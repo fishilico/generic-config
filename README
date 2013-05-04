@@ -1,0 +1,13 @@
+Generic Configuration
+---------------------
+
+Everytime I install a new Linux machine there are config files that need to be
+edited. For example, on a server it's a good idea to disable remote root login
+after an administrator account is being created. Another example is a desktop
+host which needs a firewall for security purpose, but with much simpler rules
+than a router firewall.
+
+This project aims to give a quick technical overview of the config files I need
+to modify and how there are set up. Hence it is organised in folders sorted by
+domain. Each folders contains a set of files with comments and sometimes a
+README file.
