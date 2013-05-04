@@ -1,0 +1,14 @@
+Add a new user
+--------------
+Command:
+    useradd user
+
+Options:
+    -c, --comment "Comment"
+    -m, --create-home
+    -u, --uid UID
+
+Add an existing user to groups
+------------------------------
+Example:
+    usermod -G sudo,adm user

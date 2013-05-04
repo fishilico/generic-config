@@ -1,0 +1,13 @@
+# Here is a general configuration file for SSH server
+
+# Authentication mechanisms, change to no to disable one.
+PubkeyAuthentication yes
+PasswordAuthentication yes
+
+# Some other config values
+PermitRootLogin no
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding no
+UseDNS yes
+PermitTunnel no
