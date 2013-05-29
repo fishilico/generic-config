@@ -1,0 +1,104 @@
+# This file contains a basic set of rules to apply for an Internet server.
+# Please adapt these rules to make them match what you use.
+
+
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+
+# IPv6: Disable processing of any RH0 packet to prevent ping-pong
+-6 -A INPUT -m rt --rt-type 0 -j DROP
+-6 -A FORWARD -m rt --rt-type 0 -j DROP
+-6 -A OUTPUT -m rt --rt-type 0 -j DROP
+
+##############################################################################
+# INPUT filters
+
+# Trust local loopback
+-A INPUT -i lo -j ACCEPT
+
+# Drop invalid packets
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+
+# port range is in /proc/sys/net/ipv4/ip_local_port_range
+# If conntrack is not available (old kernel), use -m state --state instead
+-A INPUT -p tcp -m tcp --dport 32768:61000 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p udp -m udp --dport 32768:61000 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+# If conntrack module is not available, state module doesn't work well for IPv6
+# so use these rules instead
+#-6 -A INPUT -p tcp -m tcp --dport 32768:61000 ! --syn -j ACCEPT
+#-6 -A INPUT -p udp -m udp --dport 32768:61000 -j ACCEPT
+
+
+# ICMPv4 echo reply, dest unreachable, echo request, time exceeded
+-4 -A INPUT -p icmp -m icmp --icmp-type 0 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 3 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 11 -j ACCEPT
+
+# ICMPv6 dest unreachable, packet too big, time exceeded, parameter problem
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 1 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 2 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 3 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 4 -j ACCEPT
+# ICMPv6 echo request, echo reply
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 128 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 129 -j ACCEPT
+
+# Neighbor Discovery Protocol: RS, RA, NS, NA
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 133 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 134 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 135 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 136 -j ACCEPT
+
+
+# Drop broadcast
+-4 -A INPUT -d 255.255.255.255/32 -j DROP
+
+
+# Accept SSH, HTTP, HTTPS, ...
+-A INPUT -p tcp -m multiports --dports 22,80,443 -j ACCEPT
+
+# Accept NTP
+-A INPUT -p udp -m udp --sport 123 --dport 123 -j ACCEPT
+
+
+# Silently drop NetBios
+-A INPUT -p udp -m udp --dport 137:138 -j DROP
+-A INPUT -p tcp -m multiport --dports 139,445 -j DROP
+
+
+# Log to NetFilter, so that logs don't fills up and debugging is quick
+#-A INPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix "[IN DROP] "
+-A INPUT -m limit --limit 1/sec --limit-burst 1000 -j NFLOG
+
+# Reject packet
+-A INPUT -p tcp -j REJECT --reject-with tcp-reset
+-4 -A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
+-6 -A INPUT -p udp -j REJECT --reject-with icmp6-port-unreachable
+-4 -A INPUT -j REJECT --reject-with icmp-proto-unreachable
+-6 -A INPUT -j REJECT
+
+
+##############################################################################
+# OUTPUT filters
+
+# These filters respect the symetry of INPUT filters
+
+-A OUTPUT -o lo -j ACCEPT
+-4 -A OUTPUT -p icmp -j ACCEPT
+-6 -A OUTPUT -p ipv6-icmp -j ACCEPT
+
+-A OUTPUT -p tcp -m tcp --sport 32768:61000 -j ACCEPT
+-A OUTPUT -p udp -m udp --sport 32768:61000 -j ACCEPT
+
+-4 -A OUTPUT -d 255.255.255.255/32 -j DROP
+-A OUTPUT -p tcp -m multiports --sports 22,80,443 -j ACCEPT
+-A OUTPUT -p udp -m udp --sport 123 -j ACCEPT
+
+#-A OUTPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix "[OUT DROP] "
+-A OUTPUT -m limit --limit 1/sec --limit-burst 1000 -j NFLOG
+
+COMMIT
