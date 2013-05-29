@@ -90,6 +90,7 @@
 -4 -A INPUT -d 224.0.0.22/32 -p igmp -j ACCEPT
 -4 -A INPUT -d 224.0.0.251/32 -p igmp -j ACCEPT
 -4 -A INPUT -d 224.0.0.251/32 -p udp -m udp --sport 5353 --dport 5353 -j ACCEPT
+-6 -A INPUT -d ff02::fb/128 -p udp -m udp --sport 5353 --dport 5353 -j ACCEPT
 
 
 # Silently drop NetBios
@@ -130,6 +131,7 @@
 -4 -A OUTPUT -d 224.0.0.22/32 -p igmp -j ACCEPT
 -4 -A OUTPUT -d 224.0.0.251/32 -p igmp -j ACCEPT
 -4 -A OUTPUT -d 224.0.0.251/32 -p udp -m udp --sport 5353 --dport 5353 -j ACCEPT
+-6 -A OUTPUT -d ff02::fb/128 -p udp -m udp --sport 5353 --dport 5353 -j ACCEPT
 
 #-A OUTPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix "[OUT DROP] "
 -A OUTPUT -m limit --limit 1/sec --limit-burst 1000 -j NFLOG
