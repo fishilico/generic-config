@@ -18,6 +18,9 @@
 # Trust local loopback
 -A INPUT -i lo -j ACCEPT
 
+# Drop broadcast
+-4 -A INPUT -d 255.255.255.255/32 -j DROP
+
 # Drop invalid packets
 -A INPUT -m conntrack --ctstate INVALID -j DROP
 
@@ -25,6 +28,8 @@
 # If conntrack is not available (old kernel), use -m state --state instead
 -A INPUT -p tcp -m tcp --dport 32768:61000 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A INPUT -p udp -m udp --dport 32768:61000 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+# Most DNS resolvers (BIND, PowerDNS, ...) use their own ports numbers
+-A INPUT -p udp -m udp --sport 53 --dport 1024:65535 -j ACCEPT
 
 # If conntrack module is not available, state module doesn't work well for IPv6
 # so use these rules instead
@@ -54,31 +59,26 @@
 -6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 136 -j ACCEPT
 
 
-# Drop broadcast
--4 -A INPUT -d 255.255.255.255/32 -j DROP
-
-
-# Accept SSH, HTTP, HTTPS, ...
--A INPUT -p tcp -m multiports --dports 22,80,443 -j ACCEPT
+# Accept SSH, HTTP and HTTPS
+-A INPUT -p tcp -m multiport --dports 22,80,443 -j ACCEPT
 
 # Accept NTP
 -A INPUT -p udp -m udp --sport 123 --dport 123 -j ACCEPT
-
 
 # Silently drop NetBios
 -A INPUT -p udp -m udp --dport 137:138 -j DROP
 -A INPUT -p tcp -m multiport --dports 139,445 -j DROP
 
-
 # Log to NetFilter, so that logs don't fills up and debugging is quick
 #-A INPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix "[IN DROP] "
 -A INPUT -m limit --limit 1/sec --limit-burst 1000 -j NFLOG
 
-# Reject packet
+# Reject packet, with somes stats in iptables -nvL and ip6tables -nvL
 -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 -4 -A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
 -6 -A INPUT -p udp -j REJECT --reject-with icmp6-port-unreachable
 -4 -A INPUT -j REJECT --reject-with icmp-proto-unreachable
+-6 -A INPUT -p ipv6-icmp -j DROP
 -6 -A INPUT -j REJECT
 
 
@@ -88,14 +88,15 @@
 # These filters respect the symetry of INPUT filters
 
 -A OUTPUT -o lo -j ACCEPT
+-4 -A OUTPUT -d 255.255.255.255/32 -j DROP
 -4 -A OUTPUT -p icmp -j ACCEPT
 -6 -A OUTPUT -p ipv6-icmp -j ACCEPT
 
 -A OUTPUT -p tcp -m tcp --sport 32768:61000 -j ACCEPT
 -A OUTPUT -p udp -m udp --sport 32768:61000 -j ACCEPT
+-A OUTPUT -p udp -m udp --sport 1024:65535 --dport 53 -j ACCEPT
 
--4 -A OUTPUT -d 255.255.255.255/32 -j DROP
--A OUTPUT -p tcp -m multiports --sports 22,80,443 -j ACCEPT
+-A OUTPUT -p tcp -m multiport --sports 22,80,443 -j ACCEPT
 -A OUTPUT -p udp -m udp --sport 123 -j ACCEPT
 
 #-A OUTPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix "[OUT DROP] "
