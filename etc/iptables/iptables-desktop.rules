@@ -87,10 +87,9 @@
 -4 -A INPUT -d 224.0.0.251/32 -p udp -m udp --sport 5353 --dport 5353 -j ACCEPT
 -6 -A INPUT -d ff02::fb/128 -p udp -m udp --sport 5353 --dport 5353 -j ACCEPT
 
-
-# Silently drop NetBios
--A INPUT -p udp -m udp --dport 137:138 -j DROP
--A INPUT -p tcp -m multiport --dports 139,445 -j DROP
+# Accept NetBios
+-A INPUT -p tcp -m multiport --dports 139,445 -j ACCEPT
+-A INPUT -p udp -m udp --sport 137:138 --dport 137:138 -j ACCEPT
 
 # Log to NetFilter, so that logs don't fills up and debugging is quick
 #-A INPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix "[IN DROP] "
@@ -100,9 +99,9 @@
 -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 -4 -A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
 -6 -A INPUT -p udp -j REJECT --reject-with icmp6-port-unreachable
--4 -A INPUT -j REJECT --reject-with icmp-proto-unreachable
 -4 -A INPUT -p icmp -j DROP
 -6 -A INPUT -p ipv6-icmp -j DROP
+-4 -A INPUT -j REJECT --reject-with icmp-proto-unreachable
 -6 -A INPUT -j REJECT
 
 
