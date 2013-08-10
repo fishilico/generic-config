@@ -33,6 +33,19 @@ To configure an HTTP proxy, you need to add one more line:
     deb http://ftp.de.debian.org/debian          squeeze main contrib non-free
     deb http://ftp.de.debian.org/debian-security squeeze/updates main contrib non-free
 
+You may install debsums package to check the installed files. There is a cron
+job with debsums which is configured by /etc/default/debsums:
+    # Set this to never to disable the checksum verification or
+    # one of "daily", "weekly", "monthly" to enable it
+    CRON_CHECK=never
+
+Apticron is a program which automatically downloads the new updates (without
+installing them) and send mails about them. By default, it is configured to run
+every day and to change this to a weekly-based period, you need to edit
+/etc/cron.d/apticron:
+    # Sunday, 0:41
+    41 0 * * 0 root if test -x /usr/sbin/apticron; then /usr/sbin/apticron --cron; else true; fi
+
 
 Apache commands
 ---------------
