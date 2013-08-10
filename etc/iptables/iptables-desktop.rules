@@ -22,8 +22,8 @@
 -A INPUT -m conntrack --ctstate INVALID -j DROP
 
 # Drop DHCP requests but accept answers
--4 -A INPUT -d 255.255.255.255/32 -p udp -m udp --sport 68 --dport 67 -j DROP
--4 -A INPUT -d 255.255.255.255/32 -p udp -m udp --sport 67 --dport 68 -j ACCEPT
+-4 -A INPUT -p udp -m udp --sport 68 --dport 67 -j DROP
+-4 -A INPUT -p udp -m udp --sport 67 --dport 68 -j ACCEPT
 # Drop broadcast
 -4 -A INPUT -d 255.255.255.255/32 -j DROP
 
@@ -111,8 +111,8 @@
 # These filters respect the symetry of INPUT filters
 
 -A OUTPUT -o lo -j ACCEPT
--4 -A OUTPUT -d 255.255.255.255/32 -p udp -m udp --sport 67 --dport 68 -j DROP
--4 -A OUTPUT -d 255.255.255.255/32 -p udp -m udp --sport 68 --dport 67 -j ACCEPT
+-4 -A OUTPUT -p udp -m udp --sport 67 --dport 68 -j DROP
+-4 -A OUTPUT -p udp -m udp --sport 68 --dport 67 -j ACCEPT
 -4 -A OUTPUT -d 255.255.255.255/32 -j DROP
 -4 -A OUTPUT -m conntrack --ctstate INVALID -j DROP
 -4 -A OUTPUT -p icmp -j ACCEPT
