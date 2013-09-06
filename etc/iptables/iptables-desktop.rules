@@ -91,6 +91,11 @@
 -A INPUT -p tcp -m multiport --dports 139,445 -j ACCEPT
 -A INPUT -p udp -m udp --sport 137:138 --dport 137:138 -j ACCEPT
 
+# Silently drop unsollicited broadcast and multicast
+-A INPUT -m pkttype --pkt-type broadcast -j DROP
+-A INPUT -m pkttype --pkt-type multicast -j DROP
+-4 -A INPUT -d 255.255.255.255/32 -j DROP
+
 # Log to NetFilter, so that logs don't fills up and debugging is quick
 #-A INPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix "[IN DROP] "
 -A INPUT -m limit --limit 1/sec --limit-burst 1000 -j NFLOG
@@ -113,13 +118,15 @@
 -A OUTPUT -o lo -j ACCEPT
 -4 -A OUTPUT -p udp -m udp --sport 67 --dport 68 -j DROP
 -4 -A OUTPUT -p udp -m udp --sport 68 --dport 67 -j ACCEPT
--4 -A OUTPUT -d 255.255.255.255/32 -j DROP
--4 -A OUTPUT -m conntrack --ctstate INVALID -j DROP
 -4 -A OUTPUT -p icmp -j ACCEPT
 -6 -A OUTPUT -p ipv6-icmp -j ACCEPT
 
-# Accept TCP reset
+# Accept TCP reset and FIN+ACK
 -A OUTPUT -p tcp -m tcp --tcp-flags RST RST -j ACCEPT
+-A OUTPUT -p tcp -m tcp --tcp-flags FIN,ACK FIN,ACK -j ACCEPT
+
+-4 -A OUTPUT -d 255.255.255.255/32 -j DROP
+-4 -A OUTPUT -m conntrack --ctstate INVALID -j DROP
 
 -A OUTPUT -p tcp -m tcp --sport 32768:61000 -j ACCEPT
 -A OUTPUT -p udp -m udp --sport 32768:61000 -j ACCEPT
