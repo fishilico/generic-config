@@ -98,8 +98,10 @@ Here are the modules from the Reference policy which are active on my Debian des
     hddtemp
     hostname
     hotplug
+    inetd
     init
     iptables
+    kerberos
     lda
     libraries
     loadkeys
@@ -118,11 +120,11 @@ Here are the modules from the Reference policy which are active on my Debian des
     netlabel
     netutils
     networkmanager
-    nginx
     ntp
     policykit
     postfix
     postgresql
+    ptchown
     pulseaudio
     pythonsupport
     radvd
@@ -138,6 +140,7 @@ Here are the modules from the Reference policy which are active on my Debian des
     sudo
     sysadm
     sysnetwork
+    systemd
     timidity
     tzdata
     udev
