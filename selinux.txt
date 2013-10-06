@@ -9,6 +9,7 @@ it, please read one of these websites:
 
 Other websites useful to be bookmarked:
 * http://oss.tresys.com/docs/refpolicy/api/ (reference policy API)
+* http://oss.tresys.com/projects/refpolicy/log/ (git log)
 * https://wiki.gentoo.org/wiki/Project:SELinux/Development
 * http://www.selinuxproject.org/page/ObjectClassesPerms
 * http://git.overlays.gentoo.org/gitweb/?p=proj/hardened-refpolicy.git;a=summary
@@ -60,6 +61,15 @@ Enable reading of urandom for all domains:
 If you have CGI on your webserver (gitweb for example) you need to set:
     setsebool -P httpd_enable_cgi on
     setsebool -P nginx_enable_http_server on
+
+For GPG agent to work, you need to set:
+    setsebool -P gpg_agent_env_file on
+
+To disable NX memory protection for some applications (eg. Firefox):
+    setsebool -P allow_execmem on
+
+To print logs on some tty (like tty12):
+    setsebool -P logging_syslogd_use_tty on
 
 Fix labels for files in /home
 -----------------------------
@@ -165,16 +175,14 @@ By default /etc/selinux/default/modules/active/file_contexts.homedirs defines
     chcon -u staff_u /root -R
 
 
-Bugs still present in August 2013
----------------------------------
+Bugs still present in September 2013
+------------------------------------
 
-The reference policy is not so much up to date so it needs to be patched to
-work correctly. For example, to use sudo, you need to do this:
+In ArchLinux, /sys is not labelled correctly on boot. It needs to be labeled by
+systemd using tmpfiles.d configuration. Therefore you need to add this in
+/etc/tmpfiles.d/sysfs.conf:
+    Z /sys/devices/system/cpu/online 0444 root root
 
-    semanage fcontext -a -t pam_var_run_t "/var/((db)|(lib)|(adm))/sudo(/.*)?"
-    restorecon -R -v /var/lib/sudo
-    semanage fcontext -a -t shell_exec_t "/usr/lib/sudo/sesh"
-    restorecon -v /usr/lib/sudo/sesh
-
-When a rule is missing in the reference policy and you see a denied in audit
-log, you need to create a new module and compile and load it.
+For further information, please read:
+    https://bugzilla.redhat.com/show_bug.cgi?id=767355
+    http://www.spinics.net/lists/selinux/msg11684.html
