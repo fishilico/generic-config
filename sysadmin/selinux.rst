@@ -25,22 +25,18 @@ Install a strict policy
 
 On Debian by default a targeted policy is installed, daemons are confined but
 not users. To make users confined, you need to remove the unconfined module.
-To do this:
+To do this::
 
-- Set up staff accounts::
-
+    # Set up staff accounts
     semanage login -a -s staff_u userlogin
 
-- Confine users::
-
+    # Confine user
     semanage login -m -s user_u -r s0 __default__
 
-- Map ``root`` to ``root`` instead of ``unconfined_u``::
-
+    # Map root to root instead of unconfined_u
     semanage login -m -s root root
 
-- Remove the ``unconfined`` module::
-
+    # Remove the unconfined module
     semodule -r unconfined
 
 
