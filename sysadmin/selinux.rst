@@ -16,6 +16,9 @@ Other websites useful to be bookmarked:
 - http://www.selinuxproject.org/page/ObjectClassesPerms
 - http://git.overlays.gentoo.org/gitweb/?p=proj/hardened-refpolicy.git;a=summary
 
+This document will instead focus on some pitfalls I've encountered since
+installing SELinux on systems running Debian or ArchLinux.
+
 
 Install a strict policy
 -----------------------
@@ -90,8 +93,8 @@ Here are some booleans I use is almost all my SELinux system::
     # Print logs on some tty (like tty12)
     setsebool -P logging_syslogd_use_tty on
 
-Fix labels for files in /home
------------------------------
+Fix labels for files in ``/home``
+---------------------------------
 
 By default, files under ``/home`` are labeled as user home directories. On some
 system, ``/home`` is on the largest disk partition and there are other things,
@@ -100,6 +103,18 @@ For such folders, you must a command like this to specify the real file context
 to use::
 
     semanage fcontext -a -t httpd_sys_content_t "/home/git(/.*)?"
+
+
+Generate interface file for ``audit2allow -R``
+----------------------------------------------
+
+audit2allow -R needs ``/var/lib/sepolgen/interface_info``, which is created by
+``sepolgen-ifgen``. However, as the ``-p`` parameter of this command is buggy,
+your interface files need to be located in the ``default`` policy, ie. in
+``/usr/share/selinux/default/include`` directory. For example, add a symlink
+``/usr/share/selinux/default`` to your policy directory::
+
+    cd /usr/share/selinux && ln -s $(policyname) default
 
 
 Activate some SELinux modules
@@ -217,3 +232,12 @@ For further information, please read:
 
 - https://bugzilla.redhat.com/show_bug.cgi?id=767355
 - http://www.spinics.net/lists/selinux/msg11684.html
+
+
+In Archlinux, ``dbus`` package is not compiled with selinux support. A simple
+way to get it is to recompile the package on an SELinux system
+(in permissive mode)::
+
+    yaourt -G dbus
+    cd dbus
+    makepkg -si
