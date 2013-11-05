@@ -13,6 +13,10 @@ Debian post-installation commands
     Keep in mind SSH preserve locale accross the connection so a single UTF-8
     locale is not enough.
 
+``dpkg-reconfigure keyboard-configuration``
+    Change which keyboard configuration to use. ``loadkeys`` can also be used,
+    with keymaps in ``/usr/share/kbd/keymaps``.
+
 ``cd /usr/bin && sudo ln -s python python2``
     For scripts which require python2 command.
 
