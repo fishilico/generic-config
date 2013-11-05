@@ -40,6 +40,23 @@ To do this::
     semodule -r unconfined
 
 
+Use ``run_init`` as root without a password
+-------------------------------------------
+
+``run_init`` command (to manage services) authenticates the real user with PAM
+before making a transition to ``system_u:system_r:init_t`` context. The default
+configuration tell PAM to ask for a password to authenticate but this may be
+annoying on non-critical systems where root needs to restart services.
+To disable the password prompt for root, add this at the beginning of
+``/etc/pam.d/run_init``::
+
+    auth       sufficient   pam_rootok.so
+
+Moreover make sure that you allow ``run_init_t`` to use ``pam_rootok.so``::
+
+    allow run_init_t self:passwd rootok;
+
+
 Fix ``/tmp`` labeling
 ---------------------
 
