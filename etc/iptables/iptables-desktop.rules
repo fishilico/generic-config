@@ -18,14 +18,16 @@
 # Trust local loopback
 -A INPUT -i lo -j ACCEPT
 
+# Broadcast pings are allowed and produce replies in invalid states
+-4 -A INPUT -p icmp -m icmp --icmp-type 0/0 -m limit --limit 2/sec -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 129/0 -m limit --limit 2/sec -j ACCEPT
+
 # Drop invalid packets
 -A INPUT -m conntrack --ctstate INVALID -j DROP
 
 # Drop DHCP requests but accept answers
 -4 -A INPUT -p udp -m udp --sport 68 --dport 67 -j DROP
 -4 -A INPUT -p udp -m udp --sport 67 --dport 68 -j ACCEPT
-# Drop broadcast
--4 -A INPUT -d 255.255.255.255/32 -j DROP
 
 # port range is in /proc/sys/net/ipv4/ip_local_port_range
 # If conntrack is not available (old kernel), use -m state --state instead
@@ -41,9 +43,9 @@
 
 
 # ICMPv4 echo reply, dest unreachable, echo request, time exceeded
--4 -A INPUT -p icmp -m icmp --icmp-type 0 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 0/0 -j ACCEPT
 -4 -A INPUT -p icmp -m icmp --icmp-type 3 -j ACCEPT
--4 -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 8/0 -j ACCEPT
 -4 -A INPUT -p icmp -m icmp --icmp-type 11 -j ACCEPT
 
 # ICMPv6 dest unreachable, packet too big, time exceeded, parameter problem
@@ -52,19 +54,17 @@
 -6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 3 -j ACCEPT
 -6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 4 -j ACCEPT
 # ICMPv6 echo request, echo reply
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 128 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 129 -j ACCEPT
-
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 128/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 129/0 -j ACCEPT
 # IPv6 Multicast Listener Query, Report and Done
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 130 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 131 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 132 -j ACCEPT
-
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 130/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 131/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 132/0 -j ACCEPT
 # Neighbor Discovery Protocol: RS, RA, NS, NA
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 133 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 134 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 135 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 136 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 133/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 134/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 135/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 136/0 -j ACCEPT
 
 
 # Accept SSH, HTTP, HTTPS, ... (activate only the ones needed)
@@ -91,9 +91,14 @@
 -A INPUT -p tcp -m multiport --dports 139,445 -j ACCEPT
 -A INPUT -p udp -m udp --sport 137:138 --dport 137:138 -j ACCEPT
 
+# Silently drop some LAN discovery services
+-4 -A INPUT -p udp -m udp --sport 3483 --dport 3483 -m comment --comment "Slim Devices" -j DROP
+-4 -A INPUT -p udp -m udp --sport 17500 --dport 17500 -m comment --comment "DropBox" -j DROP
+
 # Silently drop unsollicited broadcast and multicast
 -A INPUT -m pkttype --pkt-type broadcast -j DROP
 -A INPUT -m pkttype --pkt-type multicast -j DROP
+# This rule is still here to really avoid rejecting an IPv4 broadcast
 -4 -A INPUT -d 255.255.255.255/32 -j DROP
 
 # Log to NetFilter, so that logs don't fills up and debugging is quick

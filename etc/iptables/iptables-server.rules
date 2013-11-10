@@ -35,9 +35,9 @@
 
 
 # ICMPv4 echo reply, dest unreachable, echo request, time exceeded
--4 -A INPUT -p icmp -m icmp --icmp-type 0 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 0/0 -j ACCEPT
 -4 -A INPUT -p icmp -m icmp --icmp-type 3 -j ACCEPT
--4 -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 8/0 -j ACCEPT
 -4 -A INPUT -p icmp -m icmp --icmp-type 11 -j ACCEPT
 
 # ICMPv6 dest unreachable, packet too big, time exceeded, parameter problem
@@ -46,14 +46,13 @@
 -6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 3 -j ACCEPT
 -6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 4 -j ACCEPT
 # ICMPv6 echo request, echo reply
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 128 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 129 -j ACCEPT
-
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 128/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 129/0 -j ACCEPT
 # Neighbor Discovery Protocol: RS, RA, NS, NA
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 133 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 134 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 135 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 136 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 133/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 134/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 135/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 136/0 -j ACCEPT
 
 
 # Accept SSH, HTTP and HTTPS
@@ -63,12 +62,13 @@
 -A INPUT -p udp -m udp --sport 123 --dport 123 -j ACCEPT
 
 # Silently drop NetBios
--A INPUT -p udp -m udp --dport 137:138 -j DROP
 -A INPUT -p tcp -m multiport --dports 139,445 -j DROP
+-A INPUT -p udp -m udp --dport 137:138 -j DROP
 
 # Silently drop unsollicited broadcast and multicast
 -A INPUT -m pkttype --pkt-type broadcast -j DROP
 -A INPUT -m pkttype --pkt-type multicast -j DROP
+# This rule is still here to really avoid rejecting an IPv4 broadcast
 -4 -A INPUT -d 255.255.255.255/32 -j DROP
 
 # Log to NetFilter, so that logs don't fills up and debugging is quick
