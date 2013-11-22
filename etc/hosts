@@ -7,7 +7,19 @@
 # MyHostName should be what's in /etc/hostname
 127.0.1.1       MyHostName
 ::1             localhost.localdomain   localhost ip6-localhost ip6-loopback
+
+# Speed up non-numeric iptables listing
+# For IPv4 there are some PTR records in DNS with mcast.net subdomains
+224.0.0.0       ip4-mcast224
+224.0.0.1       ip4-allsystems
+224.0.0.2       ip4-allrouters
+224.0.0.22      ip4-igmp
+224.0.0.251     ip4-mdns
+239.0.0.0       ip4-mcast239
+255.255.255.255 ip4-broadcast
+
 fe00::0         ip6-localnet
 ff00::0         ip6-mcastprefix
 ff02::1         ip6-allnodes
 ff02::2         ip6-allrouters
+ff02::fb        ip6-mdns
