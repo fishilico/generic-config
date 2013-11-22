@@ -81,5 +81,7 @@ Establish an TLS (or SSL) connection::
     openssl s_client -connect ssl.example.com:443 -servername ssl.example.com -showcerts
 
 Use a web service, like Qualys’s SSL Server Test:
+https://www.ssllabs.com/ssltest/
 
-* https://www.ssllabs.com/ssltest/
+This web page helps displays what your browser supports:
+https://www.ssllabs.com/ssltest/viewMyClient.html
