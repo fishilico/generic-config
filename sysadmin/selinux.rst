@@ -121,13 +121,15 @@ to use::
 Generate interface file for ``audit2allow -R``
 ----------------------------------------------
 
-audit2allow -R needs ``/var/lib/sepolgen/interface_info``, which is created by
-``sepolgen-ifgen``. However, as the ``-p`` parameter of this command is buggy,
-your interface files need to be located in the ``default`` policy, ie. in
-``/usr/share/selinux/default/include`` directory. For example, add a symlink
+``audit2allow -R`` needs ``/var/lib/sepolgen/interface_info``, which is created
+by ``sepolgen-ifgen``. However, as the ``-p`` parameter of this command is
+buggy, your interface files need to be located in the ``default`` policy, ie.
+in ``/usr/share/selinux/default/include`` directory. For example, add a symlink
 ``/usr/share/selinux/default`` to your policy directory::
 
-    cd /usr/share/selinux && ln -s $(policyname) default
+    . /etc/selinux/config
+    cd /usr/share/selinux && ln -s $SELINUXTYPE default
+    sepolgen-ifgen
 
 
 Activate some SELinux modules
