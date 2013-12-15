@@ -148,3 +148,118 @@ Here are some extensions to enable for most common-purpose websites:
 - ``pdo_sqlite``
 - ``pgsql``
 - ``sqlite3``
+
+Apache configuration
+--------------------
+
+Apache has a module to run PHP. On Debian its installation is simple::
+
+    apt-get install libapache2-mod-php5
+    a2enmod php5
+
+This will automatically load ``/usr/lib/apache2/modules/libphp5.so`` and
+configure Apache so that ``.php`` files (and other extensions) are handled to
+PHP module for execution.
+
+To disable the PHP engine for some folders, use ``php_admin_value`` directive
+in ``<Directory>`` sections. For example this disables PHP in home directories::
+
+    <IfModule mod_userdir.c>
+        <Directory /home/*/public_html>
+            php_admin_value engine Off
+        </Directory>
+    </IfModule>
+
+Rewrite module
+~~~~~~~~~~~~~~
+
+To have nicer URLs, many websites setup a hook to call ``index.php`` with a part of the path in its parameter. In Apache, this behavior is achieved thanks to the rewrite module. To enable this module on Debian, run::
+
+    a2enmod rewrite
+
+Then ensure that you have this directive in your virtual host configuration, to
+allow ``.htaccess`` files::
+
+    AllowOverride All
+
+Finally, put a ``.htaccess`` file where you want to split the path and write
+lines such as these ones in it::
+
+    <IfModule mod_rewrite.c>
+        RewriteEngine on
+        RewriteBase /path/to/current/directory
+        # Only rewrite non-existing files and directories
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule ^(.*)$ index.php?path=$1 [L,QSA]
+    </IfModule>
+
+Module doc: https://httpd.apache.org/docs/current/mod/mod_rewrite.html
+
+
+Nginx configuration
+-------------------
+
+Nginx doesn't use PHP as a module so you have to run another daemon which
+provides a CGI-like gateway. For example, you may use ``php5-fpm`` daemon,
+which installation is trivial on Debian::
+
+    apt-get install php5-fpm
+    update-rc.d php5-fpm defaults
+
+This daemon creates an Unix socket in ``/var/run/php5-fpm.sock``.
+Use something like this to connect nginx to php5-fpm::
+
+    server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/localhost/htdocs;
+        location ~ ^(.+?\.php)(/.*)?$ {
+            try_files $1 =404;
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$1;
+            fastcgi_param PATH_INFO $2;
+            fastcgi_pass unix:/var/run/php5-fpm.sock;
+        }
+    }
+
+Indeed all the mandatory paramaters for fastcgi interface are already defined
+in ``/etc/nginx/fastcgi_params``::
+
+    fastcgi_param   QUERY_STRING            $query_string;
+    fastcgi_param   REQUEST_METHOD          $request_method;
+    fastcgi_param   CONTENT_TYPE            $content_type;
+    fastcgi_param   CONTENT_LENGTH          $content_length;
+
+    fastcgi_param   SCRIPT_FILENAME         $request_filename;
+    fastcgi_param   SCRIPT_NAME             $fastcgi_script_name;
+    fastcgi_param   REQUEST_URI             $request_uri;
+    fastcgi_param   DOCUMENT_URI            $document_uri;
+    fastcgi_param   DOCUMENT_ROOT           $document_root;
+    fastcgi_param   SERVER_PROTOCOL         $server_protocol;
+
+    fastcgi_param   GATEWAY_INTERFACE       CGI/1.1;
+    fastcgi_param   SERVER_SOFTWARE         nginx/$nginx_version;
+
+    fastcgi_param   REMOTE_ADDR             $remote_addr;
+    fastcgi_param   REMOTE_PORT             $remote_port;
+    fastcgi_param   SERVER_ADDR             $server_addr;
+    fastcgi_param   SERVER_PORT             $server_port;
+    fastcgi_param   SERVER_NAME             $server_name;
+
+    fastcgi_param   HTTPS                   $https;
+
+    # PHP only, required if PHP was built with --enable-force-cgi-redirect
+    fastcgi_param   REDIRECT_STATUS         200;
+
+Rewrite directive
+~~~~~~~~~~~~~~~~~
+
+Nginx provides an HTTP rewrite module to change URIs dynamically. This directive
+sets up pseudo subdirectories in ``/path`` URI which are handled by ``page.php``
+script::
+
+    rewrite ^/path(/.*)$ /page.php$1 last;
+
+Module doc: http://nginx.org/en/docs/http/ngx_http_rewrite_module.html
