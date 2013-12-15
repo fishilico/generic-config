@@ -147,3 +147,10 @@ https://github.com/pommi/CGP/releases in a folder and to configure your web
 server accordingly.
 
 Official website: http://pommi.nethuis.nl/category/cgp/
+
+To enable ``jsrrdgraph`` (to have Javascript-rendered graphs in which you can
+navigate with your mouse), you just need to enable the ``canvas`` mode. This
+is done by creating ``conf/config.local.php`` with::
+
+    <?php
+    $CONFIG['graph_type'] = 'canvas';
