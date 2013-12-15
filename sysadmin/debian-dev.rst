@@ -122,9 +122,9 @@ The starting point of every Debian package is the *original files archive*. This
 archive is the one that may be downloaded from the websites which provide a
 `download link`. For example, if your library is on PyPI, you would download
 https://pypi.python.org/packages/source/m/mylibrary/mylibrary-0.0.1.tar.gz.
-This file should be put in the parent directory of the folder where `mylibrary``
-lies, and named ``mylibrary_0.0.1.orig.tar.gz`` (name, underscore, version).
-``setup.py`` can be used to create this file::
+This file should be put in the parent directory of the folder where
+``mylibrary`` lies, and named ``mylibrary_0.0.1.orig.tar.gz``
+(name, underscore, version). ``setup.py`` can be used to create this file::
 
     python setup.py sdist
     cp dist/mylibrary-0.0.1.tar.gz ../mylibrary_0.0.1.orig.tar.gz
@@ -148,30 +148,29 @@ this:
     dch --create -v 0.0.1-1 --package mylibrary
 
 When you feel the package is almost ready, you need to test building the package
-without running tests nor signing the package nor its changelog::
+without running tests nor signing anything::
 
     DEB_BUILD_OPTIONS=nocheck debuild -uc -us
 
-Usually ``lintian`` will get angry and print error messages because it's really
-hard to follow Debian packaging rules the first time. This is where the
-packaging takes time, as you need to edit files in ``debian`` folder to fix the
-issues reported by ``lintian``.
+Usually ``lintian`` will get angry and print error messages at this step because
+it's really hard to follow all of the Debian packaging rules the first time.
+This is where the packaging process takes time, as you need to edit files in
+``debian`` folder to fix the issues reported by ``lintian``.
 
 Often the ``clean`` function of the package doesn't remove the ``.egg-info``
 folder which is created by ``setup.py build``. This is an issue because
 ``debuild`` finds out that ``mylibrary.egg-info`` doesn't exist in the original
-files and so treats it as a `Debian-specific patch`. To prevent this behavior,
-you need to add that to ``debian/clean``::
+files and thus treats it as a `Debian-specific patch`. To prevent this behavior,
+you need to add this line to ``debian/clean``::
 
     mylibrary.egg-info/*
 
-Once ``lintian`` has no more things to say, you should build the final package
+Once ``lintian`` has no more things to say, you can build the final package
 and sign it with your GPG key::
 
     debuild
 
-Your parent directory now contains the following files (here on a 64-bits
-system):
+The parent directory now contains the following files (here on a 64-bit system):
 
 * ``mylibrary_0.0.1-1_all.deb``
 * ``mylibrary_0.0.1-1_amd64.build``
