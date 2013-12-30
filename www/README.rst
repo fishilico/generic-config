@@ -1,5 +1,5 @@
 WWW server files
-----------------
+================
 
 This project contains basic files which are on every web server which are not
 really public. This means that the first function of the web server which
@@ -9,9 +9,7 @@ monitoring, statistics, file sharing, ...
 Usage
 -----
 
-If you're using nginx, put these lines into your default vhost:
-
-.. code-block::
+If you're using nginx, put these lines into your default vhost::
 
     root /path/to/www/htdocs;
     error_page 403 /403.html;
@@ -21,9 +19,7 @@ If you're using nginx, put these lines into your default vhost:
     index index.html
     try_files $uri $uri/ =404;
 
-With Apache, use:
-
-.. code-block::
+With Apache, use::
 
     DocumentRoot "/path/to/www/htdocs"
     ErrorDocument 403 "/403.html"
