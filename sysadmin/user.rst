@@ -1,14 +1,26 @@
+User management on Linux
+========================
+
 Add a new user
 --------------
-Command:
-    useradd user
 
-Options:
+Command:
+
+.. code-block:: sh
+
+    useradd LOGIN
+
+Options::
+
     -c, --comment "Comment"
     -m, --create-home
     -u, --uid UID
 
 Add an existing user to groups
 ------------------------------
+
 Example:
-    usermod -G sudo,adm user
+
+.. code-block:: sh
+
+    usermod -a -G sudo,adm user
