@@ -1,0 +1,7 @@
+*~
+*.backup
+*.bak
+.*.sw[op]
+
+*.raw.rst
+/_build

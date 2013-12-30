@@ -1,13 +1,19 @@
-WWW server files
-================
+WWW server files (``/var/www``)
+===============================
 
-This project contains basic files which are on every web server which are not
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   **
+
+This directory contains basic files which are on every web server which are not
 really public. This means that the first function of the web server which
 serves these files is not to be a cool website but something else, like
-monitoring, statistics, file sharing, ...
+monitoring, statistics, file sharing...
 
-Usage
------
+Web server configuration
+------------------------
 
 If you're using nginx, put these lines into your default vhost::
 
