@@ -137,6 +137,19 @@ Nginx server configuration
         }
     }
 
+Lighttpd server configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
+
+    # Note: if the config already enables mod_alias, you must remove it from
+    # the next line
+    server.modules += ( "mod_alias" "mod_cgi" )
+    alias.url += ( "/collection3" => "/usr/share/doc/collectd-core/examples/collection3/" )
+    $HTTP["url"] =~ "^/collection3" {
+        cgi.assign = ( ".cgi" => "/usr/bin/perl" )
+    }
+    index-file.names += ( "bin/index.cgi" )
+
 
 Collectd Graph Panel front-end
 ------------------------------
