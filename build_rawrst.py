@@ -11,14 +11,7 @@ import sys
 RAWRST_HEADER = """``{dirpath}/{filename}``
 {underline}
 :download:`Download file<{filename}>`
-"""
-RAWRST_TEXT = """
-.. include:: {filename}
-   :literal:
-"""
-RAWRST_IMAGE = """
-.. image:: {filename}
-   :alt: {dirpath}/{filename}
+
 """
 
 
@@ -29,9 +22,21 @@ def build_rawrst_file(dirpath, filename):
 
     content = RAWRST_HEADER
     if filename.endswith(('.ico', '.jpg', '.png')):
-        content += RAWRST_IMAGE
+        content += '.. image:: {filename}\n   :alt: {dirpath}/{filename}\n'
     else:
-        content += RAWRST_TEXT
+        content += '.. literalinclude:: {filename}\n'
+        if filename.endswith(('.htm', '.html')):
+            content += '   :language: html\n'
+        elif filename.endswith(('.ini', '.inf')):
+            content += '   :language: ini\n'
+        elif 'apache' in filename:
+            content += '   :language: apache\n'
+        elif 'lighttpd' in filename:
+            content += '   :language: lighttpd\n'
+        elif 'nginx' in filename:
+            content += '   :language: nginx\n'
+        else:
+            content += '   :language: sh\n'
 
     content = content.format(
         dirpath=dirpath,
