@@ -22,7 +22,7 @@ Apache::
         SSLCACertificateFile /etc/ssl/certs
         SSLProtocol ALL -SSLv2
         SSLHonorCipherOrder On
-        SSLCipherSuite ECDHE-RSA-AES128-SHA256:AES128-GCM-SHA256:RC4:HIGH:!MD5:!aNULL:!EDH
+        SSLCipherSuite ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS;
         SSLCompression Off
 
         # Enable this if your want HSTS (recommended, but be careful)
@@ -46,11 +46,11 @@ Nginx::
         ssl_certificate /etc/nginx/ssl/ssl.example.com_and_intermediates.pem;
         ssl_certificate_key /etc/nginx/ssl/ssl.example.com.key;
         ssl_dhparam /etc/nginx/ssl/dhparam.pem;
-        ssl_session_timeout 5m;
+        ssl_session_timeout 10m
         ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
-        ssl_ciphers ECDHE-RSA-AES128-SHA256:AES128-GCM-SHA256:RC4:HIGH:!MD5:!aNULL:!EDH;
+        ssl_ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS;
         ssl_prefer_server_ciphers on;
-        ssl_session_cache shared:SSL:50m;
+        ssl_session_cache shared:SSL:10m;
 
         # Enable this if your want HSTS (recommended, but be careful)
         # add_header Strict-Transport-Security max-age=15768000;
