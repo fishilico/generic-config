@@ -1,5 +1,5 @@
-Git Web
-=======
+Git Web and CGit
+================
 
 To configure Git Web on a server, you need to install ``git`` and ``gitweb``
 packages. With Apache, the configuration is already included within ``gitweb``
@@ -158,3 +158,64 @@ Tips & Tricks
   program. On Debian::
 
     apt-get install highlight
+
+
+CGit
+----
+
+CGit is a fast Git web interface written in C. As there are issues with Debian
+packaging (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=515793), you may
+need to follow instructions on http://git.zx2c4.com/cgit/tree/README to
+download, compile and install the latest release.
+
+Let's say cgit files are installed in ``/var/www/htdocs/cgit/``. The web server
+needs to be configured to serve the static files and the CGI, exactly like
+gitweb. Here is an extract of an Nginx configuration file::
+
+    location ~ ^/cgit\.(png|css)$ { root /var/www/htdocs/cgit/; }
+    location ~ ^/cgit(/.*) {
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+        fastcgi_param SCRIPT_FILENAME /home/www/cgit/cgit.cgi;
+        fastcgi_param PATH_INFO       $1;
+        fastcgi_param CGIT_CONFIG     /home/git/cgitrc;
+        include fastcgi_params;
+    }
+
+Here is an example of ``/home/git/cgitrc``::
+
+    # Here are some default values
+    css=/cgit.css
+    favicon=/favicon.ico
+    logo=/cgit.png
+    root-title=Git repository browser
+    root-desc=a fast webinterface for the git dscm
+
+    # Global settings
+    cache-size=1000
+    enable-commit-graph=1
+    enable-git-config=1
+    enable-index-links=1
+    enable-log-filecount=1
+    enable-log-linecount=1
+    max-atom-items=100
+    max-repo-count=10000
+    max-stats=year
+    remove-suffix=1
+    snapshots=tar.gz tar.bz2 zip
+    strict-export=git-daemon-export-ok
+
+    # Custom configuration
+    virtual-root=/cgit
+    cache-root=/var/cache/cgit
+    #project-list=/home/git/projects.list
+    scan-path=/home/git/
+    clone-prefix=http://localhost/git/
+    readme=README
+
+    # Syntax highlighting
+    source-filter=/usr/lib/cgit/filters/syntax-highlighting.sh
+
+To create a cache directory (if it doesn't already exist), run something like::
+
+    mkdir -p /var/cache/cgit
+    chown -R www-data: /var/cache/cgit
