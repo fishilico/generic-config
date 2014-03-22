@@ -175,7 +175,7 @@ gitweb. Here is an extract of an Nginx configuration file::
     location ~ ^/cgit\.(png|css)$ { root /var/www/htdocs/cgit/; }
     location ~ ^/cgit(/.*) {
         fastcgi_pass unix:/var/run/fcgiwrap.socket;
-        fastcgi_param SCRIPT_FILENAME /home/www/cgit/cgit.cgi;
+        fastcgi_param SCRIPT_FILENAME /var/www/htdocs/cgit/cgit.cgi;
         fastcgi_param PATH_INFO       $1;
         fastcgi_param CGIT_CONFIG     /home/git/cgitrc;
         include fastcgi_params;
