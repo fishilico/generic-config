@@ -42,7 +42,7 @@ or when loading the module::
     modprobe netconsole netconsole=...
 
 Once the source host is configured, you would normally set up something which
-is listening for incomming messags on the destination host. For example with
+is listening for incoming messages on the destination host. For example with
 ``socat`` by doing so::
 
     socat UDP6-RECV:6666 -
@@ -59,8 +59,8 @@ and if this worked, trigger a kernel message on the source host::
 Dynamic configuration
 ---------------------
 
-To dynamicaly change netconsole's settings, you need to mount the kernel config
-filesystem::
+To dynamically change netconsole's settings, you need to mount the kernel
+config filesystem::
 
     modprobe configfs
     mount none -t configfs /sys/kernel/config
