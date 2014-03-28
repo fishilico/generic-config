@@ -80,3 +80,56 @@ To enable IPv6, use the following commands:
 
 To make these changes persistent, add ``ipv6`` to ``/etc/modules`` and
 ``net.ipv6.conf.default.use_tempaddr = 2`` to ``/etc/sysctl.conf``.
+
+
+Some useful system information
+------------------------------
+
+Here are the outputs of several commands to retrieve system information on a
+Raspberry Pi, model B::
+
+    $ uname -m
+    armv6l
+
+    $ cat /proc/cpuinfo
+    Processor       : ARMv6-compatible processor rev 7 (v6l)
+    BogoMIPS        : 697.95
+    Features        : swp half thumb fastmult vfp edsp java tls
+    CPU implementer : 0x41
+    CPU architecture: 7
+    CPU variant     : 0x0
+    CPU part        : 0xb76
+    CPU revision    : 7
+
+    Hardware        : BCM2708
+    Revision        : 000f
+    Serial          : 00000000eaa46896
+
+    $ cat /proc/modules
+    ipv6 278186 32 - Live 0x00000000
+    snd_bcm2835 16304 0 - Live 0x00000000
+    snd_pcm 77560 1 snd_bcm2835, Live 0x00000000
+    snd_seq 53329 0 - Live 0x00000000
+    snd_timer 19998 2 snd_pcm,snd_seq, Live 0x00000000
+    snd_seq_device 6438 1 snd_seq, Live 0x00000000
+    snd 58447 5 snd_bcm2835,snd_pcm,snd_seq,snd_timer,snd_seq_device, Live 0x00000000
+    snd_page_alloc 5145 1 snd_pcm, Live 0x00000000
+    leds_gpio 2235 0 - Live 0x00000000
+    led_class 3562 1 leds_gpio, Live 0x00000000
+
+    $ gcc -E -v - < /dev/null 2>&1 |grep cc1
+    /usr/lib/gcc/arm-linux-gnueabihf/4.6/cc1 -E -quiet -v -imultilib . -imultiarch arm-linux-gnueabihf - -march=armv6 -mfloat-abi=hard -mfpu=vfp
+
+    $ cat /proc/self/maps |tail -n2   # With XXXX where ALSR takes place
+    beXXX000-beXXX000 rw-p 00000000 00:00 0          [stack]
+    ffff0000-ffff1000 r-xp 00000000 00:00 0          [vectors]
+
+    $ lsusb
+    Bus 001 Device 002: ID 0424:9512 Standard Microsystems Corp.
+    Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+    Bus 001 Device 003: ID 0424:ec00 Standard Microsystems Corp.
+
+    $ readlink /sys/class/net/eth0
+    ../../devices/platform/bcm2708_usb/usb1/1-1/1-1.1/1-1.1:1.0/net/eth0
+    $ readlink /sys/devices/platform/bcm2708_usb/usb1/1-1/1-1.1/1-1.1:1.0/driver
+    ../../../../../../../bus/usb/drivers/smsc95xx
