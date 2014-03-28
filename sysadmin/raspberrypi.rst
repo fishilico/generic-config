@@ -6,9 +6,13 @@ Raspbian installation
 
 Download Raspbian image from http://www.raspberrypi.org/downloads.
 
-Each time the SD card is mounted and files modified, ``/etc/fake-hwtime`` needs
-to be updated with current date and time in ``YYYY-MM-DD HH:MM:SS`` format.
-Otherwise the system may experience some timing-related issues.
+Each time the SD card is mounted and files modified, ``/etc/fake-hwtime`` or
+``/etc/fake-hwclock.data`` needs to be updated with current date and time in
+``YYYY-MM-DD HH:MM:SS`` format. Otherwise the system may experience some
+timing-related issues (and fails to mount the root filesystem).
+This can be done with::
+
+    date '+%Y-%m-%d %H:%M:%S' > /etc/fake-hwclock.data
 
 You may run the system on the SD card in QEMU if you don't have an HDMI screen.
 http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/ describes how to
