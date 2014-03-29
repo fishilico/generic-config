@@ -71,6 +71,14 @@ First setup the listener (``192.0.2.1``) to accept connections from the sender
 
     load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1;192.0.2.42
 
+Or here is the unsecure configuration::
+
+    load-module module-native-protocol-tcp listen=0.0.0.0 auth-anonymous=1
+
 Then configure the sender to send its audio output. ``/etc/pulse/default.pa``::
 
     load-module module-rtp-send destination=192.0.2.1 port=16001
+
+To sync the configuration of PulseAudio with X11, there may be needed to run::
+
+    pax11publish -e
