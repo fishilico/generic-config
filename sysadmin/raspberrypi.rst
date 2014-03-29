@@ -105,6 +105,15 @@ Raspberry Pi, model B::
     Revision        : 000f
     Serial          : 00000000eaa46896
 
+    $ cat /proc/cmdline | anonymize_macaddr | fmt -80
+    dma.dmachans=0x7f35 bcm2708_fb.fbwidth=656
+    bcm2708_fb.fbheight=416 bcm2708.boardrev=0xf bcm2708.serial=0xeaXXXXXX
+    smsc95xx.macaddr=B8:27:EB:XX:XX:XX sdhci-bcm2708.emmc_clock_freq=100000000
+    vc_mem.mem_base=0x1ec00000 vc_mem.mem_size=0x20000000  dwc_otg.lpm_enable=0
+    console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2
+    rootfstype=ext4 elevator=deadline rootwait
+
+
     $ cat /proc/modules
     ipv6 278186 32 - Live 0x00000000
     snd_bcm2835 16304 0 - Live 0x00000000
@@ -117,8 +126,9 @@ Raspberry Pi, model B::
     leds_gpio 2235 0 - Live 0x00000000
     led_class 3562 1 leds_gpio, Live 0x00000000
 
-    $ gcc -E -v - < /dev/null 2>&1 |grep cc1
-    /usr/lib/gcc/arm-linux-gnueabihf/4.6/cc1 -E -quiet -v -imultilib . -imultiarch arm-linux-gnueabihf - -march=armv6 -mfloat-abi=hard -mfpu=vfp
+    $ gcc -E -v - < /dev/null 2>&1 | grep cc1 | fmt -80
+    /usr/lib/gcc/arm-linux-gnueabihf/4.6/cc1 -E -quiet -v -imultilib
+    . -imultiarch arm-linux-gnueabihf - -march=armv6 -mfloat-abi=hard -mfpu=vfp
 
     $ cat /proc/self/maps |tail -n2   # With XXXX where ALSR takes place
     beXXX000-beXXX000 rw-p 00000000 00:00 0          [stack]
@@ -133,3 +143,5 @@ Raspberry Pi, model B::
     ../../devices/platform/bcm2708_usb/usb1/1-1/1-1.1/1-1.1:1.0/net/eth0
     $ readlink /sys/devices/platform/bcm2708_usb/usb1/1-1/1-1.1/1-1.1:1.0/driver
     ../../../../../../../bus/usb/drivers/smsc95xx
+    $ dmesg | grep eth0 | head -n1 | tail -c+16 | anonymize_macaddr
+    smsc95xx 1-1.1:1.0: eth0: register 'smsc95xx' at usb-bcm2708_usb-1.1, smsc95xx USB 2.0 Ethernet, b8:27:eb:XX:XX:XX
