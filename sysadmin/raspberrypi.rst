@@ -104,18 +104,19 @@ Raspberry Pi, model B.
     armv6l
 
     $ cat /proc/cpuinfo
-    Processor       : ARMv6-compatible processor rev 7 (v6l)
-    BogoMIPS        : 697.95
-    Features        : swp half thumb fastmult vfp edsp java tls
+    processor   : 0
+    model name  : ARMv6-compatible processor rev 7 (v6l)
+    BogoMIPS    : 2.00
+    Features    : swp half thumb fastmult vfp edsp java tls
     CPU implementer : 0x41
     CPU architecture: 7
-    CPU variant     : 0x0
-    CPU part        : 0xb76
+    CPU variant : 0x0
+    CPU part    : 0xb76
     CPU revision    : 7
 
-    Hardware        : BCM2708
-    Revision        : 000f
-    Serial          : 00000000XXXXXXXX
+    Hardware    : BCM2708
+    Revision    : 000f
+    Serial      : 00000000XXXXXXXX
 
     $ cat /proc/cmdline | fmt -80
     dma.dmachans=0x7f35 bcm2708_fb.fbwidth=656
