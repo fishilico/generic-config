@@ -130,7 +130,7 @@ Raspberry Pi, model B::
     /usr/lib/gcc/arm-linux-gnueabihf/4.6/cc1 -E -quiet -v -imultilib
     . -imultiarch arm-linux-gnueabihf - -march=armv6 -mfloat-abi=hard -mfpu=vfp
 
-    $ cat /proc/self/maps |tail -n2   # With XXXX where ALSR takes place
+    $ cat /proc/self/maps | tail -n2   # With XXXX where ASLR takes place
     beXXX000-beXXX000 rw-p 00000000 00:00 0          [stack]
     ffff0000-ffff1000 r-xp 00000000 00:00 0          [vectors]
 
