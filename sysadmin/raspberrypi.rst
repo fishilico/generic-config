@@ -88,9 +88,15 @@ Some useful system information
 Here are the outputs of several commands to retrieve system information on a
 Raspberry Pi, model B.
 
-* As some people consider a Serial Number and a MAC address as being sensitive information, each potential sensitive hexadecimal byte has been replaced here by ``XX``.
-* Information about used kernel is not relevant here. So these outputs don't include kernel version and kernel pointers have been protected (``sysctl -w kernel.kptr_restrict=2``).
-* Address space is randomized (ASLR on, ``sysctl -w kernel.randomize_va_space=2``) so when dumping ``/proc/*/maps``, random parts of addresses have been replaced by ``X``.
+* As some people consider a Serial Number and a MAC address as being sensitive
+  information, each potential sensitive hexadecimal byte has been replaced here
+  by ``XX``.
+* Information about used kernel is not relevant here. So these outputs don't
+  include kernel version and kernel pointers have been protected
+  (``sysctl -w kernel.kptr_restrict=2``).
+* Address space is randomized (ALSR, ``sysctl -w kernel.randomize_va_space=2``)
+  so when dumping ``/proc/*/maps``, random parts of addresses have been
+  replaced by ``X``.
 
 ::
 
