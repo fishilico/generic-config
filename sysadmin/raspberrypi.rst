@@ -86,7 +86,13 @@ Some useful system information
 ------------------------------
 
 Here are the outputs of several commands to retrieve system information on a
-Raspberry Pi, model B::
+Raspberry Pi, model B.
+
+* As some people consider a Serial Number and a MAC address as being sensitive information, each potential sensitive hexadecimal byte has been replaced here by ``XX``.
+* Information about used kernel is not relevant here. So these outputs don't include kernel version and kernel pointers have been protected (``sysctl -w kernel.kptr_restrict=2``).
+* Address space is randomized (ASLR on, ``sysctl -w kernel.randomize_va_space=2``) so when dumping ``/proc/*/maps``, random parts of addresses have been replaced by ``X``.
+
+::
 
     $ uname -m
     armv6l
@@ -103,12 +109,12 @@ Raspberry Pi, model B::
 
     Hardware        : BCM2708
     Revision        : 000f
-    Serial          : 00000000eaa46896
+    Serial          : 00000000XXXXXXXX
 
-    $ cat /proc/cmdline | anonymize_macaddr | fmt -80
+    $ cat /proc/cmdline | fmt -80
     dma.dmachans=0x7f35 bcm2708_fb.fbwidth=656
-    bcm2708_fb.fbheight=416 bcm2708.boardrev=0xf bcm2708.serial=0xeaXXXXXX
-    smsc95xx.macaddr=B8:27:EB:XX:XX:XX sdhci-bcm2708.emmc_clock_freq=100000000
+    bcm2708_fb.fbheight=416 bcm2708.boardrev=0xf bcm2708.serial=0xXXXXXXXX
+    smsc95xx.macaddr=B8:27:XX:XX:XX:XX sdhci-bcm2708.emmc_clock_freq=100000000
     vc_mem.mem_base=0x1ec00000 vc_mem.mem_size=0x20000000  dwc_otg.lpm_enable=0
     console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2
     rootfstype=ext4 elevator=deadline rootwait
@@ -130,7 +136,7 @@ Raspberry Pi, model B::
     /usr/lib/gcc/arm-linux-gnueabihf/4.6/cc1 -E -quiet -v -imultilib
     . -imultiarch arm-linux-gnueabihf - -march=armv6 -mfloat-abi=hard -mfpu=vfp
 
-    $ cat /proc/self/maps | tail -n2   # With XXXX where ASLR takes place
+    $ cat /proc/self/maps | tail -n2
     beXXX000-beXXX000 rw-p 00000000 00:00 0          [stack]
     ffff0000-ffff1000 r-xp 00000000 00:00 0          [vectors]
 
@@ -143,5 +149,5 @@ Raspberry Pi, model B::
     ../../devices/platform/bcm2708_usb/usb1/1-1/1-1.1/1-1.1:1.0/net/eth0
     $ readlink /sys/devices/platform/bcm2708_usb/usb1/1-1/1-1.1/1-1.1:1.0/driver
     ../../../../../../../bus/usb/drivers/smsc95xx
-    $ dmesg | grep eth0 | head -n1 | tail -c+16 | anonymize_macaddr
-    smsc95xx 1-1.1:1.0: eth0: register 'smsc95xx' at usb-bcm2708_usb-1.1, smsc95xx USB 2.0 Ethernet, b8:27:eb:XX:XX:XX
+    $ dmesg | grep eth0 | head -n1 | tail -c+16
+    smsc95xx 1-1.1:1.0: eth0: register 'smsc95xx' at usb-bcm2708_usb-1.1, smsc95xx USB 2.0 Ethernet, b8:27:XX:XX:XX:XX
