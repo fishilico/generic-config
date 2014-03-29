@@ -125,7 +125,6 @@ Raspberry Pi, model B.
     console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2
     rootfstype=ext4 elevator=deadline rootwait
 
-
     $ cat /proc/modules
     ipv6 278186 32 - Live 0x00000000
     snd_bcm2835 16304 0 - Live 0x00000000
@@ -157,3 +156,33 @@ Raspberry Pi, model B.
     ../../../../../../../bus/usb/drivers/smsc95xx
     $ dmesg | grep eth0 | head -n1 | tail -c+16
     smsc95xx 1-1.1:1.0: eth0: register 'smsc95xx' at usb-bcm2708_usb-1.1, smsc95xx USB 2.0 Ethernet, b8:27:XX:XX:XX:XX
+
+    $ lshw | fmt -80 -s
+    raspberrypi
+        description: Computer
+        width: 32 bits
+      *-core
+           description: Motherboard
+           physical id: 0
+         *-memory
+              description: System memory
+              physical id: 0
+              size: 438MiB
+         *-cpu
+              physical id: 1
+              bus info: cpu@0
+              size: 700MHz
+              capacity: 700MHz
+              capabilities: cpufreq
+      *-network
+           description: Ethernet interface
+           physical id: 1
+           logical name: eth0
+           serial: b8:27:XX:XX:XX:XX
+           size: 100Mbit/s
+           capacity: 100Mbit/s
+           capabilities: ethernet physical tp mii 10bt 10bt-fd 100bt 100bt-fd
+           autonegotiation
+           configuration: autonegotiation=on broadcast=yes driver=smsc95xx
+           driverversion=22-Aug-2005 duplex=full firmware=smsc95xx USB 2.0
+           Ethernet ip=192.0.2.42 link=yes multicast=yes port=MII speed=100Mbit/s
