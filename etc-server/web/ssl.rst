@@ -1,5 +1,5 @@
-SSL configuration on an Apache server
-=====================================
+SSL configuration on a web server
+=================================
 
 Many websites describe how to correctly set up a SSL/TLS web server with a
 secure configuration. Here is a list of some that I've found:
