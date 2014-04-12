@@ -181,3 +181,28 @@ The parent directory now contains the following files (here on a 64-bit system):
 
 Now you would directly install the package using ``dpkg -i`` or upload it to
 a Debian package repository or wherever you like.
+
+
+Test patches in git code with a clean package
+---------------------------------------------
+
+Let's say you're working on ``mysoftware`` (add features, fix bugs...) and you
+need to test it "for real" on your Debian system. To make the installation
+process really looks like a common installation, the best way is to build a
+package out of the current development version. Let's suppose ``mysoftware``
+uses git to manage its code. Here is how to build and install such test package:
+
+* First, update ``debian/`` directory (new entry in ``debian/Changelog``, no
+  patches...).
+  For the sake of the example, let's say your testing version is ``0.99-1``.
+* Create the original files archive::
+
+    git archive --prefix=mysoftware_0.99/ -o ../mysoftware_0.99.orig.tar.gz master
+
+* Build the package (without signing anything)::
+
+    debuild -uc -us
+
+* Install it::
+
+    sudo dpkg -i ../mysoftware_0.99-1_*.deb
