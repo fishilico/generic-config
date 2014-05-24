@@ -44,77 +44,30 @@ system with calendar time events. ArchLinux provides on its wiki some config
 files to replace common cron scripts:
 https://wiki.archlinux.org/index.php/Systemd/cron_functionality
 
-First, create ``/etc/systemd/system/timer-daily.timer``::
+Since April 2014 the timers are included and enabled by default, with timer
+files in ``/usr/lib/systemd/system`` and symlinks in
+``/usr/lib/systemd/system/multi-user.target.wants/``. To disable some timers
+which do many disk writes, an overriding unit needs to be created.
+
+``/etc/systemd/system/disabled-timer.service``::
 
     [Unit]
-    Description=Daily Timer
-
-    [Timer]
-    OnBootSec=10min
-    OnUnitActiveSec=1d
-    Unit=timer-daily.target
-
-    [Install]
-    WantedBy=basic.target
-
-and ``/etc/systemd/system/timer-daily.target``::
-
-    [Unit]
-    Description=Daily Timer Target
-    StopWhenUnneeded=yes
-
-You may also create ``timer-hourly`` and ``timer-weekly`` files with 1h and 1w
-durations, and also with different ``OnBootSec`` values.
-
-Then, add some events in ``/etc/systemd/system/timer-daily.target.wants``.
-
-- Logrotate::
-
-    # /etc/systemd/system/timer-daily.target.wants/logrotate.service
-    [Unit]
-    Description=Rotate Logs
-
-    [Service]
-    Nice=19
-    IOSchedulingClass=2
-    IOSchedulingPriority=7
-    ExecStart=/usr/bin/logrotate /etc/logrotate.conf
-
-- Update man-db::
-
-    # /etc/systemd/system/timer-daily.target.wants/man-db-update.service
-    [Unit]
-    Description=Update man-db
-
-    [Service]
-    Nice=19
-    IOSchedulingClass=2
-    IOSchedulingPriority=7
-    ExecStart=/usr/bin/mandb --quiet
-
-- Update mlocate database::
-
-    # /etc/systemd/system/timer-daily.target.wants/mlocate-update.service
-    [Unit]
-    Description=Update mlocate database
-
-    [Service]
-    Nice=19
-    IOSchedulingClass=2
-    IOSchedulingPriority=7
-    ExecStart=/usr/bin/updatedb
-
-- Verify integrity of password and group files::
-
-    # /etc/systemd/system/timer-daily.target.wants/verify-shadow.service
-    [Unit]
-    Description=Verify integrity of password and group files
+    Description=Unit to be able to disable timers
 
     [Service]
     Type=oneshot
-    ExecStart=/usr/bin/pwck -r
-    ExecStart=/usr/bin/grpck -r
+    ExecStart=/usr/bin/true
 
-Finally, start the timer::
 
-    systemctl enable timer-daily.timer && systemctl start timer-daily.timer
+``/etc/systemd/system/updatedb.timer``::
+
+    [Unit]
+    Description=Disabled locate database update
+
+    [Timer]
+    #OnCalendar=daily
+    #Persistent=true
+    #OnBootSec=10min
+    #OnUnitActiveSec=1d
+    OnCalendar=monthly
+    Unit=disabled-timer.service
