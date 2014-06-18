@@ -53,6 +53,9 @@ def build_rawrst_dir(dirpath):
         for filename in files:
             if filename.lower().endswith(('~', '.bak', '.rst')):
                 continue
+            # Ignore files already associated with a .rst
+            if os.path.exists(os.path.join(root, filename + '.rst')):
+                continue
             build_rawrst_file(root, filename)
 
 
