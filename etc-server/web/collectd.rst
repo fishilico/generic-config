@@ -23,15 +23,32 @@ straightforward and the wiki helps understanding the few tricky fields
 
 Here is a basic configuration::
 
+    LoadPlugin syslog
+    <Plugin syslog>
+        LogLevel info
+    </Plugin>
+
     LoadPlugin cpu
     LoadPlugin df
     LoadPlugin disk
     LoadPlugin interface
+    #LoadPlugin irq
     LoadPlugin load
     LoadPlugin memory
     LoadPlugin rrdtool
-    LoadPlugin syslog
+    #LoadPlugin sensors
 
+    <Plugin df>
+        Device "rootfs"
+        # MountPoint "/home"
+        FSType "cgroup"
+        FSType "devtmpfs"
+        FSType "tmpfs"
+        IgnoreSelected true
+        ReportByDevice true
+        ReportReserved true
+        ReportInodes true
+    </Plugin>
     <Plugin interface>
         # Don't collect statistitics about loopback interface
         Interface "lo"
@@ -39,9 +56,6 @@ Here is a basic configuration::
     </Plugin>
     <Plugin rrdtool>
         DataDir "/var/lib/collectd/rrd/"
-    </Plugin>
-    <Plugin syslog>
-        LogLevel info
     </Plugin>
 
 Network setup
