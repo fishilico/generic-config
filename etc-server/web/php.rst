@@ -263,3 +263,26 @@ script::
     rewrite ^/path(/.*)$ /page.php$1 last;
 
 Module doc: http://nginx.org/en/docs/http/ngx_http_rewrite_module.html
+
+
+Lighttpd configuration
+----------------------
+
+Like Nginx, Lighttpd can use PHP through a CGI or FastCGI application like
+PHP-FPM.  Here are some documentation links:
+
+* http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_ConfigurationOptions#mod_fastcgi-fastcgi
+* https://wiki.archlinux.org/index.php/lighttpd#Using_php-fpm
+
+And here is what ``/etc/lighttpd/lighttpd.conf`` looks like, once it is linked
+with PHP-FPM::
+
+    server.modules += ( "mod_fastcgi" )
+    index-file.names += ( "index.php" )
+    fastcgi.server += (
+        ".php" => ("localhost" => (
+            "socket" => "/var/run/php5-fpm.sock",
+            "broken-scriptfilename" => "enable"
+        ))
+    )
+    alias.url += ( "/my-php-pages" => "/srv/http/my-php-pages" )
