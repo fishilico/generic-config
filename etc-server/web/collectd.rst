@@ -37,6 +37,7 @@ Here is a basic configuration::
     LoadPlugin memory
     LoadPlugin rrdtool
     #LoadPlugin sensors
+    LoadPlugin swap
 
     <Plugin df>
         Device "rootfs"
@@ -45,7 +46,7 @@ Here is a basic configuration::
         FSType "devtmpfs"
         FSType "tmpfs"
         IgnoreSelected true
-        ReportByDevice true
+        ReportByDevice false
         ReportReserved true
         ReportInodes true
     </Plugin>

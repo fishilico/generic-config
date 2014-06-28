@@ -1,5 +1,5 @@
-``etc-server/dhcp/dnsmasq.conf``
-================================
+``etc-server/dhcp/dnsmasq.conf`` and doc
+========================================
 
 Full example configuration file for dnsmasq can be downloaded at:
 http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=blob;f=dnsmasq.conf.example
