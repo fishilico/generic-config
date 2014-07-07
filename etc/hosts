@@ -26,7 +26,7 @@ ff02::fb        ip6-mdns
 
 # Blacklist some advertisement providers with DNS
 # To follow every DNS query on Linux, you can use a command such as:
-#   tshark -n udp dst port 53
+#   tshark -n udp dst port 53
 0.0.0.1 ad.doubleclick.net
 0.0.0.1 googleads.g.doubleclick.net
 0.0.0.1 pubads.g.doubleclick.net

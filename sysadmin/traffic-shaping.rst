@@ -18,8 +18,8 @@ following command (``tc`` means "Traffic Controller")::
 By default it will display something like::
 
     qdisc pfifo_fast 0: root refcnt 2 bands 3 priomap  1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1
-     Sent 42000 bytes 1337 pkt (dropped 0, overlimits 0 requeues 0) 
-     backlog 0b 0p requeues 0 
+     Sent 42000 bytes 1337 pkt (dropped 0, overlimits 0 requeues 0)
+     backlog 0b 0p requeues 0
 
 At any time, to restore this default configuration (and remove all rules), run::
 
@@ -74,9 +74,9 @@ command with ``iptables`` power::
 To show active rules::
 
     # tc -s -d class show dev eth0
-    class htb 1:10 root prio 0 quantum 51200 rate 4096Kbit ceil 6144Kbit burst 1599b/1 mpu 0b overhead 0b cburst 1598b/1 mpu 0b overhead 0b level 0 
-     Sent 42000 bytes 1337 pkt (dropped 0, overlimits 0 requeues 0) 
-     rate 400bit 0pps backlog 0b 0p requeues 0 
+    class htb 1:10 root prio 0 quantum 51200 rate 4096Kbit ceil 6144Kbit burst 1599b/1 mpu 0b overhead 0b cburst 1598b/1 mpu 0b overhead 0b level 0
+     Sent 42000 bytes 1337 pkt (dropped 0, overlimits 0 requeues 0)
+     rate 400bit 0pps backlog 0b 0p requeues 0
      lended: 1337 borrowed: 0 giants: 0
      tokens: 44738 ctokens: 29819
 
@@ -101,11 +101,11 @@ After that, statistics commands display this::
     qdisc ingress ffff: dev eth0 parent ffff:fff1 ----------------
 
     # tc filter show dev eth0 parent ffff:
-    filter protocol ip pref 50 u32 
-    filter protocol ip pref 50 u32 fh 800: ht divisor 1 
-    filter protocol ip pref 50 u32 fh 800::800 order 2048 key ht 800 bkt 0 flowid :1 
+    filter protocol ip pref 50 u32
+    filter protocol ip pref 50 u32 fh 800: ht divisor 1
+    filter protocol ip pref 50 u32 fh 800::800 order 2048 key ht 800 bkt 0 flowid :1
       match 00000000/00000000 at 12
-            action order 0:  police 0x1 rate 800Kbit burst 10Kb mtu 2Kb action drop overhead 0b 
+            action order 0:  police 0x1 rate 800Kbit burst 10Kb mtu 2Kb action drop overhead 0b
     ref 1 bind 1
 
 To delete everything related to inbound packets policy on ``eth0``, use::

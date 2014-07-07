@@ -12,21 +12,21 @@
 ##
 ## Groups of machines. These may include host names (optionally with wildcards),
 ## IP addresses, network numbers or netgroups.
-# Host_Alias	WEBSERVERS = www1, www2, www3
+# Host_Alias WEBSERVERS = www1, www2, www3
 
 ##
 ## User alias specification
 ##
 ## Groups of users.  These may consist of user names, uids, Unix groups,
 ## or netgroups.
-# User_Alias	ADMINS = millert, dowdy, mikef
+# User_Alias ADMINS = millert, dowdy, mikef
 
 ##
 ## Cmnd alias specification
 ##
 ## Groups of commands.  Often used to group related commands together.
-# Cmnd_Alias	PROCESSES = /usr/bin/nice, /bin/kill, /usr/bin/renice, \
-# 			    /usr/bin/pkill, /usr/bin/top
+# Cmnd_Alias PROCESSES = /usr/bin/nice, /bin/kill, /usr/bin/renice, \
+#                 /usr/bin/pkill, /usr/bin/top
 
 ##
 ## Defaults specification
@@ -95,7 +95,7 @@ root ALL=(ALL) ALL
 # %wheel ALL=(ALL) NOPASSWD: ALL
 
 ## Uncomment to allow members of group sudo to execute any command
-# %sudo	ALL=(ALL) ALL
+# %sudo ALL=(ALL) ALL
 
 ## Uncomment to allow any user to run sudo if they know the password
 ## of the user they are running the command as (root by default).
