@@ -182,3 +182,9 @@ is done by creating ``conf/config.local.php`` with::
 
     <?php
     $CONFIG['graph_type'] = 'canvas';
+
+    // Here are some other useful options
+    $CONFIG['graph_type'] = 'hybrid';
+    $CONFIG['rrd_fetch_method'] = 'async';
+    $CONFIG['overview'] = array('load', 'memory', 'swap', 'sensors', 'df', 'interface');
+    $CONFIG['time_range']['default'] = 7200; // 2 hours
