@@ -9,6 +9,8 @@ Documentation:
 * http://linux-ip.net/articles/Traffic-Control-HOWTO/
 * http://lartc.org/wondershaper/ (scripts to do QoS on ADSL)
 * https://www.kernel.org/doc/Documentation/cgroups/net_cls.txt (filter with cgroup)
+* http://lartc.org/manpages/tc.html (official manpage)
+* http://lartc.org/howto/lartc.qdisc.filters.html (tc filters)
 
 First, to dump current traffic shaping rules on interface ``eth0``, use the
 following command (``tc`` means "Traffic Controller")::
@@ -57,9 +59,9 @@ HTTP server outbound traffic shaping
 ------------------------------------
 
 When running an HTTP server on TCP port 80, it is possible to throttle the
-outbound traffic with ``tc``::
+outbound traffic with ``tc-htb`` (Hierarchy Token Bucket)::
 
-    tc qdisc add dev eth0 root handle 1:0 htb default 10
+    tc qdisc add dev eth0 root handle 1:0 htb default 1
     tc class add dev eth0 parent 1:0 classid 1:10 htb rate 512kbps ceil 768kbps prio 0
     tc filter add dev eth0 parent 1:0 protocol ip match ip sport 80 0xffff flowid 1:10
 
@@ -82,6 +84,22 @@ To show active rules::
 
     # tc filter show dev eth0
     filter parent 1: protocol ip pref 49152 fw
+
+It is also possible to filter by IP address::
+
+    tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 192.0.2.42/32 flowid 1:1
+    tc filter add dev eth0 parent 1:0 protocol ipv6 prio 2 u32 match ip6 dst 2001:db8::beef/128 flowid 1:1
+    tc filter add dev eth0 parent 1:0 protocol ip prio 3 u32 match ip src 192.0.2.36/32 flowid 1:2
+    tc filter add dev eth0 parent 1:0 protocol ipv6 prio 4 u32 match ip6 src 2001:db8::cafe/128 flowid 1:2
+
+If you happen to define filters for IPv4 and IPv6 with the same priority, the
+kernel rejects the request with a mysterious message::
+
+    RTNETLINK answers: Invalid argument
+    We have an error talking to the kernel
+
+When such a thing happens, you only need to use a different "prio" argument for
+your IPv4 and IPv6 filters.
 
 
 Make downloads slow
