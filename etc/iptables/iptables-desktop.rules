@@ -133,12 +133,15 @@
 -4 -A OUTPUT -d 255.255.255.255/32 -j DROP
 -4 -A OUTPUT -m conntrack --ctstate INVALID -j DROP
 
+# Refuse to send emails direcly through SMTP. Use SMTPS (port 587) to send mail.
+-A OUTPUT -p tcp -m tcp --dport 25 -j REJECT
+
 -A OUTPUT -p tcp -m tcp --sport 32768:61000 -j ACCEPT
 -A OUTPUT -p udp -m udp --sport 32768:61000 -j ACCEPT
 -A OUTPUT -p udp -m udp --sport 1024:65535 --dport 53 -j ACCEPT
 
 #-A OUTPUT -p tcp -m multiport --sports 22,80,443 -j ACCEPT
--A OUTPUT -p udp -m udp --sport 123 --dport 123 -j ACCEPT
+-A OUTPUT -p udp -m udp --dport 123 -j ACCEPT
 
 -4 -A OUTPUT -d 224.0.0.1/32 -p igmp -j ACCEPT
 -4 -A OUTPUT -d 224.0.0.2/32 -p igmp -j ACCEPT
