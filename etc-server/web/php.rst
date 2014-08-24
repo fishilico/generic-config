@@ -253,6 +253,26 @@ in ``/etc/nginx/fastcgi_params``::
     # PHP only, required if PHP was built with --enable-force-cgi-redirect
     fastcgi_param   REDIRECT_STATUS         200;
 
+PHP can also be enabled only in a specific subdirectory of a location::
+
+    server {
+        [...]
+        # The trailing slash makes nginx redirect "/subdir" to "/subdir/"
+        location /subdir/ {
+            alias /var/www/localhost/htdocs/specialPHPdir/;
+            location ~ ^(/subdir)(.+?\.php)(/.*)?$ {
+                try_files $2 =404;
+                include fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME $document_root$2;
+                fastcgi_param SCRIPT_NAME $1$2;
+                fastcgi_param PATH_INFO $3;
+                fastcgi_param DOCUMENT_URI $1$2;
+                fastcgi_pass unix:/var/run/php5-fpm.sock;
+            }
+        }
+    }
+
+
 Rewrite directive
 ~~~~~~~~~~~~~~~~~
 
