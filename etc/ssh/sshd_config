@@ -11,3 +11,14 @@ UsePAM yes
 X11Forwarding no
 UseDNS yes
 PermitTunnel no
+
+# This configuration jails users in sftpusers group to only use sftp.
+# Their home directory must belong to root, otherwise sshd complains with:
+#    fatal: bad ownership or modes for chroot directory "/home/user"
+# Documentation: https://wiki.archlinux.org/index.php/SFTP_chroot
+Subsystem sftp internal-sftp
+Match Group sftpusers
+   ChrootDirectory /home/%u
+   ForceCommand internal-sftp
+   AllowTcpForwarding no
+   X11Forwarding no
