@@ -31,7 +31,8 @@ example when creating a new website, three commands are needed:
 
     CREATE USER 'newsite'@'localhost' IDENTIFIED BY 'a-random-password';
     CREATE DATABASE newsite DEFAULT CHARACTER SET 'utf8';
-    GRANT SELECT, INSERT, DELETE, UPDATE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES ON newsite.* TO 'newsite'@'localhost'
+    GRANT SELECT, INSERT, DELETE, UPDATE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES ON newsite.* TO 'newsite'@'localhost';
+    FLUSH PRIVILEGES;
 
 The following command changes the password assiociated to the user:
 
@@ -43,12 +44,12 @@ To list all users, you need SELECT access to ``mysql`` database:
 
 .. code-block:: mysql
 
-    SELECT User, Host FROM mysql.user
+    SELECT User, Host FROM mysql.user;
 
 The permissions of a specific user can be seen with ``SHOW GRANTS``.  Here is
 an example::
 
-    mysql> SHOW GRANTS FOR root@localhost
+    mysql> SHOW GRANTS FOR root@localhost;
     +---------------------------------------------------------------------------------------------------------------+
     | Grants for root@localhost                                                                                     |
     +---------------------------------------------------------------------------------------------------------------+
