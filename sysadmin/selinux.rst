@@ -45,12 +45,14 @@ Install a strict policy
 
 On Debian by default a targeted policy is installed, daemons are confined but
 not users. To make users confined, you need to remove the unconfined module.
-To do this::
+To do this:
+
+.. code-block:: sh
 
     # Set up staff accounts
     semanage login -a -s staff_u userlogin
 
-    # Confine user
+    # Confine other users
     semanage login -m -s user_u -r s0 __default__
 
     # Map root to root instead of unconfined_u
@@ -88,16 +90,16 @@ If ``mount`` shows::
 
     system_u:object_r:file_t:SystemLow /tmp
 
-... the filesystem is incorrectly labeled.
+... ``/tmp`` is incorrectly labeled ``file_t`` instead of ``tmp_t``.
 
-To fix this bug, you need to restore the context of the ``/tmp`` folder of the
-root filesystem to ``system_u:object_r:tmpfs_t:s0``::
+To fix the label, you need to restore the context of the ``/tmp`` folder of the
+root filesystem to ``system_u:object_r:tmp_t:s0``::
 
     mount --bind / /mnt
     setfiles -r /mnt /etc/selinux/default/contexts/files/file_contexts /mnt
     umount /mnt
 
-Also make sure your ``/etc/fstab`` contains this line::
+It is also possible to use such a line in ``/etc/fstab``::
 
     tmpfs /tmp tmpfs nodev,nosuid,rootcontext=system_u:object_r:tmp_t:s0 0 0
 
@@ -105,7 +107,9 @@ Also make sure your ``/etc/fstab`` contains this line::
 Configure SELinux booleans
 --------------------------
 
-Here are some booleans I use is almost all my SELinux system::
+Here are some booleans I use is almost all my SELinux systems:
+
+.. code-block:: sh
 
     # Allow users to send ping
     setsebool -P user_ping on
@@ -145,7 +149,9 @@ Generate interface file for ``audit2allow -R``
 by ``sepolgen-ifgen``. However, as the ``-p`` parameter of this command is
 buggy, your interface files need to be located in the ``default`` policy, ie.
 in ``/usr/share/selinux/default/include`` directory. For example, add a symlink
-``/usr/share/selinux/default`` to your policy directory::
+``/usr/share/selinux/default`` to your policy directory:
+
+.. code-block:: sh
 
     . /etc/selinux/config
     cd /usr/share/selinux && ln -s $SELINUXTYPE default
@@ -159,89 +165,6 @@ To reload modules, go to ``/usr/share/selinux/$(policyname)`` and run::
 
     semodule --verbose -b base.pp -s $(basename $(pwd)) -n -i module1.pp -i ...
 
-Here are the modules from the Reference policy which are active on my Debian desktop system:
-
-    accountsd
-    apache
-    application
-    apt
-    authlogin
-    avahi
-    clock
-    consolekit
-    cron
-    dbus
-    devicekit
-    dhcp
-    dmidecode
-    dnsmasq
-    dpkg
-    fstools
-    ftp
-    getty
-    git
-    gpg
-    gpm
-    hddtemp
-    hostname
-    hotplug
-    inetd
-    init
-    iptables
-    kerberos
-    lda
-    libraries
-    loadkeys
-    locallogin
-    logging
-    logrotate
-    lpd
-    lvm
-    miscfiles
-    modutils
-    mount
-    mozilla
-    mpd
-    mplayer
-    mta
-    netlabel
-    netutils
-    networkmanager
-    ntp
-    policykit
-    postfix
-    postgresql
-    ptchown
-    pulseaudio
-    pythonsupport
-    radvd
-    remotelogin
-    rsync
-    rtkit
-    screen
-    selinuxutil
-    setrans
-    ssh
-    staff
-    storage
-    sudo
-    sysadm
-    sysnetwork
-    systemd
-    timidity
-    tzdata
-    udev
-    unprivuser
-    usbmodules
-    usbmuxd
-    userdomain
-    usermanage
-    vbetool
-    wireshark
-    wm
-    xscreensaver
-    xserver
-
 
 Allow ``staff_u`` to read ``/root`` when running ``sudo``
 ---------------------------------------------------------
@@ -253,9 +176,13 @@ constraint or (much sumpler) change the user associated to ``root``::
 
     chcon -u staff_u /root -R
 
+Alternatively it is possible to consider root as an usual staff user::
 
-Bugs still present in September 2013
-------------------------------------
+    semanage login -m -s staff_u root
+
+
+Bugs still present in October 2014
+----------------------------------
 
 In ArchLinux, ``/sys`` is not labelled correctly on boot. It needs to be labeled
 by systemd using ``tmpfiles.d`` configuration. Therefore you need to add this in
@@ -265,14 +192,5 @@ by systemd using ``tmpfiles.d`` configuration. Therefore you need to add this in
 
 For further information, please read:
 
-- https://bugzilla.redhat.com/show_bug.cgi?id=767355
-- http://www.spinics.net/lists/selinux/msg11684.html
-
-
-In Archlinux, ``dbus`` package is not compiled with selinux support. A simple
-way to get it is to recompile the package on an SELinux system
-(in permissive mode)::
-
-    yaourt -G dbus
-    cd dbus
-    makepkg -si
+* https://bugzilla.redhat.com/show_bug.cgi?id=767355
+* http://www.spinics.net/lists/selinux/msg11684.html
