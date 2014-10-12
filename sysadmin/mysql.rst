@@ -85,6 +85,12 @@ folder, in ``~/.my.cnf``.  Such file looks like this::
     password=password-for-mysqluser
     database=mydb
 
+To dump a database, the command is ``mysqldump``.  Here are some examples:
+
+.. code-block:: sh
+
+    mysqldump --lock-tables database mytable
+    mysqldump --single-transaction --add-drop-table database_with_innoDB
 
 List of permissions
 -------------------
