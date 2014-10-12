@@ -71,3 +71,9 @@ which do many disk writes, an overriding unit needs to be created.
     #OnUnitActiveSec=1d
     OnCalendar=monthly
     Unit=disabled-timer.service
+
+Another way may consist in masking the service units, but it did not work well
+back in spring 2014::
+
+    $ systemctl mask updatedb
+    Created symlink from /etc/systemd/system/updatedb.service to /dev/null.
