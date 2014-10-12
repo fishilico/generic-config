@@ -4,19 +4,39 @@ Some notes about my SELinux installation
 This document doesn't document how to install SELinux. If you want to install
 it, please read one of these websites:
 
-- https://wiki.debian.org/SELinux
-- https://wiki.gentoo.org/wiki/SELinux/Tutorials
-- https://fedoraproject.org/wiki/SELinux
+* https://wiki.debian.org/SELinux
+* https://wiki.gentoo.org/wiki/SELinux/Tutorials (an excellent tutorial for Gentoo)
+* https://fedoraproject.org/wiki/SELinux
 
-Other websites useful to be bookmarked:
+To develop the SELinux policy, here are the relevant git repositories:
 
-- http://oss.tresys.com/docs/refpolicy/api/ (reference policy API)
-- http://oss.tresys.com/projects/refpolicy/log/ (git log)
-- https://wiki.gentoo.org/wiki/Project:SELinux/Development
-- http://www.selinuxproject.org/page/ObjectClassesPerms
-- http://git.overlays.gentoo.org/gitweb/?p=proj/hardened-refpolicy.git;a=summary
+* https://github.com/TresysTechnology/refpolicy/commits/master (Reference Policy)
+* https://github.com/TresysTechnology/refpolicy-contrib/commits/master
+  (refpol contrib modules)
+* http://git.overlays.gentoo.org/gitweb/?p=proj/hardened-refpolicy.git;a=summary
+  (Gentoo)
+* https://git.fedorahosted.org/cgit/selinux-policy.git/log/ (Fedora)
+* http://anonscm.debian.org/cgit/selinux/refpolicy.git/log/ (Debian)
 
-This document will instead focus on some pitfalls I've encountered since
+And here is some documentation related with writing the policy:
+
+* http://oss.tresys.com/docs/refpolicy/api/ (reference policy API)
+* http://www.selinuxproject.org/page/ObjectClassesPerms
+  (SELinux Object Classes and Permissions Reference)
+* https://wiki.gentoo.org/wiki/Project:SELinux/Development (Gentoo doc)
+* http://wiki.gentoo.org/wiki/Project:SELinux/CodingStyle
+  (Gentoo coding style for SELinux)
+
+And while listing websites, here are some more:
+
+* https://people.redhat.com/sgrubb/audit/visualize/index.html
+  (Audit Data Visualization)
+* https://github.com/SELinuxProject/selinux
+  (SELinux userland libraries and tools repository)
+* http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html
+  (The SELinux Notebook - The Foundations)
+
+The present document will focus on some pitfalls I've encountered since
 installing SELinux on systems running Debian or ArchLinux.
 
 
