@@ -15,7 +15,7 @@ To develop the SELinux policy, here are the relevant git repositories:
   (refpol contrib modules)
 * http://git.overlays.gentoo.org/gitweb/?p=proj/hardened-refpolicy.git;a=summary
   (Gentoo)
-* https://git.fedorahosted.org/cgit/selinux-policy.git/log/ (Fedora)
+* https://github.com/selinux-policy/selinux-policy/tree/rawhide-base (Fedora)
 * http://anonscm.debian.org/cgit/selinux/refpolicy.git/log/ (Debian)
 
 And here is some documentation related with writing the policy:
