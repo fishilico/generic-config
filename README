@@ -6,8 +6,8 @@ Overview
 This project aims to give a quick technical perspective of the configuration
 files I need to modify to get a system which fits my needs.
 
-Disclamer
----------
+Disclaimer
+----------
 *This project is NOT intended to be a tutorial or a reference for anyone else*.
 There is absolutely **NO WARRANTY** for the content of this project to give you
 a safe and usable configuration. Please consider this files as a cheat-set or as
@@ -26,7 +26,7 @@ administration of a few personal hosts (servers and desktop workstations) is
 really hard when you don't have a way to keep configuration "in sync with your
 mind".
 
-Soon another problem came. On of my friends who was new to IPv6 wanted to know
+Soon another problem came. One of my friends who was new to IPv6 wanted to know
 what ip6tables rules I was using in the firewall of my server. I gave him a
 kind of "anonymous file" with rules which were not specific to my server and he
 found out that there were some problems with IPv6 fragmentation. So I needed to
