@@ -181,6 +181,18 @@ Alternatively it is possible to consider root as an usual staff user::
     semanage login -m -s staff_u root
 
 
+Export local configuration done with ``semanage``
+-------------------------------------------------
+
+To export all local changes done with ``semanage``, there is an option:
+
+    semanage -o
+
+To import exported data back to the local configuration:
+
+    semanage -i
+
+
 Bugs still present in October 2014
 ----------------------------------
 
