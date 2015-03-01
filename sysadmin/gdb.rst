@@ -54,6 +54,7 @@ Once ``gdb`` is started, it prints a few lines and presents a prompt with
 * ``clear main`` or ``cl``: remove the breakpoint on function ``main()``.
 * ``delete 1`` or ``d``: remove the first breakpoint.
 * ``watch variable`` or ``wa``: set up a watchpoint on a variable.
+* ``catch syscall``: set up a catchpoint for any syscall
 * ``continue`` or ``c``: continue execution after it being interrupted.
 * ``step`` or ``s``: step program until a different line of code.
 * ``next`` or ``n``: like ``step``, but step over subroutines.
@@ -103,6 +104,7 @@ Memory:
 * ``x/30xg $rsp``: dump 30 64-bit words from the stack.
 * ``x/42i main``: show the 42 first asm instructions of function ``main``.
 * ``x/10s **(char***)&environ``: show 10 environment variables.
+* ``x/hs $rsi``: show an wide-character string from rsi.
 * ``disassemble`` or ``disas``: show asm instructions around the current one.
   (an address or a symbol can be given).
 * ``list`` or ``l``: show code lines around the current one.
