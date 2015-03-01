@@ -23,6 +23,11 @@ achieve that, by downloading a special kernel of qemu-arm and running:
     qemu-system-arm -kernel kernel-qemu -cpu arm1176 -m 256 -M versatilepb \
         -no-reboot -serial stdio -append "root=/dev/sda2 panic=1" -hda /dev/sdb
 
+This kernel has been compiled with instructions written on
+http://xecdesign.com/compiling-a-kernel/.  It is configured to build a kernel
+for an ARM11 (ARMv6) versatile board, which requires a patch to be applied:
+http://xecdesign.com/downloads/linux-qemu/linux-arm.patch
+
 
 Post-install configuration
 --------------------------
