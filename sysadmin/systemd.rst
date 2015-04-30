@@ -191,3 +191,24 @@ back in spring 2014::
 
     $ systemctl mask updatedb
     Created symlink from /etc/systemd/system/updatedb.service to /dev/null.
+
+Automatically create a bridge interface
+---------------------------------------
+
+To automatically create a bridge interface which can be used for example to
+bridge together several virtual machines, here is a systemd-networkd
+configuration.
+
+``/etc/systemd/network/VMBridge.netdev``::
+
+    [NetDev]
+    Name=br0
+    Kind=bridge
+
+``/etc/systemd/network/br0.network``::
+
+    [Match]
+    Name=br0
+
+    [Address]
+    Address=198.51.100.0/24
