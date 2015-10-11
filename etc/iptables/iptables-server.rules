@@ -58,6 +58,9 @@
 # Accept SSH, HTTP and HTTPS
 -A INPUT -p tcp -m multiport --dports 22,80,443 -j ACCEPT
 
+# Accept SMTP, IMAP, SMTPS, IMAPS
+-A INPUT -p tcp -m multiport --dports 25,143,587,993 -j ACCEPT
+
 # Accept NTP
 -A INPUT -p udp -m udp --sport 123 --dport 123 -j ACCEPT
 
@@ -106,6 +109,7 @@
 -A OUTPUT -p udp -m udp --sport 1024:65535 --dport 53 -j ACCEPT
 
 -A OUTPUT -p tcp -m multiport --sports 22,80,443 -j ACCEPT
+-A OUTPUT -p tcp -m multiport --sports 25,143,587,993 -j ACCEPT
 -A OUTPUT -p udp -m udp --sport 123 --dport 123 -j ACCEPT
 
 #-A OUTPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix "[OUT DROP] "
