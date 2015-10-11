@@ -57,6 +57,16 @@ With syslog-ng, the configuration is quite straightforward::
     log { source(src); filter(f_kernel); destination(d_tty11); };
     log { source(src); destination(console_all); };
 
+It is also possible to send emergency messages to everyone logged in::
+
+    source s_src {
+        system();
+        internal();
+    };
+    destination du_all { usertty("*"); };
+    filter f_emerg { level(emerg); };
+    log { source(s_src); filter(f_emerg); destination(du_all); };
+
 With journald, the only "natively" available feature is logging to a tty, with
 something like this in ``/etc/systemd/journald.conf``::
 
