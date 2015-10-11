@@ -3,8 +3,11 @@ PHP Configuration Customization
 
 Here are some tips & tricks to configure a php.ini file.
 
+``php.ini`` configuration
+-------------------------
+
 Common important configuration options
---------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here are some options I use in both development and production environments::
 
@@ -34,7 +37,7 @@ Here are some options I use in both development and production environments::
     date.timezone = "Europe/Paris"
 
 Development vs. Production options
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here are the options which are likely to be different in dev and in prod::
 
@@ -130,6 +133,29 @@ Here are the options which are likely to be different in dev and in prod::
     ; http://php.net/display-startup-errors
     ;;display_startup_errors = Off
     display_startup_errors = On
+
+PHP size limits
+~~~~~~~~~~~~~~~
+
+In some configurations it may be needed to raise the limits on memory resource
+usage.  Here are some relevant options in ``php.ini``::
+
+    ; Maximum amount of memory a script may consume (128MB)
+    ; http://php.net/memory-limit
+    ;memory_limit = 128M
+    memory_limit = 1G
+
+    ; Maximum size of POST data that PHP will accept.
+    ; Its value may be 0 to disable the limit. It is ignored if POST data reading
+    ; is disabled through enable_post_data_reading.
+    ; http://php.net/post-max-size
+    ;post_max_size = 8M
+    post_max_size = 2G
+
+    ; Maximum allowed size for uploaded files.
+    ; http://php.net/upload-max-filesize
+    ;upload_max_filesize = 2M
+    upload_max_filesize = 2G
 
 Extensions list
 ---------------
