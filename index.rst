@@ -16,6 +16,7 @@ Contents:
    etc-desktop/index
    etc-server/index
    www/index
+   windows/index
    README
 
 Github link: https://github.com/fishilico/generic-config
