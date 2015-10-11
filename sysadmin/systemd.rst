@@ -210,5 +210,8 @@ configuration.
     [Match]
     Name=br0
 
+    [Network]
+    IPForward=yes
+
     [Address]
     Address=198.51.100.0/24
