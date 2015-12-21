@@ -7,6 +7,7 @@ it, please read one of these websites:
 * https://wiki.debian.org/SELinux
 * https://wiki.gentoo.org/wiki/SELinux/Tutorials (an excellent tutorial for Gentoo)
 * https://fedoraproject.org/wiki/SELinux
+* https://wiki.archlinux.org/index.php/SELinux
 
 To develop the SELinux policy, here are the relevant git repositories:
 
