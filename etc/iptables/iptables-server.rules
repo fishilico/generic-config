@@ -91,7 +91,7 @@
 ##############################################################################
 # OUTPUT filters
 
-# These filters respect the symetry of INPUT filters
+# These filters respect the symmetry of INPUT filters
 
 -A OUTPUT -o lo -j ACCEPT
 -4 -A OUTPUT -p icmp -j ACCEPT
