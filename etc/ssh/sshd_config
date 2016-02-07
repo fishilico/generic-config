@@ -1,16 +1,21 @@
 # Here is a general configuration file for SSH server
 
-# Authentication mechanisms, change to no to disable one.
+# Authentication mechanisms: allow public key, disable password access
 PubkeyAuthentication yes
-PasswordAuthentication yes
+PasswordAuthentication no
 
 # Some other config values
 PermitRootLogin no
+PermitEmptyPasswords no
 ChallengeResponseAuthentication no
 UsePAM yes
 X11Forwarding no
 UseDNS yes
 PermitTunnel no
+
+# Restrict allowed users
+#AllowUsers user
+#AllowGroups adm sudo wheel
 
 # This configuration jails users in sftpusers group to only use sftp.
 # Their home directory must belong to root, otherwise sshd complains with:
