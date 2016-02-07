@@ -100,9 +100,13 @@ root filesystem to ``system_u:object_r:tmp_t:s0``::
     setfiles -r /mnt /etc/selinux/default/contexts/files/file_contexts /mnt
     umount /mnt
 
-It is also possible to use such a line in ``/etc/fstab``::
+It is also possible to use such a line in ``/etc/fstab`` (without ``:s0`` suffix
+when using a policy without MLS)::
 
     tmpfs /tmp tmpfs nodev,nosuid,rootcontext=system_u:object_r:tmp_t:s0 0 0
+
+If ``ls -Zd /tmp`` shows type ``tmpfs_t`` instead of ``tmp_t``, it is also
+needed to modify ``/etc/fstab`` accordingly.
 
 
 Configure SELinux booleans
