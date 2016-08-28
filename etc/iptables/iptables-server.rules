@@ -34,11 +34,12 @@
 #-6 -A INPUT -p udp -m udp --dport 32768:61000 -j ACCEPT
 
 
-# ICMPv4 echo reply, dest unreachable, echo request, time exceeded
+# ICMPv4 echo reply, dest unreachable, echo request, time exceeded, parameter problem
 -4 -A INPUT -p icmp -m icmp --icmp-type 0/0 -j ACCEPT
 -4 -A INPUT -p icmp -m icmp --icmp-type 3 -j ACCEPT
 -4 -A INPUT -p icmp -m icmp --icmp-type 8/0 -j ACCEPT
 -4 -A INPUT -p icmp -m icmp --icmp-type 11 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 12 -j ACCEPT
 
 # ICMPv6 dest unreachable, packet too big, time exceeded, parameter problem
 -6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 1 -j ACCEPT
