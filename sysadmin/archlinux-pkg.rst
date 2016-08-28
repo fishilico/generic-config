@@ -38,15 +38,20 @@ For more information read the wiki! Here are some links:
 - https://wiki.archlinux.org/index.php/Yaourt
 
 
-Yaourt
-------
+Yaourt and pacaur
+-----------------
 
-``yaourt`` (Yet AnOther User Repository Tool) ease the installation of packages
-from the AUR. Its interface is similar to ``pacman`` but it can download, build
-and install user packages too, using ``makepkg`` and ``pacman``.
+``yaourt`` (Yet AnOther User Repository Tool) and ``pacaur`` ease the
+installation of packages from the AUR. Their interfaces are similar to
+``pacman`` but they can download, build and install user packages too, wrapping
+both ``makepkg`` and ``pacman``.
 
 ``yaourt`` includes ``-G`` option (``--getpkgbuild``) to get a ``PKGBUILD`` file
 for a specified package.
+
+``pacaur`` main advantage lies in keeping the downloaded PKGBUILD and their git
+history in a directory, ``$HOME/.cache/pacaur/``, which allows tracking changes
+when upgrading AUR packages.
 
 
 Debug build
