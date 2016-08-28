@@ -32,3 +32,5 @@ ff02::fb        ip6-mdns
 0.0.0.1 pubads.g.doubleclick.net
 0.0.0.1 pagead2.googlesyndication.com
 0.0.0.1 pixel.quantserve.com
+
+# See also https://github.com/StevenBlack/hosts to block ads using /etc/hosts
