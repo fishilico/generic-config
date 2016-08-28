@@ -35,6 +35,27 @@ this::
 
     MaxRetentionSec=3month
 
+Logging: audit logs and journald
+--------------------------------
+
+journald can listen to the audit socket for events. Even if that could be
+useful without ``auditd`` service, it can spam the logs when using software
+such as Chrome (https://bugs.chromium.org/p/chromium/issues/detail?id=456535
+has been opened for more than a year) and it does not honour auditctl
+configuration such as::
+
+    auditctl -a never,exit -F arch=b64 -S set_robust_list -F path=/usr/lib/chromium/chromium -F key=bug456535
+
+(This line without ``auditctl`` can be put in
+``/etc/audit/rules.d/chromium.rules`` so that ``augenrules --load`` loads this
+at every boot).
+
+To disable this journald feature, the easier way consists in masking the audit
+socket (cf. https://github.com/systemd/systemd/issues/959#issuecomment-174541674):
+
+.. code-block:: sh
+
+    systemctl mask systemd-journald-audit.socket
 
 Write journal on tty
 --------------------
