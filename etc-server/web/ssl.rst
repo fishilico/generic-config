@@ -6,6 +6,7 @@ secure configuration. Here is a list of some that I've found:
 
 * http://hynek.me/articles/hardening-your-web-servers-ssl-ciphers/
 * https://wiki.mozilla.org/Security/Server_Side_TLS
+* https://bettercrypto.org/ (with a paper which advices a configuration)
 
 Here are example configurations for ssl.example.com host with a certificate
 signed by StartSSL (https://www.startssl.com/) or Let's encrypt
