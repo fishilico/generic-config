@@ -63,7 +63,7 @@ Defaults env_keep += "http_proxy https_proxy ftp_proxy all_proxy no_proxy"
 # Defaults log_output
 # Defaults!/usr/bin/sudoreplay !log_output
 # Defaults!/usr/local/bin/sudoreplay !log_output
-# Defaults!/sbin/reboot !log_output
+# Defaults!REBOOT !log_output
 ##
 ## Override build in defaults
 ##
@@ -105,4 +105,3 @@ root ALL=(ALL) ALL
 ## Read drop-in files from /etc/sudoers.d
 ## (the '#' here does not indicate a comment)
 #includedir /etc/sudoers.d
-
