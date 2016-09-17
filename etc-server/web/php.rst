@@ -250,7 +250,7 @@ Use something like this to connect nginx to php5-fpm::
         }
     }
 
-Indeed all the mandatory paramaters for fastcgi interface are already defined
+Indeed all the mandatory parameters for fastcgi interface are already defined
 in ``/etc/nginx/fastcgi_params``::
 
     fastcgi_param   QUERY_STRING            $query_string;
