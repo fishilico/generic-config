@@ -65,16 +65,13 @@ Defaults env_keep += "http_proxy https_proxy ftp_proxy all_proxy no_proxy"
 # Defaults!/usr/local/bin/sudoreplay !log_output
 # Defaults!REBOOT !log_output
 ##
-## Override build in defaults
+## Override built-in defaults
 ##
-
-Defaults insults,runas_default=root,timestamp_timeout=1,passprompt="Password for %u@%h:"
-
 Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 Defaults env_reset, env_keep += "HOME SSH_CLIENT SSH_CONNECTION SSH_TTY"
 Defaults editor=/usr/bin/vim, !env_editor
 Defaults mail_badpass, mail_no_user, mail_no_host, mail_no_perms, mailto=root
-Defaults insults, runas_default=root,timestamp_timeout=1
+Defaults insults, runas_default=root, timestamp_timeout=1
 # Use root or user password
 Defaults rootpw, passprompt="Password for root@%h:"
 #Defaults passprompt="Password for %u@%h:"
