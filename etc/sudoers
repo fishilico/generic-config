@@ -72,6 +72,7 @@ Defaults env_reset, env_keep += "HOME SSH_CLIENT SSH_CONNECTION SSH_TTY"
 Defaults editor=/usr/bin/vim, !env_editor
 Defaults mail_badpass, mail_no_user, mail_no_host, mail_no_perms, mailto=root
 Defaults insults, runas_default=root, timestamp_timeout=1
+Defaults requiretty, use_pty, ignore_dot
 # Use root or user password
 Defaults rootpw, passprompt="Password for root@%h:"
 #Defaults passprompt="Password for %u@%h:"
