@@ -157,6 +157,15 @@ usage.  Here are some relevant options in ``php.ini``::
     ;upload_max_filesize = 2M
     upload_max_filesize = 2G
 
+Debian default configuration file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With PHP 5, the default configuration file that Debian ships is installed in
+``/usr/share/php5/php.ini-production``. Each time this file gets updated it is
+possible to re-sync ``php.ini`` with a command like::
+
+    vimdiff /etc/php5/fpm/php.ini /usr/share/php5/php.ini-production
+
 Extensions list
 ---------------
 
