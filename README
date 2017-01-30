@@ -1,6 +1,11 @@
 Generic Configuration README
 ============================
 
+.. image:: https://circleci.com/gh/fishilico/generic-config.png?style=shield
+  :target: https://circleci.com/gh/fishilico/generic-config
+
+https://fishilico.github.io/generic-config/
+
 Overview
 --------
 This project aims to give a quick technical perspective of the configuration
