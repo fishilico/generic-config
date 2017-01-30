@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sound Configuration &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="next" title="systemd configuration" href="systemd.html" />
+    <link rel="prev" title="Some notes about my SELinux installation" href="selinux.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="systemd.html" title="systemd configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="selinux.html" title="Some notes about my SELinux installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sound-configuration">
+<h1>Sound Configuration<a class="headerlink" href="#sound-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Here are some notes about how I setup sound on my desktop systems.</p>
+<div class="section" id="mpd-and-pulseaudio">
+<h2>MPD and PulseAudio<a class="headerlink" href="#mpd-and-pulseaudio" title="Permalink to this headline">¶</a></h2>
+<p>MPD (Music Player Daemon) is a system daemon which plays music from files,
+playlists... It needs to interact with PulseAudio to get the sound out (using
+ALSA) to enable multiplexing several audio output streams (like the ones which
+are played by the Desktop Environment to signal important events to the user).</p>
+<p>As it is discouraged to run PulseAudio as a system daemon, I use the standard
+setup which spawns one PulseAudio server per logged user. However to allow
+multiplexing MPD needs to use the same server as my user. Hence on my system
+MPD is running with my user ID.</p>
+<p>ArchLinux&#8217; MPD wiki article give some tips to set up such configuration.
+First, configure these two files:</p>
+<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/mpd-MYUSER.service</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>.include /usr/lib/systemd/system/mpd.service
+
+[Unit]
+Description=Music Player Daemon (running as MYUSER)
+
+[Service]
+User=MYUSER
+PAMName=system-local-login
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">/etc/mpd.conf</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>music_directory &quot;/home/public/music&quot;
+playlist_directory &quot;/var/lib/mpd/playlists&quot;
+db_file &quot;/var/lib/mpd/mpd.db&quot;
+pid_file &quot;/var/lib/mpd/mpd.pid&quot;
+state_file &quot;/var/lib/mpd/mpdstate&quot;
+
+user &quot;MYUSER&quot;
+audio_output {
+    type            &quot;pulse&quot;
+    name            &quot;MPD Pulse Output&quot;
+}
+</pre></div>
+</div>
+<p>Then disable the system-wide MPD service and enable the new one:</p>
+<div class="highlight-sh"><div class="highlight"><pre>systemctl disable mpd
+systemctl stop mpd
+systemctl start mpd-MYUSER
+systemctl <span class="nb">enable </span>mpd-MYUSER
+</pre></div>
+</div>
+<p>Documentation:
+<a class="reference external" href="https://wiki.archlinux.org/index.php/MPD/Tips_and_Tricks#MPD_and_PulseAudio">https://wiki.archlinux.org/index.php/MPD/Tips_and_Tricks#MPD_and_PulseAudio</a>
+(This wiki also describe the setup with a local TCP socket)</p>
+</div>
+<div class="section" id="network">
+<h2>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h2>
+<p>Streaming audio stream over the network is quite easy with PulseAudio. Let&#8217;s
+suppose host <tt class="docutils literal"><span class="pre">192.0.2.42</span></tt> wants to send its audio output to a PulseAudio
+server running on host <tt class="docutils literal"><span class="pre">192.0.2.1</span></tt>.</p>
+<p>First setup the listener (<tt class="docutils literal"><span class="pre">192.0.2.1</span></tt>) to accept connections from the sender
+(<tt class="docutils literal"><span class="pre">192.0.2.42</span></tt>). <tt class="docutils literal"><span class="pre">/etc/pulse/default.pa</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1;192.0.2.42
+</pre></div>
+</div>
+<p>Or here is the unsecure configuration:</p>
+<div class="highlight-python"><div class="highlight"><pre>load-module module-native-protocol-tcp listen=0.0.0.0 auth-anonymous=1
+</pre></div>
+</div>
+<p>Then configure the sender to send its audio output. <tt class="docutils literal"><span class="pre">/etc/pulse/default.pa</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>load-module module-rtp-send destination=192.0.2.1 port=16001
+</pre></div>
+</div>
+<p>To sync the configuration of PulseAudio with X11, there may be needed to run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pax11publish</span> <span class="o">-</span><span class="n">e</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Sound Configuration</a><ul>
+<li><a class="reference internal" href="#mpd-and-pulseaudio">MPD and PulseAudio</a></li>
+<li><a class="reference internal" href="#network">Network</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="selinux.html"
+                        title="previous chapter">Some notes about my SELinux installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="systemd.html"
+                        title="next chapter">systemd configuration</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/sound.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="systemd.html" title="systemd configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="selinux.html" title="Some notes about my SELinux installation"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

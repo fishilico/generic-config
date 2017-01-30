@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Traffic shaping &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="next" title="User management on Linux" href="user.html" />
+    <link rel="prev" title="Use tmpfs for some directories" href="tmpfs.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="user.html" title="User management on Linux"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tmpfs.html" title="Use tmpfs for some directories"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="traffic-shaping">
+<h1>Traffic shaping<a class="headerlink" href="#traffic-shaping" title="Permalink to this headline">¶</a></h1>
+<p>This is not a complete guide which explains how to shape traffic but a list
+of not-so-intuitive commands related to traffic shaping.</p>
+<p>Documentation:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://linux-ip.net/articles/Traffic-Control-HOWTO/">http://linux-ip.net/articles/Traffic-Control-HOWTO/</a></li>
+<li><a class="reference external" href="http://lartc.org/wondershaper/">http://lartc.org/wondershaper/</a> (scripts to do QoS on ADSL)</li>
+<li><a class="reference external" href="https://www.kernel.org/doc/Documentation/cgroups/net_cls.txt">https://www.kernel.org/doc/Documentation/cgroups/net_cls.txt</a> (filter with cgroup)</li>
+<li><a class="reference external" href="http://lartc.org/manpages/tc.html">http://lartc.org/manpages/tc.html</a> (official manpage)</li>
+<li><a class="reference external" href="http://lartc.org/howto/lartc.qdisc.filters.html">http://lartc.org/howto/lartc.qdisc.filters.html</a> (tc filters)</li>
+</ul>
+<p>First, to dump current traffic shaping rules on interface <tt class="docutils literal"><span class="pre">eth0</span></tt>, use the
+following command (<tt class="docutils literal"><span class="pre">tc</span></tt> means &#8220;Traffic Controller&#8221;):</p>
+<div class="highlight-python"><div class="highlight"><pre>tc -s qdisc show dev eth0
+</pre></div>
+</div>
+<p>By default it will display something like:</p>
+<div class="highlight-python"><div class="highlight"><pre>qdisc pfifo_fast 0: root refcnt 2 bands 3 priomap  1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1
+ Sent 42000 bytes 1337 pkt (dropped 0, overlimits 0 requeues 0)
+ backlog 0b 0p requeues 0
+</pre></div>
+</div>
+<p>At any time, to restore this default configuration (and remove all rules), run:</p>
+<div class="highlight-python"><div class="highlight"><pre>tc qdisc del dev eth0 root
+</pre></div>
+</div>
+<div class="section" id="egress-shaping-limiting-outbound-traffic">
+<h2>Egress shaping (limiting outbound traffic)<a class="headerlink" href="#egress-shaping-limiting-outbound-traffic" title="Permalink to this headline">¶</a></h2>
+<p>This command attachs a TBF (Token Bucket Filter) to <tt class="docutils literal"><span class="pre">eth0</span></tt> which :</p>
+<ul class="simple">
+<li>limit the maxium rate to 1 Mbits/s,</li>
+<li>define a peakrate at 2 Mbits/s,</li>
+<li>use a 10 KB buffer,</li>
+<li>limit the latency caused by the TBF to at most 70ms</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>tc qdisc add dev eth0 root tbf rate 1mbit peakrate 2mbit burst 10kb latency 70ms minburst 1540
+</pre></div>
+</div>
+</div>
+<div class="section" id="delay">
+<h2>Delay<a class="headerlink" href="#delay" title="Permalink to this headline">¶</a></h2>
+<p>This command applies a delay of 500ms on each outbound packets:</p>
+<div class="highlight-python"><div class="highlight"><pre>tc qdisc add dev eth0 root netem delay 500ms
+</pre></div>
+</div>
+<p>With this, <tt class="docutils literal"><span class="pre">tc</span> <span class="pre">qdisc</span> <span class="pre">show</span> <span class="pre">dev</span> <span class="pre">eth0</span></tt> shows:</p>
+<div class="highlight-python"><div class="highlight"><pre>qdisc netem 8001: root refcnt 2 limit 1000 delay 500.0ms
+</pre></div>
+</div>
+</div>
+<div class="section" id="http-server-outbound-traffic-shaping">
+<h2>HTTP server outbound traffic shaping<a class="headerlink" href="#http-server-outbound-traffic-shaping" title="Permalink to this headline">¶</a></h2>
+<p>When running an HTTP server on TCP port 80, it is possible to throttle the
+outbound traffic with <tt class="docutils literal"><span class="pre">tc-htb</span></tt> (Hierarchy Token Bucket):</p>
+<div class="highlight-python"><div class="highlight"><pre>tc qdisc add dev eth0 root handle 1:0 htb default 1
+tc class add dev eth0 parent 1:0 classid 1:10 htb rate 512kbps ceil 768kbps prio 0
+tc filter add dev eth0 parent 1:0 protocol ip match ip sport 80 0xffff flowid 1:10
+</pre></div>
+</div>
+<p>Here are some commands to get a similar behavior of the last <tt class="docutils literal"><span class="pre">tc</span> <span class="pre">filter</span></tt>
+command with <tt class="docutils literal"><span class="pre">iptables</span></tt> power:</p>
+<div class="highlight-python"><div class="highlight"><pre>iptables -A OUTPUT -t mangle -o eth0 -p tcp --sport 80 -j MARK --set-mark 10
+ip6tables -A OUTPUT -t mangle -o eth0 -p tcp --sport 80 -j MARK --set-mark 10
+tc filter add dev eth0 parent 1:0 prio 0 protocol ip handle 10 fw flowid 1:10
+</pre></div>
+</div>
+<p>To show active rules:</p>
+<div class="highlight-python"><div class="highlight"><pre># tc -s -d class show dev eth0
+class htb 1:10 root prio 0 quantum 51200 rate 4096Kbit ceil 6144Kbit burst 1599b/1 mpu 0b overhead 0b cburst 1598b/1 mpu 0b overhead 0b level 0
+ Sent 42000 bytes 1337 pkt (dropped 0, overlimits 0 requeues 0)
+ rate 400bit 0pps backlog 0b 0p requeues 0
+ lended: 1337 borrowed: 0 giants: 0
+ tokens: 44738 ctokens: 29819
+
+# tc filter show dev eth0
+filter parent 1: protocol ip pref 49152 fw
+</pre></div>
+</div>
+<p>It is also possible to filter by IP address:</p>
+<div class="highlight-python"><div class="highlight"><pre>tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 192.0.2.42/32 flowid 1:1
+tc filter add dev eth0 parent 1:0 protocol ipv6 prio 2 u32 match ip6 dst 2001:db8::beef/128 flowid 1:1
+tc filter add dev eth0 parent 1:0 protocol ip prio 3 u32 match ip src 192.0.2.36/32 flowid 1:2
+tc filter add dev eth0 parent 1:0 protocol ipv6 prio 4 u32 match ip6 src 2001:db8::cafe/128 flowid 1:2
+</pre></div>
+</div>
+<p>If you happen to define filters for IPv4 and IPv6 with the same priority, the
+kernel rejects the request with a mysterious message:</p>
+<div class="highlight-python"><div class="highlight"><pre>RTNETLINK answers: Invalid argument
+We have an error talking to the kernel
+</pre></div>
+</div>
+<p>When such a thing happens, you only need to use a different &#8220;prio&#8221; argument for
+your IPv4 and IPv6 filters.</p>
+</div>
+<div class="section" id="make-downloads-slow">
+<h2>Make downloads slow<a class="headerlink" href="#make-downloads-slow" title="Permalink to this headline">¶</a></h2>
+<p>In order to slow down downloads to prevent them from filling ISP&#8217;s buffers, you
+can attach a filter in ingress mode which drops too fast packets:</p>
+<div class="highlight-python"><div class="highlight"><pre>tc qdisc add dev eth0 handle ffff: ingress
+tc filter add dev eth0 parent ffff: protocol ip prio 50 u32 \
+    match ip src 0.0.0.0/0 police rate 800kbit burst 10k drop flowid :1
+</pre></div>
+</div>
+<p>After that, statistics commands display this:</p>
+<div class="highlight-python"><div class="highlight"><pre># tc qdisc show dev eth0
+qdisc pfifo_fast 0: dev eth0 root refcnt 2 bands 3 priomap  1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1
+qdisc ingress ffff: dev eth0 parent ffff:fff1 ----------------
+
+# tc filter show dev eth0 parent ffff:
+filter protocol ip pref 50 u32
+filter protocol ip pref 50 u32 fh 800: ht divisor 1
+filter protocol ip pref 50 u32 fh 800::800 order 2048 key ht 800 bkt 0 flowid :1
+  match 00000000/00000000 at 12
+        action order 0:  police 0x1 rate 800Kbit burst 10Kb mtu 2Kb action drop overhead 0b
+ref 1 bind 1
+</pre></div>
+</div>
+<p>To delete everything related to inbound packets policy on <tt class="docutils literal"><span class="pre">eth0</span></tt>, use:</p>
+<div class="highlight-python"><div class="highlight"><pre>tc qdisc del dev eth0 ingress
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Traffic shaping</a><ul>
+<li><a class="reference internal" href="#egress-shaping-limiting-outbound-traffic">Egress shaping (limiting outbound traffic)</a></li>
+<li><a class="reference internal" href="#delay">Delay</a></li>
+<li><a class="reference internal" href="#http-server-outbound-traffic-shaping">HTTP server outbound traffic shaping</a></li>
+<li><a class="reference internal" href="#make-downloads-slow">Make downloads slow</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tmpfs.html"
+                        title="previous chapter">Use tmpfs for some directories</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="user.html"
+                        title="next chapter">User management on Linux</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/traffic-shaping.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="user.html" title="User management on Linux"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tmpfs.html" title="Use tmpfs for some directories"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

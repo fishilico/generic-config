@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Use tmpfs for some directories &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="next" title="Traffic shaping" href="traffic-shaping.html" />
+    <link rel="prev" title="systemd configuration" href="systemd.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="traffic-shaping.html" title="Traffic shaping"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="systemd.html" title="systemd configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="use-tmpfs-for-some-directories">
+<h1>Use tmpfs for some directories<a class="headerlink" href="#use-tmpfs-for-some-directories" title="Permalink to this headline">¶</a></h1>
+<p>On my hosts I configure some directories to be tmpfs mountpoint to save disk
+writes, which is very important when using SSD drives. Here is how to do so.</p>
+<div class="section" id="tmp">
+<h2><tt class="docutils literal"><span class="pre">/tmp</span></tt><a class="headerlink" href="#tmp" title="Permalink to this headline">¶</a></h2>
+<p>Here is what I usually put in my <tt class="docutils literal"><span class="pre">/etc/fstab</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre># &lt;file system&gt; &lt;dir&gt; &lt;type&gt; &lt;options&gt;            &lt;dump&gt; &lt;pass&gt;
+tmpfs           /tmp  tmpfs  nodev,nosuid,noexec  0      0
+</pre></div>
+</div>
+</div>
+<div class="section" id="home-cache">
+<h2><tt class="docutils literal"><span class="pre">$HOME/.cache</span></tt><a class="headerlink" href="#home-cache" title="Permalink to this headline">¶</a></h2>
+<p>Example of <tt class="docutils literal"><span class="pre">/etc/fstab</span></tt> entry for user&#8217;s <tt class="docutils literal"><span class="pre">.cache</span></tt> home subdirectory:</p>
+<div class="highlight-python"><div class="highlight"><pre>$USER.cache $HOME/.cache tmpfs defaults,auto,nodev,noexec,nosuid,size=2048M,gid=100,uid=1000,mode=0700 0 0
+</pre></div>
+</div>
+</div>
+<div class="section" id="yaourt-build-dir-on-archlinux">
+<h2>Yaourt build dir on ArchLinux<a class="headerlink" href="#yaourt-build-dir-on-archlinux" title="Permalink to this headline">¶</a></h2>
+<p>To build AUR packaes, yaourt uses <tt class="docutils literal"><span class="pre">/tmp/yaourt-tmp-$USER</span></tt>. To make this
+directory a tmpfs mountpoint the time of a build, add the following line to
+<tt class="docutils literal"><span class="pre">/etc/fstab</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$USER.yaourt /tmp/yaourt-tmp-$USER tmpfs defaults,user,noauto,nodev,exec,nosuid,gid=$GID,uid=$UID,mode=0700 0 0
+</pre></div>
+</div>
+<p>Then, create (if needed) and mount <tt class="docutils literal"><span class="pre">/tmp/yaourt-tmp-$USER</span></tt> before running
+yaourt.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Use tmpfs for some directories</a><ul>
+<li><a class="reference internal" href="#tmp"><tt class="docutils literal"><span class="pre">/tmp</span></tt></a></li>
+<li><a class="reference internal" href="#home-cache"><tt class="docutils literal"><span class="pre">$HOME/.cache</span></tt></a></li>
+<li><a class="reference internal" href="#yaourt-build-dir-on-archlinux">Yaourt build dir on ArchLinux</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="systemd.html"
+                        title="previous chapter">systemd configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="traffic-shaping.html"
+                        title="next chapter">Traffic shaping</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/tmpfs.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="traffic-shaping.html" title="Traffic shaping"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="systemd.html" title="systemd configuration"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

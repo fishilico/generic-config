@@ -1,0 +1,6 @@
+``etc/hosts``
+=============
+:download:`Download file<hosts>`
+
+.. literalinclude:: hosts
+   :language: sh

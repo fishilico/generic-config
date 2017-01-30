@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>etc/iptables/iptables-server.rules &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../../index.html" />
+    <link rel="up" title="/etc" href="../index.html" />
+    <link rel="next" title="etc/ntp.conf" href="../ntp.conf.raw.html" />
+    <link rel="prev" title="etc/iptables/iptables-desktop.rules" href="iptables-desktop.rules.raw.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../ntp.conf.raw.html" title="etc/ntp.conf"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="iptables-desktop.rules.raw.html" title="etc/iptables/iptables-desktop.rules"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="etc-iptables-iptables-server-rules">
+<h1><tt class="docutils literal"><span class="pre">etc/iptables/iptables-server.rules</span></tt><a class="headerlink" href="#etc-iptables-iptables-server-rules" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../../_downloads/iptables-server.rules"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c"># This file contains a basic set of rules to apply for an Internet server.</span>
+<span class="c"># Please adapt these rules to make them match what you use.</span>
+
+
+*filter
+:INPUT DROP <span class="o">[</span>0:0<span class="o">]</span>
+:FORWARD DROP <span class="o">[</span>0:0<span class="o">]</span>
+:OUTPUT DROP <span class="o">[</span>0:0<span class="o">]</span>
+
+<span class="c"># IPv6: Disable processing of any RH0 packet to prevent ping-pong</span>
+-6 -A INPUT -m rt --rt-type 0 -j DROP
+-6 -A FORWARD -m rt --rt-type 0 -j DROP
+-6 -A OUTPUT -m rt --rt-type 0 -j DROP
+
+<span class="c">##############################################################################</span>
+<span class="c"># INPUT filters</span>
+
+<span class="c"># Trust local loopback</span>
+-A INPUT -i lo -j ACCEPT
+
+<span class="c"># Drop invalid packets</span>
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+
+<span class="c"># port range is in /proc/sys/net/ipv4/ip_local_port_range</span>
+<span class="c"># If conntrack is not available (old kernel), use -m state --state instead</span>
+-A INPUT -p tcp -m tcp --dport 32768:61000 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p udp -m udp --dport 32768:61000 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+<span class="c"># Most DNS resolvers (BIND, PowerDNS, ...) use their own ports numbers</span>
+-A INPUT -p udp -m udp --sport 53 --dport 1024:65535 -j ACCEPT
+
+<span class="c"># If conntrack module is not available, state module doesn&#39;t work well for IPv6</span>
+<span class="c"># so use these rules instead</span>
+<span class="c">#-6 -A INPUT -p tcp -m tcp --dport 32768:61000 ! --syn -j ACCEPT</span>
+<span class="c">#-6 -A INPUT -p udp -m udp --dport 32768:61000 -j ACCEPT</span>
+
+
+<span class="c"># ICMPv4 echo reply, dest unreachable, echo request, time exceeded, parameter problem</span>
+-4 -A INPUT -p icmp -m icmp --icmp-type 0/0 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 3 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 8/0 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 11 -j ACCEPT
+-4 -A INPUT -p icmp -m icmp --icmp-type 12 -j ACCEPT
+
+<span class="c"># ICMPv6 dest unreachable, packet too big, time exceeded, parameter problem</span>
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 1 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 2 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 3 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 4 -j ACCEPT
+<span class="c"># ICMPv6 echo request, echo reply</span>
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 128/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 129/0 -j ACCEPT
+<span class="c"># Neighbor Discovery Protocol: RS, RA, NS, NA</span>
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 133/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 134/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 135/0 -j ACCEPT
+-6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type 136/0 -j ACCEPT
+
+
+<span class="c"># Accept SSH, HTTP and HTTPS</span>
+-A INPUT -p tcp -m multiport --dports 22,80,443 -j ACCEPT
+
+<span class="c"># Accept SMTP, IMAP, SMTPS, IMAPS</span>
+-A INPUT -p tcp -m multiport --dports 25,143,587,993 -j ACCEPT
+
+<span class="c"># Accept NTP</span>
+-A INPUT -p udp -m udp --sport 123 --dport 123 -j ACCEPT
+
+<span class="c"># Silently drop NetBios</span>
+-A INPUT -p tcp -m multiport --dports 139,445 -j DROP
+-A INPUT -p udp -m udp --dport 137:138 -j DROP
+
+<span class="c"># Silently drop unsollicited broadcast and multicast</span>
+-A INPUT -m pkttype --pkt-type broadcast -j DROP
+-A INPUT -m pkttype --pkt-type multicast -j DROP
+<span class="c"># This rule is still here to really avoid rejecting an IPv4 broadcast</span>
+-4 -A INPUT -d 255.255.255.255/32 -j DROP
+
+<span class="c"># Log to NetFilter, so that logs don&#39;t fills up and debugging is quick</span>
+<span class="c">#-A INPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix &quot;[IN DROP] &quot;</span>
+-A INPUT -m limit --limit 1/sec --limit-burst 1000 -j NFLOG
+
+<span class="c"># Reject packet, with some stats in iptables -nvL and ip6tables -nvL</span>
+-A INPUT -p tcp -j REJECT --reject-with tcp-reset
+-4 -A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
+-6 -A INPUT -p udp -j REJECT --reject-with icmp6-port-unreachable
+-4 -A INPUT -p icmp -j DROP
+-6 -A INPUT -p ipv6-icmp -j DROP
+-4 -A INPUT -j REJECT --reject-with icmp-proto-unreachable
+-6 -A INPUT -j REJECT
+
+
+<span class="c">##############################################################################</span>
+<span class="c"># OUTPUT filters</span>
+
+<span class="c"># These filters respect the symmetry of INPUT filters</span>
+
+-A OUTPUT -o lo -j ACCEPT
+-4 -A OUTPUT -p icmp -j ACCEPT
+-6 -A OUTPUT -p ipv6-icmp -j ACCEPT
+
+<span class="c"># Accept TCP reset and FIN+ACK</span>
+-A OUTPUT -p tcp -m tcp --tcp-flags RST RST -j ACCEPT
+-A OUTPUT -p tcp -m tcp --tcp-flags FIN,ACK FIN,ACK -j ACCEPT
+
+-4 -A OUTPUT -d 255.255.255.255/32 -j DROP
+-4 -A OUTPUT -m conntrack --ctstate INVALID -j DROP
+
+-A OUTPUT -p tcp -m tcp --sport 32768:61000 -j ACCEPT
+-A OUTPUT -p udp -m udp --sport 32768:61000 -j ACCEPT
+-A OUTPUT -p udp -m udp --sport 1024:65535 --dport 53 -j ACCEPT
+
+-A OUTPUT -p tcp -m multiport --sports 22,80,443 -j ACCEPT
+-A OUTPUT -p tcp -m multiport --sports 25,143,587,993 -j ACCEPT
+-A OUTPUT -p udp -m udp --sport 123 --dport 123 -j ACCEPT
+
+<span class="c">#-A OUTPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix &quot;[OUT DROP] &quot;</span>
+-A OUTPUT -m limit --limit 1/sec --limit-burst 1000 -j NFLOG
+
+<span class="c"># Reject other packets, with some stats in iptables -nvL and ip6tables -nvL</span>
+-A OUTPUT -p tcp -j REJECT --reject-with tcp-reset
+-4 -A OUTPUT -p udp -j REJECT --reject-with icmp-port-unreachable
+-6 -A OUTPUT -p udp -j REJECT --reject-with icmp6-port-unreachable
+-4 -A OUTPUT -j REJECT --reject-with icmp-proto-unreachable
+-6 -A OUTPUT -j REJECT
+
+COMMIT
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="iptables-desktop.rules.raw.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc/iptables/iptables-desktop.rules</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../ntp.conf.raw.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">etc/ntp.conf</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/etc/iptables/iptables-server.rules.raw.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../ntp.conf.raw.html" title="etc/ntp.conf"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="iptables-desktop.rules.raw.html" title="etc/iptables/iptables-desktop.rules"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

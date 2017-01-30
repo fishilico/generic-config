@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Set hardware clock to UTC &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Windows system information" href="index.html" />
+    <link rel="next" title="Windows Virtual Machine with Vagrant" href="vagrant.html" />
+    <link rel="prev" title="Some cmd.exe commands" href="cmd.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="vagrant.html" title="Windows Virtual Machine with Vagrant"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cmd.html" title="Some cmd.exe commands"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Windows system information</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="set-hardware-clock-to-utc">
+<h1>Set hardware clock to UTC<a class="headerlink" href="#set-hardware-clock-to-utc" title="Permalink to this headline">¶</a></h1>
+<p>Some OS like GNU/Linux and MacOS set up the hardware clock to use UTC instead
+of local time.  This helps when dealing with daylight saving time, as the real
+clock does not need to be updated accordingly.</p>
+<p>Windows expects the hardward clock to give &#8220;local time&#8221; by default.  The reason
+is, according to Microsoft, so that users are not confused in BIOS menu
+(<a class="reference external" href="http://blogs.msdn.com/b/oldnewthing/archive/2004/09/02/224672.aspx">http://blogs.msdn.com/b/oldnewthing/archive/2004/09/02/224672.aspx</a>).</p>
+<p>To enable UTC real-time clock in Windows, put this in a <tt class="docutils literal"><span class="pre">.reg</span></tt> file:</p>
+<div class="highlight-python"><div class="highlight"><pre>Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation]
+&quot;RealTimeIsUniversal&quot;=dword:00000001
+</pre></div>
+</div>
+<p>Apply this file for example with a command like:</p>
+<div class="highlight-python"><div class="highlight"><pre>reg import utc-clock.reg
+</pre></div>
+</div>
+<p>Or directly set the value with:</p>
+<div class="highlight-python"><div class="highlight"><pre>reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
+</pre></div>
+</div>
+<p>To check the current config, you can use:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt; reg query HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation
+    RealTimeIsUniversal    REG_DWORD    0x1
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cmd.html"
+                        title="previous chapter">Some cmd.exe commands</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="vagrant.html"
+                        title="next chapter">Windows Virtual Machine with Vagrant</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/windows/utc-clock.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="vagrant.html" title="Windows Virtual Machine with Vagrant"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cmd.html" title="Some cmd.exe commands"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Windows system information</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>etc-desktop/avahi/avahi-daemon.conf &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../../index.html" />
+    <link rel="up" title="/etc for Desktop" href="../index.html" />
+    <link rel="next" title="/etc for Server" href="../../etc-server/index.html" />
+    <link rel="prev" title="etc-desktop/X11/xorg.conf.d/50-synaptics.conf" href="../X11/xorg.conf.d/50-synaptics.conf.raw.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../etc-server/index.html" title="/etc for Server"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../X11/xorg.conf.d/50-synaptics.conf.raw.html" title="etc-desktop/X11/xorg.conf.d/50-synaptics.conf"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Desktop</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="etc-desktop-avahi-avahi-daemon-conf">
+<h1><tt class="docutils literal"><span class="pre">etc-desktop/avahi/avahi-daemon.conf</span></tt><a class="headerlink" href="#etc-desktop-avahi-avahi-daemon-conf" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../../_downloads/avahi-daemon.conf"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c"># This file is part of avahi.</span>
+<span class="c">#</span>
+<span class="c"># avahi is free software; you can redistribute it and/or modify it</span>
+<span class="c"># under the terms of the GNU Lesser General Public License as</span>
+<span class="c"># published by the Free Software Foundation; either version 2 of the</span>
+<span class="c"># License, or (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># avahi is distributed in the hope that it will be useful, but WITHOUT</span>
+<span class="c"># ANY WARRANTY; without even the implied warranty of MERCHANTABILITY</span>
+<span class="c"># or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public</span>
+<span class="c"># License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU Lesser General Public</span>
+<span class="c"># License along with avahi; if not, write to the Free Software</span>
+<span class="c"># Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307</span>
+<span class="c"># USA.</span>
+
+<span class="c"># See avahi-daemon.conf(5) for more information on this configuration</span>
+<span class="c"># file!</span>
+
+<span class="o">[</span>server<span class="o">]</span>
+<span class="c">#host-name=foo</span>
+<span class="c">#domain-name=local</span>
+<span class="c">#browse-domains=0pointer.de, zeroconf.org</span>
+use-ipv4<span class="o">=</span>yes
+use-ipv6<span class="o">=</span>yes
+<span class="c">#allow-interfaces=eth0</span>
+<span class="c">#deny-interfaces=eth1</span>
+<span class="c">#check-response-ttl=no</span>
+<span class="c">#use-iff-running=no</span>
+<span class="c">#enable-dbus=yes</span>
+<span class="c">#disallow-other-stacks=no</span>
+<span class="c">#allow-point-to-point=no</span>
+<span class="c">#cache-entries-max=4096</span>
+<span class="c">#clients-max=4096</span>
+<span class="c">#objects-per-client-max=1024</span>
+<span class="c">#entries-per-entry-group-max=32</span>
+ratelimit-interval-usec<span class="o">=</span>1000000
+ratelimit-burst<span class="o">=</span>1000
+
+<span class="o">[</span>wide-area<span class="o">]</span>
+<span class="nb">enable</span>-wide-area<span class="o">=</span>yes
+
+<span class="o">[</span>publish<span class="o">]</span>
+<span class="c"># Default configuration, for a server:</span>
+<span class="c">#disable-publishing=no</span>
+<span class="c">#disable-user-service-publishing=no</span>
+<span class="c">#add-service-cookie=no</span>
+<span class="c">#publish-addresses=yes</span>
+<span class="c">#publish-hinfo=yes</span>
+<span class="c">#publish-workstation=yes</span>
+<span class="c">#publish-domain=yes</span>
+<span class="c">#publish-dns-servers=192.168.50.1, 192.168.50.2</span>
+<span class="c">#publish-resolv-conf-dns-servers=yes</span>
+<span class="c">#publish-aaaa-on-ipv4=yes</span>
+<span class="c">#publish-a-on-ipv6=no</span>
+
+<span class="c"># To hide a workstation, add this line:</span>
+disable-publishing<span class="o">=</span>yes
+
+<span class="o">[</span>reflector<span class="o">]</span>
+<span class="c">#enable-reflector=no</span>
+<span class="c">#reflect-ipv=no</span>
+
+<span class="o">[</span>rlimits<span class="o">]</span>
+<span class="c">#rlimit-as=</span>
+rlimit-core<span class="o">=</span>0
+rlimit-data<span class="o">=</span>4194304
+rlimit-fsize<span class="o">=</span>0
+rlimit-nofile<span class="o">=</span>768
+rlimit-stack<span class="o">=</span>4194304
+rlimit-nproc<span class="o">=</span>3
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../X11/xorg.conf.d/50-synaptics.conf.raw.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc-desktop/X11/xorg.conf.d/50-synaptics.conf</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../etc-server/index.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/etc-desktop/avahi/avahi-daemon.conf.raw.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../etc-server/index.html" title="/etc for Server"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../X11/xorg.conf.d/50-synaptics.conf.raw.html" title="etc-desktop/X11/xorg.conf.d/50-synaptics.conf"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt> for Desktop</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

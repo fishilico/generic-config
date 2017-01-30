@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>etc-server/dns/unbound.conf &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../../index.html" />
+    <link rel="up" title="/etc for Server" href="../index.html" />
+    <link rel="next" title="ejabberd configuration" href="../jabber/ejabberd.html" />
+    <link rel="prev" title="etc-server/dhcp/dnsmasq.conf and doc" href="../dhcp/dnsmasq.conf.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../jabber/ejabberd.html" title="ejabberd configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../dhcp/dnsmasq.conf.html" title="etc-server/dhcp/dnsmasq.conf and doc"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="etc-server-dns-unbound-conf">
+<h1><tt class="docutils literal"><span class="pre">etc-server/dns/unbound.conf</span></tt><a class="headerlink" href="#etc-server-dns-unbound-conf" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../../_downloads/unbound.conf"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c"># This file summaries several files for Unbound configuration, in one file for</span>
+<span class="c"># clarity purposes.</span>
+
+<span class="c"># /etc/unbound/unbound.conf</span>
+<span class="c"># On Debian this file only contains one non-commented line:</span>
+include: <span class="s2">&quot;/etc/unbound/unbound.conf.d/*.conf&quot;</span>
+
+<span class="c"># /etc/unbound/unbound.conf.d/root-auto-trust-anchor-file.conf</span>
+server:
+    <span class="c"># The following line will configure unbound to perform cryptographic</span>
+    <span class="c"># DNSSEC validation using the root trust anchor.</span>
+    auto-trust-anchor-file: <span class="s2">&quot;/var/lib/unbound/root.key&quot;</span>
+
+<span class="c"># /etc/unbound/unbound.conf.d/localhost.conf</span>
+<span class="c"># Allow access from localhost</span>
+server:
+    interface: 127.0.0.1
+    interface: ::1
+    access-control: 127.0.0.0/8 allow
+    access-control: ::1/128 allow
+
+<span class="c"># /etc/unbound/unbound.conf.d/vpn.conf</span>
+<span class="c"># Allow access from VPN clients in 10.0.0.0/24 network</span>
+server:
+    interface: 10.0.0.1
+    access-control: 10.0.0.0/24 allow
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../dhcp/dnsmasq.conf.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc-server/dhcp/dnsmasq.conf</span></tt> and doc</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../jabber/ejabberd.html"
+                        title="next chapter">ejabberd configuration</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/etc-server/dns/unbound.conf.raw.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../jabber/ejabberd.html" title="ejabberd configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../dhcp/dnsmasq.conf.html" title="etc-server/dhcp/dnsmasq.conf and doc"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

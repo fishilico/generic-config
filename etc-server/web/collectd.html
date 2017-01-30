@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Collectd &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../../index.html" />
+    <link rel="up" title="/etc for Server" href="../index.html" />
+    <link rel="next" title="Git Web and CGit" href="gitweb.html" />
+    <link rel="prev" title="etc-server/web/apache.conf" href="apache.conf.raw.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="gitweb.html" title="Git Web and CGit"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="apache.conf.raw.html" title="etc-server/web/apache.conf"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="collectd">
+<h1>Collectd<a class="headerlink" href="#collectd" title="Permalink to this headline">¶</a></h1>
+<p>Collectd is a daemon to collect system statistics in RRD (Round-Robin Database)
+files. It is basically a backend daemon and several front-end exist to navigate through the data.</p>
+<ul class="simple">
+<li>Web site: <a class="reference external" href="https://collectd.org/">https://collectd.org/</a></li>
+<li>Plugins: <a class="reference external" href="https://collectd.org/wiki/index.php/Table_of_Plugins">https://collectd.org/wiki/index.php/Table_of_Plugins</a></li>
+<li>Front-ends: <a class="reference external" href="https://collectd.org/wiki/index.php/List_of_front-ends">https://collectd.org/wiki/index.php/List_of_front-ends</a></li>
+</ul>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Collectd is packaged for some Linux distribution. In Debian, this command
+installs collectd with the default configuration:</p>
+<div class="highlight-python"><div class="highlight"><pre>apt-get install collectd
+</pre></div>
+</div>
+<p>The configuration is done in <tt class="docutils literal"><span class="pre">/etc/collectd/collectd.conf</span></tt>. It is quite
+straightforward and the wiki helps understanding the few tricky fields
+(<a class="reference external" href="https://collectd.org/wiki/index.php/Table_of_Plugins">https://collectd.org/wiki/index.php/Table_of_Plugins</a>).</p>
+<p>Here is a basic configuration:</p>
+<div class="highlight-python"><div class="highlight"><pre>LoadPlugin syslog
+&lt;Plugin syslog&gt;
+    LogLevel info
+&lt;/Plugin&gt;
+
+LoadPlugin cpu
+LoadPlugin df
+LoadPlugin disk
+LoadPlugin interface
+#LoadPlugin irq
+LoadPlugin load
+LoadPlugin memory
+LoadPlugin rrdtool
+#LoadPlugin sensors
+LoadPlugin swap
+
+&lt;Plugin df&gt;
+    Device &quot;rootfs&quot;
+    # MountPoint &quot;/home&quot;
+    FSType &quot;cgroup&quot;
+    FSType &quot;devtmpfs&quot;
+    FSType &quot;tmpfs&quot;
+    IgnoreSelected true
+    ReportByDevice false
+    ReportReserved true
+    ReportInodes true
+&lt;/Plugin&gt;
+&lt;Plugin interface&gt;
+    # Don&#39;t collect statistitics about loopback interface
+    Interface &quot;lo&quot;
+    IgnoreSelected true
+&lt;/Plugin&gt;
+&lt;Plugin rrdtool&gt;
+    DataDir &quot;/var/lib/collectd/rrd/&quot;
+&lt;/Plugin&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="network-setup">
+<h2>Network setup<a class="headerlink" href="#network-setup" title="Permalink to this headline">¶</a></h2>
+<p>To centralise collected data on a server, you need to use the network plugin
+(<a class="reference external" href="https://collectd.org/wiki/index.php/Plugin:Network">https://collectd.org/wiki/index.php/Plugin:Network</a>). If your collectd daemon
+is recent enough, you may use authenticated and encrypted communication channels
+using a password.</p>
+<p>On the server, the configuration looks like this in <tt class="docutils literal"><span class="pre">collectd.conf</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;Plugin network&gt;
+    # Server IP and UDP port to listen to
+    &lt;Listen &quot;10.0.0.1&quot; &quot;25826&quot;&gt;
+        SecurityLevel Sign
+        # This file contains for each user with password &quot;secret&quot;:
+        #     user: secret
+        AuthFile &quot;/etc/collectd/passwd&quot;
+        Interface &quot;eth0&quot;
+    &lt;/Listen&gt;
+    MaxPacketSize 1024
+&lt;/Plugin&gt;
+</pre></div>
+</div>
+<p>On each client, <tt class="docutils literal"><span class="pre">collectd.conf</span></tt> may contain:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;Plugin network&gt;
+    &lt;Server &quot;10.0.0.1&quot; &quot;25826&quot;&gt;
+        SecurityLevel Encrypt
+        Username &quot;user&quot;
+        Password &quot;secret&quot;
+        Interface &quot;eth0&quot;
+    &lt;/Server&gt;
+    TimeToLive &quot;128&quot;
+&lt;/Plugin&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="collection3-front-end">
+<h2>Collection3 front-end<a class="headerlink" href="#collection3-front-end" title="Permalink to this headline">¶</a></h2>
+<p>Collectd package often provides front-end examples among which is Collection3.
+This front-end is a web front-end written as a CGI script in Perl.
+By default it will look for RRD files in <tt class="docutils literal"><span class="pre">/var/lib/collectd/rrd</span></tt> but this
+can be changed by editing <tt class="docutils literal"><span class="pre">etc/collection.conf</span></tt> which contains by default:</p>
+<div class="highlight-python"><div class="highlight"><pre>DataDir &quot;/var/lib/collectd/rrd&quot;
+</pre></div>
+</div>
+<p>Collection3 needs some Perl modules:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Config::General</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Regexp::Common</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">HTML::Entities</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">RRDs</span></tt></li>
+</ul>
+<p>On a Debian server, this command installs the needed modules:</p>
+<div class="highlight-python"><div class="highlight"><pre>apt-get install lib{config-general,regexp-common,html-parser,rrds}-perl
+</pre></div>
+</div>
+<div class="section" id="apache-virtual-host-configuration">
+<h3>Apache virtual host configuration<a class="headerlink" href="#apache-virtual-host-configuration" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>&lt;VirtualHost *:80&gt;
+    Alias /collection3/ /usr/share/doc/collectd-core/examples/collection3/
+    ScriptAlias /collection3/bin/ /usr/share/doc/collectd-core/examples/collection3/bin/
+    &lt;Directory /usr/share/doc/collectd-core/examples/collection3/&gt;
+        AddHandler cgi-script .cgi
+        DirectoryIndex bin/index.cgi
+        Options +ExecCGI
+        Order Allow,Deny
+        Allow from all
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="nginx-server-configuration">
+<h3>Nginx server configuration<a class="headerlink" href="#nginx-server-configuration" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>server {
+    listen 80 default_server;
+    location /collection3 {
+        alias /usr/share/doc/collectd-core/examples/collection3;
+        location ~ ^/collection3/bin/.+\.cgi$ {
+            include fastcgi_params;
+            fastcgi_pass unix:/var/run/fcgiwrap.socket;
+        }
+        location /collection3/share {
+            try_files $uri $uri/ =404;
+        }
+        location /collection3 {
+            return 301 /collection3/bin/index.cgi;
+        }
+    }
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="lighttpd-server-configuration">
+<h3>Lighttpd server configuration<a class="headerlink" href="#lighttpd-server-configuration" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre># Note: if the config already enables mod_alias, you must remove it from
+# the next line
+server.modules += ( &quot;mod_alias&quot; &quot;mod_cgi&quot; )
+alias.url += ( &quot;/collection3&quot; =&gt; &quot;/usr/share/doc/collectd-core/examples/collection3/&quot; )
+$HTTP[&quot;url&quot;] =~ &quot;^/collection3&quot; {
+    cgi.assign = ( &quot;.cgi&quot; =&gt; &quot;/usr/bin/perl&quot; )
+}
+index-file.names += ( &quot;bin/index.cgi&quot; )
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="collectd-graph-panel-front-end">
+<h2>Collectd Graph Panel front-end<a class="headerlink" href="#collectd-graph-panel-front-end" title="Permalink to this headline">¶</a></h2>
+<p>CGP (Collectd Graph Panel) is a better front-end than Collection3. It is
+written in PHP. To install it, you just need to download lastest release from
+<a class="reference external" href="https://github.com/pommi/CGP/releases">https://github.com/pommi/CGP/releases</a> in a folder and to configure your web
+server accordingly.</p>
+<p>Official website: <a class="reference external" href="http://pommi.nethuis.nl/category/cgp/">http://pommi.nethuis.nl/category/cgp/</a></p>
+<p>To enable <tt class="docutils literal"><span class="pre">jsrrdgraph</span></tt> (to have Javascript-rendered graphs in which you can
+navigate with your mouse), you just need to enable the <tt class="docutils literal"><span class="pre">canvas</span></tt> mode. This
+is done by creating <tt class="docutils literal"><span class="pre">conf/config.local.php</span></tt> with:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?php
+$CONFIG[&#39;graph_type&#39;] = &#39;canvas&#39;;
+
+// Here are some other useful options
+$CONFIG[&#39;graph_type&#39;] = &#39;hybrid&#39;;
+$CONFIG[&#39;rrd_fetch_method&#39;] = &#39;async&#39;;
+$CONFIG[&#39;overview&#39;] = array(&#39;load&#39;, &#39;memory&#39;, &#39;swap&#39;, &#39;sensors&#39;, &#39;df&#39;, &#39;interface&#39;);
+$CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Collectd</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#network-setup">Network setup</a></li>
+<li><a class="reference internal" href="#collection3-front-end">Collection3 front-end</a><ul>
+<li><a class="reference internal" href="#apache-virtual-host-configuration">Apache virtual host configuration</a></li>
+<li><a class="reference internal" href="#nginx-server-configuration">Nginx server configuration</a></li>
+<li><a class="reference internal" href="#lighttpd-server-configuration">Lighttpd server configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#collectd-graph-panel-front-end">Collectd Graph Panel front-end</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="apache.conf.raw.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc-server/web/apache.conf</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gitweb.html"
+                        title="next chapter">Git Web and CGit</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/etc-server/web/collectd.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="gitweb.html" title="Git Web and CGit"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="apache.conf.raw.html" title="etc-server/web/apache.conf"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

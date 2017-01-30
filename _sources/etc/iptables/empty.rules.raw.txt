@@ -1,0 +1,6 @@
+``etc/iptables/empty.rules``
+============================
+:download:`Download file<empty.rules>`
+
+.. literalinclude:: empty.rules
+   :language: sh

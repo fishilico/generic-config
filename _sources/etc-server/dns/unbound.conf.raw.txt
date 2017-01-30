@@ -1,0 +1,6 @@
+``etc-server/dns/unbound.conf``
+===============================
+:download:`Download file<unbound.conf>`
+
+.. literalinclude:: unbound.conf
+   :language: sh

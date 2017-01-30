@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>etc-server/web/nginx.conf &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../../index.html" />
+    <link rel="up" title="/etc for Server" href="../index.html" />
+    <link rel="next" title="PHP Configuration Customization" href="php.html" />
+    <link rel="prev" title="etc-server/web/lighttpd.conf" href="lighttpd.conf.raw.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="php.html" title="PHP Configuration Customization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lighttpd.conf.raw.html" title="etc-server/web/lighttpd.conf"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="etc-server-web-nginx-conf">
+<h1><tt class="docutils literal"><span class="pre">etc-server/web/nginx.conf</span></tt><a class="headerlink" href="#etc-server-web-nginx-conf" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../../_downloads/nginx.conf"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
+<div class="highlight-nginx"><div class="highlight"><pre><span class="c1"># /etc/nginx/nginx.conf</span>
+<span class="c1"># This file contains some customizations from the default configuration</span>
+
+<span class="k">user</span> <span class="s">www-data</span><span class="p">;</span>
+<span class="k">worker_processes</span> <span class="mi">4</span><span class="p">;</span>
+<span class="k">pid</span> <span class="s">/var/run/nginx.pid</span><span class="p">;</span>
+
+<span class="k">events</span> <span class="p">{</span>
+    <span class="kn">worker_connections</span> <span class="mi">768</span><span class="p">;</span>
+    <span class="c1"># multi_accept on;</span>
+<span class="p">}</span>
+
+<span class="k">http</span> <span class="p">{</span>
+    <span class="c1">##</span>
+    <span class="c1"># Basic Settings</span>
+    <span class="c1">##</span>
+
+    <span class="kn">sendfile</span> <span class="no">on</span><span class="p">;</span>
+    <span class="kn">tcp_nopush</span> <span class="no">on</span><span class="p">;</span>
+    <span class="kn">tcp_nodelay</span> <span class="no">on</span><span class="p">;</span>
+    <span class="kn">keepalive_timeout</span> <span class="mi">65</span><span class="p">;</span>
+    <span class="kn">types_hash_max_size</span> <span class="mi">2048</span><span class="p">;</span>
+
+    <span class="c1"># Only display &quot;nginx&quot; in Server HTTP header</span>
+    <span class="kn">server_tokens</span> <span class="no">off</span><span class="p">;</span>
+
+    <span class="c1"># server_names_hash_bucket_size 64;</span>
+    <span class="c1"># server_name_in_redirect off;</span>
+
+    <span class="kn">include</span> <span class="s">/etc/nginx/mime.types</span><span class="p">;</span>
+    <span class="kn">default_type</span> <span class="s">application/octet-stream</span><span class="p">;</span>
+
+    <span class="c1">##</span>
+    <span class="c1"># Logging Settings</span>
+    <span class="c1">##</span>
+
+    <span class="kn">access_log</span> <span class="s">/var/log/nginx/access.log</span><span class="p">;</span>
+    <span class="kn">error_log</span> <span class="s">/var/log/nginx/error.log</span><span class="p">;</span>
+
+    <span class="c1">##</span>
+    <span class="c1"># Gzip Settings</span>
+    <span class="c1">##</span>
+
+    <span class="kn">gzip</span> <span class="no">on</span><span class="p">;</span>
+    <span class="kn">gzip_disable</span> <span class="s">&quot;msie6&quot;</span><span class="p">;</span>
+
+    <span class="c1"># gzip_vary on;</span>
+    <span class="c1"># gzip_proxied any;</span>
+    <span class="c1"># gzip_comp_level 6;</span>
+    <span class="c1"># gzip_buffers 16 8k;</span>
+    <span class="c1"># gzip_http_version 1.1;</span>
+    <span class="c1"># gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;</span>
+
+    <span class="c1">##</span>
+    <span class="c1"># Content charset</span>
+    <span class="c1">##</span>
+    <span class="kn">charset</span> <span class="s">UTF-8</span><span class="p">;</span>
+
+    <span class="c1">##</span>
+    <span class="c1"># Virtual Host Configs</span>
+    <span class="c1">##</span>
+
+    <span class="kn">include</span> <span class="s">/etc/nginx/conf.d/*.conf</span><span class="p">;</span>
+    <span class="kn">include</span> <span class="s">/etc/nginx/sites-enabled/*</span><span class="p">;</span>
+
+    <span class="c1"># Example of localhost</span>
+    <span class="kn">server</span> <span class="p">{</span>
+        <span class="kn">listen</span> <span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">80</span> <span class="s">default_server</span><span class="p">;</span>
+        <span class="kn">listen</span> <span class="s">[::1]:80</span> <span class="s">default_server</span> <span class="s">ipv6only=on</span><span class="p">;</span>
+        <span class="kn">server_name</span> <span class="s">localhost</span><span class="p">;</span>
+        <span class="kn">root</span> <span class="s">/srv/http</span><span class="p">;</span>
+        <span class="kn">index</span> <span class="s">index.html</span><span class="p">;</span>
+
+        <span class="c1"># Deny anything else than GET/POST</span>
+        <span class="kn">limit_except</span> <span class="s">GET</span> <span class="s">HEAD</span> <span class="s">POST</span> <span class="p">{</span>
+            <span class="kn">deny</span> <span class="s">all</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Deny access to hidden directories</span>
+        <span class="kn">location</span> <span class="p">~</span> <span class="sr">/\.</span> <span class="p">{</span>
+            <span class="kn">return</span> <span class="mi">403</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Allow access to static files</span>
+        <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+            <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="nv">$uri/</span> <span class="p">=</span><span class="mi">404</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lighttpd.conf.raw.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc-server/web/lighttpd.conf</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="php.html"
+                        title="next chapter">PHP Configuration Customization</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/etc-server/web/nginx.conf.raw.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="php.html" title="PHP Configuration Customization"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lighttpd.conf.raw.html" title="etc-server/web/lighttpd.conf"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

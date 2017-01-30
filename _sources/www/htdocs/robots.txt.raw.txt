@@ -1,0 +1,6 @@
+``www/htdocs/robots.txt``
+=========================
+:download:`Download file<robots.txt>`
+
+.. literalinclude:: robots.txt
+   :language: sh

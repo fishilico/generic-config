@@ -1,0 +1,6 @@
+``etc/ssh/sshd_config.default``
+===============================
+:download:`Download file<sshd_config.default>`
+
+.. literalinclude:: sshd_config.default
+   :language: sh

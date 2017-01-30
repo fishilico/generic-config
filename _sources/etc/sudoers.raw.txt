@@ -1,0 +1,6 @@
+``etc/sudoers``
+===============
+:download:`Download file<sudoers>`
+
+.. literalinclude:: sudoers
+   :language: sh

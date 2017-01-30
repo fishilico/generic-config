@@ -1,0 +1,6 @@
+``etc-server/dhcp/dhcpd.conf``
+==============================
+:download:`Download file<dhcpd.conf>`
+
+.. literalinclude:: dhcpd.conf
+   :language: sh

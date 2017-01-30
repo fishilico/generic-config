@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuration tweaks on a Raspberry Pi &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="next" title="Some notes about my SELinux installation" href="selinux.html" />
+    <link rel="prev" title="QEmu-KVM notes" href="qemu.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="selinux.html" title="Some notes about my SELinux installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="qemu.html" title="QEmu-KVM notes"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configuration-tweaks-on-a-raspberry-pi">
+<h1>Configuration tweaks on a Raspberry Pi<a class="headerlink" href="#configuration-tweaks-on-a-raspberry-pi" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="raspbian-installation">
+<h2>Raspbian installation<a class="headerlink" href="#raspbian-installation" title="Permalink to this headline">¶</a></h2>
+<p>Download Raspbian image from <a class="reference external" href="http://www.raspberrypi.org/downloads">http://www.raspberrypi.org/downloads</a>.</p>
+<p>Each time the SD card is mounted and files modified, <tt class="docutils literal"><span class="pre">/etc/fake-hwtime</span></tt> or
+<tt class="docutils literal"><span class="pre">/etc/fake-hwclock.data</span></tt> needs to be updated with current date and time in
+<tt class="docutils literal"><span class="pre">YYYY-MM-DD</span> <span class="pre">HH:MM:SS</span></tt> format. Otherwise the system may experience some
+timing-related issues (and fails to mount the root filesystem).
+This can be done with:</p>
+<div class="highlight-python"><div class="highlight"><pre>date &#39;+%Y-%m-%d %H:%M:%S&#39; &gt; /etc/fake-hwclock.data
+</pre></div>
+</div>
+<p>You may run the system on the SD card in QEMU if you don&#8217;t have an HDMI screen.
+<a class="reference external" href="http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/">http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/</a> describes how to
+achieve that, by downloading a special kernel of qemu-arm and running:</p>
+<div class="highlight-sh"><div class="highlight"><pre>qemu-system-arm -kernel kernel-qemu -cpu arm1176 -m 256 -M versatilepb <span class="se">\</span>
+    -no-reboot -serial stdio -append <span class="s2">&quot;root=/dev/sda2 panic=1&quot;</span> -hda /dev/sdb
+</pre></div>
+</div>
+<p>This kernel has been compiled with instructions written on
+<a class="reference external" href="http://xecdesign.com/compiling-a-kernel/">http://xecdesign.com/compiling-a-kernel/</a>.  It is configured to build a kernel
+for an ARM11 (ARMv6) versatile board, which requires a patch to be applied:
+<a class="reference external" href="http://xecdesign.com/downloads/linux-qemu/linux-arm.patch">http://xecdesign.com/downloads/linux-qemu/linux-arm.patch</a></p>
+</div>
+<div class="section" id="post-install-configuration">
+<h2>Post-install configuration<a class="headerlink" href="#post-install-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Like all Debian systems, some files needs updating after the initial setup:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">/etc/mailname</span></tt> (with the name to be used in mailing)</li>
+<li><tt class="docutils literal"><span class="pre">/etc/sudoers</span></tt> (remove <tt class="docutils literal"><span class="pre">pi</span> <span class="pre">ALL=(ALL)</span> <span class="pre">NOPASSWD:</span> <span class="pre">ALL</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">/etc/ntp.conf</span></tt> (remove <tt class="docutils literal"><span class="pre">restrict</span> <span class="pre">::1</span></tt> if IPv6 module is not loaded)</li>
+<li>Reconfigure the keyboard: <tt class="docutils literal"><span class="pre">keyboard-configuration</span></tt></li>
+<li>Change timezone: <tt class="docutils literal"><span class="pre">tzselect</span></tt> (<tt class="docutils literal"><span class="pre">TZ='Europe/Paris';</span> <span class="pre">export</span> <span class="pre">TZ</span></tt>)</li>
+</ul>
+<p>Moreover, <tt class="docutils literal"><span class="pre">/etc/sysctl.conf</span></tt> contains Raspberry Pi-specific configuration:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># rpi tweaks</span>
+<span class="n">vm</span><span class="o">.</span><span class="n">swappiness</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">vm</span><span class="o">.</span><span class="n">min_free_kbytes</span> <span class="o">=</span> <span class="mi">8192</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="networking">
+<h2>Networking<a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">/etc/network/interfaces</span></tt> with a dynamic configuration:</p>
+<div class="highlight-python"><div class="highlight"><pre>auto lo
+# Add contents:
+allow-hotplug eth0
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+allow-hotplug wlan0
+iface wlan0 inet manual
+wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+iface default inet dhcp
+</pre></div>
+</div>
+<p>Static configuration may be used with the following lines:</p>
+<div class="highlight-python"><div class="highlight"><pre>iface eth0 inet static
+    address 192.0.2.2
+    netmask 255.255.255.0
+    gateway 192.0.2.1
+</pre></div>
+</div>
+</div>
+<div class="section" id="enable-ipv6">
+<h2>Enable IPv6<a class="headerlink" href="#enable-ipv6" title="Permalink to this headline">¶</a></h2>
+<p>To enable IPv6, use the following commands:</p>
+<div class="highlight-sh"><div class="highlight"><pre>modprobe ipv6
+sysctl -w net.ipv6.conf.default.use_tempaddr<span class="o">=</span>2
+sysctl -w net.ipv6.conf.all.use_tempaddr<span class="o">=</span>2
+</pre></div>
+</div>
+<p>To make these changes persistent, add <tt class="docutils literal"><span class="pre">ipv6</span></tt> to <tt class="docutils literal"><span class="pre">/etc/modules</span></tt> and
+<tt class="docutils literal"><span class="pre">net.ipv6.conf.default.use_tempaddr</span> <span class="pre">=</span> <span class="pre">2</span></tt> to <tt class="docutils literal"><span class="pre">/etc/sysctl.conf</span></tt>.</p>
+</div>
+<div class="section" id="some-useful-system-information">
+<h2>Some useful system information<a class="headerlink" href="#some-useful-system-information" title="Permalink to this headline">¶</a></h2>
+<p>Here are the outputs of several commands to retrieve system information on a
+Raspberry Pi, model B.</p>
+<ul class="simple">
+<li>As some people consider a Serial Number and a MAC address as being sensitive
+information, each potential sensitive hexadecimal byte has been replaced here
+by <tt class="docutils literal"><span class="pre">XX</span></tt>.</li>
+<li>Information about used kernel is not relevant here. So these outputs don&#8217;t
+include kernel version and kernel pointers have been protected
+(<tt class="docutils literal"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.kptr_restrict=2</span></tt>).</li>
+<li>Address space is randomized (ALSR, <tt class="docutils literal"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.randomize_va_space=2</span></tt>)
+so when dumping <tt class="docutils literal"><span class="pre">/proc/*/maps</span></tt>, random parts of addresses have been
+replaced by <tt class="docutils literal"><span class="pre">X</span></tt>.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>$ uname -m
+armv6l
+
+$ cat /proc/cpuinfo
+processor   : 0
+model name  : ARMv6-compatible processor rev 7 (v6l)
+BogoMIPS    : 2.00
+Features    : swp half thumb fastmult vfp edsp java tls
+CPU implementer : 0x41
+CPU architecture: 7
+CPU variant : 0x0
+CPU part    : 0xb76
+CPU revision    : 7
+
+Hardware    : BCM2708
+Revision    : 000f
+Serial      : 00000000XXXXXXXX
+
+$ cat /proc/cmdline | fmt -80
+dma.dmachans=0x7f35 bcm2708_fb.fbwidth=656
+bcm2708_fb.fbheight=416 bcm2708.boardrev=0xf bcm2708.serial=0xXXXXXXXX
+smsc95xx.macaddr=B8:27:XX:XX:XX:XX sdhci-bcm2708.emmc_clock_freq=100000000
+vc_mem.mem_base=0x1ec00000 vc_mem.mem_size=0x20000000  dwc_otg.lpm_enable=0
+console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2
+rootfstype=ext4 elevator=deadline rootwait
+
+$ cat /proc/modules
+ipv6 278186 32 - Live 0x00000000
+snd_bcm2835 16304 0 - Live 0x00000000
+snd_pcm 77560 1 snd_bcm2835, Live 0x00000000
+snd_seq 53329 0 - Live 0x00000000
+snd_timer 19998 2 snd_pcm,snd_seq, Live 0x00000000
+snd_seq_device 6438 1 snd_seq, Live 0x00000000
+snd 58447 5 snd_bcm2835,snd_pcm,snd_seq,snd_timer,snd_seq_device, Live 0x00000000
+snd_page_alloc 5145 1 snd_pcm, Live 0x00000000
+leds_gpio 2235 0 - Live 0x00000000
+led_class 3562 1 leds_gpio, Live 0x00000000
+
+$ gcc -E -v - &lt; /dev/null 2&gt;&amp;1 | grep cc1 | fmt -80
+/usr/lib/gcc/arm-linux-gnueabihf/4.6/cc1 -E -quiet -v -imultilib
+. -imultiarch arm-linux-gnueabihf - -march=armv6 -mfloat-abi=hard -mfpu=vfp
+
+$ cat /proc/self/maps | tail -n2
+beXXX000-beXXX000 rw-p 00000000 00:00 0          [stack]
+ffff0000-ffff1000 r-xp 00000000 00:00 0          [vectors]
+
+$ lsusb
+Bus 001 Device 002: ID 0424:9512 Standard Microsystems Corp.
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 003: ID 0424:ec00 Standard Microsystems Corp.
+
+$ readlink /sys/class/net/eth0
+../../devices/platform/bcm2708_usb/usb1/1-1/1-1.1/1-1.1:1.0/net/eth0
+$ readlink /sys/devices/platform/bcm2708_usb/usb1/1-1/1-1.1/1-1.1:1.0/driver
+../../../../../../../bus/usb/drivers/smsc95xx
+$ dmesg | grep eth0 | head -n1 | tail -c+16
+smsc95xx 1-1.1:1.0: eth0: register &#39;smsc95xx&#39; at usb-bcm2708_usb-1.1, smsc95xx USB 2.0 Ethernet, b8:27:XX:XX:XX:XX
+
+$ lshw | fmt -80 -s
+raspberrypi
+    description: Computer
+    width: 32 bits
+  *-core
+       description: Motherboard
+       physical id: 0
+     *-memory
+          description: System memory
+          physical id: 0
+          size: 438MiB
+     *-cpu
+          physical id: 1
+          bus info: cpu@0
+          size: 700MHz
+          capacity: 700MHz
+          capabilities: cpufreq
+  *-network
+       description: Ethernet interface
+       physical id: 1
+       logical name: eth0
+       serial: b8:27:XX:XX:XX:XX
+       size: 100Mbit/s
+       capacity: 100Mbit/s
+       capabilities: ethernet physical tp mii 10bt 10bt-fd 100bt 100bt-fd
+       autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=smsc95xx
+       driverversion=22-Aug-2005 duplex=full firmware=smsc95xx USB 2.0
+       Ethernet ip=192.0.2.42 link=yes multicast=yes port=MII speed=100Mbit/s
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Configuration tweaks on a Raspberry Pi</a><ul>
+<li><a class="reference internal" href="#raspbian-installation">Raspbian installation</a></li>
+<li><a class="reference internal" href="#post-install-configuration">Post-install configuration</a></li>
+<li><a class="reference internal" href="#networking">Networking</a></li>
+<li><a class="reference internal" href="#enable-ipv6">Enable IPv6</a></li>
+<li><a class="reference internal" href="#some-useful-system-information">Some useful system information</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="qemu.html"
+                        title="previous chapter">QEmu-KVM notes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="selinux.html"
+                        title="next chapter">Some notes about my SELinux installation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/raspberrypi.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="selinux.html" title="Some notes about my SELinux installation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="qemu.html" title="QEmu-KVM notes"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

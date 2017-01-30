@@ -1,0 +1,6 @@
+``www/htdocs/index-nothing.html``
+=================================
+:download:`Download file<index-nothing.html>`
+
+.. literalinclude:: index-nothing.html
+   :language: html

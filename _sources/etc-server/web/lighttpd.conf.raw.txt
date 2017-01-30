@@ -1,0 +1,6 @@
+``etc-server/web/lighttpd.conf``
+================================
+:download:`Download file<lighttpd.conf>`
+
+.. literalinclude:: lighttpd.conf
+   :language: lighttpd

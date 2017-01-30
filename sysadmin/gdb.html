@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>GDB, The GNU Project Debugger &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="next" title="MySQL tips and tricks" href="mysql.html" />
+    <link rel="prev" title="Build a development environment for Debian" href="debian-dev.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mysql.html" title="MySQL tips and tricks"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="debian-dev.html" title="Build a development environment for Debian"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="gdb-the-gnu-project-debugger">
+<h1>GDB, The GNU Project Debugger<a class="headerlink" href="#gdb-the-gnu-project-debugger" title="Permalink to this headline">¶</a></h1>
+<p>When debugging an application or investigating a crash, several tools exist to
+understand what&#8217;s going on:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">strace</span></tt> to list system calls,</li>
+<li><tt class="docutils literal"><span class="pre">ltrace</span></tt> to list calls to functions in shared libraries,</li>
+<li><tt class="docutils literal"><span class="pre">valgrind</span></tt> to track memory usage and find out memory leaks and access to
+uninitialized data,</li>
+<li><tt class="docutils literal"><span class="pre">gdb</span></tt> to debug the application.</li>
+</ul>
+<p>This document presents how <tt class="docutils literal"><span class="pre">gdb</span></tt> can be used to debug a program.  It is not a
+complete introduction to <tt class="docutils literal"><span class="pre">gdb</span></tt> and it is not focused on development issues.
+It is written in a mindset of a system admin facing an application crashing or
+having serious bugs.  These dysfunctions can be caused by a harmful
+configuration, by a component missing or by a code issue.  <tt class="docutils literal"><span class="pre">gdb</span></tt> can be used
+to gather data such as stack trace and memory dumps.  Such data can be used when
+reporting bugs, to help developers investigate further, and it can also be used
+to get precise information about the environment context (allocated memory,
+global variables...).</p>
+<div class="section" id="starting-gdb">
+<h2>Starting GDB<a class="headerlink" href="#starting-gdb" title="Permalink to this headline">¶</a></h2>
+<p>To load a program into <tt class="docutils literal"><span class="pre">gdb</span></tt>, the command is:</p>
+<div class="highlight-python"><div class="highlight"><pre>gdb program
+</pre></div>
+</div>
+<p>The program is not started but symbols are read, which allows doing things such
+as defining breakpoints, loading shared libraries, customizing the interface...</p>
+<p>It is possible to debug a running process knowing its PID (eg. 1234):</p>
+<div class="highlight-python"><div class="highlight"><pre>gdb -p 1234
+</pre></div>
+</div>
+<p>Moreover, to launch a text user interface (TUI), one can run:</p>
+<div class="highlight-python"><div class="highlight"><pre>gdb -tui -quiet program
+</pre></div>
+</div>
+</div>
+<div class="section" id="basic-commands">
+<h2>Basic commands<a class="headerlink" href="#basic-commands" title="Permalink to this headline">¶</a></h2>
+<p>Once <tt class="docutils literal"><span class="pre">gdb</span></tt> is started, it prints a few lines and presents a prompt with
+&#8220;<tt class="docutils literal"><span class="pre">(gdb)</span></tt>&#8221;.  The commands which are mandatory to know then are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">quit</span></tt> or <tt class="docutils literal"><span class="pre">q</span></tt>: exit <tt class="docutils literal"><span class="pre">gdb</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">help</span></tt> or <tt class="docutils literal"><span class="pre">h</span></tt>: get help.</li>
+<li><tt class="docutils literal"><span class="pre">run</span> <span class="pre">arg1</span> <span class="pre">arg2</span> <span class="pre">arg3</span></tt> or <tt class="docutils literal"><span class="pre">r</span></tt>: launch the program with the specified
+command-line arguments.</li>
+<li><tt class="docutils literal"><span class="pre">breakpoint</span> <span class="pre">main</span></tt> or <tt class="docutils literal"><span class="pre">b</span></tt>: set up a breakpoint on function <tt class="docutils literal"><span class="pre">main()</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">clear</span> <span class="pre">main</span></tt> or <tt class="docutils literal"><span class="pre">cl</span></tt>: remove the breakpoint on function <tt class="docutils literal"><span class="pre">main()</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">delete</span> <span class="pre">1</span></tt> or <tt class="docutils literal"><span class="pre">d</span></tt>: remove the first breakpoint.</li>
+<li><tt class="docutils literal"><span class="pre">watch</span> <span class="pre">variable</span></tt> or <tt class="docutils literal"><span class="pre">wa</span></tt>: set up a watchpoint on a variable.</li>
+<li><tt class="docutils literal"><span class="pre">catch</span> <span class="pre">syscall</span></tt>: set up a catchpoint for any syscall</li>
+<li><tt class="docutils literal"><span class="pre">continue</span></tt> or <tt class="docutils literal"><span class="pre">c</span></tt>: continue execution after it being interrupted.</li>
+<li><tt class="docutils literal"><span class="pre">step</span></tt> or <tt class="docutils literal"><span class="pre">s</span></tt>: step program until a different line of code.</li>
+<li><tt class="docutils literal"><span class="pre">next</span></tt> or <tt class="docutils literal"><span class="pre">n</span></tt>: like <tt class="docutils literal"><span class="pre">step</span></tt>, but step over subroutines.</li>
+<li><tt class="docutils literal"><span class="pre">stepi</span></tt> or <tt class="docutils literal"><span class="pre">si</span></tt>: step one instruction.</li>
+<li><tt class="docutils literal"><span class="pre">nexti</span></tt> or <tt class="docutils literal"><span class="pre">ni</span></tt>: like <tt class="docutils literal"><span class="pre">stepi</span></tt> but step over subroutines.</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">step</span></tt>, <tt class="docutils literal"><span class="pre">next</span></tt>, <tt class="docutils literal"><span class="pre">stepi</span></tt> and <tt class="docutils literal"><span class="pre">nexti</span></tt> takes an optional integer parameter
+which specifies how many times to repeat the command.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">layout</span> <span class="pre">split</span></tt>: change layout to a 3-windows layout, code, asm and command.
+Other possible layout are <tt class="docutils literal"><span class="pre">src</span></tt>, <tt class="docutils literal"><span class="pre">asm</span></tt> and <tt class="docutils literal"><span class="pre">regs</span></tt>.</li>
+</ul>
+<p>To iterate through layouts, use <tt class="docutils literal"><span class="pre">layout</span> <span class="pre">next</span></tt> (or <tt class="docutils literal"><span class="pre">la</span> <span class="pre">n</span></tt>) and press enter
+several times.  Pressing enter with an empty prompt repeats the last command.</p>
+<p>To switch between TUI (with layouts) and CLI (only command line), the default
+key binding is <tt class="docutils literal"><span class="pre">Ctrl-X</span> <span class="pre">A</span></tt> (<tt class="docutils literal"><span class="pre">^Xa</span></tt>, <tt class="docutils literal"><span class="pre">^XA</span></tt> or <tt class="docutils literal"><span class="pre">^X^A</span></tt>).</p>
+</div>
+<div class="section" id="analysis-commands">
+<h2>Analysis commands<a class="headerlink" href="#analysis-commands" title="Permalink to this headline">¶</a></h2>
+<p>Once a program is interrupted, either because of a breakpoint, a segmentation
+fault, an interrupt signal (Ctrl-C) or other trapped signals, it is possible to
+analysis the execution context of a program.</p>
+<p>Call frame:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">backtrace</span></tt> or <tt class="docutils literal"><span class="pre">bt</span></tt>: show the stack trace (list of function calls).</li>
+<li><tt class="docutils literal"><span class="pre">frame</span> <span class="pre">0</span></tt> or <tt class="docutils literal"><span class="pre">f</span> <span class="pre">0</span></tt>: select a frame in the stack trace.</li>
+<li><tt class="docutils literal"><span class="pre">info</span> <span class="pre">frame</span></tt> or <tt class="docutils literal"><span class="pre">i</span> <span class="pre">f</span></tt>: show information about current frame.
+(A frame ID can be added).</li>
+</ul>
+<p>Display variables and expressions:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">print</span> <span class="pre">$rsp</span></tt> or <tt class="docutils literal"><span class="pre">p</span></tt>: print an expression, which is here the x86_64 stack
+pointer, but can be a symbol (to a global variable) or a complex expression.
+It can even call functions from the currently-being-debugged program!</li>
+<li><tt class="docutils literal"><span class="pre">p/x</span> <span class="pre">$r12</span></tt>: print the value of register 12 in hexadecimal format.</li>
+<li><tt class="docutils literal"><span class="pre">p</span> <span class="pre">*(char***)&amp;__libc_argv</span></tt>: retrieve the value of <tt class="docutils literal"><span class="pre">argv</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">output</span></tt> or <tt class="docutils literal"><span class="pre">ou</span></tt>: like <tt class="docutils literal"><span class="pre">print</span></tt> without value history nor newline.</li>
+</ul>
+<p>Memory:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">x/256xb</span> <span class="pre">$rsp</span></tt>: dump 256 bytes from the stack in hexadecimal format.</li>
+<li><tt class="docutils literal"><span class="pre">x/60xw</span> <span class="pre">$rsp</span></tt>: dump 60 32-bit words from the stack.</li>
+<li><tt class="docutils literal"><span class="pre">x/30xg</span> <span class="pre">$rsp</span></tt>: dump 30 64-bit words from the stack.</li>
+<li><tt class="docutils literal"><span class="pre">x/42i</span> <span class="pre">main</span></tt>: show the 42 first asm instructions of function <tt class="docutils literal"><span class="pre">main</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">x/10s</span> <span class="pre">**(char***)&amp;environ</span></tt>: show 10 environment variables.</li>
+<li><tt class="docutils literal"><span class="pre">x/hs</span> <span class="pre">$rsi</span></tt>: show an wide-character string from rsi.</li>
+<li><tt class="docutils literal"><span class="pre">disassemble</span></tt> or <tt class="docutils literal"><span class="pre">disas</span></tt>: show asm instructions around the current one.
+(an address or a symbol can be given).</li>
+<li><tt class="docutils literal"><span class="pre">list</span></tt> or <tt class="docutils literal"><span class="pre">l</span></tt>: show code lines around the current one.</li>
+<li><tt class="docutils literal"><span class="pre">list</span> <span class="pre">-</span></tt> or <tt class="docutils literal"><span class="pre">l</span> <span class="pre">-</span></tt>: show code lines before the current one.</li>
+<li><tt class="docutils literal"><span class="pre">dump</span> <span class="pre">memory</span> <span class="pre">text.bin</span> <span class="pre">0x400000</span> <span class="pre">0x401000</span></tt>: write memory content to a file.
+The two hexadecimal arguments define a [start, stop) range.</li>
+</ul>
+<p>General information:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">info</span> <span class="pre">registers</span></tt> or <tt class="docutils literal"><span class="pre">i</span> <span class="pre">reg</span></tt>: show the values of current registers.</li>
+<li><tt class="docutils literal"><span class="pre">info</span> <span class="pre">proc</span> <span class="pre">mappings</span></tt> or <tt class="docutils literal"><span class="pre">i</span> <span class="pre">proc</span> <span class="pre">m</span></tt>: show the memory mapping.</li>
+<li><tt class="docutils literal"><span class="pre">info</span> <span class="pre">locals</span></tt> or <tt class="docutils literal"><span class="pre">i</span> <span class="pre">lo</span></tt>: show the values of local variables.</li>
+</ul>
+</div>
+<div class="section" id="remote-debug">
+<h2>Remote debug<a class="headerlink" href="#remote-debug" title="Permalink to this headline">¶</a></h2>
+<p>It is possible debug a program through a network connection using <tt class="docutils literal"><span class="pre">target</span></tt>
+command in <tt class="docutils literal"><span class="pre">gdb</span></tt>.  Even if it is quite crazy to do such a thing for an usual
+application, it comes handy when debugging an emulated program (with QEmu),
+a Windows program on a Linux host (with Wine), or an embedded system (with a
+real wire).</p>
+<p>For example, to debug an application running with wine, it is possible to do:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ winedbg --gdb --no-start cmd.exe
+0022:0023: create process &#39;C:\windows\system32\cmd.exe&#39;/0x110760 @0x7ece8b70 (0&lt;0&gt;)
+0022:0023: create thread I @0x7ece8b70
+target remote localhost:12345
+
+$ gdb -quiet
+(gdb) target remote localhost:12345
+Remote debugging using localhost:47152
+0x7b85d4b0 in ?? ()
+(gdb) c
+Continuing.
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">target</span></tt> can also be used to load a core dump and other things.</p>
+</div>
+<div class="section" id="using-core-dumps">
+<h2>Using core dumps<a class="headerlink" href="#using-core-dumps" title="Permalink to this headline">¶</a></h2>
+<p>When a program crashes, Linux can dump its execution context to a file.  This
+file is called a &#8220;core dump&#8221; and it is possible to run gdb to analyze it using:</p>
+<blockquote>
+<div>gdb program corefile</div></blockquote>
+<p>To generate such a core dump, the &#8220;core resource limit&#8221; needs to be non-zero
+and <tt class="docutils literal"><span class="pre">kernel.core_pattern</span></tt> needs to be configured.  By default, these values
+are:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ulimit -c
+0
+$ sysctl kernel.core_pattern
+kernel.core_pattern = core
+</pre></div>
+</div>
+<p>Here is an example to dump core of &#8220;sleep&#8221;:</p>
+<div class="highlight-sh"><div class="highlight"><pre>sudo sysctl -w kernel.core_pattern<span class="o">=</span>%e.core
+<span class="nb">ulimit</span> -c unlimited
+sleep 3600 &amp;
+<span class="nb">kill</span> -SEGV <span class="nv">$!</span>
+</pre></div>
+</div>
+<p>The shell would print something like:</p>
+<div class="highlight-python"><div class="highlight"><pre>[1]  + segmentation fault (core dumped)  sleep 3600
+</pre></div>
+</div>
+<p>and the current directory now contains a file named <tt class="docutils literal"><span class="pre">sleep.core.1234</span></tt> with
+1234 being the PID of the sleep process.  To launch <tt class="docutils literal"><span class="pre">gdb</span></tt> on the coredump,
+the command is:</p>
+<div class="highlight-sh"><div class="highlight"><pre>gdb <span class="k">$(</span>which sleep<span class="k">)</span> sleep.core.1234
+</pre></div>
+</div>
+<p>and it prints lines such as:</p>
+<div class="highlight-python"><div class="highlight"><pre>Core was generated by `sleep 3600&#39;.
+Program terminated with signal SIGSEGV, Segmentation fault.
+#0  0x00007fe5073c89d0 in __nanosleep_nocancel () from /usr/lib/libc.so.6
+</pre></div>
+</div>
+<p>Systemd uses a specific system to store core dump in the journal.  To use this
+system, you need to configure <tt class="docutils literal"><span class="pre">kernel.core_pattern</span></tt> with:</p>
+<div class="highlight-python"><div class="highlight"><pre>|/usr/lib/systemd/systemd-coredump %p %u %g %s %t %e
+</pre></div>
+</div>
+<p>Once this is done, core dumps are available through <tt class="docutils literal"><span class="pre">coredumpctl</span></tt> command,
+which provides an easy way to launch <tt class="docutils literal"><span class="pre">gdb</span></tt> on the dumps.</p>
+</div>
+<div class="section" id="debug-options-for-compilation">
+<h2>Debug options for compilation<a class="headerlink" href="#debug-options-for-compilation" title="Permalink to this headline">¶</a></h2>
+<p>To compile a C program with debug symbols, the compiler command line is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">gcc</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">ggdb</span> <span class="o">-</span><span class="n">fvar</span><span class="o">-</span><span class="n">tracking</span><span class="o">-</span><span class="n">assignments</span>
+</pre></div>
+</div>
+<p>The variable tracker is documented on GCC wiki:
+<a class="reference external" href="https://gcc.gnu.org/wiki/Var_Tracking_Assignments">https://gcc.gnu.org/wiki/Var_Tracking_Assignments</a></p>
+<p>To build an Archlinux package with debug symbols, the <tt class="docutils literal"><span class="pre">debug</span></tt> option needs to
+be enabled in <tt class="docutils literal"><span class="pre">/etc/makepkg.conf</span></tt> or in the used <tt class="docutils literal"><span class="pre">PKGBUILD</span></tt>.  Moreover, if
+the <tt class="docutils literal"><span class="pre">strip</span></tt> option is also given, the usual package contains compiled binaries
+without debug symbols and a second package (with <tt class="docutils literal"><span class="pre">-debug</span></tt> suffix) is built,
+which installs files in <tt class="docutils literal"><span class="pre">/usr/lib/debug/</span></tt> with debug information.  More
+information is given in the <tt class="docutils literal"><span class="pre">PKGBUILD</span></tt> manpage.</p>
+<p>To build a Debian package with debug symbols, the following commands can be
+used:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nb">export </span><span class="nv">DEB_BUILD_OPTIONS</span><span class="o">=</span><span class="s2">&quot;nostrip noopt&quot;</span>
+debuild -uc -us
+</pre></div>
+</div>
+<p>When the debug symbols are separated from a binary, the build ID is used to
+keep a relationship between the stripped binary and the debug symbols.  This ID
+is created at build time and is available in section <tt class="docutils literal"><span class="pre">.note.gnu.build-id</span></tt> (or
+<tt class="docutils literal"><span class="pre">NOTE</span></tt> entry in the program header):</p>
+<div class="highlight-python"><div class="highlight"><pre>$ LANG=C readelf --notes /bin/sh |grep Build
+Build ID: ab8308edd4619fdf3c578408bee0b123b41f8553
+
+$ readelf --program-headers /usr/bin/sh |grep -A1 NOTE
+  NOTE           0x0000000000000254 0x0000000000400254 0x0000000000400254
+                 0x0000000000000044 0x0000000000000044  R      4
+
+$ LANG=C objdump -s -j .note.gnu.build-id /bin/sh |tail -n +4
+Contents of section .note.gnu.build-id:
+ 400274 04000000 14000000 03000000 474e5500  ............GNU.
+ 400284 ab8308ed d4619fdf 3c578408 bee0b123  .....a..&lt;W.....#
+ 400294 b41f8553                             ...S
+</pre></div>
+</div>
+<p>Here, debug information may be found in
+<tt class="docutils literal"><span class="pre">/usr/lib/debug/.build_id/ab/8308edd4619fdf3c578408bee0b123b41f8553.debug</span></tt>,
+if this file is installed.</p>
+</div>
+<div class="section" id="documentations">
+<h2>Documentations<a class="headerlink" href="#documentations" title="Permalink to this headline">¶</a></h2>
+<p>Zenk Security made a useful Quick Reference PDF for gdb:
+<a class="reference external" href="https://repo.zenk-security.com/Reversing%20.%20cracking/GDB%20QUICK%20REFERENCE.pdf">https://repo.zenk-security.com/Reversing%20.%20cracking/GDB%20QUICK%20REFERENCE.pdf</a></p>
+<p>More information about core dumps and <tt class="docutils literal"><span class="pre">kernel.core_pattern</span></tt> format can be
+found in the &#8220;core&#8221; man page: <a class="reference external" href="http://man7.org/linux/man-pages/man5/core.5.html">http://man7.org/linux/man-pages/man5/core.5.html</a></p>
+<p>To debug Linux kernel, it is recommended to first decompress the kernel image
+(like <tt class="docutils literal"><span class="pre">vmlinuz</span></tt>) to an uncompressed ELF image (<tt class="docutils literal"><span class="pre">vmlinux</span></tt>).  The kernel
+sources contain a script which exactly does this:
+<a class="reference external" href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/scripts/extract-vmlinux">https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/scripts/extract-vmlinux</a>.
+As <tt class="docutils literal"><span class="pre">vmlinux</span></tt> is likely to be stripped, the <tt class="docutils literal"><span class="pre">System.map</span></tt> file is needed to
+find the symbols.  Nevertheless a developer-oriented distribution may choose to
+provide the decompressed unstripped <tt class="docutils literal"><span class="pre">vmlinux</span></tt> file in
+<tt class="docutils literal"><span class="pre">/usr/lib/modules/$(uname</span> <span class="pre">-r)/build/vmlinux</span></tt>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">GDB, The GNU Project Debugger</a><ul>
+<li><a class="reference internal" href="#starting-gdb">Starting GDB</a></li>
+<li><a class="reference internal" href="#basic-commands">Basic commands</a></li>
+<li><a class="reference internal" href="#analysis-commands">Analysis commands</a></li>
+<li><a class="reference internal" href="#remote-debug">Remote debug</a></li>
+<li><a class="reference internal" href="#using-core-dumps">Using core dumps</a></li>
+<li><a class="reference internal" href="#debug-options-for-compilation">Debug options for compilation</a></li>
+<li><a class="reference internal" href="#documentations">Documentations</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="debian-dev.html"
+                        title="previous chapter">Build a development environment for Debian</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mysql.html"
+                        title="next chapter">MySQL tips and tricks</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/gdb.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mysql.html" title="MySQL tips and tricks"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="debian-dev.html" title="Build a development environment for Debian"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

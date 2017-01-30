@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>systemd configuration &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="next" title="Use tmpfs for some directories" href="tmpfs.html" />
+    <link rel="prev" title="Sound Configuration" href="sound.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tmpfs.html" title="Use tmpfs for some directories"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sound.html" title="Sound Configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="systemd-configuration">
+<h1>systemd configuration<a class="headerlink" href="#systemd-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Even if systemd works well with the default configuration, it needs to be
+configured on some system so that logs don&#8217;t fill the disk, ...</p>
+<div class="section" id="logging-syslog-and-journald">
+<h2>Logging: syslog and journald<a class="headerlink" href="#logging-syslog-and-journald" title="Permalink to this headline">¶</a></h2>
+<p>On most of my systems I&#8217;m using syslog-ng to manage my log files. This
+interfaces quite well with journald as the only thing you need to do to make it
+work is to use these sources in <tt class="docutils literal"><span class="pre">/etc/syslog-ng/syslog-ng.conf</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>source src {
+  unix-dgram(&quot;/run/systemd/journal/syslog&quot;);
+  internal();
+  file(&quot;/proc/kmsg&quot;);
+};
+</pre></div>
+</div>
+<p>Once this is done, you no longer need persistent storage to /var/log/journal.
+Instead of deleting this directory or making it a tmpfs, the right way to
+disable persistent storage is to set this into <tt class="docutils literal"><span class="pre">/etc/systemd/journald.conf</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Storage</span><span class="o">=</span><span class="n">volatile</span>
+<span class="n">ForwardToSyslog</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">ForwardToKMsg</span><span class="o">=</span><span class="n">no</span>
+<span class="n">ForwardToConsole</span><span class="o">=</span><span class="n">no</span>
+</pre></div>
+</div>
+<p>More information can be found in the man page:
+<a class="reference external" href="http://www.freedesktop.org/software/systemd/man/journald.conf.html">http://www.freedesktop.org/software/systemd/man/journald.conf.html</a></p>
+<p>If you use persistent storage, you may want to rotate logs every 3 months for
+example. This option in <tt class="docutils literal"><span class="pre">/etc/systemd/journald.conf</span></tt> tells journald to do
+this:</p>
+<div class="highlight-python"><div class="highlight"><pre>MaxRetentionSec=3month
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging-audit-logs-and-journald">
+<h2>Logging: audit logs and journald<a class="headerlink" href="#logging-audit-logs-and-journald" title="Permalink to this headline">¶</a></h2>
+<p>journald can listen to the audit socket for events. Even if that could be
+useful without <tt class="docutils literal"><span class="pre">auditd</span></tt> service, it can spam the logs when using software
+such as Chrome (<a class="reference external" href="https://bugs.chromium.org/p/chromium/issues/detail?id=456535">https://bugs.chromium.org/p/chromium/issues/detail?id=456535</a>
+has been opened for more than a year) and it does not honour auditctl
+configuration such as:</p>
+<div class="highlight-python"><div class="highlight"><pre>auditctl -a never,exit -F arch=b64 -S set_robust_list -F path=/usr/lib/chromium/chromium -F key=bug456535
+</pre></div>
+</div>
+<p>(This line without <tt class="docutils literal"><span class="pre">auditctl</span></tt> can be put in
+<tt class="docutils literal"><span class="pre">/etc/audit/rules.d/chromium.rules</span></tt> so that <tt class="docutils literal"><span class="pre">augenrules</span> <span class="pre">--load</span></tt> loads this
+at every boot).</p>
+<p>To disable this journald feature, the easier way consists in masking the audit
+socket (cf. <a class="reference external" href="https://github.com/systemd/systemd/issues/959#issuecomment-174541674">https://github.com/systemd/systemd/issues/959#issuecomment-174541674</a>):</p>
+<div class="highlight-sh"><div class="highlight"><pre>systemctl mask systemd-journald-audit.socket
+</pre></div>
+</div>
+</div>
+<div class="section" id="write-journal-on-tty">
+<h2>Write journal on tty<a class="headerlink" href="#write-journal-on-tty" title="Permalink to this headline">¶</a></h2>
+<p>On a workstation, it can be quite convenient to read the journal directly from
+ttys above 7 (tty1-6 being consoles and tty7 the X Window session, for example).</p>
+<p>With syslog-ng, the configuration is quite straightforward:</p>
+<div class="highlight-python"><div class="highlight"><pre>source src { system(); };
+destination d_tty9 { file(&quot;/dev/tty9&quot; owner(-1) group(-1) perm(-1)); };
+destination d_tty10 { file(&quot;/dev/tty10&quot; owner(-1) group(-1) perm(-1)); };
+destination d_tty11 { file(&quot;/dev/tty11&quot; owner(-1) group(-1) perm(-1)); };
+destination console_all { file(&quot;/dev/tty12&quot; owner(-1) group(-1) perm(-1)); };
+filter f_authpriv { facility(auth, authpriv); };
+filter f_daemon { facility(daemon); };
+filter f_kernel { facility(kern); };
+log { source(src); filter(f_authpriv); destination(d_tty9); };
+log { source(src); filter(f_daemon); destination(d_tty10); };
+log { source(src); filter(f_kernel); destination(d_tty11); };
+log { source(src); destination(console_all); };
+</pre></div>
+</div>
+<p>It is also possible to send emergency messages to everyone logged in:</p>
+<div class="highlight-python"><div class="highlight"><pre>source s_src {
+    system();
+    internal();
+};
+destination du_all { usertty(&quot;*&quot;); };
+filter f_emerg { level(emerg); };
+log { source(s_src); filter(f_emerg); destination(du_all); };
+</pre></div>
+</div>
+<p>With journald, the only &#8220;natively&#8221; available feature is logging to a tty, with
+something like this in <tt class="docutils literal"><span class="pre">/etc/systemd/journald.conf</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>ForwardToConsole=yes
+TTYPath=/dev/tty12
+MaxLevelConsole=info
+</pre></div>
+</div>
+<p>The other filters can be implemented with services.  Here are some files.</p>
+<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/journal&#64;.service</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>[Unit]
+Description=Show journal on %I
+After=systemd-journald.service
+ConditionPathExists=/dev/%I
+
+[Service]
+Type=idle
+StandardOutput=tty
+TTYPath=/dev/%I
+TTYReset=yes
+TTYVHangup=yes
+
+[Install]
+WantedBy=multi-user.target
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/journal&#64;tty9.service</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>.include /etc/systemd/system/journal@.service
+
+[Unit]
+Description=Show journal on %I (auth)
+
+[Service]
+# Facilities: 4 = LOG_AUTH, 10 = LOG_AUTHPRIV
+ExecStart=/usr/bin/journalctl -b -n50 SYSLOG_FACILITY=4 SYSLOG_FACILITY=10
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/journal&#64;tty10.service</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>.include /etc/systemd/system/journal@.service
+
+[Unit]
+Description=Show journal on %I (daemon)
+
+[Service]
+# Facility codes:
+#   2 = LOG_MAIL
+#   3 = LOG_DAEMON
+#   5 = LOG_SYSLOG
+#   6 = LOG_LPR
+#   7 = LOG_NEWS
+#   8 = LOG_UUCP
+#   9 = LOG_CRON
+#  11 = LOG_FTP
+#
+# Not selected:
+#   0 = LOG_KERN
+#   1 = LOG_USER
+#   4 = LOG_AUTH
+#  10 = LOG_AUTHPRIV
+#  16..23 = LOG_LOCAL0..7
+#
+# Source: /usr/include/sys/syslog.h
+#   in glibc: https://sourceware.org/git/?p=glibc.git;a=blob;f=misc/sys/syslog.h;hb=HEAD
+ExecStart=/usr/bin/journalctl -b -n50 \
+    SYSLOG_FACILITY=2 SYSLOG_FACILITY=3 SYSLOG_FACILITY=5 SYSLOG_FACILITY=6 \
+    SYSLOG_FACILITY=7 SYSLOG_FACILITY=8 SYSLOG_FACILITY=9 SYSLOG_FACILITY=11
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/journal&#64;tty11.service</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>.include /etc/systemd/system/journal@.service
+
+[Unit]
+Description=Show journal on %I (kernel)
+
+[Service]
+# --dmesg implies -b and _TRANSPORT=kernel
+ExecStart=/usr/bin/journalctl -b -f -n 50 --dmesg
+
+``/etc/systemd/system/journal@tty12.service``::
+
+.include /etc/systemd/system/journal@.service
+
+[Unit]
+Description=Show journal on %I (everything)
+
+[Service]
+ExecStart=/usr/bin/journalctl -b -f -n 50
+</pre></div>
+</div>
+<p>With such commands, it is also possible to pipe <tt class="docutils literal"><span class="pre">journalctl</span></tt> output to
+<tt class="docutils literal"><span class="pre">ccze</span></tt> (if installed) to colorize the logs.</p>
+</div>
+<div class="section" id="configure-timers-and-remove-cron">
+<h2>Configure timers (and remove cron)<a class="headerlink" href="#configure-timers-and-remove-cron" title="Permalink to this headline">¶</a></h2>
+<p>systemd doesn&#8217;t rely on a cron daemon to run periodic tasks but uses its own
+system with calendar time events. ArchLinux provides on its wiki some config
+files to replace common cron scripts:
+<a class="reference external" href="https://wiki.archlinux.org/index.php/Systemd/cron_functionality">https://wiki.archlinux.org/index.php/Systemd/cron_functionality</a></p>
+<p>Since April 2014 the timers are included and enabled by default, with timer
+files in <tt class="docutils literal"><span class="pre">/usr/lib/systemd/system</span></tt> and symlinks in
+<tt class="docutils literal"><span class="pre">/usr/lib/systemd/system/multi-user.target.wants/</span></tt>. To disable some timers
+which do many disk writes, an overriding unit needs to be created.</p>
+<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/disabled-timer.service</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>[Unit]
+Description=Unit to be able to disable timers
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/true
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/updatedb.timer</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>[Unit]
+Description=Disabled locate database update
+
+[Timer]
+#OnCalendar=daily
+#Persistent=true
+#OnBootSec=10min
+#OnUnitActiveSec=1d
+OnCalendar=monthly
+Unit=disabled-timer.service
+</pre></div>
+</div>
+<p>Another way may consist in masking the service units, but it did not work well
+back in spring 2014:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ systemctl mask updatedb
+Created symlink from /etc/systemd/system/updatedb.service to /dev/null.
+</pre></div>
+</div>
+</div>
+<div class="section" id="automatically-create-a-bridge-interface">
+<h2>Automatically create a bridge interface<a class="headerlink" href="#automatically-create-a-bridge-interface" title="Permalink to this headline">¶</a></h2>
+<p>To automatically create a bridge interface which can be used for example to
+bridge together several virtual machines, here is a systemd-networkd
+configuration.</p>
+<p><tt class="docutils literal"><span class="pre">/etc/systemd/network/VMBridge.netdev</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">NetDev</span><span class="p">]</span>
+<span class="n">Name</span><span class="o">=</span><span class="n">br0</span>
+<span class="n">Kind</span><span class="o">=</span><span class="n">bridge</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">/etc/systemd/network/br0.network</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>[Match]
+Name=br0
+
+[Network]
+IPForward=yes
+
+[Address]
+Address=198.51.100.0/24
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">systemd configuration</a><ul>
+<li><a class="reference internal" href="#logging-syslog-and-journald">Logging: syslog and journald</a></li>
+<li><a class="reference internal" href="#logging-audit-logs-and-journald">Logging: audit logs and journald</a></li>
+<li><a class="reference internal" href="#write-journal-on-tty">Write journal on tty</a></li>
+<li><a class="reference internal" href="#configure-timers-and-remove-cron">Configure timers (and remove cron)</a></li>
+<li><a class="reference internal" href="#automatically-create-a-bridge-interface">Automatically create a bridge interface</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sound.html"
+                        title="previous chapter">Sound Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tmpfs.html"
+                        title="next chapter">Use tmpfs for some directories</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/systemd.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tmpfs.html" title="Use tmpfs for some directories"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sound.html" title="Sound Configuration"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

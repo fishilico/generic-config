@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Some cmd.exe commands &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Windows system information" href="index.html" />
+    <link rel="next" title="Set hardware clock to UTC" href="utc-clock.html" />
+    <link rel="prev" title="Windows system information" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="utc-clock.html" title="Set hardware clock to UTC"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Windows system information"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Windows system information</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="some-cmd-exe-commands">
+<h1>Some cmd.exe commands<a class="headerlink" href="#some-cmd-exe-commands" title="Permalink to this headline">¶</a></h1>
+<p>Here is a set of commands which are not very easy to remember but can be useful.</p>
+<p>Create a file with input from the console:</p>
+<div class="highlight-python"><div class="highlight"><pre>copy con new_file.txt
+
+# Read it
+type new_file.txt
+# Remove it
+del new_file.txt
+</pre></div>
+</div>
+<p>Resize the window (from <a class="reference external" href="http://superuser.com/questions/653390/how-can-i-open-a-console-application-with-a-given-window-size">http://superuser.com/questions/653390/how-can-i-open-a-console-application-with-a-given-window-size</a>):</p>
+<div class="highlight-python"><div class="highlight"><pre>mode con:cols=140 lines=70
+</pre></div>
+</div>
+<p>Change colors:</p>
+<div class="highlight-python"><div class="highlight"><pre># Write white on blue background
+color 1f
+
+# Write dark or light green on black
+color 2
+color a
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Windows system information</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="utc-clock.html"
+                        title="next chapter">Set hardware clock to UTC</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/windows/cmd.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="utc-clock.html" title="Set hardware clock to UTC"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Windows system information"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Windows system information</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

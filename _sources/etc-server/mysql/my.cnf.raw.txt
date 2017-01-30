@@ -1,0 +1,6 @@
+``etc-server/mysql/my.cnf``
+===========================
+:download:`Download file<my.cnf>`
+
+.. literalinclude:: my.cnf
+   :language: sh

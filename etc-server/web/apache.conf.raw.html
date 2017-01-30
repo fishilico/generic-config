@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>etc-server/web/apache.conf &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../../index.html" />
+    <link rel="up" title="/etc for Server" href="../index.html" />
+    <link rel="next" title="Collectd" href="collectd.html" />
+    <link rel="prev" title="etc-server/mysql/my.cnf" href="../mysql/my.cnf.raw.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="collectd.html" title="Collectd"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../mysql/my.cnf.raw.html" title="etc-server/mysql/my.cnf"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="etc-server-web-apache-conf">
+<h1><tt class="docutils literal"><span class="pre">etc-server/web/apache.conf</span></tt><a class="headerlink" href="#etc-server-web-apache-conf" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../../_downloads/apache.conf"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
+<div class="highlight-apache"><div class="highlight"><pre><span class="c"># This file contains some customizations from the default Apache configuration.</span>
+<span class="c"># The main config file can be located in:</span>
+<span class="c">#   * /etc/httpd/conf/httpd.conf (ArchLinux)</span>
+<span class="c">#   * /etc/apache2/apache2.conf (Debian)</span>
+<span class="c">#</span>
+<span class="c"># Documentation:</span>
+<span class="c">#   * http://httpd.apache.org/docs/current/</span>
+<span class="c">#   * https://wiki.archlinux.org/index.php/LAMP</span>
+
+<span class="nb">ServerSignature</span> <span class="k">Off</span>
+<span class="nb">ServerTokens</span> Prod
+
+<span class="c"># Configuration for a local web server</span>
+<span class="nb">ServerName</span> localhost
+<span class="nb">Listen</span> <span class="m">127.0.0.1</span>:80
+<span class="nb">Listen</span> [::1]:80
+
+<span class="nb">AllowOverride</span> <span class="k">None</span>
+
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/srv/http&quot;</span><span class="nt">&gt;</span>
+    <span class="nb">Options</span> Indexes FollowSymLinks
+    <span class="nb">AllowOverride</span> <span class="k">None</span>
+    <span class="nb">Require</span> <span class="k">all</span> granted
+    <span class="c"># Apache &lt;2.3 configuration:</span>
+    <span class="c"># &lt;IfVersion &lt; 2.3&gt;</span>
+    <span class="c">#   Order allow,deny</span>
+    <span class="c">#   Allow from all</span>
+    <span class="c"># &lt;/IfVersion&gt;</span>
+<span class="nt">&lt;/Directory&gt;</span>
+<span class="nt">&lt;IfModule</span> <span class="s">dir_module</span><span class="nt">&gt;</span>
+    <span class="nb">DirectoryIndex</span> index.html
+<span class="nt">&lt;/IfModule&gt;</span>
+
+<span class="nt">&lt;IfModule</span> <span class="s">alias_module</span><span class="nt">&gt;</span>
+    <span class="nb">Alias</span> <span class="s2">&quot;/doc&quot;</span> <span class="s2">&quot;/usr/share/doc/&quot;</span>
+    <span class="nt">&lt;Directory</span> <span class="s">&quot;/usr/share/doc/&quot;</span><span class="nt">&gt;</span>
+        <span class="nb">Options</span> Indexes MultiViews FollowSymLinks
+        <span class="nb">AllowOverride</span> <span class="k">None</span>
+
+        <span class="c"># &quot;Require local&quot; is better than:</span>
+        <span class="c">#   Require ip 127.0.0.0/8 ::1/128</span>
+        <span class="c">#   Require host localhost</span>
+        <span class="nb">Require</span> local
+
+        <span class="c"># Apache &lt;2.4 configuration:</span>
+        <span class="c">#Order deny,allow</span>
+        <span class="c">#Deny from all</span>
+        <span class="c">#Allow from 127.0.0.0/255.0.0.0 ::1/128</span>
+
+        <span class="c"># Disable PHP in this directory</span>
+        <span class="nt">&lt;IfModule</span> <span class="s">php5_module</span><span class="nt">&gt;</span>
+            <span class="nb">php_admin_value</span> engine <span class="k">Off</span>
+            <span class="c"># If PHP is enabled, this directive restricts fopen</span>
+            <span class="nb">php_admin_value</span> open_basedir <span class="s2">&quot;/usr/share/doc/&quot;</span>
+        <span class="nt">&lt;/IfModule&gt;</span>
+    <span class="nt">&lt;/Directory&gt;</span>
+<span class="nt">&lt;/IfModule&gt;</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../mysql/my.cnf.raw.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc-server/mysql/my.cnf</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="collectd.html"
+                        title="next chapter">Collectd</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/etc-server/web/apache.conf.raw.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="collectd.html" title="Collectd"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../mysql/my.cnf.raw.html" title="etc-server/mysql/my.cnf"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

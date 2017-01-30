@@ -1,0 +1,6 @@
+``www/htdocs/500.html``
+=======================
+:download:`Download file<500.html>`
+
+.. literalinclude:: 500.html
+   :language: html

@@ -1,0 +1,6 @@
+``etc-desktop/avahi/avahi-daemon.conf``
+=======================================
+:download:`Download file<avahi-daemon.conf>`
+
+.. literalinclude:: avahi-daemon.conf
+   :language: sh

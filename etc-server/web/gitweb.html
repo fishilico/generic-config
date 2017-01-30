@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Git Web and CGit &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../../index.html" />
+    <link rel="up" title="/etc for Server" href="../index.html" />
+    <link rel="next" title="etc-server/web/lighttpd.conf" href="lighttpd.conf.raw.html" />
+    <link rel="prev" title="Collectd" href="collectd.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="lighttpd.conf.raw.html" title="etc-server/web/lighttpd.conf"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="collectd.html" title="Collectd"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git-web-and-cgit">
+<h1>Git Web and CGit<a class="headerlink" href="#git-web-and-cgit" title="Permalink to this headline">¶</a></h1>
+<p>To configure Git Web on a server, you need to install <tt class="docutils literal"><span class="pre">git</span></tt> and <tt class="docutils literal"><span class="pre">gitweb</span></tt>
+packages. With Apache, the configuration is already included within <tt class="docutils literal"><span class="pre">gitweb</span></tt>
+package. With Nginx, you need FastCGI (<tt class="docutils literal"><span class="pre">fcgiwrap</span></tt> package on Debian) and some
+configuration in an host file.</p>
+<p>Let&#8217;s suppose you host Git repositories in <tt class="docutils literal"><span class="pre">/home/git</span></tt> on your server.
+You would like to setup a web server (Apache or Nginx) to be able to use <tt class="docutils literal"><span class="pre">git</span></tt>
+over HTTP and to browse your repositories using the Git Web interface.</p>
+<p>Documentation:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.kernel.org/pub/software/scm/git/docs/git-http-backend.html">https://www.kernel.org/pub/software/scm/git/docs/git-http-backend.html</a></li>
+<li><a class="reference external" href="https://wiki.archlinux.org/index.php/gitweb">https://wiki.archlinux.org/index.php/gitweb</a> (ArchLinux)</li>
+</ul>
+<div class="section" id="gitweb-configuration">
+<h2>Gitweb configuration<a class="headerlink" href="#gitweb-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example of <tt class="docutils literal"><span class="pre">/home/git/gitweb.conf</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre># path to git projects (&lt;project&gt;.git)
+$projectroot = &quot;/home/git&quot;;
+
+# directory to use for temp files
+$git_temp = &quot;/tmp&quot;;
+
+# target of the home link on top of all pages
+#$home_link = $my_uri || &quot;/&quot;;
+
+# html text to include at home page
+#$home_text = &quot;indextext.html&quot;;
+
+# file with project list; by default, simply scan the projectroot dir.
+#$projects_list = $projectroot;
+
+# stylesheet to use
+#@stylesheets = (&quot;static/gitweb.css&quot;);
+
+# javascript code for gitweb
+#$javascript = &quot;static/gitweb.js&quot;;
+
+# logo to use
+#$logo = &quot;static/git-logo.png&quot;;
+#$logo_url = &quot;http://localhost/git&quot;;
+#$logo_label = &quot;Localhost Git Repositories&quot;;
+
+# the &#39;favicon&#39;
+#$favicon = &quot;static/git-favicon.png&quot;;
+
+# git-diff-tree(1) options to use for generated patches
+#@diff_opts = (&quot;-M&quot;);
+@diff_opts = ();
+
+# This prevents gitweb to show hidden repositories
+#$export_ok = &quot;git-daemon-export-ok&quot;;
+#$strict_export = 1;
+
+# This lets it make the URLs you see in the header
+#@git_base_url_list = ( &#39;git://localhost/git&#39; );
+
+# Features: syntax highlighting and blame view
+$feature{&#39;highlight&#39;}{&#39;default&#39;} = [1];
+$feature{&#39;blame&#39;}{&#39;default&#39;} = [1];
+</pre></div>
+</div>
+</div>
+<div class="section" id="apache-configuration">
+<h2>Apache configuration<a class="headerlink" href="#apache-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre>&lt;VirtualHost *:80&gt;
+    ServerName localhost
+
+    SetEnv GIT_PROJECT_ROOT /home/git
+    SetEnv GIT_HTTP_EXPORT_ALL
+
+    AliasMatch ^/git/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$          /home/git/$1
+    AliasMatch ^/git/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ /home/git/$1
+    # Remove git-receive-pack in next line to forbid push to this server
+    ScriptAliasMatch \
+            &quot;(?x)^/git/(.*/(HEAD | \
+                            info/refs | \
+                            objects/info/[^/]+ | \
+                            git-(upload|receive)-pack))$&quot; \
+            /usr/libexec/git-core/git-http-backend/$1
+
+    ScriptAlias /git/ /usr/share/gitweb/gitweb.cgi/
+    Alias /git /usr/share/gitweb
+    &lt;Directory &quot;/usr/share/gitweb/&quot;&gt;
+        AddHandler cgi-script .cgi
+        DirectoryIndex gitweb.cgi
+        Options +ExecCGI
+
+        AllowOverride None
+        Order allow,deny
+        Allow from all
+
+        SetEnv GITWEB_CONFIG /home/git/gitweb.conf
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="nginx-configuration">
+<h2>Nginx configuration<a class="headerlink" href="#nginx-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre>server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+    #root /var/www/...;
+    # Server name is used in the title of GitWeb pages
+    server_name localhost;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Git over HTTP
+    location ~ ^/git/.*\.git/objects/([0-9a-f]+/[0-9a-f]+|pack/pack-[0-9a-f]+.(pack|idx))$ {
+        root /home/git;
+    }
+    # Remove git-receive-pack in next line to forbid push to this server
+    location ~ ^/git/(.*\.git/(HEAD|info/refs|objects/info/.*|git-(upload|receive)-pack))$ {
+        rewrite ^/git(/.*)$ $1 break;
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+        fastcgi_param SCRIPT_FILENAME     /usr/lib/git-core/git-http-backend;
+        fastcgi_param PATH_INFO           $uri;
+        fastcgi_param GIT_PROJECT_ROOT    /home/git;
+        fastcgi_param GIT_HTTP_EXPORT_ALL &quot;&quot;;
+        include fastcgi_params;
+    }
+
+    # Git web
+    location /git/static/ {
+        alias /usr/share/gitweb/static/;
+    }
+    location /git/ {
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+        fastcgi_param SCRIPT_FILENAME     /usr/share/gitweb/gitweb.cgi;
+        fastcgi_param PATH_INFO           $uri/git;
+        fastcgi_param GITWEB_CONFIG       /home/git/gitweb.conf;
+        fastcgi_param GIT_HTTP_EXPORT_ALL &quot;&quot;;
+        include fastcgi_params;
+    }
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="tips-tricks">
+<h2>Tips &amp; Tricks<a class="headerlink" href="#tips-tricks" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Gitweb is written in Perl so to use FastCGI you need to install
+<tt class="docutils literal"><span class="pre">libcgi-fast-perl</span></tt>. On Debian:</p>
+<div class="highlight-python"><div class="highlight"><pre>apt-get install libcgi-fast-perl
+</pre></div>
+</div>
+</li>
+<li><p class="first">To color files with syntax highlighting, you need to install <tt class="docutils literal"><span class="pre">highlight</span></tt>
+program. On Debian:</p>
+<div class="highlight-python"><div class="highlight"><pre>apt-get install highlight
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="cgit">
+<h2>CGit<a class="headerlink" href="#cgit" title="Permalink to this headline">¶</a></h2>
+<p>CGit is a fast Git web interface written in C. As there are issues with Debian
+packaging (<a class="reference external" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=515793">https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=515793</a>), you may
+need to follow instructions on <a class="reference external" href="http://git.zx2c4.com/cgit/tree/README">http://git.zx2c4.com/cgit/tree/README</a> to
+download, compile and install the latest release.</p>
+<p>Let&#8217;s say cgit files are installed in <tt class="docutils literal"><span class="pre">/var/www/htdocs/cgit/</span></tt>. The web server
+needs to be configured to serve the static files and the CGI, exactly like
+gitweb. Here is an extract of an Nginx configuration file:</p>
+<div class="highlight-python"><div class="highlight"><pre>location ~ ^/cgit\.(png|css)$ { root /var/www/htdocs/cgit/; }
+location ~ ^/cgit(/.*) {
+    fastcgi_pass unix:/var/run/fcgiwrap.socket;
+    fastcgi_param SCRIPT_FILENAME /var/www/htdocs/cgit/cgit.cgi;
+    fastcgi_param PATH_INFO       $1;
+    fastcgi_param CGIT_CONFIG     /home/git/cgitrc;
+    include fastcgi_params;
+}
+</pre></div>
+</div>
+<p>Here is an example of <tt class="docutils literal"><span class="pre">/home/git/cgitrc</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre># Here are some default values
+css=/cgit.css
+favicon=/favicon.ico
+logo=/cgit.png
+root-title=Git repository browser
+root-desc=a fast webinterface for the git dscm
+
+# Global settings
+cache-size=1000
+enable-commit-graph=1
+enable-git-config=1
+enable-index-links=1
+enable-log-filecount=1
+enable-log-linecount=1
+max-atom-items=100
+max-repo-count=10000
+max-stats=year
+remove-suffix=1
+snapshots=tar.gz tar.bz2 zip
+strict-export=git-daemon-export-ok
+
+# Custom configuration
+virtual-root=/cgit
+cache-root=/var/cache/cgit
+#project-list=/home/git/projects.list
+scan-path=/home/git/
+clone-prefix=http://localhost/git/
+readme=README
+
+# Syntax highlighting
+source-filter=/usr/lib/cgit/filters/syntax-highlighting.sh
+</pre></div>
+</div>
+<p>To create a cache directory (if it doesn&#8217;t already exist), run something like:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p /var/cache/cgit
+chown -R www-data: /var/cache/cgit
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Git Web and CGit</a><ul>
+<li><a class="reference internal" href="#gitweb-configuration">Gitweb configuration</a></li>
+<li><a class="reference internal" href="#apache-configuration">Apache configuration</a></li>
+<li><a class="reference internal" href="#nginx-configuration">Nginx configuration</a></li>
+<li><a class="reference internal" href="#tips-tricks">Tips &amp; Tricks</a></li>
+<li><a class="reference internal" href="#cgit">CGit</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="collectd.html"
+                        title="previous chapter">Collectd</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lighttpd.conf.raw.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">etc-server/web/lighttpd.conf</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/etc-server/web/gitweb.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="lighttpd.conf.raw.html" title="etc-server/web/lighttpd.conf"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="collectd.html" title="Collectd"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

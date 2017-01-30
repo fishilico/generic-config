@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Some notes and tips&amp;tricks about system administration &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="next" title="Notes about Arch Linux packages" href="archlinux-pkg.html" />
+    <link rel="prev" title="Generic Configuration" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="archlinux-pkg.html" title="Notes about Arch Linux packages"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Generic Configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="some-notes-and-tips-tricks-about-system-administration">
+<h1>Some notes and tips&amp;tricks about system administration<a class="headerlink" href="#some-notes-and-tips-tricks-about-system-administration" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="archlinux-pkg.html">Notes about Arch Linux packages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="archlinux-pkg.html#building-packages">Building packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archlinux-pkg.html#yaourt-and-pacaur">Yaourt and pacaur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archlinux-pkg.html#debug-build">Debug build</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debian.html">Some information of Debian systems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="debian.html#debian-post-installation-commands">Debian post-installation commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debian.html#apt-configuration">APT configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debian.html#apache-commands">Apache commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debian.html#postfix-configuration">Postfix configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debian-dev.html">Build a development environment for Debian</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="debian-dev.html#compile-a-debian-package-in-debug-mode">Compile a Debian package in debug mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debian-dev.html#set-up-your-own-debian-repository">Set up your own Debian repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debian-dev.html#package-a-python-library-for-debian">Package a Python library for Debian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debian-dev.html#test-patches-in-git-code-with-a-clean-package">Test patches in git code with a clean package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gdb.html">GDB, The GNU Project Debugger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gdb.html#starting-gdb">Starting GDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdb.html#basic-commands">Basic commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdb.html#analysis-commands">Analysis commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdb.html#remote-debug">Remote debug</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdb.html#using-core-dumps">Using core dumps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdb.html#debug-options-for-compilation">Debug options for compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gdb.html#documentations">Documentations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mysql.html">MySQL tips and tricks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mysql.html#basic-commands">Basic commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mysql.html#account-management">Account management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mysql.html#shell-connection">Shell connection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mysql.html#list-of-permissions">List of permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mysql.html#mysql-query-examples">MySQL query examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nat.html">Linux NAT router</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nat.html#network-architecture">Network architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nat.html#persistent-configuration">Persistent configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="netconfig.html">Network configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="netconfig.html#ipv4-configuration">IPv4 configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netconfig.html#ipv6-configuration">IPv6 configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netconfig.html#dns-configuration">DNS configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netconfig.html#broadcast-ping">Broadcast ping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netconfig.html#link-layer-ping">Link-layer ping</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="netconsole.html">Kernel Network Console (netconsole module)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="netconsole.html#dynamic-configuration">Dynamic configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netconsole.html#firewall-configuration">Firewall configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netconsole.html#documentation-links">Documentation links</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pxe-boot-server.html">Configure a server to handle network boot (PXE)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pxe-boot-server.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pxe-boot-server.html#debian-network-installation">Debian network installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="qemu.html">QEmu-KVM notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="qemu.html#simple-qemu-invocation-commands">Simple QEmu invocation commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu.html#networking">Networking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu.html#qcow2-format-and-virtual-disk-usage">QCow2 format and virtual disk usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu.html#nfs-configuration">NFS configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu.html#p-shared-directory">9p shared directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu.html#interaction-based-on-unix-sockets">Interaction based on Unix sockets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu.html#other-qemu-options">Other QEmu options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu.html#qemu-static-chroot">QEmu-static chroot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu.html#libvirt-integration">Libvirt integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu.html#web-links">Web links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu.html#a-quick-glance-at-docker">A quick glance at Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="raspberrypi.html">Configuration tweaks on a Raspberry Pi</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="raspberrypi.html#raspbian-installation">Raspbian installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="raspberrypi.html#post-install-configuration">Post-install configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="raspberrypi.html#networking">Networking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="raspberrypi.html#enable-ipv6">Enable IPv6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="raspberrypi.html#some-useful-system-information">Some useful system information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="selinux.html">Some notes about my SELinux installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="selinux.html#install-a-strict-policy">Install a strict policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selinux.html#use-run-init-as-root-without-a-password">Use <tt class="docutils literal"><span class="pre">run_init</span></tt> as root without a password</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selinux.html#fix-tmp-labeling">Fix <tt class="docutils literal"><span class="pre">/tmp</span></tt> labeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selinux.html#configure-selinux-booleans">Configure SELinux booleans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selinux.html#fix-labels-for-files-in-home">Fix labels for files in <tt class="docutils literal"><span class="pre">/home</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="selinux.html#generate-interface-file-for-audit2allow-r">Generate interface file for <tt class="docutils literal"><span class="pre">audit2allow</span> <span class="pre">-R</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="selinux.html#activate-some-selinux-modules">Activate some SELinux modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selinux.html#allow-staff-u-to-read-root-when-running-sudo">Allow <tt class="docutils literal"><span class="pre">staff_u</span></tt> to read <tt class="docutils literal"><span class="pre">/root</span></tt> when running <tt class="docutils literal"><span class="pre">sudo</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="selinux.html#export-local-configuration-done-with-semanage">Export local configuration done with <tt class="docutils literal"><span class="pre">semanage</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="selinux.html#bugs-still-present-in-october-2014">Bugs still present in October 2014</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sound.html">Sound Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sound.html#mpd-and-pulseaudio">MPD and PulseAudio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sound.html#network">Network</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="systemd.html">systemd configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="systemd.html#logging-syslog-and-journald">Logging: syslog and journald</a></li>
+<li class="toctree-l2"><a class="reference internal" href="systemd.html#logging-audit-logs-and-journald">Logging: audit logs and journald</a></li>
+<li class="toctree-l2"><a class="reference internal" href="systemd.html#write-journal-on-tty">Write journal on tty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="systemd.html#configure-timers-and-remove-cron">Configure timers (and remove cron)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="systemd.html#automatically-create-a-bridge-interface">Automatically create a bridge interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tmpfs.html">Use tmpfs for some directories</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tmpfs.html#tmp"><tt class="docutils literal"><span class="pre">/tmp</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tmpfs.html#home-cache"><tt class="docutils literal"><span class="pre">$HOME/.cache</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tmpfs.html#yaourt-build-dir-on-archlinux">Yaourt build dir on ArchLinux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="traffic-shaping.html">Traffic shaping</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="traffic-shaping.html#egress-shaping-limiting-outbound-traffic">Egress shaping (limiting outbound traffic)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traffic-shaping.html#delay">Delay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traffic-shaping.html#http-server-outbound-traffic-shaping">HTTP server outbound traffic shaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traffic-shaping.html#make-downloads-slow">Make downloads slow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">User management on Linux</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user.html#add-a-new-user">Add a new user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user.html#add-an-existing-user-to-groups">Add an existing user to groups</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Generic Configuration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="archlinux-pkg.html"
+                        title="next chapter">Notes about Arch Linux packages</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="archlinux-pkg.html" title="Notes about Arch Linux packages"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Generic Configuration"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Some notes about my SELinux installation &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="next" title="Sound Configuration" href="sound.html" />
+    <link rel="prev" title="Configuration tweaks on a Raspberry Pi" href="raspberrypi.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="sound.html" title="Sound Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="raspberrypi.html" title="Configuration tweaks on a Raspberry Pi"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="some-notes-about-my-selinux-installation">
+<h1>Some notes about my SELinux installation<a class="headerlink" href="#some-notes-about-my-selinux-installation" title="Permalink to this headline">¶</a></h1>
+<p>This document doesn&#8217;t document how to install SELinux. If you want to install
+it, please read one of these websites:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://wiki.debian.org/SELinux">https://wiki.debian.org/SELinux</a></li>
+<li><a class="reference external" href="https://wiki.gentoo.org/wiki/SELinux/Tutorials">https://wiki.gentoo.org/wiki/SELinux/Tutorials</a> (an excellent tutorial for Gentoo)</li>
+<li><a class="reference external" href="https://fedoraproject.org/wiki/SELinux">https://fedoraproject.org/wiki/SELinux</a></li>
+<li><a class="reference external" href="https://wiki.archlinux.org/index.php/SELinux">https://wiki.archlinux.org/index.php/SELinux</a></li>
+</ul>
+<p>To develop the SELinux policy, here are the relevant git repositories:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/TresysTechnology/refpolicy/commits/master">https://github.com/TresysTechnology/refpolicy/commits/master</a> (Reference Policy)</li>
+<li><a class="reference external" href="https://github.com/TresysTechnology/refpolicy-contrib/commits/master">https://github.com/TresysTechnology/refpolicy-contrib/commits/master</a>
+(refpol contrib modules)</li>
+<li><a class="reference external" href="https://gitweb.gentoo.org/proj/hardened-refpolicy.git/">https://gitweb.gentoo.org/proj/hardened-refpolicy.git/</a> (Gentoo)</li>
+<li><a class="reference external" href="https://github.com/selinux-policy/selinux-policy/tree/rawhide-base">https://github.com/selinux-policy/selinux-policy/tree/rawhide-base</a> (Fedora)</li>
+<li><a class="reference external" href="http://anonscm.debian.org/cgit/selinux/refpolicy.git/log/">http://anonscm.debian.org/cgit/selinux/refpolicy.git/log/</a> (Debian)</li>
+</ul>
+<p>And here is some documentation related with writing the policy:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://oss.tresys.com/docs/refpolicy/api/">http://oss.tresys.com/docs/refpolicy/api/</a> (reference policy API)</li>
+<li><a class="reference external" href="http://www.selinuxproject.org/page/ObjectClassesPerms">http://www.selinuxproject.org/page/ObjectClassesPerms</a>
+(SELinux Object Classes and Permissions Reference)</li>
+<li><a class="reference external" href="https://wiki.gentoo.org/wiki/Project:SELinux/Development">https://wiki.gentoo.org/wiki/Project:SELinux/Development</a> (Gentoo doc)</li>
+<li><a class="reference external" href="http://wiki.gentoo.org/wiki/Project:SELinux/CodingStyle">http://wiki.gentoo.org/wiki/Project:SELinux/CodingStyle</a>
+(Gentoo coding style for SELinux)</li>
+</ul>
+<p>And while listing websites, here are some more:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://people.redhat.com/sgrubb/audit/visualize/index.html">https://people.redhat.com/sgrubb/audit/visualize/index.html</a>
+(Audit Data Visualization)</li>
+<li><a class="reference external" href="https://github.com/SELinuxProject/selinux">https://github.com/SELinuxProject/selinux</a>
+(SELinux userland libraries and tools repository)</li>
+<li><a class="reference external" href="http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html">http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html</a>
+(The SELinux Notebook - The Foundations)</li>
+</ul>
+<p>The present document will focus on some pitfalls I&#8217;ve encountered since
+installing SELinux on systems running Debian or ArchLinux.</p>
+<div class="section" id="install-a-strict-policy">
+<h2>Install a strict policy<a class="headerlink" href="#install-a-strict-policy" title="Permalink to this headline">¶</a></h2>
+<p>On Debian by default a targeted policy is installed, daemons are confined but
+not users. To make users confined, you need to remove the unconfined module.
+To do this:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c"># Set up staff accounts</span>
+semanage login -a -s staff_u userlogin
+
+<span class="c"># Confine other users</span>
+semanage login -m -s user_u -r s0 __default__
+
+<span class="c"># Map root to root instead of unconfined_u</span>
+semanage login -m -s root root
+
+<span class="c"># Remove the unconfined module</span>
+semodule -r unconfined
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-run-init-as-root-without-a-password">
+<h2>Use <tt class="docutils literal"><span class="pre">run_init</span></tt> as root without a password<a class="headerlink" href="#use-run-init-as-root-without-a-password" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">run_init</span></tt> command (to manage services) authenticates the real user with PAM
+before making a transition to <tt class="docutils literal"><span class="pre">system_u:system_r:init_t</span></tt> context. The default
+configuration tell PAM to ask for a password to authenticate but this may be
+annoying on non-critical systems where root needs to restart services.
+To disable the password prompt for root, add this at the beginning of
+<tt class="docutils literal"><span class="pre">/etc/pam.d/run_init</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>auth       sufficient   pam_rootok.so
+</pre></div>
+</div>
+<p>Moreover make sure that you allow <tt class="docutils literal"><span class="pre">run_init_t</span></tt> to use <tt class="docutils literal"><span class="pre">pam_rootok.so</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>allow run_init_t self:passwd rootok;
+</pre></div>
+</div>
+</div>
+<div class="section" id="fix-tmp-labeling">
+<h2>Fix <tt class="docutils literal"><span class="pre">/tmp</span></tt> labeling<a class="headerlink" href="#fix-tmp-labeling" title="Permalink to this headline">¶</a></h2>
+<p>If <tt class="docutils literal"><span class="pre">mount</span></tt> shows:</p>
+<div class="highlight-python"><div class="highlight"><pre>tmpfs on /tmp type tmpfs (rw,nosuid,nodev,relatime,rootcontext=system_u:object_r:file_t:s0,seclabel)
+</pre></div>
+</div>
+<p>... or if <tt class="docutils literal"><span class="pre">ls</span> <span class="pre">-Zd</span> <span class="pre">/tmp</span></tt> shows:</p>
+<div class="highlight-python"><div class="highlight"><pre>system_u:object_r:file_t:SystemLow /tmp
+</pre></div>
+</div>
+<p>... <tt class="docutils literal"><span class="pre">/tmp</span></tt> is incorrectly labeled <tt class="docutils literal"><span class="pre">file_t</span></tt> instead of <tt class="docutils literal"><span class="pre">tmp_t</span></tt>.</p>
+<p>To fix the label, you need to restore the context of the <tt class="docutils literal"><span class="pre">/tmp</span></tt> folder of the
+root filesystem to <tt class="docutils literal"><span class="pre">system_u:object_r:tmp_t:s0</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>mount --bind / /mnt
+setfiles -r /mnt /etc/selinux/default/contexts/files/file_contexts /mnt
+umount /mnt
+</pre></div>
+</div>
+<p>It is also possible to use such a line in <tt class="docutils literal"><span class="pre">/etc/fstab</span></tt> (without <tt class="docutils literal"><span class="pre">:s0</span></tt> suffix
+when using a policy without MLS):</p>
+<div class="highlight-python"><div class="highlight"><pre>tmpfs /tmp tmpfs nodev,nosuid,rootcontext=system_u:object_r:tmp_t:s0 0 0
+</pre></div>
+</div>
+<p>If <tt class="docutils literal"><span class="pre">ls</span> <span class="pre">-Zd</span> <span class="pre">/tmp</span></tt> shows type <tt class="docutils literal"><span class="pre">tmpfs_t</span></tt> instead of <tt class="docutils literal"><span class="pre">tmp_t</span></tt>, it is also
+needed to modify <tt class="docutils literal"><span class="pre">/etc/fstab</span></tt> accordingly.</p>
+</div>
+<div class="section" id="configure-selinux-booleans">
+<h2>Configure SELinux booleans<a class="headerlink" href="#configure-selinux-booleans" title="Permalink to this headline">¶</a></h2>
+<p>Here are some booleans I use is almost all my SELinux systems:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c"># Allow users to send ping</span>
+setsebool -P user_ping on
+
+<span class="c"># Enable reading of urandom for all domains</span>
+setsebool -P global_ssp on
+
+<span class="c"># Use CGI with nginx (eg. for gitweb)</span>
+setsebool -P httpd_enable_cgi on
+setsebool -P nginx_enable_http_server on
+
+<span class="c"># Make GPG agent to work</span>
+setsebool -P gpg_agent_env_file on
+
+<span class="c"># Disable NX memory protection for some applications (eg. Firefox)</span>
+setsebool -P allow_execmem on
+
+<span class="c"># Print logs on some tty (like tty12)</span>
+setsebool -P logging_syslogd_use_tty on
+</pre></div>
+</div>
+</div>
+<div class="section" id="fix-labels-for-files-in-home">
+<h2>Fix labels for files in <tt class="docutils literal"><span class="pre">/home</span></tt><a class="headerlink" href="#fix-labels-for-files-in-home" title="Permalink to this headline">¶</a></h2>
+<p>By default, files under <tt class="docutils literal"><span class="pre">/home</span></tt> are labeled as user home directories. On some
+system, <tt class="docutils literal"><span class="pre">/home</span></tt> is on the largest disk partition and there are other things,
+like database files (instead of <tt class="docutils literal"><span class="pre">/var/lib/...</span></tt> folders) or Git repositories.
+For such folders, you must a command like this to specify the real file context
+to use:</p>
+<div class="highlight-python"><div class="highlight"><pre>semanage fcontext -a -t httpd_sys_content_t &quot;/home/git(/.*)?&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="generate-interface-file-for-audit2allow-r">
+<h2>Generate interface file for <tt class="docutils literal"><span class="pre">audit2allow</span> <span class="pre">-R</span></tt><a class="headerlink" href="#generate-interface-file-for-audit2allow-r" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">audit2allow</span> <span class="pre">-R</span></tt> needs <tt class="docutils literal"><span class="pre">/var/lib/sepolgen/interface_info</span></tt>, which is created
+by <tt class="docutils literal"><span class="pre">sepolgen-ifgen</span></tt>. However, as the <tt class="docutils literal"><span class="pre">-p</span></tt> parameter of this command is
+buggy, your interface files need to be located in the <tt class="docutils literal"><span class="pre">default</span></tt> policy, ie.
+in <tt class="docutils literal"><span class="pre">/usr/share/selinux/default/include</span></tt> directory. For example, add a symlink
+<tt class="docutils literal"><span class="pre">/usr/share/selinux/default</span></tt> to your policy directory:</p>
+<div class="highlight-sh"><div class="highlight"><pre>. /etc/selinux/config
+<span class="nb">cd</span> /usr/share/selinux <span class="o">&amp;&amp;</span> ln -s <span class="nv">$SELINUXTYPE</span> default
+sepolgen-ifgen
+</pre></div>
+</div>
+</div>
+<div class="section" id="activate-some-selinux-modules">
+<h2>Activate some SELinux modules<a class="headerlink" href="#activate-some-selinux-modules" title="Permalink to this headline">¶</a></h2>
+<p>To reload modules, go to <tt class="docutils literal"><span class="pre">/usr/share/selinux/$(policyname)</span></tt> and run:</p>
+<div class="highlight-python"><div class="highlight"><pre>semodule --verbose -b base.pp -s $(basename $(pwd)) -n -i module1.pp -i ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="allow-staff-u-to-read-root-when-running-sudo">
+<h2>Allow <tt class="docutils literal"><span class="pre">staff_u</span></tt> to read <tt class="docutils literal"><span class="pre">/root</span></tt> when running <tt class="docutils literal"><span class="pre">sudo</span></tt><a class="headerlink" href="#allow-staff-u-to-read-root-when-running-sudo" title="Permalink to this headline">¶</a></h2>
+<p>By default <tt class="docutils literal"><span class="pre">/etc/selinux/default/modules/active/file_contexts.homedirs</span></tt>
+defines <tt class="docutils literal"><span class="pre">/root</span></tt> to be labeled <tt class="docutils literal"><span class="pre">root:object_r:user_home_t</span></tt>, which <tt class="docutils literal"><span class="pre">staff_u</span></tt>
+can&#8217;t access (there is a constraint for it). To solve this issue, change the
+constraint or (much sumpler) change the user associated to <tt class="docutils literal"><span class="pre">root</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>chcon -u staff_u /root -R
+</pre></div>
+</div>
+<p>Alternatively it is possible to consider root as an usual staff user:</p>
+<div class="highlight-python"><div class="highlight"><pre>semanage login -m -s staff_u root
+</pre></div>
+</div>
+</div>
+<div class="section" id="export-local-configuration-done-with-semanage">
+<h2>Export local configuration done with <tt class="docutils literal"><span class="pre">semanage</span></tt><a class="headerlink" href="#export-local-configuration-done-with-semanage" title="Permalink to this headline">¶</a></h2>
+<p>To export all local changes done with <tt class="docutils literal"><span class="pre">semanage</span></tt>, there is an option:</p>
+<blockquote>
+<div>semanage -o</div></blockquote>
+<p>To import exported data back to the local configuration:</p>
+<blockquote>
+<div>semanage -i</div></blockquote>
+</div>
+<div class="section" id="bugs-still-present-in-october-2014">
+<h2>Bugs still present in October 2014<a class="headerlink" href="#bugs-still-present-in-october-2014" title="Permalink to this headline">¶</a></h2>
+<p>In ArchLinux, <tt class="docutils literal"><span class="pre">/sys</span></tt> is not labelled correctly on boot. It needs to be labeled
+by systemd using <tt class="docutils literal"><span class="pre">tmpfiles.d</span></tt> configuration. Therefore you need to add this in
+<tt class="docutils literal"><span class="pre">/etc/tmpfiles.d/sysfs.conf</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>Z /sys/devices/system/cpu/online 0444 root root
+</pre></div>
+</div>
+<p>For further information, please read:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://bugzilla.redhat.com/show_bug.cgi?id=767355">https://bugzilla.redhat.com/show_bug.cgi?id=767355</a></li>
+<li><a class="reference external" href="http://www.spinics.net/lists/selinux/msg11684.html">http://www.spinics.net/lists/selinux/msg11684.html</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Some notes about my SELinux installation</a><ul>
+<li><a class="reference internal" href="#install-a-strict-policy">Install a strict policy</a></li>
+<li><a class="reference internal" href="#use-run-init-as-root-without-a-password">Use <tt class="docutils literal"><span class="pre">run_init</span></tt> as root without a password</a></li>
+<li><a class="reference internal" href="#fix-tmp-labeling">Fix <tt class="docutils literal"><span class="pre">/tmp</span></tt> labeling</a></li>
+<li><a class="reference internal" href="#configure-selinux-booleans">Configure SELinux booleans</a></li>
+<li><a class="reference internal" href="#fix-labels-for-files-in-home">Fix labels for files in <tt class="docutils literal"><span class="pre">/home</span></tt></a></li>
+<li><a class="reference internal" href="#generate-interface-file-for-audit2allow-r">Generate interface file for <tt class="docutils literal"><span class="pre">audit2allow</span> <span class="pre">-R</span></tt></a></li>
+<li><a class="reference internal" href="#activate-some-selinux-modules">Activate some SELinux modules</a></li>
+<li><a class="reference internal" href="#allow-staff-u-to-read-root-when-running-sudo">Allow <tt class="docutils literal"><span class="pre">staff_u</span></tt> to read <tt class="docutils literal"><span class="pre">/root</span></tt> when running <tt class="docutils literal"><span class="pre">sudo</span></tt></a></li>
+<li><a class="reference internal" href="#export-local-configuration-done-with-semanage">Export local configuration done with <tt class="docutils literal"><span class="pre">semanage</span></tt></a></li>
+<li><a class="reference internal" href="#bugs-still-present-in-october-2014">Bugs still present in October 2014</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="raspberrypi.html"
+                        title="previous chapter">Configuration tweaks on a Raspberry Pi</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sound.html"
+                        title="next chapter">Sound Configuration</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/selinux.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="sound.html" title="Sound Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="raspberrypi.html" title="Configuration tweaks on a Raspberry Pi"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

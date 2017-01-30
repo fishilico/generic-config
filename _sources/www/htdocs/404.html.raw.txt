@@ -1,0 +1,6 @@
+``www/htdocs/404.html``
+=======================
+:download:`Download file<404.html>`
+
+.. literalinclude:: 404.html
+   :language: html

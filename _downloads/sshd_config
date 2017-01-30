@@ -1,0 +1,29 @@
+# Here is a general configuration file for SSH server
+
+# Authentication mechanisms: allow public key, disable password access
+PubkeyAuthentication yes
+PasswordAuthentication no
+
+# Some other config values
+PermitRootLogin no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding no
+UseDNS yes
+PermitTunnel no
+
+# Restrict allowed users
+#AllowUsers user
+#AllowGroups adm sudo wheel
+
+# This configuration jails users in sftpusers group to only use sftp.
+# Their home directory must belong to root, otherwise sshd complains with:
+#    fatal: bad ownership or modes for chroot directory "/home/user"
+# Documentation: https://wiki.archlinux.org/index.php/SFTP_chroot
+Subsystem sftp internal-sftp
+Match Group sftpusers
+   ChrootDirectory /home/%u
+   ForceCommand internal-sftp
+   AllowTcpForwarding no
+   X11Forwarding no

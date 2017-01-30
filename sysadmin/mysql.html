@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MySQL tips and tricks &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="next" title="Linux NAT router" href="nat.html" />
+    <link rel="prev" title="GDB, The GNU Project Debugger" href="gdb.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nat.html" title="Linux NAT router"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gdb.html" title="GDB, The GNU Project Debugger"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mysql-tips-and-tricks">
+<h1>MySQL tips and tricks<a class="headerlink" href="#mysql-tips-and-tricks" title="Permalink to this headline">¶</a></h1>
+<p>Here are some useful reference for MySQL command line.  This file does not
+contain anything related to server configuration</p>
+<p>The official documentation is available at: <a class="reference external" href="http://dev.mysql.com/doc/">http://dev.mysql.com/doc/</a></p>
+<div class="section" id="basic-commands">
+<h2>Basic commands<a class="headerlink" href="#basic-commands" title="Permalink to this headline">¶</a></h2>
+<p>The basic MySQL commands are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">DATABASES</span></tt> to list available databases,</li>
+<li><tt class="docutils literal"><span class="pre">USE</span> <span class="pre">database</span></tt> to tell the MySQL client to use a specific database,</li>
+<li><tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">TABLES</span></tt> to list tables in the current database,</li>
+<li><tt class="docutils literal"><span class="pre">DESCRIBE</span> <span class="pre">table</span></tt> to get a list of fields of a given table, and</li>
+<li><tt class="docutils literal"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">table</span> <span class="pre">LIMIT</span> <span class="pre">10</span></tt> to get 10 rows from the given table.</li>
+</ul>
+<p>Once a database is selected, standard SQL queries are possible.</p>
+</div>
+<div class="section" id="account-management">
+<h2>Account management<a class="headerlink" href="#account-management" title="Permalink to this headline">¶</a></h2>
+<p>To create a new MySQL user and give her a special database, which is useful for
+example when creating a new website, three commands are needed:</p>
+<div class="highlight-mysql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="n">USER</span> <span class="s1">&#39;newsite&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;a-random-password&#39;</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">newsite</span> <span class="k">DEFAULT</span> <span class="k">CHARACTER</span> <span class="kt">SET</span> <span class="s1">&#39;utf8&#39;</span><span class="p">;</span>
+<span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">INSERT</span><span class="p">,</span> <span class="k">DELETE</span><span class="p">,</span> <span class="k">UPDATE</span><span class="p">,</span> <span class="k">CREATE</span><span class="p">,</span> <span class="k">DROP</span><span class="p">,</span> <span class="k">INDEX</span><span class="p">,</span> <span class="k">ALTER</span><span class="p">,</span> <span class="k">CREATE</span> <span class="n">TEMPORARY</span> <span class="kp">TABLES</span> <span class="k">ON</span> <span class="n">newsite</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;newsite&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="p">;</span>
+<span class="n">FLUSH</span> <span class="n">PRIVILEGES</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The following command changes the password assiociated to the user:</p>
+<div class="highlight-mysql"><div class="highlight"><pre><span class="kt">SET</span> <span class="n">PASSWORD</span> <span class="k">FOR</span> <span class="s1">&#39;newsite&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="o">=</span> <span class="nf">PASSWORD</span><span class="p">(</span><span class="s1">&#39;an other random password!&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To list all users, you need SELECT access to <tt class="docutils literal"><span class="pre">mysql</span></tt> database:</p>
+<div class="highlight-mysql"><div class="highlight"><pre><span class="k">SELECT</span> <span class="n">User</span><span class="p">,</span> <span class="n">Host</span> <span class="k">FROM</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The permissions of a specific user can be seen with <tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">GRANTS</span></tt>.  Here is
+an example:</p>
+<div class="highlight-python"><div class="highlight"><pre>mysql&gt; SHOW GRANTS FOR root@localhost;
++---------------------------------------------------------------------------------------------------------------+
+| Grants for root@localhost                                                                                     |
++---------------------------------------------------------------------------------------------------------------+
+| GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY PASSWORD &#39;*Hashed password&#39; WITH GRANT OPTION |
+| GRANT PROXY ON &#39;&#39;@&#39;&#39; TO &#39;root&#39;@&#39;localhost&#39; WITH GRANT OPTION                                                  |
++---------------------------------------------------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="shell-connection">
+<h2>Shell connection<a class="headerlink" href="#shell-connection" title="Permalink to this headline">¶</a></h2>
+<p>To connect to a database when being in a shell, use the <tt class="docutils literal"><span class="pre">mysql</span></tt> command:</p>
+<div class="highlight-sh"><div class="highlight"><pre>mysql -H server -u user -p database
+</pre></div>
+</div>
+<p>This command asks for the password of user and then connects and use the
+specified database.</p>
+<p>To give the password directly on the command line, do not put a space between
+<tt class="docutils literal"><span class="pre">-p</span></tt> and the password:</p>
+<div class="highlight-sh"><div class="highlight"><pre>mysql -u user <span class="s2">&quot;-p$PASSWORD&quot;</span> database
+</pre></div>
+</div>
+<p>It is also possible to put login information in a hidden file in your home
+folder, in <tt class="docutils literal"><span class="pre">~/.my.cnf</span></tt>.  Such file looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>[mysql]
+user=mysqluser
+password=password-for-mysqluser
+database=mydb
+</pre></div>
+</div>
+<p>To dump a database, the command is <tt class="docutils literal"><span class="pre">mysqldump</span></tt>.  Here are some examples:</p>
+<div class="highlight-sh"><div class="highlight"><pre>mysqldump --lock-tables database mytable
+mysqldump --single-transaction --add-drop-table database_with_innoDB
+</pre></div>
+</div>
+</div>
+<div class="section" id="list-of-permissions">
+<h2>List of permissions<a class="headerlink" href="#list-of-permissions" title="Permalink to this headline">¶</a></h2>
+<p>This table lists the available permissions, used by <tt class="docutils literal"><span class="pre">GRANT</span></tt>:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="45%" />
+<col width="37%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Data</th>
+<th class="head">Structure</th>
+<th class="head">Administration</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">SELECT</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">CREATE</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">GRANT</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">INSERT</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">ALTER</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">SUPER</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">UPDATE</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">INDEX</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">PROCESS</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">DELETE</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">DROP</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">RELOAD</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">FILE</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TEMPORARY</span> <span class="pre">TABLES</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">SHUTDOWN</span></tt></td>
+</tr>
+<tr class="row-odd"><td rowspan="7">&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">VIEW</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">SHOW</span> <span class="pre">DATABASES</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">ROUTINE</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">LOCK</span> <span class="pre">TABLES</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">ALTER</span> <span class="pre">ROUTINE</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">REFERENCES</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">EXECUTE</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">REPLICATION</span> <span class="pre">CLIENT</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">VIEW</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">REPLICATION</span> <span class="pre">SLAVE</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">EVENT</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">CREATE</span> <span class="pre">USER</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">TRIGGER</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mysql-query-examples">
+<h2>MySQL query examples<a class="headerlink" href="#mysql-query-examples" title="Permalink to this headline">¶</a></h2>
+<p>These queries create an empty account table with some fields:</p>
+<div class="highlight-mysql"><div class="highlight"><pre><span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="ss">`account`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="ss">`account`</span> <span class="p">(</span>
+  <span class="ss">`uid`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="kp">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="ss">`hruid`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">CHARACTER</span> <span class="kt">SET</span> <span class="n">ascii</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`name`</span> <span class="kt">tinytext</span> <span class="k">CHARACTER</span> <span class="kt">SET</span> <span class="n">utf8</span> <span class="k">COLLATE</span> <span class="n">utf8_unicode_ci</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`email`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">CHARACTER</span> <span class="kt">SET</span> <span class="n">utf8</span> <span class="k">COLLATE</span> <span class="n">utf8_unicode_ci</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`admin`</span> <span class="kt">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+  <span class="ss">`birthday`</span> <span class="kt">datetime</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`uid`</span><span class="p">),</span>
+  <span class="k">UNIQUE</span> <span class="k">KEY</span> <span class="ss">`hruid`</span> <span class="p">(</span><span class="ss">`hruid`</span><span class="p">)</span>
+<span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MySQL tips and tricks</a><ul>
+<li><a class="reference internal" href="#basic-commands">Basic commands</a></li>
+<li><a class="reference internal" href="#account-management">Account management</a></li>
+<li><a class="reference internal" href="#shell-connection">Shell connection</a></li>
+<li><a class="reference internal" href="#list-of-permissions">List of permissions</a></li>
+<li><a class="reference internal" href="#mysql-query-examples">MySQL query examples</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="gdb.html"
+                        title="previous chapter">GDB, The GNU Project Debugger</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nat.html"
+                        title="next chapter">Linux NAT router</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/mysql.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nat.html" title="Linux NAT router"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gdb.html" title="GDB, The GNU Project Debugger"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

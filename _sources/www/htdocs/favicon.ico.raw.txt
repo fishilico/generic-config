@@ -1,0 +1,6 @@
+``www/htdocs/favicon.ico``
+==========================
+:download:`Download file<favicon.ico>`
+
+.. image:: favicon.ico
+   :alt: www/htdocs/favicon.ico

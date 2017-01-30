@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Generic Configuration &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="#" />
+    <link rel="next" title="Some notes and tips&amp;tricks about system administration" href="sysadmin/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="sysadmin/index.html" title="Some notes and tips&amp;tricks about system administration"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">Generic Config</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="generic-configuration">
+<h1>Generic Configuration<a class="headerlink" href="#generic-configuration" title="Permalink to this headline">¶</a></h1>
+<p>If it&#8217;s the first time you come here, you may want to read the
+<a class="reference internal" href="README.html"><em>README</em></a> before continuing.</p>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin/index.html">Some notes and tips&amp;tricks about system administration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/archlinux-pkg.html">Notes about Arch Linux packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/debian.html">Some information of Debian systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/debian-dev.html">Build a development environment for Debian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/gdb.html">GDB, The GNU Project Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/mysql.html">MySQL tips and tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/nat.html">Linux NAT router</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/netconfig.html">Network configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/netconsole.html">Kernel Network Console (netconsole module)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/pxe-boot-server.html">Configure a server to handle network boot (PXE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/qemu.html">QEmu-KVM notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/raspberrypi.html">Configuration tweaks on a Raspberry Pi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/selinux.html">Some notes about my SELinux installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/sound.html">Sound Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/systemd.html">systemd configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/tmpfs.html">Use tmpfs for some directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/traffic-shaping.html">Traffic shaping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin/user.html">User management on Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="etc/index.html"><tt class="docutils literal"><span class="pre">/etc</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="etc/hosts.raw.html"><tt class="docutils literal"><span class="pre">etc/hosts</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc/iptables/empty.rules.raw.html"><tt class="docutils literal"><span class="pre">etc/iptables/empty.rules</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc/iptables/iptables-desktop.rules.raw.html"><tt class="docutils literal"><span class="pre">etc/iptables/iptables-desktop.rules</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc/iptables/iptables-server.rules.raw.html"><tt class="docutils literal"><span class="pre">etc/iptables/iptables-server.rules</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc/ntp.conf.raw.html"><tt class="docutils literal"><span class="pre">etc/ntp.conf</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc/resolv.conf.raw.html"><tt class="docutils literal"><span class="pre">etc/resolv.conf</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc/ssh/sshd_config.default.raw.html"><tt class="docutils literal"><span class="pre">etc/ssh/sshd_config.default</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc/ssh/sshd_config.raw.html"><tt class="docutils literal"><span class="pre">etc/ssh/sshd_config</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc/sudoers.raw.html"><tt class="docutils literal"><span class="pre">etc/sudoers</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc/sysctl.conf.raw.html"><tt class="docutils literal"><span class="pre">etc/sysctl.conf</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="etc-desktop/index.html"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Desktop</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="etc-desktop/X11/xorg.conf.d/00-french-keyboard.conf.raw.html"><tt class="docutils literal"><span class="pre">etc-desktop/X11/xorg.conf.d/00-french-keyboard.conf</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-desktop/X11/xorg.conf.d/50-synaptics.conf.raw.html"><tt class="docutils literal"><span class="pre">etc-desktop/X11/xorg.conf.d/50-synaptics.conf</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-desktop/avahi/avahi-daemon.conf.raw.html"><tt class="docutils literal"><span class="pre">etc-desktop/avahi/avahi-daemon.conf</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="etc-server/index.html"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/dhcp/dhcpd.conf.raw.html"><tt class="docutils literal"><span class="pre">etc-server/dhcp/dhcpd.conf</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/dhcp/dnsmasq.conf.html"><tt class="docutils literal"><span class="pre">etc-server/dhcp/dnsmasq.conf</span></tt> and doc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/dns/unbound.conf.raw.html"><tt class="docutils literal"><span class="pre">etc-server/dns/unbound.conf</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/jabber/ejabberd.html">ejabberd configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/mail.html">Mail server configuration with Postfix and dovecot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/mysql/my.cnf.raw.html"><tt class="docutils literal"><span class="pre">etc-server/mysql/my.cnf</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/web/apache.conf.raw.html"><tt class="docutils literal"><span class="pre">etc-server/web/apache.conf</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/web/collectd.html">Collectd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/web/gitweb.html">Git Web and CGit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/web/lighttpd.conf.raw.html"><tt class="docutils literal"><span class="pre">etc-server/web/lighttpd.conf</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/web/nginx.conf.raw.html"><tt class="docutils literal"><span class="pre">etc-server/web/nginx.conf</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/web/php.html">PHP Configuration Customization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etc-server/web/ssl.html">SSL configuration on a web server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="www/index.html">WWW server files (<tt class="docutils literal"><span class="pre">/var/www</span></tt>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="www/htdocs/403.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/403.html</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="www/htdocs/404.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/404.html</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="www/htdocs/500.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/500.html</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="www/htdocs/50x.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/50x.html</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="www/htdocs/down.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/down.html</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="www/htdocs/favicon.ico.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/favicon.ico</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="www/htdocs/index-nothing.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/index-nothing.html</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="www/htdocs/robots.txt.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/robots.txt</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="www/index.html#web-server-configuration">Web server configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="windows/index.html">Windows system information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="windows/cmd.html">Some cmd.exe commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windows/utc-clock.html">Set hardware clock to UTC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windows/vagrant.html">Windows Virtual Machine with Vagrant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windows/windbg-kd.html">WinDbg-kd, Windows Kernel Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">Generic Configuration README</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="README.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#disclaimer">Disclaimer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#structure">Structure</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Github link: <a class="reference external" href="https://github.com/fishilico/generic-config">https://github.com/fishilico/generic-config</a></p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sysadmin/index.html"
+                        title="next chapter">Some notes and tips&amp;tricks about system administration</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="sysadmin/index.html" title="Some notes and tips&amp;tricks about system administration"
+             >next</a> |</li>
+        <li><a href="#">Generic Config</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

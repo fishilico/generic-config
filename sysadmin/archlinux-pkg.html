@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Notes about Arch Linux packages &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="next" title="Some information of Debian systems" href="debian.html" />
+    <link rel="prev" title="Some notes and tips&amp;tricks about system administration" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="debian.html" title="Some information of Debian systems"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Some notes and tips&amp;tricks about system administration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="notes-about-arch-linux-packages">
+<h1>Notes about Arch Linux packages<a class="headerlink" href="#notes-about-arch-linux-packages" title="Permalink to this headline">¶</a></h1>
+<p>Here are some notes about Arch Linux packages.</p>
+<div class="section" id="building-packages">
+<h2>Building packages<a class="headerlink" href="#building-packages" title="Permalink to this headline">¶</a></h2>
+<p>Arch Linux packages can be found in two main places: official repositories and
+Arch User Repository (AUR). Official repositories are managed throw the Arch
+Build System (ABS). Users interact with them thanks to <tt class="docutils literal"><span class="pre">pacman</span></tt>. AUR is
+managed by users and only contain sources, not binary packages.</p>
+<p>To build a package, you need to install <tt class="docutils literal"><span class="pre">base-devel</span></tt> and use <tt class="docutils literal"><span class="pre">makepkg</span></tt>.
+The main component of a package is the <tt class="docutils literal"><span class="pre">PKGBUILD</span></tt> description file, which
+describes where to download sources and how to compile binary files. Once you
+have a <tt class="docutils literal"><span class="pre">PKGBUILD</span></tt> (and additionnal files such as patches) in a directory,
+to build and install the package you just need to issue:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">makepkg</span> <span class="o">-</span><span class="n">si</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">-s</span></tt> option means <em>install missing dependencies using pacman</em>.
+<tt class="docutils literal"><span class="pre">-i</span></tt> option means <em>install the package after it is built</em>.</p>
+<p>You should customize your <tt class="docutils literal"><span class="pre">/etc/makepkg.conf</span></tt> file before launching the build,
+for example to set up the packager name:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">PACKAGER</span><span class="o">=</span><span class="s">&quot;Myself &lt;root@localhost&gt;&quot;</span>
+</pre></div>
+</div>
+<p>For more information read the wiki! Here are some links:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://wiki.archlinux.org/index.php/Arch_Build_System">https://wiki.archlinux.org/index.php/Arch_Build_System</a></li>
+<li><a class="reference external" href="https://wiki.archlinux.org/index.php/AUR">https://wiki.archlinux.org/index.php/AUR</a></li>
+<li><a class="reference external" href="https://wiki.archlinux.org/index.php/makepkg">https://wiki.archlinux.org/index.php/makepkg</a></li>
+<li><a class="reference external" href="https://wiki.archlinux.org/index.php/Official_Repositories">https://wiki.archlinux.org/index.php/Official_Repositories</a></li>
+<li><a class="reference external" href="https://wiki.archlinux.org/index.php/Pacman_Tips">https://wiki.archlinux.org/index.php/Pacman_Tips</a></li>
+<li><a class="reference external" href="https://wiki.archlinux.org/index.php/PKGBUILD">https://wiki.archlinux.org/index.php/PKGBUILD</a></li>
+<li><a class="reference external" href="https://wiki.archlinux.org/index.php/Yaourt">https://wiki.archlinux.org/index.php/Yaourt</a></li>
+</ul>
+</div>
+<div class="section" id="yaourt-and-pacaur">
+<h2>Yaourt and pacaur<a class="headerlink" href="#yaourt-and-pacaur" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">yaourt</span></tt> (Yet AnOther User Repository Tool) and <tt class="docutils literal"><span class="pre">pacaur</span></tt> ease the
+installation of packages from the AUR. Their interfaces are similar to
+<tt class="docutils literal"><span class="pre">pacman</span></tt> but they can download, build and install user packages too, wrapping
+both <tt class="docutils literal"><span class="pre">makepkg</span></tt> and <tt class="docutils literal"><span class="pre">pacman</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">yaourt</span></tt> includes <tt class="docutils literal"><span class="pre">-G</span></tt> option (<tt class="docutils literal"><span class="pre">--getpkgbuild</span></tt>) to get a <tt class="docutils literal"><span class="pre">PKGBUILD</span></tt> file
+for a specified package.</p>
+<p><tt class="docutils literal"><span class="pre">pacaur</span></tt> main advantage lies in keeping the downloaded PKGBUILD and their git
+history in a directory, <tt class="docutils literal"><span class="pre">$HOME/.cache/pacaur/</span></tt>, which allows tracking changes
+when upgrading AUR packages.</p>
+</div>
+<div class="section" id="debug-build">
+<h2>Debug build<a class="headerlink" href="#debug-build" title="Permalink to this headline">¶</a></h2>
+<p>To build packages with debug symbols, you need to change <tt class="docutils literal"><span class="pre">OPTIONS</span></tt> variable
+in <tt class="docutils literal"><span class="pre">/etc/makepkg.conf</span></tt>. Here is the default configuration:</p>
+<div class="highlight-python"><div class="highlight"><pre>OPTIONS=(strip docs !libtool !staticlibs emptydirs zipman purge !upx !debug)
+</pre></div>
+</div>
+<p>You just need to add and remove some bangs following your needs:</p>
+<div class="highlight-python"><div class="highlight"><pre>OPTIONS=(!strip docs !libtool !staticlibs emptydirs zipman purge !upx debug)
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Notes about Arch Linux packages</a><ul>
+<li><a class="reference internal" href="#building-packages">Building packages</a></li>
+<li><a class="reference internal" href="#yaourt-and-pacaur">Yaourt and pacaur</a></li>
+<li><a class="reference internal" href="#debug-build">Debug build</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Some notes and tips&amp;tricks about system administration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="debian.html"
+                        title="next chapter">Some information of Debian systems</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/archlinux-pkg.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="debian.html" title="Some information of Debian systems"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Some notes and tips&amp;tricks about system administration"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

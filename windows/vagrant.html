@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Windows Virtual Machine with Vagrant &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="up" title="Windows system information" href="index.html" />
+    <link rel="next" title="WinDbg-kd, Windows Kernel Debugging" href="windbg-kd.html" />
+    <link rel="prev" title="Set hardware clock to UTC" href="utc-clock.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="windbg-kd.html" title="WinDbg-kd, Windows Kernel Debugging"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="utc-clock.html" title="Set hardware clock to UTC"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Windows system information</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="windows-virtual-machine-with-vagrant">
+<h1>Windows Virtual Machine with Vagrant<a class="headerlink" href="#windows-virtual-machine-with-vagrant" title="Permalink to this headline">¶</a></h1>
+<p>Microsoft provides free Windows VM (which expire after 90 days) on
+<a class="reference external" href="https://developer.microsoft.com/en-us/microsoft-edge/">https://developer.microsoft.com/en-us/microsoft-edge/</a> .
+Among the available VM are Vagrant machines. Here are instructions to setup
+a Windows VM through Vagrant using Libvirt and QEmu-KVM as backend.</p>
+<div class="section" id="create-a-libvirt-box">
+<h2>Create a libvirt box<a class="headerlink" href="#create-a-libvirt-box" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Download a ZIP from <a class="reference external" href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/">https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/</a>, like
+<a class="reference external" href="https://az792536.vo.msecnd.net/vms/VMBuild_20160810/Vagrant/MSEdge/MSEdge.Win10_RS1.Vagrant.zip">https://az792536.vo.msecnd.net/vms/VMBuild_20160810/Vagrant/MSEdge/MSEdge.Win10_RS1.Vagrant.zip</a></p>
+</li>
+<li><p class="first">Extract the box from the ZIP (it is named for example <tt class="docutils literal"><span class="pre">dev-msedge.box</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>unzip MSEdge.Win10_RS1.Vagrant.zip
+</pre></div>
+</div>
+</li>
+<li><p class="first">Import the VirtualBox-Vagrant box and mutate it to use libvirt:</p>
+<div class="highlight-python"><div class="highlight"><pre>vagrant plugin install vagrant-mutate
+vagrant box add windows/win10-edge dev-msedge.box
+vagrant mutate windows/win10-edge libvirt
+vagrant box remove --provider virtualbox windows/win10-edge
+</pre></div>
+</div>
+<p>The mutate command will use <tt class="docutils literal"><span class="pre">qemu-img</span> <span class="pre">convert</span> <span class="pre">-p</span> <span class="pre">-S</span> <span class="pre">16k</span> <span class="pre">-o</span> <span class="pre">compat=1.1</span> <span class="pre">-O</span> <span class="pre">qcow2</span> <span class="pre">...</span></tt>
+to convert the virtual box disk to a QEmu-compatible one.</p>
+</li>
+<li><p class="first">Initialize a new Vagrant box in the current directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>vagrant init windows/win10-edge
+</pre></div>
+</div>
+</li>
+<li><p class="first">Configure the box by adding the following lines to <tt class="docutils literal"><span class="pre">Vagrantfile</span></tt> before the final <tt class="docutils literal"><span class="pre">end</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre># Configure remote access
+config.ssh.username = &quot;IEUser&quot;
+config.ssh.password = &quot;Passw0rd!&quot;
+
+# Use 2GB of memory
+config.vm.provider :libvirt do |v|
+  v.memory = 2048
+end
+</pre></div>
+</div>
+</li>
+<li><p class="first">Start the new box:</p>
+<div class="highlight-python"><div class="highlight"><pre>vagrant up --provider libvirt --no-destroy-on-error
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="first-configuration">
+<h2>First configuration<a class="headerlink" href="#first-configuration" title="Permalink to this headline">¶</a></h2>
+<p>By default the virtual machine won&#8217;t be able to use the virtual network card as
+it lacks the VirtIO network drivers. The suitable drivers are provided by Redhat
+in a <tt class="docutils literal"><span class="pre">virtio-win</span></tt> package: <a class="reference external" href="https://fedoraproject.org/wiki/Windows_Virtio_Drivers">https://fedoraproject.org/wiki/Windows_Virtio_Drivers</a>.</p>
+<ul>
+<li><p class="first">Download the floppy disk of the drivers, <a class="reference external" href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd">https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd</a></p>
+</li>
+<li><p class="first">Poweroff the virtual machine and add the floppy drive to the Virtual Machine,
+with virt-manager or <tt class="docutils literal"><span class="pre">virsh</span> <span class="pre">edit</span> <span class="pre">windows_default</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;disk type=&#39;file&#39; device=&#39;floppy&#39;&gt;
+    &lt;source file=&#39;/path/to/virtio-win_amd64.vfd&#39;/&gt;
+    &lt;target dev=&#39;fda&#39;/&gt;
+&lt;/disk&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Then power the machine on again through Libvirt, open the Explorer (Win+E), go
+to <tt class="docutils literal"><span class="pre">A:\amd64\Win10\</span></tt> directory and install all <tt class="docutils literal"><span class="pre">.inf</span></tt> files. There are 3
+drivers:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">netkvm.inf</span></tt> for the Virtio Ethernet Adapter,</li>
+<li><tt class="docutils literal"><span class="pre">vioscsi.inf</span></tt> for the VirtIO SCSI pass-through controller,</li>
+<li><tt class="docutils literal"><span class="pre">viostor.inf</span></tt> for the VirtIO SCSI controller.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="software-to-install">
+<h2>Software to install<a class="headerlink" href="#software-to-install" title="Permalink to this headline">¶</a></h2>
+<p>Here is a list of software which can be useful in a Windows virtual machine:</p>
+<ul>
+<li><p class="first">Notepad++: <a class="reference external" href="https://notepad-plus-plus.org/">https://notepad-plus-plus.org/</a> (the sha1sums of the downloaded files can be verified)</p>
+</li>
+<li><p class="first">Windows Development Kits, debugger (WinDbg)...: <a class="reference external" href="https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit">https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit</a></p>
+<blockquote>
+<div><ul class="simple">
+<li>Create a shortcut to <tt class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Windows</span> <span class="pre">Kits\10\Debuggers\x64</span></tt></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">msys2 environment: <a class="reference external" href="https://msys2.github.io/">https://msys2.github.io/</a> , and install some software:</p>
+<div class="highlight-python"><div class="highlight"><pre>PATH=&quot;/cygdrive/c/msys64/usr/bin:$PATH&quot;
+pacman -Syu
+pacman -Sy git mingw-w64-x86_64-toolchain
+</pre></div>
+</div>
+</li>
+<li><p class="first">Some Sysinternals tools:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Process Explorer <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processexplorer">https://technet.microsoft.com/en-us/sysinternals/processexplorer</a></li>
+<li>Process Monitor <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processmonitor">https://technet.microsoft.com/en-us/sysinternals/processmonitor</a></li>
+<li>DebugView <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/debugview">https://technet.microsoft.com/en-us/sysinternals/debugview</a></li>
+<li>WinObj <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/winobj">https://technet.microsoft.com/en-us/sysinternals/winobj</a></li>
+<li>AccessEnum <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/accessenum">https://technet.microsoft.com/en-us/sysinternals/accessenum</a></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="using-winrm">
+<h2>Using WinRM<a class="headerlink" href="#using-winrm" title="Permalink to this headline">¶</a></h2>
+<p>In order to use WinRM to connect to the machine, add the following information
+to the <tt class="docutils literal"><span class="pre">Vagrantfile</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Use Windows Remote Management protocol</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">communicator</span> <span class="o">=</span> <span class="s">&quot;winrm&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">winrm</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="s">&quot;IEUser&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">winrm</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s">&quot;Passw0rd!&quot;</span>
+</pre></div>
+</div>
+<p>In a command-line prompt (eg. in <tt class="docutils literal"><span class="pre">vagrant</span> <span class="pre">ssh</span></tt>) run:</p>
+<div class="highlight-python"><div class="highlight"><pre>powershell -Command Enable-PSRemoting
+</pre></div>
+</div>
+<p>If this commands fails with:</p>
+<div class="highlight-python"><div class="highlight"><pre>WinRM is already set up to receive requests on this computer.
+Set-WSManQuickConfig : &lt;f:WSManFault xmlns:f=&quot;http://schemas.microsoft.com/wbem/wsman/1/wsmanfault&quot; Code=&quot;2150859113&quot;
+Machine=&quot;localhost&quot;&gt;&lt;f:Message&gt;&lt;f:ProviderFault provider=&quot;Config provider&quot;
+path=&quot;%systemroot%\system32\WsmSvc.dll&quot;&gt;&lt;f:WSManFault xmlns:f=&quot;http://schemas.microsoft.com/wbem/wsman/1/wsmanfault&quot;
+Code=&quot;2150859113&quot; Machine=&quot;MSEDGEWIN10&quot;&gt;&lt;f:Message&gt;WinRM firewall exception will not work since one of the network
+connection types on this machine is set to Public. Change the network connection type to either Domain or Private and
+try again. &lt;/f:Message&gt;&lt;/f:WSManFault&gt;&lt;/f:ProviderFault&gt;&lt;/f:Message&gt;&lt;/f:WSManFault&gt;
+At line:116 char:17
++                 Set-WSManQuickConfig -force
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [Set-WSManQuickConfig], InvalidOperationException
+    + FullyQualifiedErrorId : WsManError,Microsoft.WSMan.Management.SetWSManQuickConfigCommand
+</pre></div>
+</div>
+<p>You need to change the network to a Private network (cf. for example
+<a class="reference external" href="http://www.hurryupandwait.io/blog/fixing-winrm-firewall-exception-rule-not-working-when-internet-connection-type-is-set-to-public">http://www.hurryupandwait.io/blog/fixing-winrm-firewall-exception-rule-not-working-when-internet-connection-type-is-set-to-public</a>).
+Otherwise the output is:</p>
+<div class="highlight-python"><div class="highlight"><pre>WinRM is already set up to receive requests on this computer.
+WinRM is already set up for remote management on this computer.
+</pre></div>
+</div>
+<p>Then:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ vagrant install vagrant-winrm
+$ vagrant winrm -s cmd -c ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Ethernet 2:
+
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : fe80::40eb:b9c3:babb:31b5%4
+   IPv4 Address. . . . . . . . . . . : 192.168.121.241
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.121.1
+
+Tunnel adapter isatap.{8C624652-4727-4A10-9CC3-DC0C7E0177FB}:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+
+Tunnel adapter Teredo Tunneling Pseudo-Interface:
+
+   Connection-specific DNS Suffix  . :
+   IPv6 Address. . . . . . . . . . . : 2001:0:9d38:6ab8:248d:f1e:b27a:31df
+   Link-local IPv6 Address . . . . . : fe80::248d:f1e:b27a:31df%3
+   Default Gateway . . . . . . . . . : ::
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Windows Virtual Machine with Vagrant</a><ul>
+<li><a class="reference internal" href="#create-a-libvirt-box">Create a libvirt box</a></li>
+<li><a class="reference internal" href="#first-configuration">First configuration</a></li>
+<li><a class="reference internal" href="#software-to-install">Software to install</a></li>
+<li><a class="reference internal" href="#using-winrm">Using WinRM</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="utc-clock.html"
+                        title="previous chapter">Set hardware clock to UTC</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="windbg-kd.html"
+                        title="next chapter">WinDbg-kd, Windows Kernel Debugging</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/windows/vagrant.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="windbg-kd.html" title="WinDbg-kd, Windows Kernel Debugging"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="utc-clock.html" title="Set hardware clock to UTC"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="index.html" >Windows system information</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

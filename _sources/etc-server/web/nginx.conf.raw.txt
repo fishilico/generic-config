@@ -1,0 +1,6 @@
+``etc-server/web/nginx.conf``
+=============================
+:download:`Download file<nginx.conf>`
+
+.. literalinclude:: nginx.conf
+   :language: nginx

@@ -1,0 +1,6 @@
+``etc/resolv.conf``
+===================
+:download:`Download file<resolv.conf>`
+
+.. literalinclude:: resolv.conf
+   :language: sh

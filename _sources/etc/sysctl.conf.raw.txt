@@ -1,0 +1,6 @@
+``etc/sysctl.conf``
+===================
+:download:`Download file<sysctl.conf>`
+
+.. literalinclude:: sysctl.conf
+   :language: sh

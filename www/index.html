@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>WWW server files (/var/www) &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../index.html" />
+    <link rel="next" title="www/htdocs/403.html" href="htdocs/403.html.raw.html" />
+    <link rel="prev" title="SSL configuration on a web server" href="../etc-server/web/ssl.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="htdocs/403.html.raw.html" title="www/htdocs/403.html"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../etc-server/web/ssl.html" title="SSL configuration on a web server"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="www-server-files-var-www">
+<h1>WWW server files (<tt class="docutils literal"><span class="pre">/var/www</span></tt>)<a class="headerlink" href="#www-server-files-var-www" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="htdocs/403.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/403.html</span></tt></a></li>
+<li class="toctree-l1"><a class="reference internal" href="htdocs/404.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/404.html</span></tt></a></li>
+<li class="toctree-l1"><a class="reference internal" href="htdocs/500.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/500.html</span></tt></a></li>
+<li class="toctree-l1"><a class="reference internal" href="htdocs/50x.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/50x.html</span></tt></a></li>
+<li class="toctree-l1"><a class="reference internal" href="htdocs/down.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/down.html</span></tt></a></li>
+<li class="toctree-l1"><a class="reference internal" href="htdocs/favicon.ico.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/favicon.ico</span></tt></a></li>
+<li class="toctree-l1"><a class="reference internal" href="htdocs/index-nothing.html.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/index-nothing.html</span></tt></a></li>
+<li class="toctree-l1"><a class="reference internal" href="htdocs/robots.txt.raw.html"><tt class="docutils literal"><span class="pre">www/htdocs/robots.txt</span></tt></a></li>
+</ul>
+</div>
+<p>This directory contains basic files which are on every web server which are not
+really public. This means that the first function of the web server which
+serves these files is not to be a cool website but something else, like
+monitoring, statistics, file sharing...</p>
+<div class="section" id="web-server-configuration">
+<h2>Web server configuration<a class="headerlink" href="#web-server-configuration" title="Permalink to this headline">¶</a></h2>
+<p>If you&#8217;re using nginx, put these lines into your default vhost:</p>
+<div class="highlight-python"><div class="highlight"><pre>root /path/to/www/htdocs;
+error_page 403 /403.html;
+error_page 404 /404.html;
+error_page 500 /500.html;
+error_page 500 502 503 504 /50x.html;
+index index.html
+try_files $uri $uri/ =404;
+</pre></div>
+</div>
+<p>With Apache, use:</p>
+<div class="highlight-python"><div class="highlight"><pre>DocumentRoot &quot;/path/to/www/htdocs&quot;
+ErrorDocument 403 &quot;/403.html&quot;
+ErrorDocument 404 &quot;/404.html&quot;/i
+ErrorDocument 500 &quot;/500.html&quot;
+ErrorDocument 502 &quot;/50x.html&quot;
+ErrorDocument 503 &quot;/50x.html&quot;
+ErrorDocument 504 &quot;/50x.html&quot;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">WWW server files (<tt class="docutils literal"><span class="pre">/var/www</span></tt>)</a><ul>
+<li><a class="reference internal" href="#web-server-configuration">Web server configuration</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../etc-server/web/ssl.html"
+                        title="previous chapter">SSL configuration on a web server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="htdocs/403.html.raw.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">www/htdocs/403.html</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/www/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="htdocs/403.html.raw.html" title="www/htdocs/403.html"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../etc-server/web/ssl.html" title="SSL configuration on a web server"
+             >previous</a> |</li>
+        <li><a href="../index.html">Generic Config</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

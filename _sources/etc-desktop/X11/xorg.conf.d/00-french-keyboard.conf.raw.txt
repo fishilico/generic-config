@@ -1,0 +1,6 @@
+``etc-desktop/X11/xorg.conf.d/00-french-keyboard.conf``
+=======================================================
+:download:`Download file<00-french-keyboard.conf>`
+
+.. literalinclude:: 00-french-keyboard.conf
+   :language: sh

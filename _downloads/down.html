@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+Put this file on a folder like /srv/http/down and then configure your webserver
+to only serve this file.
+
+For Apache, here is a possible configuration for the virtual host you wish to
+take down:
+
+    DocumentRoot /srv/http/down
+    <Directory /srv/http/down>
+        Order allow,deny
+        Allow from all
+        AllowOverride None
+        RewriteEngine On
+        RewriteBase /
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^.*$ down.html [L]
+    </Directory>
+-->
+<html>
+<head>
+    <title>It does NOT work!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>This website is down</h1>
+    <p>
+Some nasty technical issues occurred and the website has been temporarily
+shut down for safety reasons. Please come back later.
+    </p>
+</body>
+</html>

@@ -1,0 +1,6 @@
+``etc/iptables/iptables-desktop.rules``
+=======================================
+:download:`Download file<iptables-desktop.rules>`
+
+.. literalinclude:: iptables-desktop.rules
+   :language: sh
