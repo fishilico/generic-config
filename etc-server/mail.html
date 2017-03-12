@@ -131,6 +131,8 @@ package (or through <tt class="docutils literal"><span class="pre">dpkg-reconfig
 
 <span class="c"># Only listen to the loopback interface</span>
 <span class="nv">inet_interfaces</span> <span class="o">=</span> loopback-only
+<span class="c"># If this becomes misconfigured, reject all clients not in mynetworks</span>
+<span class="nv">smtpd_client_restrictions</span> <span class="o">=</span> permit_mynetworks, reject
 
 <span class="c"># Use IPv4 and IPv6</span>
 <span class="nv">inet_protocols</span> <span class="o">=</span> all
@@ -223,7 +225,7 @@ the file configured in <tt class="docutils literal"><span class="pre">alias_maps
 <p>To send local emails as <tt class="docutils literal"><span class="pre">root+hostname&#64;example.com</span></tt> instead of
 <tt class="docutils literal"><span class="pre">root&#64;hostname.example.com</span></tt>, a canonical mapping can be added:</p>
 <ul>
-<li><p class="first">in <tt class="docutils literal"><span class="pre">`/etc/postfix/main.cf</span></tt>:</p>
+<li><p class="first">in <tt class="docutils literal"><span class="pre">/etc/postfix/main.cf</span></tt>:</p>
 <div class="highlight-python"><div class="highlight"><pre>canonical_classes = envelope_sender, header_sender, header_recipient
 canonical_maps = regexp:/etc/postfix/canonical.regexp
 </pre></div>
@@ -317,7 +319,7 @@ service auth <span class="o">{</span>
 </div>
 <p>Also configure Postfix to use qmail-style delivery, with this in
 <tt class="docutils literal"><span class="pre">/etc/postfix/main.cf</span></tt>:</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c"># Delive mails in ~/Maildir/ (the trailing / is required)</span>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c"># Deliver mails in ~/Maildir/ (the trailing / is required)</span>
 <span class="nv">home_mailbox</span> <span class="o">=</span> Maildir/
 </pre></div>
 </div>
