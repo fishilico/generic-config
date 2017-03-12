@@ -86,6 +86,8 @@ Here are config files for a server named ``examplehost`` in domain ``example.com
 
     # Only listen to the loopback interface
     inet_interfaces = loopback-only
+    # If this becomes misconfigured, reject all clients not in mynetworks
+    smtpd_client_restrictions = permit_mynetworks, reject
 
     # Use IPv4 and IPv6
     inet_protocols = all
@@ -187,7 +189,7 @@ the file configured in ``alias_maps`` and ``alias_database`` variables
 To send local emails as ``root+hostname@example.com`` instead of
 ``root@hostname.example.com``, a canonical mapping can be added:
 
-* in ```/etc/postfix/main.cf``::
+* in ``/etc/postfix/main.cf``::
 
     canonical_classes = envelope_sender, header_sender, header_recipient
     canonical_maps = regexp:/etc/postfix/canonical.regexp
@@ -288,7 +290,7 @@ Also configure Postfix to use qmail-style delivery, with this in
 
 .. code-block:: sh
 
-    # Delive mails in ~/Maildir/ (the trailing / is required)
+    # Deliver mails in ~/Maildir/ (the trailing / is required)
     home_mailbox = Maildir/
 
 The dovecot authentication can then be activated in Postfix by updating the
