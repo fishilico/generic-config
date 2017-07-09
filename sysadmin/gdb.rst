@@ -112,6 +112,12 @@ Memory:
 * ``dump memory text.bin 0x400000 0x401000``: write memory content to a file.
   The two hexadecimal arguments define a [start, stop) range.
 
+It is possible to run an examine command each time the program is interrupted,
+with ``display``.  For example, this command displays the to-be-run
+instruction, which is useful when running step-by-step with ``si``::
+
+    display/i $pc
+
 General information:
 
 * ``info registers`` or ``i reg``: show the values of current registers.
