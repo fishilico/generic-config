@@ -155,6 +155,12 @@ It can even call functions from the currently-being-debugged program!</li>
 <li><tt class="docutils literal"><span class="pre">dump</span> <span class="pre">memory</span> <span class="pre">text.bin</span> <span class="pre">0x400000</span> <span class="pre">0x401000</span></tt>: write memory content to a file.
 The two hexadecimal arguments define a [start, stop) range.</li>
 </ul>
+<p>It is possible to run an examine command each time the program is interrupted,
+with <tt class="docutils literal"><span class="pre">display</span></tt>.  For example, this command displays the to-be-run
+instruction, which is useful when running step-by-step with <tt class="docutils literal"><span class="pre">si</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>display/i $pc
+</pre></div>
+</div>
 <p>General information:</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">info</span> <span class="pre">registers</span></tt> or <tt class="docutils literal"><span class="pre">i</span> <span class="pre">reg</span></tt>: show the values of current registers.</li>

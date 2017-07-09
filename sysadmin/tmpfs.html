@@ -69,6 +69,11 @@ tmpfs           /tmp  tmpfs  nodev,nosuid,noexec  0      0
 <div class="highlight-python"><div class="highlight"><pre>$USER.cache $HOME/.cache tmpfs defaults,auto,nodev,noexec,nosuid,size=2048M,gid=100,uid=1000,mode=0700 0 0
 </pre></div>
 </div>
+<p>As <tt class="docutils literal"><span class="pre">.cache/pacaur</span></tt> is intended to persist accross reboots, this directory can
+be set up as a bind-mount:</p>
+<div class="highlight-python"><div class="highlight"><pre>$HOME/.cache.pacaur $HOME/.cache/pacaur none bind 0 0
+</pre></div>
+</div>
 </div>
 <div class="section" id="yaourt-build-dir-on-archlinux">
 <h2>Yaourt build dir on ArchLinux<a class="headerlink" href="#yaourt-build-dir-on-archlinux" title="Permalink to this headline">¶</a></h2>
@@ -80,6 +85,17 @@ directory a tmpfs mountpoint the time of a build, add the following line to
 </div>
 <p>Then, create (if needed) and mount <tt class="docutils literal"><span class="pre">/tmp/yaourt-tmp-$USER</span></tt> before running
 yaourt.</p>
+</div>
+<div class="section" id="other-directories">
+<h2>Other directories<a class="headerlink" href="#other-directories" title="Permalink to this headline">¶</a></h2>
+<p>Here are some entries which may be written into <tt class="docutils literal"><span class="pre">/etc/fstab</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre># Web browser downloads
+$HOME/Downloads/tmp tmpfs defaults,auto,nodev,nosuid,exec,gid=$GID,uid=$UID,mode=0700,rootcontext=$(getfattr --only-values -n security.selinux $HOME/Downloads) 0 0
+
+# makepkg build directory (modify BUILDDIR=/tmp/makepkg-$USER in /etc/makepkg.conf)
+$USER.yaourt /tmp/makepkg-$USER tmpfs defaults,user,noauto,nodev,exec,nosuid,gid=$GID,uid=$UID,mode=0700 0 0
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -95,6 +111,7 @@ yaourt.</p>
 <li><a class="reference internal" href="#tmp"><tt class="docutils literal"><span class="pre">/tmp</span></tt></a></li>
 <li><a class="reference internal" href="#home-cache"><tt class="docutils literal"><span class="pre">$HOME/.cache</span></tt></a></li>
 <li><a class="reference internal" href="#yaourt-build-dir-on-archlinux">Yaourt build dir on ArchLinux</a></li>
+<li><a class="reference internal" href="#other-directories">Other directories</a></li>
 </ul>
 </li>
 </ul>
