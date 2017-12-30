@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>etc/audit/audit.rules &mdash; Generic Config</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Generic Config" href="../../index.html" />
+    <link rel="up" title="/etc" href="../index.html" />
+    <link rel="next" title="etc/hosts" href="../hosts.raw.html" />
+    <link rel="prev" title="/etc" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../hosts.raw.html" title="etc/hosts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="/etc"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="etc-audit-audit-rules">
+<h1><tt class="docutils literal"><span class="pre">etc/audit/audit.rules</span></tt><a class="headerlink" href="#etc-audit-audit-rules" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../../_downloads/audit.rules"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="c"># Reload this file with:</span>
+<span class="c">#    auditctl -D &amp;&amp; auditctl -R /etc/audit/audit.rules</span>
+<span class="c">#</span>
+<span class="c"># Then list rules with:</span>
+<span class="c">#    auditctl -l</span>
+<span class="c">#</span>
+<span class="c"># and generate report with:</span>
+<span class="c">#    aureport -i -k --summary</span>
+<span class="c">#</span>
+<span class="c"># Documentation:</span>
+<span class="c"># - section 6.7.3 of https://www.ssi.gouv.fr/uploads/2015/10/NP_Linux_Configuration.pdf</span>
+
+<span class="c"># Monitor insmod, rmmod and modprobe</span>
+-w /usr/bin/insmod -p x -k audit_modules
+-w /usr/bin/modprobe -p x -k audit_modules
+-w /usr/bin/rmmod -p x -k audit_modules
+-w /sbin/insmod -p x -k audit_modules
+-w /sbin/modprobe -p x -k audit_modules
+-w /sbin/rmmod -p x -k audit_modules
+
+<span class="c"># Log modifications in /etc/</span>
+-w /etc/ -p wa -k audit_conf
+
+<span class="c"># Log mount and unmount operations</span>
+-a <span class="nb">exit</span>,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S mount -S umount2 -k audit_mount
+-a <span class="nb">exit</span>,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S mount -S umount2 -k audit_mount
+
+<span class="c"># Log suspicious x86 syscalls</span>
+-a <span class="nb">exit</span>,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S ioperm -S modify_ldt -k audit_syscall
+-a <span class="nb">exit</span>,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S ioperm -S modify_ldt -k audit_syscall
+
+<span class="c"># Log uncommon syscalls which need some close monitoring</span>
+-a <span class="nb">exit</span>,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S get_kernel_syms -S ptrace -S prctl -k audit_syscall
+-a <span class="nb">exit</span>,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S init_module -S finit_module -k audit_syscall
+-a <span class="nb">exit</span>,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S perf_event_open -k audit_syscall
+-a <span class="nb">exit</span>,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S get_kernel_syms -S ptrace -S prctl -k audit_syscall
+-a <span class="nb">exit</span>,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S init_module -S finit_module -k audit_syscall
+-a <span class="nb">exit</span>,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S perf_event_open -k audit_syscall
+
+<span class="c"># Lock auditd configuration</span>
+-e 2
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">/etc</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../hosts.raw.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">etc/hosts</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/etc/audit/audit.rules.raw.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../hosts.raw.html" title="etc/hosts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="/etc"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
+          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

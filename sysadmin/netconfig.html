@@ -129,6 +129,20 @@ search example.com
 </pre></div>
 </div>
 </div>
+<div class="section" id="systemd-network-configuration">
+<h2>Systemd network configuration<a class="headerlink" href="#systemd-network-configuration" title="Permalink to this headline">¶</a></h2>
+<p>On a server which provides an ens42 wired connection with a static IP
+configuration, it is possible to use systemd-networkd with the following
+configuration in <tt class="docutils literal"><span class="pre">/etc/systemd/network/wired.network</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>[Match]
+Name=ens42
+
+[Network]
+Address=192.168.0.42/24
+Gateway=192.168.0.1
+</pre></div>
+</div>
+</div>
 <div class="section" id="broadcast-ping">
 <h2>Broadcast ping<a class="headerlink" href="#broadcast-ping" title="Permalink to this headline">¶</a></h2>
 <p>To discover pingable hosts on your network, send an Echo Request (ping) to
@@ -175,6 +189,7 @@ messages):</p>
 <li><a class="reference internal" href="#ipv4-configuration">IPv4 configuration</a></li>
 <li><a class="reference internal" href="#ipv6-configuration">IPv6 configuration</a></li>
 <li><a class="reference internal" href="#dns-configuration">DNS configuration</a></li>
+<li><a class="reference internal" href="#systemd-network-configuration">Systemd network configuration</a></li>
 <li><a class="reference internal" href="#broadcast-ping">Broadcast ping</a></li>
 <li><a class="reference internal" href="#link-layer-ping">Link-layer ping</a></li>
 </ul>

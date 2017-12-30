@@ -1,0 +1,41 @@
+# Reload this file with:
+#    auditctl -D && auditctl -R /etc/audit/audit.rules
+#
+# Then list rules with:
+#    auditctl -l
+#
+# and generate report with:
+#    aureport -i -k --summary
+#
+# Documentation:
+# - section 6.7.3 of https://www.ssi.gouv.fr/uploads/2015/10/NP_Linux_Configuration.pdf
+
+# Monitor insmod, rmmod and modprobe
+-w /usr/bin/insmod -p x -k audit_modules
+-w /usr/bin/modprobe -p x -k audit_modules
+-w /usr/bin/rmmod -p x -k audit_modules
+-w /sbin/insmod -p x -k audit_modules
+-w /sbin/modprobe -p x -k audit_modules
+-w /sbin/rmmod -p x -k audit_modules
+
+# Log modifications in /etc/
+-w /etc/ -p wa -k audit_conf
+
+# Log mount and unmount operations
+-a exit,always -F arch=b32 -S mount -S umount2 -k audit_mount
+-a exit,always -F arch=b64 -S mount -S umount2 -k audit_mount
+
+# Log suspicious x86 syscalls
+-a exit,always -F arch=b32 -S ioperm -S modify_ldt -k audit_syscall
+-a exit,always -F arch=b64 -S ioperm -S modify_ldt -k audit_syscall
+
+# Log uncommon syscalls which need some close monitoring
+-a exit,always -F arch=b32 -S get_kernel_syms -S ptrace -S prctl -k audit_syscall
+-a exit,always -F arch=b32 -S init_module -S finit_module -k audit_syscall
+-a exit,always -F arch=b32 -S perf_event_open -k audit_syscall
+-a exit,always -F arch=b64 -S get_kernel_syms -S ptrace -S prctl -k audit_syscall
+-a exit,always -F arch=b64 -S init_module -S finit_module -k audit_syscall
+-a exit,always -F arch=b64 -S perf_event_open -k audit_syscall
+
+# Lock auditd configuration
+-e 2

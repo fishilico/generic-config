@@ -1,0 +1,6 @@
+``etc/audit/audit.rules``
+=========================
+:download:`Download file<audit.rules>`
+
+.. literalinclude:: audit.rules
+   :language: sh

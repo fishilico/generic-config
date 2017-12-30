@@ -81,6 +81,20 @@ In manual configuration, edit this file with lines like these::
     search example.com
 
 
+Systemd network configuration
+-----------------------------
+On a server which provides an ens42 wired connection with a static IP
+configuration, it is possible to use systemd-networkd with the following
+configuration in ``/etc/systemd/network/wired.network``::
+
+    [Match]
+    Name=ens42
+
+    [Network]
+    Address=192.168.0.42/24
+    Gateway=192.168.0.1
+
+
 Broadcast ping
 --------------
 To discover pingable hosts on your network, send an Echo Request (ping) to

@@ -1,0 +1,6 @@
+``etc/nftables-server.conf``
+============================
+:download:`Download file<nftables-server.conf>`
+
+.. literalinclude:: nftables-server.conf
+   :language: sh
