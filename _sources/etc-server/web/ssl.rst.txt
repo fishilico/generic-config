@@ -10,7 +10,7 @@ secure configuration. Here is a list of some that I've found:
 
 Here are example configurations for ssl.example.com host with a certificate
 signed by StartSSL (https://www.startssl.com/) or Let's encrypt
-(https://letsencrypt.org/).
+(https://letsencrypt.org/) or AlwaysOnSSL (https://alwaysonssl.com/).
 
 Apache::
 
@@ -48,7 +48,7 @@ Nginx::
         ssl_certificate /etc/ssl/ssl.example.com_and_intermediates.pem;
         ssl_certificate_key /etc/ssl/ssl.example.com.key;
         ssl_dhparam /etc/ssl/dhparam.pem;
-        ssl_session_timeout 10m
+        ssl_session_timeout 10m;
         ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
         ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA;
         ssl_prefer_server_ciphers on;
