@@ -42,7 +42,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Generic Config'
-copyright = '2013-2016, Nicolas Iooss'
+copyright = '2013-2018, Nicolas Iooss'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
