@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Traffic shaping &mdash; Generic Config</title>
-    
+    <title>Traffic shaping &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="User management on Linux" href="user.html" />
     <link rel="prev" title="Use tmpfs for some directories" href="tmpfs.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,15 +30,15 @@
         <li class="right" >
           <a href="tmpfs.html" title="Use tmpfs for some directories"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="traffic-shaping">
 <h1>Traffic shaping<a class="headerlink" href="#traffic-shaping" title="Permalink to this headline">¶</a></h1>
@@ -63,114 +52,114 @@ of not-so-intuitive commands related to traffic shaping.</p>
 <li><a class="reference external" href="http://lartc.org/manpages/tc.html">http://lartc.org/manpages/tc.html</a> (official manpage)</li>
 <li><a class="reference external" href="http://lartc.org/howto/lartc.qdisc.filters.html">http://lartc.org/howto/lartc.qdisc.filters.html</a> (tc filters)</li>
 </ul>
-<p>First, to dump current traffic shaping rules on interface <tt class="docutils literal"><span class="pre">eth0</span></tt>, use the
-following command (<tt class="docutils literal"><span class="pre">tc</span></tt> means &#8220;Traffic Controller&#8221;):</p>
-<div class="highlight-python"><div class="highlight"><pre>tc -s qdisc show dev eth0
+<p>First, to dump current traffic shaping rules on interface <code class="docutils literal notranslate"><span class="pre">eth0</span></code>, use the
+following command (<code class="docutils literal notranslate"><span class="pre">tc</span></code> means “Traffic Controller”):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="o">-</span><span class="n">s</span> <span class="n">qdisc</span> <span class="n">show</span> <span class="n">dev</span> <span class="n">eth0</span>
 </pre></div>
 </div>
 <p>By default it will display something like:</p>
-<div class="highlight-python"><div class="highlight"><pre>qdisc pfifo_fast 0: root refcnt 2 bands 3 priomap  1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1
- Sent 42000 bytes 1337 pkt (dropped 0, overlimits 0 requeues 0)
- backlog 0b 0p requeues 0
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qdisc</span> <span class="n">pfifo_fast</span> <span class="mi">0</span><span class="p">:</span> <span class="n">root</span> <span class="n">refcnt</span> <span class="mi">2</span> <span class="n">bands</span> <span class="mi">3</span> <span class="n">priomap</span>  <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+ <span class="n">Sent</span> <span class="mi">42000</span> <span class="nb">bytes</span> <span class="mi">1337</span> <span class="n">pkt</span> <span class="p">(</span><span class="n">dropped</span> <span class="mi">0</span><span class="p">,</span> <span class="n">overlimits</span> <span class="mi">0</span> <span class="n">requeues</span> <span class="mi">0</span><span class="p">)</span>
+ <span class="n">backlog</span> <span class="mi">0</span><span class="n">b</span> <span class="mi">0</span><span class="n">p</span> <span class="n">requeues</span> <span class="mi">0</span>
 </pre></div>
 </div>
 <p>At any time, to restore this default configuration (and remove all rules), run:</p>
-<div class="highlight-python"><div class="highlight"><pre>tc qdisc del dev eth0 root
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="k">del</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">root</span>
 </pre></div>
 </div>
 <div class="section" id="egress-shaping-limiting-outbound-traffic">
 <h2>Egress shaping (limiting outbound traffic)<a class="headerlink" href="#egress-shaping-limiting-outbound-traffic" title="Permalink to this headline">¶</a></h2>
-<p>This command attachs a TBF (Token Bucket Filter) to <tt class="docutils literal"><span class="pre">eth0</span></tt> which :</p>
+<p>This command attachs a TBF (Token Bucket Filter) to <code class="docutils literal notranslate"><span class="pre">eth0</span></code> which :</p>
 <ul class="simple">
 <li>limit the maxium rate to 1 Mbits/s,</li>
 <li>define a peakrate at 2 Mbits/s,</li>
 <li>use a 10 KB buffer,</li>
 <li>limit the latency caused by the TBF to at most 70ms</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre>tc qdisc add dev eth0 root tbf rate 1mbit peakrate 2mbit burst 10kb latency 70ms minburst 1540
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">root</span> <span class="n">tbf</span> <span class="n">rate</span> <span class="mi">1</span><span class="n">mbit</span> <span class="n">peakrate</span> <span class="mi">2</span><span class="n">mbit</span> <span class="n">burst</span> <span class="mi">10</span><span class="n">kb</span> <span class="n">latency</span> <span class="mi">70</span><span class="n">ms</span> <span class="n">minburst</span> <span class="mi">1540</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="delay">
 <h2>Delay<a class="headerlink" href="#delay" title="Permalink to this headline">¶</a></h2>
 <p>This command applies a delay of 500ms on each outbound packets:</p>
-<div class="highlight-python"><div class="highlight"><pre>tc qdisc add dev eth0 root netem delay 500ms
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">root</span> <span class="n">netem</span> <span class="n">delay</span> <span class="mi">500</span><span class="n">ms</span>
 </pre></div>
 </div>
-<p>With this, <tt class="docutils literal"><span class="pre">tc</span> <span class="pre">qdisc</span> <span class="pre">show</span> <span class="pre">dev</span> <span class="pre">eth0</span></tt> shows:</p>
-<div class="highlight-python"><div class="highlight"><pre>qdisc netem 8001: root refcnt 2 limit 1000 delay 500.0ms
+<p>With this, <code class="docutils literal notranslate"><span class="pre">tc</span> <span class="pre">qdisc</span> <span class="pre">show</span> <span class="pre">dev</span> <span class="pre">eth0</span></code> shows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qdisc</span> <span class="n">netem</span> <span class="mi">8001</span><span class="p">:</span> <span class="n">root</span> <span class="n">refcnt</span> <span class="mi">2</span> <span class="n">limit</span> <span class="mi">1000</span> <span class="n">delay</span> <span class="mf">500.0</span><span class="n">ms</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="http-server-outbound-traffic-shaping">
 <h2>HTTP server outbound traffic shaping<a class="headerlink" href="#http-server-outbound-traffic-shaping" title="Permalink to this headline">¶</a></h2>
 <p>When running an HTTP server on TCP port 80, it is possible to throttle the
-outbound traffic with <tt class="docutils literal"><span class="pre">tc-htb</span></tt> (Hierarchy Token Bucket):</p>
-<div class="highlight-python"><div class="highlight"><pre>tc qdisc add dev eth0 root handle 1:0 htb default 1
-tc class add dev eth0 parent 1:0 classid 1:10 htb rate 512kbps ceil 768kbps prio 0
-tc filter add dev eth0 parent 1:0 protocol ip match ip sport 80 0xffff flowid 1:10
+outbound traffic with <code class="docutils literal notranslate"><span class="pre">tc-htb</span></code> (Hierarchy Token Bucket):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">root</span> <span class="n">handle</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">htb</span> <span class="n">default</span> <span class="mi">1</span>
+<span class="n">tc</span> <span class="k">class</span> <span class="nc">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">classid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">10</span> <span class="n">htb</span> <span class="n">rate</span> <span class="mi">512</span><span class="n">kbps</span> <span class="n">ceil</span> <span class="mi">768</span><span class="n">kbps</span> <span class="n">prio</span> <span class="mi">0</span>
+<span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">match</span> <span class="n">ip</span> <span class="n">sport</span> <span class="mi">80</span> <span class="mh">0xffff</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">10</span>
 </pre></div>
 </div>
-<p>Here are some commands to get a similar behavior of the last <tt class="docutils literal"><span class="pre">tc</span> <span class="pre">filter</span></tt>
-command with <tt class="docutils literal"><span class="pre">iptables</span></tt> power:</p>
-<div class="highlight-python"><div class="highlight"><pre>iptables -A OUTPUT -t mangle -o eth0 -p tcp --sport 80 -j MARK --set-mark 10
-ip6tables -A OUTPUT -t mangle -o eth0 -p tcp --sport 80 -j MARK --set-mark 10
-tc filter add dev eth0 parent 1:0 prio 0 protocol ip handle 10 fw flowid 1:10
+<p>Here are some commands to get a similar behavior of the last <code class="docutils literal notranslate"><span class="pre">tc</span> <span class="pre">filter</span></code>
+command with <code class="docutils literal notranslate"><span class="pre">iptables</span></code> power:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">OUTPUT</span> <span class="o">-</span><span class="n">t</span> <span class="n">mangle</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">sport</span> <span class="mi">80</span> <span class="o">-</span><span class="n">j</span> <span class="n">MARK</span> <span class="o">--</span><span class="nb">set</span><span class="o">-</span><span class="n">mark</span> <span class="mi">10</span>
+<span class="n">ip6tables</span> <span class="o">-</span><span class="n">A</span> <span class="n">OUTPUT</span> <span class="o">-</span><span class="n">t</span> <span class="n">mangle</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">sport</span> <span class="mi">80</span> <span class="o">-</span><span class="n">j</span> <span class="n">MARK</span> <span class="o">--</span><span class="nb">set</span><span class="o">-</span><span class="n">mark</span> <span class="mi">10</span>
+<span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">prio</span> <span class="mi">0</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">handle</span> <span class="mi">10</span> <span class="n">fw</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">10</span>
 </pre></div>
 </div>
 <p>To show active rules:</p>
-<div class="highlight-python"><div class="highlight"><pre># tc -s -d class show dev eth0
-class htb 1:10 root prio 0 quantum 51200 rate 4096Kbit ceil 6144Kbit burst 1599b/1 mpu 0b overhead 0b cburst 1598b/1 mpu 0b overhead 0b level 0
- Sent 42000 bytes 1337 pkt (dropped 0, overlimits 0 requeues 0)
- rate 400bit 0pps backlog 0b 0p requeues 0
- lended: 1337 borrowed: 0 giants: 0
- tokens: 44738 ctokens: 29819
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># tc -s -d class show dev eth0</span>
+<span class="k">class</span> <span class="nc">htb</span> <span class="mi">1</span><span class="p">:</span><span class="mi">10</span> <span class="n">root</span> <span class="n">prio</span> <span class="mi">0</span> <span class="n">quantum</span> <span class="mi">51200</span> <span class="n">rate</span> <span class="mi">4096</span><span class="n">Kbit</span> <span class="n">ceil</span> <span class="mi">6144</span><span class="n">Kbit</span> <span class="n">burst</span> <span class="mi">1599</span><span class="n">b</span><span class="o">/</span><span class="mi">1</span> <span class="n">mpu</span> <span class="mi">0</span><span class="n">b</span> <span class="n">overhead</span> <span class="mi">0</span><span class="n">b</span> <span class="n">cburst</span> <span class="mi">1598</span><span class="n">b</span><span class="o">/</span><span class="mi">1</span> <span class="n">mpu</span> <span class="mi">0</span><span class="n">b</span> <span class="n">overhead</span> <span class="mi">0</span><span class="n">b</span> <span class="n">level</span> <span class="mi">0</span>
+ <span class="n">Sent</span> <span class="mi">42000</span> <span class="nb">bytes</span> <span class="mi">1337</span> <span class="n">pkt</span> <span class="p">(</span><span class="n">dropped</span> <span class="mi">0</span><span class="p">,</span> <span class="n">overlimits</span> <span class="mi">0</span> <span class="n">requeues</span> <span class="mi">0</span><span class="p">)</span>
+ <span class="n">rate</span> <span class="mi">400</span><span class="n">bit</span> <span class="mi">0</span><span class="n">pps</span> <span class="n">backlog</span> <span class="mi">0</span><span class="n">b</span> <span class="mi">0</span><span class="n">p</span> <span class="n">requeues</span> <span class="mi">0</span>
+ <span class="n">lended</span><span class="p">:</span> <span class="mi">1337</span> <span class="n">borrowed</span><span class="p">:</span> <span class="mi">0</span> <span class="n">giants</span><span class="p">:</span> <span class="mi">0</span>
+ <span class="n">tokens</span><span class="p">:</span> <span class="mi">44738</span> <span class="n">ctokens</span><span class="p">:</span> <span class="mi">29819</span>
 
-# tc filter show dev eth0
-filter parent 1: protocol ip pref 49152 fw
+<span class="c1"># tc filter show dev eth0</span>
+<span class="nb">filter</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">pref</span> <span class="mi">49152</span> <span class="n">fw</span>
 </pre></div>
 </div>
 <p>It is also possible to filter by IP address:</p>
-<div class="highlight-python"><div class="highlight"><pre>tc filter add dev eth0 parent 1:0 protocol ip prio 1 u32 match ip dst 192.0.2.42/32 flowid 1:1
-tc filter add dev eth0 parent 1:0 protocol ipv6 prio 2 u32 match ip6 dst 2001:db8::beef/128 flowid 1:1
-tc filter add dev eth0 parent 1:0 protocol ip prio 3 u32 match ip src 192.0.2.36/32 flowid 1:2
-tc filter add dev eth0 parent 1:0 protocol ipv6 prio 4 u32 match ip6 src 2001:db8::cafe/128 flowid 1:2
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">prio</span> <span class="mi">1</span> <span class="n">u32</span> <span class="n">match</span> <span class="n">ip</span> <span class="n">dst</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span><span class="o">/</span><span class="mi">32</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">1</span>
+<span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">protocol</span> <span class="n">ipv6</span> <span class="n">prio</span> <span class="mi">2</span> <span class="n">u32</span> <span class="n">match</span> <span class="n">ip6</span> <span class="n">dst</span> <span class="mi">2001</span><span class="p">:</span><span class="n">db8</span><span class="p">::</span><span class="n">beef</span><span class="o">/</span><span class="mi">128</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">1</span>
+<span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">prio</span> <span class="mi">3</span> <span class="n">u32</span> <span class="n">match</span> <span class="n">ip</span> <span class="n">src</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.36</span><span class="o">/</span><span class="mi">32</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span>
+<span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">protocol</span> <span class="n">ipv6</span> <span class="n">prio</span> <span class="mi">4</span> <span class="n">u32</span> <span class="n">match</span> <span class="n">ip6</span> <span class="n">src</span> <span class="mi">2001</span><span class="p">:</span><span class="n">db8</span><span class="p">::</span><span class="n">cafe</span><span class="o">/</span><span class="mi">128</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span>
 </pre></div>
 </div>
 <p>If you happen to define filters for IPv4 and IPv6 with the same priority, the
 kernel rejects the request with a mysterious message:</p>
-<div class="highlight-python"><div class="highlight"><pre>RTNETLINK answers: Invalid argument
-We have an error talking to the kernel
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RTNETLINK</span> <span class="n">answers</span><span class="p">:</span> <span class="n">Invalid</span> <span class="n">argument</span>
+<span class="n">We</span> <span class="n">have</span> <span class="n">an</span> <span class="n">error</span> <span class="n">talking</span> <span class="n">to</span> <span class="n">the</span> <span class="n">kernel</span>
 </pre></div>
 </div>
-<p>When such a thing happens, you only need to use a different &#8220;prio&#8221; argument for
+<p>When such a thing happens, you only need to use a different “prio” argument for
 your IPv4 and IPv6 filters.</p>
 </div>
 <div class="section" id="make-downloads-slow">
 <h2>Make downloads slow<a class="headerlink" href="#make-downloads-slow" title="Permalink to this headline">¶</a></h2>
-<p>In order to slow down downloads to prevent them from filling ISP&#8217;s buffers, you
+<p>In order to slow down downloads to prevent them from filling ISP’s buffers, you
 can attach a filter in ingress mode which drops too fast packets:</p>
-<div class="highlight-python"><div class="highlight"><pre>tc qdisc add dev eth0 handle ffff: ingress
-tc filter add dev eth0 parent ffff: protocol ip prio 50 u32 \
-    match ip src 0.0.0.0/0 police rate 800kbit burst 10k drop flowid :1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">handle</span> <span class="n">ffff</span><span class="p">:</span> <span class="n">ingress</span>
+<span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="n">ffff</span><span class="p">:</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">prio</span> <span class="mi">50</span> <span class="n">u32</span> \
+    <span class="n">match</span> <span class="n">ip</span> <span class="n">src</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span> <span class="n">police</span> <span class="n">rate</span> <span class="mi">800</span><span class="n">kbit</span> <span class="n">burst</span> <span class="mi">10</span><span class="n">k</span> <span class="n">drop</span> <span class="n">flowid</span> <span class="p">:</span><span class="mi">1</span>
 </pre></div>
 </div>
 <p>After that, statistics commands display this:</p>
-<div class="highlight-python"><div class="highlight"><pre># tc qdisc show dev eth0
-qdisc pfifo_fast 0: dev eth0 root refcnt 2 bands 3 priomap  1 2 2 2 1 2 0 0 1 1 1 1 1 1 1 1
-qdisc ingress ffff: dev eth0 parent ffff:fff1 ----------------
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># tc qdisc show dev eth0</span>
+<span class="n">qdisc</span> <span class="n">pfifo_fast</span> <span class="mi">0</span><span class="p">:</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">root</span> <span class="n">refcnt</span> <span class="mi">2</span> <span class="n">bands</span> <span class="mi">3</span> <span class="n">priomap</span>  <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="n">qdisc</span> <span class="n">ingress</span> <span class="n">ffff</span><span class="p">:</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="n">ffff</span><span class="p">:</span><span class="n">fff1</span> <span class="o">----------------</span>
 
-# tc filter show dev eth0 parent ffff:
-filter protocol ip pref 50 u32
-filter protocol ip pref 50 u32 fh 800: ht divisor 1
-filter protocol ip pref 50 u32 fh 800::800 order 2048 key ht 800 bkt 0 flowid :1
-  match 00000000/00000000 at 12
-        action order 0:  police 0x1 rate 800Kbit burst 10Kb mtu 2Kb action drop overhead 0b
-ref 1 bind 1
+<span class="c1"># tc filter show dev eth0 parent ffff:</span>
+<span class="nb">filter</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">pref</span> <span class="mi">50</span> <span class="n">u32</span>
+<span class="nb">filter</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">pref</span> <span class="mi">50</span> <span class="n">u32</span> <span class="n">fh</span> <span class="mi">800</span><span class="p">:</span> <span class="n">ht</span> <span class="n">divisor</span> <span class="mi">1</span>
+<span class="nb">filter</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">pref</span> <span class="mi">50</span> <span class="n">u32</span> <span class="n">fh</span> <span class="mi">800</span><span class="p">::</span><span class="mi">800</span> <span class="n">order</span> <span class="mi">2048</span> <span class="n">key</span> <span class="n">ht</span> <span class="mi">800</span> <span class="n">bkt</span> <span class="mi">0</span> <span class="n">flowid</span> <span class="p">:</span><span class="mi">1</span>
+  <span class="n">match</span> <span class="mi">00000000</span><span class="o">/</span><span class="mi">00000000</span> <span class="n">at</span> <span class="mi">12</span>
+        <span class="n">action</span> <span class="n">order</span> <span class="mi">0</span><span class="p">:</span>  <span class="n">police</span> <span class="mh">0x1</span> <span class="n">rate</span> <span class="mi">800</span><span class="n">Kbit</span> <span class="n">burst</span> <span class="mi">10</span><span class="n">Kb</span> <span class="n">mtu</span> <span class="mi">2</span><span class="n">Kb</span> <span class="n">action</span> <span class="n">drop</span> <span class="n">overhead</span> <span class="mi">0</span><span class="n">b</span>
+<span class="n">ref</span> <span class="mi">1</span> <span class="n">bind</span> <span class="mi">1</span>
 </pre></div>
 </div>
-<p>To delete everything related to inbound packets policy on <tt class="docutils literal"><span class="pre">eth0</span></tt>, use:</p>
-<div class="highlight-python"><div class="highlight"><pre>tc qdisc del dev eth0 ingress
+<p>To delete everything related to inbound packets policy on <code class="docutils literal notranslate"><span class="pre">eth0</span></code>, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="k">del</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">ingress</span>
 </pre></div>
 </div>
 </div>
@@ -180,7 +169,7 @@ ref 1 bind 1
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -199,29 +188,30 @@ ref 1 bind 1
   <h4>Next topic</h4>
   <p class="topless"><a href="user.html"
                         title="next chapter">User management on Linux</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/sysadmin/traffic-shaping.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sysadmin/traffic-shaping.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -233,13 +223,13 @@ ref 1 bind 1
         <li class="right" >
           <a href="tmpfs.html" title="Use tmpfs for some directories"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

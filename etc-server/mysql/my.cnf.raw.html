@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>etc-server/mysql/my.cnf &mdash; Generic Config</title>
-    
+    <title>etc-server/mysql/my.cnf &#8212; Generic Config</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../../index.html" />
-    <link rel="up" title="/etc for Server" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="etc-server/web/apache.conf" href="../web/apache.conf.raw.html" />
     <link rel="prev" title="Mail server configuration with Postfix and dovecot" href="../mail.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,150 +30,150 @@
         <li class="right" >
           <a href="../mail.html" title="Mail server configuration with Postfix and dovecot"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="etc-server-mysql-my-cnf">
-<h1><tt class="docutils literal"><span class="pre">etc-server/mysql/my.cnf</span></tt><a class="headerlink" href="#etc-server-mysql-my-cnf" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference download internal" href="../../_downloads/my.cnf"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c"># Example MariaDB config file for medium systems.</span>
-<span class="c">#</span>
-<span class="c"># This is for a system with little memory (32M - 64M) where MariaDB plays</span>
-<span class="c"># an important part, or systems up to 128M where MariaDB is used together with</span>
-<span class="c"># other programs (such as a web server)</span>
-<span class="c">#</span>
-<span class="c"># MariaDB programs look for option files in a set of</span>
-<span class="c"># locations which depend on the deployment platform.</span>
-<span class="c"># You can copy this option file to one of those</span>
-<span class="c"># locations. For information about these locations, do:</span>
-<span class="c"># &#39;my_print_defaults --help&#39; and see what is printed under</span>
-<span class="c"># Default options are read from the following files in the given order:</span>
-<span class="c"># More information at: http://dev.mysql.com/doc/mysql/en/option-files.html</span>
-<span class="c">#</span>
-<span class="c"># In this file, you can use all long options that a program supports.</span>
-<span class="c"># If you want to know which options a program supports, run the program</span>
-<span class="c"># with the &quot;--help&quot; option.</span>
+<h1><code class="docutils literal notranslate"><span class="pre">etc-server/mysql/my.cnf</span></code><a class="headerlink" href="#etc-server-mysql-my-cnf" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../../_downloads/my.cnf" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example MariaDB config file for medium systems.</span>
+<span class="c1">#</span>
+<span class="c1"># This is for a system with little memory (32M - 64M) where MariaDB plays</span>
+<span class="c1"># an important part, or systems up to 128M where MariaDB is used together with</span>
+<span class="c1"># other programs (such as a web server)</span>
+<span class="c1">#</span>
+<span class="c1"># MariaDB programs look for option files in a set of</span>
+<span class="c1"># locations which depend on the deployment platform.</span>
+<span class="c1"># You can copy this option file to one of those</span>
+<span class="c1"># locations. For information about these locations, do:</span>
+<span class="c1"># &#39;my_print_defaults --help&#39; and see what is printed under</span>
+<span class="c1"># Default options are read from the following files in the given order:</span>
+<span class="c1"># More information at: http://dev.mysql.com/doc/mysql/en/option-files.html</span>
+<span class="c1">#</span>
+<span class="c1"># In this file, you can use all long options that a program supports.</span>
+<span class="c1"># If you want to know which options a program supports, run the program</span>
+<span class="c1"># with the &quot;--help&quot; option.</span>
 
-<span class="c"># The following options will be passed to all MariaDB clients</span>
+<span class="c1"># The following options will be passed to all MariaDB clients</span>
 <span class="o">[</span>client<span class="o">]</span>
-<span class="c">#password = your_password</span>
-<span class="nv">port</span> <span class="o">=</span> 3306
+<span class="c1">#password = your_password</span>
+<span class="nv">port</span> <span class="o">=</span> <span class="m">3306</span>
 <span class="nv">socket</span> <span class="o">=</span> /run/mysqld/mysqld.sock
 
-<span class="c"># Here follows entries for some specific programs</span>
+<span class="c1"># Here follows entries for some specific programs</span>
 
-<span class="c"># The MariaDB server</span>
+<span class="c1"># The MariaDB server</span>
 <span class="o">[</span>mysqld<span class="o">]</span>
-<span class="nv">port</span> <span class="o">=</span> 3306
+<span class="nv">port</span> <span class="o">=</span> <span class="m">3306</span>
 <span class="nv">socket</span> <span class="o">=</span> /run/mysqld/mysqld.sock
 skip-external-locking
 <span class="nv">key_buffer_size</span> <span class="o">=</span> 16M
 <span class="nv">max_allowed_packet</span> <span class="o">=</span> 16M
-<span class="nv">table_open_cache</span> <span class="o">=</span> 64
+<span class="nv">table_open_cache</span> <span class="o">=</span> <span class="m">64</span>
 <span class="nv">sort_buffer_size</span> <span class="o">=</span> 512K
 <span class="nv">net_buffer_length</span> <span class="o">=</span> 8K
 <span class="nv">read_buffer_size</span> <span class="o">=</span> 256K
 <span class="nv">read_rnd_buffer_size</span> <span class="o">=</span> 512K
 <span class="nv">myisam_sort_buffer_size</span> <span class="o">=</span> 8M
 
-<span class="c"># Point the following paths to different dedicated disks</span>
-<span class="c">#tmpdir = /tmp/</span>
+<span class="c1"># Point the following paths to different dedicated disks</span>
+<span class="c1">#tmpdir = /tmp/</span>
 
-<span class="c"># Don&#39;t listen on a TCP/IP port at all. This can be a security enhancement,</span>
-<span class="c"># if all processes that need to connect to mysqld run on the same host.</span>
-<span class="c"># All interaction with mysqld must be made via Unix sockets or named pipes.</span>
-<span class="c"># Note that using this option without enabling named pipes on Windows</span>
-<span class="c"># (via the &quot;enable-named-pipe&quot; option) will render mysqld useless!</span>
-<span class="c">#</span>
+<span class="c1"># Don&#39;t listen on a TCP/IP port at all. This can be a security enhancement,</span>
+<span class="c1"># if all processes that need to connect to mysqld run on the same host.</span>
+<span class="c1"># All interaction with mysqld must be made via Unix sockets or named pipes.</span>
+<span class="c1"># Note that using this option without enabling named pipes on Windows</span>
+<span class="c1"># (via the &quot;enable-named-pipe&quot; option) will render mysqld useless!</span>
+<span class="c1">#</span>
 skip-networking
 
-<span class="c"># Replication Master Server (default)</span>
-<span class="c"># binary logging is required for replication</span>
+<span class="c1"># Replication Master Server (default)</span>
+<span class="c1"># binary logging is required for replication</span>
 log-bin<span class="o">=</span>mysql-bin
 
-<span class="c"># binary logging format - mixed recommended</span>
+<span class="c1"># binary logging format - mixed recommended</span>
 <span class="nv">binlog_format</span><span class="o">=</span>mixed
 
-<span class="c"># required unique id between 1 and 2^32 - 1</span>
-<span class="c"># defaults to 1 if master-host is not set</span>
-<span class="c"># but will not function as a master if omitted</span>
-server-id <span class="o">=</span> 1
+<span class="c1"># required unique id between 1 and 2^32 - 1</span>
+<span class="c1"># defaults to 1 if master-host is not set</span>
+<span class="c1"># but will not function as a master if omitted</span>
+server-id <span class="o">=</span> <span class="m">1</span>
 
-<span class="c"># Replication Slave (comment out master section to use this)</span>
-<span class="c">#</span>
-<span class="c"># To configure this host as a replication slave, you can choose between</span>
-<span class="c"># two methods :</span>
-<span class="c">#</span>
-<span class="c"># 1) Use the CHANGE MASTER TO command (fully described in our manual) -</span>
-<span class="c">#    the syntax is:</span>
-<span class="c">#</span>
-<span class="c">#    CHANGE MASTER TO MASTER_HOST=&lt;host&gt;, MASTER_PORT=&lt;port&gt;,</span>
-<span class="c">#    MASTER_USER=&lt;user&gt;, MASTER_PASSWORD=&lt;password&gt; ;</span>
-<span class="c">#</span>
-<span class="c">#    where you replace &lt;host&gt;, &lt;user&gt;, &lt;password&gt; by quoted strings and</span>
-<span class="c">#    &lt;port&gt; by the master&#39;s port number (3306 by default).</span>
-<span class="c">#</span>
-<span class="c">#    Example:</span>
-<span class="c">#</span>
-<span class="c">#    CHANGE MASTER TO MASTER_HOST=&#39;125.564.12.1&#39;, MASTER_PORT=3306,</span>
-<span class="c">#    MASTER_USER=&#39;joe&#39;, MASTER_PASSWORD=&#39;secret&#39;;</span>
-<span class="c">#</span>
-<span class="c"># OR</span>
-<span class="c">#</span>
-<span class="c"># 2) Set the variables below. However, in case you choose this method, then</span>
-<span class="c">#    start replication for the first time (even unsuccessfully, for example</span>
-<span class="c">#    if you mistyped the password in master-password and the slave fails to</span>
-<span class="c">#    connect), the slave will create a master.info file, and any later</span>
-<span class="c">#    change in this file to the variables&#39; values below will be ignored and</span>
-<span class="c">#    overridden by the content of the master.info file, unless you shutdown</span>
-<span class="c">#    the slave server, delete master.info and restart the slaver server.</span>
-<span class="c">#    For that reason, you may want to leave the lines below untouched</span>
-<span class="c">#    (commented) and instead use CHANGE MASTER TO (see above)</span>
-<span class="c">#</span>
-<span class="c"># required unique id between 2 and 2^32 - 1</span>
-<span class="c"># (and different from the master)</span>
-<span class="c"># defaults to 2 if master-host is set</span>
-<span class="c"># but will not function as a slave if omitted</span>
-<span class="c">#server-id       = 2</span>
-<span class="c">#</span>
-<span class="c"># The replication master for this slave - required</span>
-<span class="c">#master-host     =   &lt;hostname&gt;</span>
-<span class="c">#</span>
-<span class="c"># The username the slave will use for authentication when connecting</span>
-<span class="c"># to the master - required</span>
-<span class="c">#master-user     =   &lt;username&gt;</span>
-<span class="c">#</span>
-<span class="c"># The password the slave will authenticate with when connecting to</span>
-<span class="c"># the master - required</span>
-<span class="c">#master-password =   &lt;password&gt;</span>
-<span class="c">#</span>
-<span class="c"># The port the master is listening on.</span>
-<span class="c"># optional - defaults to 3306</span>
-<span class="c">#master-port     =  &lt;port&gt;</span>
-<span class="c">#</span>
-<span class="c"># binary logging - not required for slaves, but recommended</span>
-<span class="c">#log-bin=mysql-bin</span>
+<span class="c1"># Replication Slave (comment out master section to use this)</span>
+<span class="c1">#</span>
+<span class="c1"># To configure this host as a replication slave, you can choose between</span>
+<span class="c1"># two methods :</span>
+<span class="c1">#</span>
+<span class="c1"># 1) Use the CHANGE MASTER TO command (fully described in our manual) -</span>
+<span class="c1">#    the syntax is:</span>
+<span class="c1">#</span>
+<span class="c1">#    CHANGE MASTER TO MASTER_HOST=&lt;host&gt;, MASTER_PORT=&lt;port&gt;,</span>
+<span class="c1">#    MASTER_USER=&lt;user&gt;, MASTER_PASSWORD=&lt;password&gt; ;</span>
+<span class="c1">#</span>
+<span class="c1">#    where you replace &lt;host&gt;, &lt;user&gt;, &lt;password&gt; by quoted strings and</span>
+<span class="c1">#    &lt;port&gt; by the master&#39;s port number (3306 by default).</span>
+<span class="c1">#</span>
+<span class="c1">#    Example:</span>
+<span class="c1">#</span>
+<span class="c1">#    CHANGE MASTER TO MASTER_HOST=&#39;125.564.12.1&#39;, MASTER_PORT=3306,</span>
+<span class="c1">#    MASTER_USER=&#39;joe&#39;, MASTER_PASSWORD=&#39;secret&#39;;</span>
+<span class="c1">#</span>
+<span class="c1"># OR</span>
+<span class="c1">#</span>
+<span class="c1"># 2) Set the variables below. However, in case you choose this method, then</span>
+<span class="c1">#    start replication for the first time (even unsuccessfully, for example</span>
+<span class="c1">#    if you mistyped the password in master-password and the slave fails to</span>
+<span class="c1">#    connect), the slave will create a master.info file, and any later</span>
+<span class="c1">#    change in this file to the variables&#39; values below will be ignored and</span>
+<span class="c1">#    overridden by the content of the master.info file, unless you shutdown</span>
+<span class="c1">#    the slave server, delete master.info and restart the slaver server.</span>
+<span class="c1">#    For that reason, you may want to leave the lines below untouched</span>
+<span class="c1">#    (commented) and instead use CHANGE MASTER TO (see above)</span>
+<span class="c1">#</span>
+<span class="c1"># required unique id between 2 and 2^32 - 1</span>
+<span class="c1"># (and different from the master)</span>
+<span class="c1"># defaults to 2 if master-host is set</span>
+<span class="c1"># but will not function as a slave if omitted</span>
+<span class="c1">#server-id       = 2</span>
+<span class="c1">#</span>
+<span class="c1"># The replication master for this slave - required</span>
+<span class="c1">#master-host     =   &lt;hostname&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># The username the slave will use for authentication when connecting</span>
+<span class="c1"># to the master - required</span>
+<span class="c1">#master-user     =   &lt;username&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># The password the slave will authenticate with when connecting to</span>
+<span class="c1"># the master - required</span>
+<span class="c1">#master-password =   &lt;password&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># The port the master is listening on.</span>
+<span class="c1"># optional - defaults to 3306</span>
+<span class="c1">#master-port     =  &lt;port&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># binary logging - not required for slaves, but recommended</span>
+<span class="c1">#log-bin=mysql-bin</span>
 
-<span class="c"># Uncomment the following if you are using InnoDB tables</span>
-<span class="c">#innodb_data_home_dir = /var/lib/mysql</span>
-<span class="c">#innodb_data_file_path = ibdata1:10M:autoextend</span>
-<span class="c">#innodb_log_group_home_dir = /var/lib/mysql</span>
-<span class="c"># You can set .._buffer_pool_size up to 50 - 80 %</span>
-<span class="c"># of RAM but beware of setting memory usage too high</span>
-<span class="c">#innodb_buffer_pool_size = 16M</span>
-<span class="c">#innodb_additional_mem_pool_size = 2M</span>
-<span class="c"># Set .._log_file_size to 25 % of buffer pool size</span>
-<span class="c">#innodb_log_file_size = 5M</span>
-<span class="c">#innodb_log_buffer_size = 8M</span>
-<span class="c">#innodb_flush_log_at_trx_commit = 1</span>
-<span class="c">#innodb_lock_wait_timeout = 50</span>
+<span class="c1"># Uncomment the following if you are using InnoDB tables</span>
+<span class="c1">#innodb_data_home_dir = /var/lib/mysql</span>
+<span class="c1">#innodb_data_file_path = ibdata1:10M:autoextend</span>
+<span class="c1">#innodb_log_group_home_dir = /var/lib/mysql</span>
+<span class="c1"># You can set .._buffer_pool_size up to 50 - 80 %</span>
+<span class="c1"># of RAM but beware of setting memory usage too high</span>
+<span class="c1">#innodb_buffer_pool_size = 16M</span>
+<span class="c1">#innodb_additional_mem_pool_size = 2M</span>
+<span class="c1"># Set .._log_file_size to 25 % of buffer pool size</span>
+<span class="c1">#innodb_log_file_size = 5M</span>
+<span class="c1">#innodb_log_buffer_size = 8M</span>
+<span class="c1">#innodb_flush_log_at_trx_commit = 1</span>
+<span class="c1">#innodb_lock_wait_timeout = 50</span>
 
 <span class="o">[</span>mysqldump<span class="o">]</span>
 quick
@@ -192,8 +181,8 @@ quick
 
 <span class="o">[</span>mysql<span class="o">]</span>
 no-auto-rehash
-<span class="c"># Remove the next comment character if you are not familiar with SQL</span>
-<span class="c">#safe-updates</span>
+<span class="c1"># Remove the next comment character if you are not familiar with SQL</span>
+<span class="c1">#safe-updates</span>
 
 <span class="o">[</span>myisamchk<span class="o">]</span>
 <span class="nv">key_buffer_size</span> <span class="o">=</span> 20M
@@ -211,37 +200,38 @@ interactive-timeout
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="../mail.html"
                         title="previous chapter">Mail server configuration with Postfix and dovecot</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../web/apache.conf.raw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">etc-server/web/apache.conf</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../../_sources/etc-server/mysql/my.cnf.raw.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/web/apache.conf</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/etc-server/mysql/my.cnf.raw.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -253,13 +243,13 @@ interactive-timeout
         <li class="right" >
           <a href="../mail.html" title="Mail server configuration with Postfix and dovecot"
              >previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>etc-server/dhcp/dnsmasq.conf and doc &mdash; Generic Config</title>
-    
+    <title>etc-server/dhcp/dnsmasq.conf and doc &#8212; Generic Config</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../../index.html" />
-    <link rel="up" title="/etc for Server" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="etc-server/dns/unbound.conf" href="../dns/unbound.conf.raw.html" />
     <link rel="prev" title="etc-server/dhcp/dhcpd.conf" href="dhcpd.conf.raw.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,110 +30,110 @@
         <li class="right" >
           <a href="dhcpd.conf.raw.html" title="etc-server/dhcp/dhcpd.conf"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="etc-server-dhcp-dnsmasq-conf-and-doc">
-<h1><tt class="docutils literal"><span class="pre">etc-server/dhcp/dnsmasq.conf</span></tt> and doc<a class="headerlink" href="#etc-server-dhcp-dnsmasq-conf-and-doc" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc-server/dhcp/dnsmasq.conf</span></code> and doc<a class="headerlink" href="#etc-server-dhcp-dnsmasq-conf-and-doc" title="Permalink to this headline">¶</a></h1>
 <p>Full example configuration file for dnsmasq can be downloaded at:
 <a class="reference external" href="http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=blob;f=dnsmasq.conf.example">http://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=blob;f=dnsmasq.conf.example</a></p>
-<p>The following command spawns a DHCP server on interface <tt class="docutils literal"><span class="pre">eth0</span></tt> which gives IP
+<p>The following command spawns a DHCP server on interface <code class="docutils literal notranslate"><span class="pre">eth0</span></code> which gives IP
 addresses in range 10.13.37.100..10.13.37.200 and tells its clients to use
 192.168.1.1 as primary DNS server:</p>
-<div class="highlight-python"><div class="highlight"><pre>dnsmasq -kd -i eth0 --dhcp-range=10.13.37.100,10.13.37.200 --dhcp-option=6,192.168.1.1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dnsmasq</span> <span class="o">-</span><span class="n">kd</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">--</span><span class="n">dhcp</span><span class="o">-</span><span class="nb">range</span><span class="o">=</span><span class="mf">10.13</span><span class="o">.</span><span class="mf">37.100</span><span class="p">,</span><span class="mf">10.13</span><span class="o">.</span><span class="mf">37.200</span> <span class="o">--</span><span class="n">dhcp</span><span class="o">-</span><span class="n">option</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.1</span>
 </pre></div>
 </div>
 <p>By the way, here are iptables commands to open UDP ports for DHCP and DNS server:</p>
-<div class="highlight-python"><div class="highlight"><pre>iptables -I INPUT -i eth0 -p udp --sport 68 --dport 67 -j ACCEPT
-iptables -I OUTPUT -o eth0 -p udp --sport 67 --dport 68 -j ACCEPT
-iptables -I INPUT -i eth0 -p udp --dport 53 -j ACCEPT
-iptables -I OUTPUT -o eth0 -p udp --sport 53 -j ACCEPT
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">udp</span> <span class="o">--</span><span class="n">sport</span> <span class="mi">68</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">67</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">OUTPUT</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">udp</span> <span class="o">--</span><span class="n">sport</span> <span class="mi">67</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">68</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">udp</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">53</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">OUTPUT</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">udp</span> <span class="o">--</span><span class="n">sport</span> <span class="mi">53</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
 </pre></div>
 </div>
-<p>Here is <tt class="docutils literal"><span class="pre">/etc/dnsmasq.conf</span></tt> for a DHCP server (no IPv6, no DNS):
-(<a class="reference download internal" href="../../_downloads/dnsmasq.conf"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a>)</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c"># Configuration file for dnsmasq.</span>
-<span class="c">#</span>
-<span class="c"># Format is one option per line, legal options are the same</span>
-<span class="c"># as the long options legal on the command line. See</span>
-<span class="c"># &quot;/usr/sbin/dnsmasq --help&quot; or &quot;man 8 dnsmasq&quot; for details.</span>
+<p>Here is <code class="docutils literal notranslate"><span class="pre">/etc/dnsmasq.conf</span></code> for a DHCP server (no IPv6, no DNS):
+(<a class="reference download internal" href="../../_downloads/dnsmasq.conf" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a>)</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuration file for dnsmasq.</span>
+<span class="c1">#</span>
+<span class="c1"># Format is one option per line, legal options are the same</span>
+<span class="c1"># as the long options legal on the command line. See</span>
+<span class="c1"># &quot;/usr/sbin/dnsmasq --help&quot; or &quot;man 8 dnsmasq&quot; for details.</span>
 
-<span class="c"># Listen on this specific port instead of the standard DNS port</span>
-<span class="c"># (53). Setting this to zero completely disables DNS function,</span>
-<span class="c"># leaving only DHCP and/or TFTP.</span>
-<span class="c">#port=5353</span>
-<span class="nv">port</span><span class="o">=</span>0
+<span class="c1"># Listen on this specific port instead of the standard DNS port</span>
+<span class="c1"># (53). Setting this to zero completely disables DNS function,</span>
+<span class="c1"># leaving only DHCP and/or TFTP.</span>
+<span class="c1">#port=5353</span>
+<span class="nv">port</span><span class="o">=</span><span class="m">0</span>
 
-<span class="c"># If you want dnsmasq to listen for DHCP and DNS requests only on</span>
-<span class="c"># specified interfaces (and the loopback) give the name of the</span>
-<span class="c"># interface (eg eth0) here.</span>
-<span class="c"># Repeat the line for more than one interface.</span>
+<span class="c1"># If you want dnsmasq to listen for DHCP and DNS requests only on</span>
+<span class="c1"># specified interfaces (and the loopback) give the name of the</span>
+<span class="c1"># interface (eg eth0) here.</span>
+<span class="c1"># Repeat the line for more than one interface.</span>
 <span class="nv">interface</span><span class="o">=</span>eth0
-<span class="c"># Or you can specify which interface _not_ to listen on</span>
-<span class="c">#except-interface=</span>
-<span class="c"># Or which to listen on by address (remember to include 127.0.0.1 if</span>
-<span class="c"># you use this.)</span>
-<span class="c">#listen-address=</span>
-<span class="c"># If you want dnsmasq to provide only DNS service on an interface,</span>
-<span class="c"># configure it as shown above, and then use the following line to</span>
-<span class="c"># disable DHCP and TFTP on it.</span>
-<span class="c">#no-dhcp-interface=</span>
+<span class="c1"># Or you can specify which interface _not_ to listen on</span>
+<span class="c1">#except-interface=</span>
+<span class="c1"># Or which to listen on by address (remember to include 127.0.0.1 if</span>
+<span class="c1"># you use this.)</span>
+<span class="c1">#listen-address=</span>
+<span class="c1"># If you want dnsmasq to provide only DNS service on an interface,</span>
+<span class="c1"># configure it as shown above, and then use the following line to</span>
+<span class="c1"># disable DHCP and TFTP on it.</span>
+<span class="c1">#no-dhcp-interface=</span>
 
-<span class="c"># On systems which support it, dnsmasq binds the wildcard address,</span>
-<span class="c"># even when it is listening on only some interfaces. It then discards</span>
-<span class="c"># requests that it shouldn&#39;t reply to. This has the advantage of</span>
-<span class="c"># working even when interfaces come and go and change address. If you</span>
-<span class="c"># want dnsmasq to really bind only the interfaces it is listening on,</span>
-<span class="c"># uncomment this option. About the only time you may need this is when</span>
-<span class="c"># running another nameserver on the same machine.</span>
-<span class="c">#bind-interfaces</span>
+<span class="c1"># On systems which support it, dnsmasq binds the wildcard address,</span>
+<span class="c1"># even when it is listening on only some interfaces. It then discards</span>
+<span class="c1"># requests that it shouldn&#39;t reply to. This has the advantage of</span>
+<span class="c1"># working even when interfaces come and go and change address. If you</span>
+<span class="c1"># want dnsmasq to really bind only the interfaces it is listening on,</span>
+<span class="c1"># uncomment this option. About the only time you may need this is when</span>
+<span class="c1"># running another nameserver on the same machine.</span>
+<span class="c1">#bind-interfaces</span>
 
-<span class="c"># If you don&#39;t want dnsmasq to read /etc/hosts, uncomment the</span>
-<span class="c"># following line.</span>
-<span class="c">#no-hosts</span>
-<span class="c"># or if you want it to read another file, as well as /etc/hosts, use</span>
-<span class="c"># this.</span>
-<span class="c">#addn-hosts=/etc/banner_add_hosts</span>
+<span class="c1"># If you don&#39;t want dnsmasq to read /etc/hosts, uncomment the</span>
+<span class="c1"># following line.</span>
+<span class="c1">#no-hosts</span>
+<span class="c1"># or if you want it to read another file, as well as /etc/hosts, use</span>
+<span class="c1"># this.</span>
+<span class="c1">#addn-hosts=/etc/banner_add_hosts</span>
 
-<span class="c"># Set this (and domain: see below) if you want to have a domain</span>
-<span class="c"># automatically added to simple names in a hosts-file.</span>
-<span class="c">#expand-hosts</span>
+<span class="c1"># Set this (and domain: see below) if you want to have a domain</span>
+<span class="c1"># automatically added to simple names in a hosts-file.</span>
+<span class="c1">#expand-hosts</span>
 
-<span class="c"># Set the domain for dnsmasq. this is optional, but if it is set, it</span>
-<span class="c"># does the following things.</span>
-<span class="c"># 1) Allows DHCP hosts to have fully qualified domain names, as long</span>
-<span class="c">#     as the domain part matches this setting.</span>
-<span class="c"># 2) Sets the &quot;domain&quot; DHCP option thereby potentially setting the</span>
-<span class="c">#    domain of all systems configured by DHCP</span>
-<span class="c"># 3) Provides the domain part for &quot;expand-hosts&quot;</span>
-<span class="c">#domain=thekelleys.org.uk</span>
+<span class="c1"># Set the domain for dnsmasq. this is optional, but if it is set, it</span>
+<span class="c1"># does the following things.</span>
+<span class="c1"># 1) Allows DHCP hosts to have fully qualified domain names, as long</span>
+<span class="c1">#     as the domain part matches this setting.</span>
+<span class="c1"># 2) Sets the &quot;domain&quot; DHCP option thereby potentially setting the</span>
+<span class="c1">#    domain of all systems configured by DHCP</span>
+<span class="c1"># 3) Provides the domain part for &quot;expand-hosts&quot;</span>
+<span class="c1">#domain=thekelleys.org.uk</span>
 
-<span class="c"># Set a different domain for a particular subnet</span>
-<span class="c">#domain=wireless.thekelleys.org.uk,192.168.2.0/24</span>
+<span class="c1"># Set a different domain for a particular subnet</span>
+<span class="c1">#domain=wireless.thekelleys.org.uk,192.168.2.0/24</span>
 
-<span class="c"># Same idea, but range rather then subnet</span>
-<span class="c">#domain=reserved.thekelleys.org.uk,192.68.3.100,192.168.3.200</span>
+<span class="c1"># Same idea, but range rather then subnet</span>
+<span class="c1">#domain=reserved.thekelleys.org.uk,192.68.3.100,192.168.3.200</span>
 
-<span class="c"># Uncomment this to enable the integrated DHCP server, you need</span>
-<span class="c"># to supply the range of addresses available for lease and optionally</span>
-<span class="c"># a lease time. If you have more than one network, you will need to</span>
-<span class="c"># repeat this for each network on which you want to supply DHCP</span>
-<span class="c"># service.</span>
-dhcp-range<span class="o">=</span>10.13.37.100,10.13.37.200,12h
+<span class="c1"># Uncomment this to enable the integrated DHCP server, you need</span>
+<span class="c1"># to supply the range of addresses available for lease and optionally</span>
+<span class="c1"># a lease time. If you have more than one network, you will need to</span>
+<span class="c1"># repeat this for each network on which you want to supply DHCP</span>
+<span class="c1"># service.</span>
+dhcp-range<span class="o">=</span><span class="m">10</span>.13.37.100,10.13.37.200,12h
 
-<span class="c"># For debugging purposes, log each DNS query as it passes through</span>
-<span class="c"># dnsmasq.</span>
-<span class="c">#log-queries</span>
+<span class="c1"># For debugging purposes, log each DNS query as it passes through</span>
+<span class="c1"># dnsmasq.</span>
+<span class="c1">#log-queries</span>
 
-<span class="c"># Log lots of extra information about DHCP transactions.</span>
-<span class="c">#log-dhcp</span>
+<span class="c1"># Log lots of extra information about DHCP transactions.</span>
+<span class="c1">#log-dhcp</span>
 </pre></div>
 </div>
 </div>
@@ -153,37 +142,38 @@ dhcp-range<span class="o">=</span>10.13.37.100,10.13.37.200,12h
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="dhcpd.conf.raw.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc-server/dhcp/dhcpd.conf</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dhcp/dhcpd.conf</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../dns/unbound.conf.raw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">etc-server/dns/unbound.conf</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../../_sources/etc-server/dhcp/dnsmasq.conf.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound.conf</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/etc-server/dhcp/dnsmasq.conf.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -195,13 +185,13 @@ dhcp-range<span class="o">=</span>10.13.37.100,10.13.37.200,12h
         <li class="right" >
           <a href="dhcpd.conf.raw.html" title="etc-server/dhcp/dhcpd.conf"
              >previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

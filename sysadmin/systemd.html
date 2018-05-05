@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>systemd configuration &mdash; Generic Config</title>
-    
+    <title>systemd configuration &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Use tmpfs for some directories" href="tmpfs.html" />
     <link rel="prev" title="Sound Configuration" href="sound.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,36 +30,36 @@
         <li class="right" >
           <a href="sound.html" title="Sound Configuration"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="systemd-configuration">
 <h1>systemd configuration<a class="headerlink" href="#systemd-configuration" title="Permalink to this headline">¶</a></h1>
 <p>Even if systemd works well with the default configuration, it needs to be
-configured on some system so that logs don&#8217;t fill the disk, ...</p>
+configured on some system so that logs don’t fill the disk, …</p>
 <div class="section" id="logging-syslog-and-journald">
 <h2>Logging: syslog and journald<a class="headerlink" href="#logging-syslog-and-journald" title="Permalink to this headline">¶</a></h2>
-<p>On most of my systems I&#8217;m using syslog-ng to manage my log files. This
+<p>On most of my systems I’m using syslog-ng to manage my log files. This
 interfaces quite well with journald as the only thing you need to do to make it
-work is to use these sources in <tt class="docutils literal"><span class="pre">/etc/syslog-ng/syslog-ng.conf</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>source src {
-  unix-dgram(&quot;/run/systemd/journal/syslog&quot;);
-  internal();
-  file(&quot;/proc/kmsg&quot;);
-};
+work is to use these sources in <code class="docutils literal notranslate"><span class="pre">/etc/syslog-ng/syslog-ng.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">src</span> <span class="p">{</span>
+  <span class="n">unix</span><span class="o">-</span><span class="n">dgram</span><span class="p">(</span><span class="s2">&quot;/run/systemd/journal/syslog&quot;</span><span class="p">);</span>
+  <span class="n">internal</span><span class="p">();</span>
+  <span class="n">file</span><span class="p">(</span><span class="s2">&quot;/proc/kmsg&quot;</span><span class="p">);</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 <p>Once this is done, you no longer need persistent storage to /var/log/journal.
 Instead of deleting this directory or making it a tmpfs, the right way to
-disable persistent storage is to set this into <tt class="docutils literal"><span class="pre">/etc/systemd/journald.conf</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">Storage</span><span class="o">=</span><span class="n">volatile</span>
+disable persistent storage is to set this into <code class="docutils literal notranslate"><span class="pre">/etc/systemd/journald.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Storage</span><span class="o">=</span><span class="n">volatile</span>
 <span class="n">ForwardToSyslog</span><span class="o">=</span><span class="n">yes</span>
 <span class="n">ForwardToKMsg</span><span class="o">=</span><span class="n">no</span>
 <span class="n">ForwardToConsole</span><span class="o">=</span><span class="n">no</span>
@@ -79,28 +68,28 @@ disable persistent storage is to set this into <tt class="docutils literal"><spa
 <p>More information can be found in the man page:
 <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/journald.conf.html">http://www.freedesktop.org/software/systemd/man/journald.conf.html</a></p>
 <p>If you use persistent storage, you may want to rotate logs every 3 months for
-example. This option in <tt class="docutils literal"><span class="pre">/etc/systemd/journald.conf</span></tt> tells journald to do
+example. This option in <code class="docutils literal notranslate"><span class="pre">/etc/systemd/journald.conf</span></code> tells journald to do
 this:</p>
-<div class="highlight-python"><div class="highlight"><pre>MaxRetentionSec=3month
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MaxRetentionSec</span><span class="o">=</span><span class="mi">3</span><span class="n">month</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="logging-audit-logs-and-journald">
 <h2>Logging: audit logs and journald<a class="headerlink" href="#logging-audit-logs-and-journald" title="Permalink to this headline">¶</a></h2>
 <p>journald can listen to the audit socket for events. Even if that could be
-useful without <tt class="docutils literal"><span class="pre">auditd</span></tt> service, it can spam the logs when using software
+useful without <code class="docutils literal notranslate"><span class="pre">auditd</span></code> service, it can spam the logs when using software
 such as Chrome (<a class="reference external" href="https://bugs.chromium.org/p/chromium/issues/detail?id=456535">https://bugs.chromium.org/p/chromium/issues/detail?id=456535</a>
 has been opened for more than a year) and it does not honour auditctl
 configuration such as:</p>
-<div class="highlight-python"><div class="highlight"><pre>auditctl -a never,exit -F arch=b64 -S set_robust_list -F path=/usr/lib/chromium/chromium -F key=bug456535
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auditctl</span> <span class="o">-</span><span class="n">a</span> <span class="n">never</span><span class="p">,</span><span class="n">exit</span> <span class="o">-</span><span class="n">F</span> <span class="n">arch</span><span class="o">=</span><span class="n">b64</span> <span class="o">-</span><span class="n">S</span> <span class="n">set_robust_list</span> <span class="o">-</span><span class="n">F</span> <span class="n">path</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">chromium</span><span class="o">/</span><span class="n">chromium</span> <span class="o">-</span><span class="n">F</span> <span class="n">key</span><span class="o">=</span><span class="n">bug456535</span>
 </pre></div>
 </div>
-<p>(This line without <tt class="docutils literal"><span class="pre">auditctl</span></tt> can be put in
-<tt class="docutils literal"><span class="pre">/etc/audit/rules.d/chromium.rules</span></tt> so that <tt class="docutils literal"><span class="pre">augenrules</span> <span class="pre">--load</span></tt> loads this
+<p>(This line without <code class="docutils literal notranslate"><span class="pre">auditctl</span></code> can be put in
+<code class="docutils literal notranslate"><span class="pre">/etc/audit/rules.d/chromium.rules</span></code> so that <code class="docutils literal notranslate"><span class="pre">augenrules</span> <span class="pre">--load</span></code> loads this
 at every boot).</p>
 <p>To disable this journald feature, the easier way consists in masking the audit
 socket (cf. <a class="reference external" href="https://github.com/systemd/systemd/issues/959#issuecomment-174541674">https://github.com/systemd/systemd/issues/959#issuecomment-174541674</a>):</p>
-<div class="highlight-sh"><div class="highlight"><pre>systemctl mask systemd-journald-audit.socket
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl mask systemd-journald-audit.socket
 </pre></div>
 </div>
 </div>
@@ -109,99 +98,99 @@ socket (cf. <a class="reference external" href="https://github.com/systemd/syste
 <p>On a workstation, it can be quite convenient to read the journal directly from
 ttys above 7 (tty1-6 being consoles and tty7 the X Window session, for example).</p>
 <p>With syslog-ng, the configuration is quite straightforward:</p>
-<div class="highlight-python"><div class="highlight"><pre>source src { system(); };
-destination d_tty9 { file(&quot;/dev/tty9&quot; owner(-1) group(-1) perm(-1)); };
-destination d_tty10 { file(&quot;/dev/tty10&quot; owner(-1) group(-1) perm(-1)); };
-destination d_tty11 { file(&quot;/dev/tty11&quot; owner(-1) group(-1) perm(-1)); };
-destination console_all { file(&quot;/dev/tty12&quot; owner(-1) group(-1) perm(-1)); };
-filter f_authpriv { facility(auth, authpriv); };
-filter f_daemon { facility(daemon); };
-filter f_kernel { facility(kern); };
-log { source(src); filter(f_authpriv); destination(d_tty9); };
-log { source(src); filter(f_daemon); destination(d_tty10); };
-log { source(src); filter(f_kernel); destination(d_tty11); };
-log { source(src); destination(console_all); };
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">src</span> <span class="p">{</span> <span class="n">system</span><span class="p">();</span> <span class="p">};</span>
+<span class="n">destination</span> <span class="n">d_tty9</span> <span class="p">{</span> <span class="n">file</span><span class="p">(</span><span class="s2">&quot;/dev/tty9&quot;</span> <span class="n">owner</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">group</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">perm</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span> <span class="p">};</span>
+<span class="n">destination</span> <span class="n">d_tty10</span> <span class="p">{</span> <span class="n">file</span><span class="p">(</span><span class="s2">&quot;/dev/tty10&quot;</span> <span class="n">owner</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">group</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">perm</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span> <span class="p">};</span>
+<span class="n">destination</span> <span class="n">d_tty11</span> <span class="p">{</span> <span class="n">file</span><span class="p">(</span><span class="s2">&quot;/dev/tty11&quot;</span> <span class="n">owner</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">group</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">perm</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span> <span class="p">};</span>
+<span class="n">destination</span> <span class="n">console_all</span> <span class="p">{</span> <span class="n">file</span><span class="p">(</span><span class="s2">&quot;/dev/tty12&quot;</span> <span class="n">owner</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">group</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">perm</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span> <span class="p">};</span>
+<span class="nb">filter</span> <span class="n">f_authpriv</span> <span class="p">{</span> <span class="n">facility</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">authpriv</span><span class="p">);</span> <span class="p">};</span>
+<span class="nb">filter</span> <span class="n">f_daemon</span> <span class="p">{</span> <span class="n">facility</span><span class="p">(</span><span class="n">daemon</span><span class="p">);</span> <span class="p">};</span>
+<span class="nb">filter</span> <span class="n">f_kernel</span> <span class="p">{</span> <span class="n">facility</span><span class="p">(</span><span class="n">kern</span><span class="p">);</span> <span class="p">};</span>
+<span class="n">log</span> <span class="p">{</span> <span class="n">source</span><span class="p">(</span><span class="n">src</span><span class="p">);</span> <span class="nb">filter</span><span class="p">(</span><span class="n">f_authpriv</span><span class="p">);</span> <span class="n">destination</span><span class="p">(</span><span class="n">d_tty9</span><span class="p">);</span> <span class="p">};</span>
+<span class="n">log</span> <span class="p">{</span> <span class="n">source</span><span class="p">(</span><span class="n">src</span><span class="p">);</span> <span class="nb">filter</span><span class="p">(</span><span class="n">f_daemon</span><span class="p">);</span> <span class="n">destination</span><span class="p">(</span><span class="n">d_tty10</span><span class="p">);</span> <span class="p">};</span>
+<span class="n">log</span> <span class="p">{</span> <span class="n">source</span><span class="p">(</span><span class="n">src</span><span class="p">);</span> <span class="nb">filter</span><span class="p">(</span><span class="n">f_kernel</span><span class="p">);</span> <span class="n">destination</span><span class="p">(</span><span class="n">d_tty11</span><span class="p">);</span> <span class="p">};</span>
+<span class="n">log</span> <span class="p">{</span> <span class="n">source</span><span class="p">(</span><span class="n">src</span><span class="p">);</span> <span class="n">destination</span><span class="p">(</span><span class="n">console_all</span><span class="p">);</span> <span class="p">};</span>
 </pre></div>
 </div>
 <p>It is also possible to send emergency messages to everyone logged in:</p>
-<div class="highlight-python"><div class="highlight"><pre>source s_src {
-    system();
-    internal();
-};
-destination du_all { usertty(&quot;*&quot;); };
-filter f_emerg { level(emerg); };
-log { source(s_src); filter(f_emerg); destination(du_all); };
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">s_src</span> <span class="p">{</span>
+    <span class="n">system</span><span class="p">();</span>
+    <span class="n">internal</span><span class="p">();</span>
+<span class="p">};</span>
+<span class="n">destination</span> <span class="n">du_all</span> <span class="p">{</span> <span class="n">usertty</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">);</span> <span class="p">};</span>
+<span class="nb">filter</span> <span class="n">f_emerg</span> <span class="p">{</span> <span class="n">level</span><span class="p">(</span><span class="n">emerg</span><span class="p">);</span> <span class="p">};</span>
+<span class="n">log</span> <span class="p">{</span> <span class="n">source</span><span class="p">(</span><span class="n">s_src</span><span class="p">);</span> <span class="nb">filter</span><span class="p">(</span><span class="n">f_emerg</span><span class="p">);</span> <span class="n">destination</span><span class="p">(</span><span class="n">du_all</span><span class="p">);</span> <span class="p">};</span>
 </pre></div>
 </div>
-<p>With journald, the only &#8220;natively&#8221; available feature is logging to a tty, with
-something like this in <tt class="docutils literal"><span class="pre">/etc/systemd/journald.conf</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>ForwardToConsole=yes
-TTYPath=/dev/tty12
-MaxLevelConsole=info
+<p>With journald, the only “natively” available feature is logging to a tty, with
+something like this in <code class="docutils literal notranslate"><span class="pre">/etc/systemd/journald.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ForwardToConsole</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">TTYPath</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">tty12</span>
+<span class="n">MaxLevelConsole</span><span class="o">=</span><span class="n">info</span>
 </pre></div>
 </div>
 <p>The other filters can be implemented with services.  Here are some files.</p>
-<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/journal&#64;.service</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>[Unit]
-Description=Show journal on %I
-After=systemd-journald.service
-ConditionPathExists=/dev/%I
+<p><code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/journal&#64;.service</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Show</span> <span class="n">journal</span> <span class="n">on</span> <span class="o">%</span><span class="n">I</span>
+<span class="n">After</span><span class="o">=</span><span class="n">systemd</span><span class="o">-</span><span class="n">journald</span><span class="o">.</span><span class="n">service</span>
+<span class="n">ConditionPathExists</span><span class="o">=/</span><span class="n">dev</span><span class="o">/%</span><span class="n">I</span>
 
-[Service]
-Type=idle
-StandardOutput=tty
-TTYPath=/dev/%I
-TTYReset=yes
-TTYVHangup=yes
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">idle</span>
+<span class="n">StandardOutput</span><span class="o">=</span><span class="n">tty</span>
+<span class="n">TTYPath</span><span class="o">=/</span><span class="n">dev</span><span class="o">/%</span><span class="n">I</span>
+<span class="n">TTYReset</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">TTYVHangup</span><span class="o">=</span><span class="n">yes</span>
 
-[Install]
-WantedBy=multi-user.target
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/journal&#64;tty9.service</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>.include /etc/systemd/system/journal@.service
+<p><code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/journal&#64;tty9.service</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">journal</span><span class="o">@.</span><span class="n">service</span>
 
-[Unit]
-Description=Show journal on %I (auth)
+<span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Show</span> <span class="n">journal</span> <span class="n">on</span> <span class="o">%</span><span class="n">I</span> <span class="p">(</span><span class="n">auth</span><span class="p">)</span>
 
-[Service]
-# Facilities: 4 = LOG_AUTH, 10 = LOG_AUTHPRIV
-ExecStart=/usr/bin/journalctl -b -n50 SYSLOG_FACILITY=4 SYSLOG_FACILITY=10
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="c1"># Facilities: 4 = LOG_AUTH, 10 = LOG_AUTHPRIV</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">journalctl</span> <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">n50</span> <span class="n">SYSLOG_FACILITY</span><span class="o">=</span><span class="mi">4</span> <span class="n">SYSLOG_FACILITY</span><span class="o">=</span><span class="mi">10</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/journal&#64;tty10.service</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>.include /etc/systemd/system/journal@.service
+<p><code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/journal&#64;tty10.service</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">include</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">journal</span><span class="o">@.</span><span class="n">service</span>
 
-[Unit]
-Description=Show journal on %I (daemon)
+<span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Show</span> <span class="n">journal</span> <span class="n">on</span> <span class="o">%</span><span class="n">I</span> <span class="p">(</span><span class="n">daemon</span><span class="p">)</span>
 
-[Service]
-# Facility codes:
-#   2 = LOG_MAIL
-#   3 = LOG_DAEMON
-#   5 = LOG_SYSLOG
-#   6 = LOG_LPR
-#   7 = LOG_NEWS
-#   8 = LOG_UUCP
-#   9 = LOG_CRON
-#  11 = LOG_FTP
-#
-# Not selected:
-#   0 = LOG_KERN
-#   1 = LOG_USER
-#   4 = LOG_AUTH
-#  10 = LOG_AUTHPRIV
-#  16..23 = LOG_LOCAL0..7
-#
-# Source: /usr/include/sys/syslog.h
-#   in glibc: https://sourceware.org/git/?p=glibc.git;a=blob;f=misc/sys/syslog.h;hb=HEAD
-ExecStart=/usr/bin/journalctl -b -n50 \
-    SYSLOG_FACILITY=2 SYSLOG_FACILITY=3 SYSLOG_FACILITY=5 SYSLOG_FACILITY=6 \
-    SYSLOG_FACILITY=7 SYSLOG_FACILITY=8 SYSLOG_FACILITY=9 SYSLOG_FACILITY=11
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="c1"># Facility codes:</span>
+<span class="c1">#   2 = LOG_MAIL</span>
+<span class="c1">#   3 = LOG_DAEMON</span>
+<span class="c1">#   5 = LOG_SYSLOG</span>
+<span class="c1">#   6 = LOG_LPR</span>
+<span class="c1">#   7 = LOG_NEWS</span>
+<span class="c1">#   8 = LOG_UUCP</span>
+<span class="c1">#   9 = LOG_CRON</span>
+<span class="c1">#  11 = LOG_FTP</span>
+<span class="c1">#</span>
+<span class="c1"># Not selected:</span>
+<span class="c1">#   0 = LOG_KERN</span>
+<span class="c1">#   1 = LOG_USER</span>
+<span class="c1">#   4 = LOG_AUTH</span>
+<span class="c1">#  10 = LOG_AUTHPRIV</span>
+<span class="c1">#  16..23 = LOG_LOCAL0..7</span>
+<span class="c1">#</span>
+<span class="c1"># Source: /usr/include/sys/syslog.h</span>
+<span class="c1">#   in glibc: https://sourceware.org/git/?p=glibc.git;a=blob;f=misc/sys/syslog.h;hb=HEAD</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">journalctl</span> <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">n50</span> \
+    <span class="n">SYSLOG_FACILITY</span><span class="o">=</span><span class="mi">2</span> <span class="n">SYSLOG_FACILITY</span><span class="o">=</span><span class="mi">3</span> <span class="n">SYSLOG_FACILITY</span><span class="o">=</span><span class="mi">5</span> <span class="n">SYSLOG_FACILITY</span><span class="o">=</span><span class="mi">6</span> \
+    <span class="n">SYSLOG_FACILITY</span><span class="o">=</span><span class="mi">7</span> <span class="n">SYSLOG_FACILITY</span><span class="o">=</span><span class="mi">8</span> <span class="n">SYSLOG_FACILITY</span><span class="o">=</span><span class="mi">9</span> <span class="n">SYSLOG_FACILITY</span><span class="o">=</span><span class="mi">11</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/journal&#64;tty11.service</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>.include /etc/systemd/system/journal@.service
+<p><code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/journal&#64;tty11.service</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.include /etc/systemd/system/journal@.service
 
 [Unit]
 Description=Show journal on %I (kernel)
@@ -221,44 +210,44 @@ Description=Show journal on %I (everything)
 ExecStart=/usr/bin/journalctl -b -f -n 50
 </pre></div>
 </div>
-<p>With such commands, it is also possible to pipe <tt class="docutils literal"><span class="pre">journalctl</span></tt> output to
-<tt class="docutils literal"><span class="pre">ccze</span></tt> (if installed) to colorize the logs.</p>
+<p>With such commands, it is also possible to pipe <code class="docutils literal notranslate"><span class="pre">journalctl</span></code> output to
+<code class="docutils literal notranslate"><span class="pre">ccze</span></code> (if installed) to colorize the logs.</p>
 </div>
 <div class="section" id="configure-timers-and-remove-cron">
 <h2>Configure timers (and remove cron)<a class="headerlink" href="#configure-timers-and-remove-cron" title="Permalink to this headline">¶</a></h2>
-<p>systemd doesn&#8217;t rely on a cron daemon to run periodic tasks but uses its own
+<p>systemd doesn’t rely on a cron daemon to run periodic tasks but uses its own
 system with calendar time events. ArchLinux provides on its wiki some config
 files to replace common cron scripts:
 <a class="reference external" href="https://wiki.archlinux.org/index.php/Systemd/cron_functionality">https://wiki.archlinux.org/index.php/Systemd/cron_functionality</a></p>
 <p>Since April 2014 the timers are included and enabled by default, with timer
-files in <tt class="docutils literal"><span class="pre">/usr/lib/systemd/system</span></tt> and symlinks in
-<tt class="docutils literal"><span class="pre">/usr/lib/systemd/system/multi-user.target.wants/</span></tt>. To disable some timers
+files in <code class="docutils literal notranslate"><span class="pre">/usr/lib/systemd/system</span></code> and symlinks in
+<code class="docutils literal notranslate"><span class="pre">/usr/lib/systemd/system/multi-user.target.wants/</span></code>. To disable some timers
 which do many disk writes, an overriding unit needs to be created.</p>
-<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/disabled-timer.service</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>[Unit]
-Description=Unit to be able to disable timers
+<p><code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/disabled-timer.service</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Unit</span> <span class="n">to</span> <span class="n">be</span> <span class="n">able</span> <span class="n">to</span> <span class="n">disable</span> <span class="n">timers</span>
 
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/true
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">oneshot</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">true</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/updatedb.timer</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>[Unit]
-Description=Disabled locate database update
+<p><code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/updatedb.timer</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Disabled</span> <span class="n">locate</span> <span class="n">database</span> <span class="n">update</span>
 
-[Timer]
-#OnCalendar=daily
-#Persistent=true
-#OnBootSec=10min
-#OnUnitActiveSec=1d
-OnCalendar=monthly
-Unit=disabled-timer.service
+<span class="p">[</span><span class="n">Timer</span><span class="p">]</span>
+<span class="c1">#OnCalendar=daily</span>
+<span class="c1">#Persistent=true</span>
+<span class="c1">#OnBootSec=10min</span>
+<span class="c1">#OnUnitActiveSec=1d</span>
+<span class="n">OnCalendar</span><span class="o">=</span><span class="n">monthly</span>
+<span class="n">Unit</span><span class="o">=</span><span class="n">disabled</span><span class="o">-</span><span class="n">timer</span><span class="o">.</span><span class="n">service</span>
 </pre></div>
 </div>
 <p>Another way may consist in masking the service units, but it did not work well
 back in spring 2014:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ systemctl mask updatedb
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ systemctl mask updatedb
 Created symlink from /etc/systemd/system/updatedb.service to /dev/null.
 </pre></div>
 </div>
@@ -268,21 +257,21 @@ Created symlink from /etc/systemd/system/updatedb.service to /dev/null.
 <p>To automatically create a bridge interface which can be used for example to
 bridge together several virtual machines, here is a systemd-networkd
 configuration.</p>
-<p><tt class="docutils literal"><span class="pre">/etc/systemd/network/VMBridge.netdev</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">NetDev</span><span class="p">]</span>
+<p><code class="docutils literal notranslate"><span class="pre">/etc/systemd/network/VMBridge.netdev</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">NetDev</span><span class="p">]</span>
 <span class="n">Name</span><span class="o">=</span><span class="n">br0</span>
 <span class="n">Kind</span><span class="o">=</span><span class="n">bridge</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">/etc/systemd/network/br0.network</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>[Match]
-Name=br0
+<p><code class="docutils literal notranslate"><span class="pre">/etc/systemd/network/br0.network</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Match</span><span class="p">]</span>
+<span class="n">Name</span><span class="o">=</span><span class="n">br0</span>
 
-[Network]
-IPForward=yes
+<span class="p">[</span><span class="n">Network</span><span class="p">]</span>
+<span class="n">IPForward</span><span class="o">=</span><span class="n">yes</span>
 
-[Address]
-Address=198.51.100.0/24
+<span class="p">[</span><span class="n">Address</span><span class="p">]</span>
+<span class="n">Address</span><span class="o">=</span><span class="mf">198.51</span><span class="o">.</span><span class="mf">100.0</span><span class="o">/</span><span class="mi">24</span>
 </pre></div>
 </div>
 </div>
@@ -292,7 +281,7 @@ Address=198.51.100.0/24
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -312,29 +301,30 @@ Address=198.51.100.0/24
   <h4>Next topic</h4>
   <p class="topless"><a href="tmpfs.html"
                         title="next chapter">Use tmpfs for some directories</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/sysadmin/systemd.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sysadmin/systemd.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -346,13 +336,13 @@ Address=198.51.100.0/24
         <li class="right" >
           <a href="sound.html" title="Sound Configuration"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

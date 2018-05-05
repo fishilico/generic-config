@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>etc/nftables-server.conf &mdash; Generic Config</title>
-    
+    <title>etc/nftables-server.conf &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="/etc" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="etc/ntp.conf" href="ntp.conf.raw.html" />
     <link rel="prev" title="etc/iptables/iptables-server.rules" href="iptables/iptables-server.rules.raw.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,119 +30,119 @@
         <li class="right" >
           <a href="iptables/iptables-server.rules.raw.html" title="etc/iptables/iptables-server.rules"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="etc-nftables-server-conf">
-<h1><tt class="docutils literal"><span class="pre">etc/nftables-server.conf</span></tt><a class="headerlink" href="#etc-nftables-server-conf" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference download internal" href="../_downloads/nftables-server.conf"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c">#!/usr/bin/nft -f</span>
-<span class="c"># Example of /etc/nftables.conf content for a server</span>
-<span class="c">#</span>
-<span class="c"># Reference table:</span>
-<span class="c">#    https://wiki.nftables.org/wiki-nftables/index.php/Quick_reference-nftables_in_10_minutes</span>
+<h1><code class="docutils literal notranslate"><span class="pre">etc/nftables-server.conf</span></code><a class="headerlink" href="#etc-nftables-server-conf" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../_downloads/nftables-server.conf" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/nft -f</span>
+<span class="c1"># Example of /etc/nftables.conf content for a server</span>
+<span class="c1">#</span>
+<span class="c1"># Reference table:</span>
+<span class="c1">#    https://wiki.nftables.org/wiki-nftables/index.php/Quick_reference-nftables_in_10_minutes</span>
 
 flush ruleset
 
 table inet filter <span class="o">{</span>
-    <span class="nb">set </span>SSH_IPv4_clients <span class="o">{</span>
-        <span class="nb">type </span>ipv4_addr
-        <span class="nv">elements</span> <span class="o">=</span> <span class="o">{</span> 192.168.0.1 <span class="o">}</span>
+    <span class="nb">set</span> SSH_IPv4_clients <span class="o">{</span>
+        <span class="nb">type</span> ipv4_addr
+        <span class="nv">elements</span> <span class="o">=</span> <span class="o">{</span> <span class="m">192</span>.168.0.1 <span class="o">}</span>
     <span class="o">}</span>
-    <span class="nb">set </span>SSH_IPv6_clients <span class="o">{</span>
-        <span class="nb">type </span>ipv6_addr
+    <span class="nb">set</span> SSH_IPv6_clients <span class="o">{</span>
+        <span class="nb">type</span> ipv6_addr
         <span class="nv">elements</span> <span class="o">=</span> <span class="o">{</span> fe80::1 <span class="o">}</span>
     <span class="o">}</span>
     chain input <span class="o">{</span>
-        <span class="nb">type </span>filter hook input priority 0; policy accept;
-        rt <span class="nb">type </span>0 counter drop comment <span class="s2">&quot;disable processing of any RH0 packet to prevent ping-pong&quot;</span>
+        <span class="nb">type</span> filter hook input priority <span class="m">0</span><span class="p">;</span> policy accept<span class="p">;</span>
+        rt <span class="nb">type</span> <span class="m">0</span> counter drop comment <span class="s2">&quot;disable processing of any RH0 packet to prevent ping-pong&quot;</span>
         iifname <span class="s2">&quot;lo&quot;</span> accept comment <span class="s2">&quot;trust local loopback&quot;</span>
         ct state <span class="o">{</span> established, related<span class="o">}</span> counter accept comment <span class="s2">&quot;accept established connections&quot;</span>
         ct state invalid counter drop comment <span class="s2">&quot;drop invalid connections&quot;</span>
 
-        ip protocol icmp icmp <span class="nb">type </span>0 icmp code 0 counter accept comment <span class="s2">&quot;accept ICMPv4 echo reply&quot;</span>
-        ip protocol icmp icmp <span class="nb">type </span>3 counter accept comment <span class="s2">&quot;accept ICMPv4 dest unreachable&quot;</span>
-        ip protocol icmp icmp <span class="nb">type </span>8 icmp code 0 counter accept comment <span class="s2">&quot;accept ICMPv4 echo request&quot;</span>
-        ip protocol icmp icmp <span class="nb">type </span>11 counter accept comment <span class="s2">&quot;accept ICMPv4 time exceeded&quot;</span>
-        ip protocol icmp icmp <span class="nb">type </span>12 counter accept comment <span class="s2">&quot;accept ICMPv4 parameter problem&quot;</span>
+        ip protocol icmp icmp <span class="nb">type</span> <span class="m">0</span> icmp code <span class="m">0</span> counter accept comment <span class="s2">&quot;accept ICMPv4 echo reply&quot;</span>
+        ip protocol icmp icmp <span class="nb">type</span> <span class="m">3</span> counter accept comment <span class="s2">&quot;accept ICMPv4 dest unreachable&quot;</span>
+        ip protocol icmp icmp <span class="nb">type</span> <span class="m">8</span> icmp code <span class="m">0</span> counter accept comment <span class="s2">&quot;accept ICMPv4 echo request&quot;</span>
+        ip protocol icmp icmp <span class="nb">type</span> <span class="m">11</span> counter accept comment <span class="s2">&quot;accept ICMPv4 time exceeded&quot;</span>
+        ip protocol icmp icmp <span class="nb">type</span> <span class="m">12</span> counter accept comment <span class="s2">&quot;accept ICMPv4 parameter problem&quot;</span>
 
-        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type </span>1 counter accept comment <span class="s2">&quot;accept ICMPv6 dest unreachable&quot;</span>
-        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type </span>2 counter accept comment <span class="s2">&quot;accept ICMPv6 packet too big&quot;</span>
-        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type </span>3 counter accept comment <span class="s2">&quot;accept ICMPv6 time exceeded&quot;</span>
-        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type </span>4 counter accept comment <span class="s2">&quot;accept ICMPv6 parameter problem&quot;</span>
-        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type </span>128 icmpv6 code 0 counter accept comment <span class="s2">&quot;accept ICMPv6 echo request&quot;</span>
-        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type </span>129 icmpv6 code 0 counter accept comment <span class="s2">&quot;accept ICMPv6 echo reply&quot;</span>
-        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type </span>133 icmpv6 code 0 counter accept comment <span class="s2">&quot;accept ICMPv6 router solicitation&quot;</span>
-        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type </span>134 icmpv6 code 0 counter accept comment <span class="s2">&quot;accept ICMPv6 router advertisement&quot;</span>
-        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type </span>135 icmpv6 code 0 counter accept comment <span class="s2">&quot;accept ICMPv6 neighbor solicitation&quot;</span>
-        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type </span>136 icmpv6 code 0 counter accept comment <span class="s2">&quot;accept ICMPv6 neighbor advertisement&quot;</span>
+        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type</span> <span class="m">1</span> counter accept comment <span class="s2">&quot;accept ICMPv6 dest unreachable&quot;</span>
+        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type</span> <span class="m">2</span> counter accept comment <span class="s2">&quot;accept ICMPv6 packet too big&quot;</span>
+        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type</span> <span class="m">3</span> counter accept comment <span class="s2">&quot;accept ICMPv6 time exceeded&quot;</span>
+        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type</span> <span class="m">4</span> counter accept comment <span class="s2">&quot;accept ICMPv6 parameter problem&quot;</span>
+        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type</span> <span class="m">128</span> icmpv6 code <span class="m">0</span> counter accept comment <span class="s2">&quot;accept ICMPv6 echo request&quot;</span>
+        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type</span> <span class="m">129</span> icmpv6 code <span class="m">0</span> counter accept comment <span class="s2">&quot;accept ICMPv6 echo reply&quot;</span>
+        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type</span> <span class="m">133</span> icmpv6 code <span class="m">0</span> counter accept comment <span class="s2">&quot;accept ICMPv6 router solicitation&quot;</span>
+        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type</span> <span class="m">134</span> icmpv6 code <span class="m">0</span> counter accept comment <span class="s2">&quot;accept ICMPv6 router advertisement&quot;</span>
+        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type</span> <span class="m">135</span> icmpv6 code <span class="m">0</span> counter accept comment <span class="s2">&quot;accept ICMPv6 neighbor solicitation&quot;</span>
+        ip6 nexthdr ipv6-icmp icmpv6 <span class="nb">type</span> <span class="m">136</span> icmpv6 code <span class="m">0</span> counter accept comment <span class="s2">&quot;accept ICMPv6 neighbor advertisement&quot;</span>
 
-        <span class="c">#tcp dport 22 counter accept comment &quot;accept SSH&quot;</span>
-        ip saddr @SSH_IPv4_clients tcp dport 22 counter accept comment <span class="s2">&quot;accept SSH from trusted IPv4 clients&quot;</span>
-        ip6 saddr @SSH_IPv6_clients tcp dport 22 counter accept comment <span class="s2">&quot;accept SSH from trusted IPv6 clients&quot;</span>
-        tcp dport <span class="o">{</span> 80, 443<span class="o">}</span> counter accept comment <span class="s2">&quot;accept HTTP and HTTPS&quot;</span>
-        <span class="c">#tcp dport { 25, 143, 587, 993} counter accept comment &quot;accept SMTP, IMAP, SMTPS, IMAPS&quot;</span>
-        udp sport 123 udp dport 123 counter accept comment <span class="s2">&quot;accept NTP&quot;</span>
+        <span class="c1">#tcp dport 22 counter accept comment &quot;accept SSH&quot;</span>
+        ip saddr @SSH_IPv4_clients tcp dport <span class="m">22</span> counter accept comment <span class="s2">&quot;accept SSH from trusted IPv4 clients&quot;</span>
+        ip6 saddr @SSH_IPv6_clients tcp dport <span class="m">22</span> counter accept comment <span class="s2">&quot;accept SSH from trusted IPv6 clients&quot;</span>
+        tcp dport <span class="o">{</span> <span class="m">80</span>, <span class="m">443</span><span class="o">}</span> counter accept comment <span class="s2">&quot;accept HTTP and HTTPS&quot;</span>
+        <span class="c1">#tcp dport { 25, 143, 587, 993} counter accept comment &quot;accept SMTP, IMAP, SMTPS, IMAPS&quot;</span>
+        udp sport <span class="m">123</span> udp dport <span class="m">123</span> counter accept comment <span class="s2">&quot;accept NTP&quot;</span>
 
-        tcp dport <span class="o">{</span> 139, 445<span class="o">}</span> counter drop comment <span class="s2">&quot;silently drop NetBios&quot;</span>
-        udp dport <span class="o">{</span> 137, 138<span class="o">}</span> counter drop comment <span class="s2">&quot;silently drop NetBios&quot;</span>
+        tcp dport <span class="o">{</span> <span class="m">139</span>, <span class="m">445</span><span class="o">}</span> counter drop comment <span class="s2">&quot;silently drop NetBios&quot;</span>
+        udp dport <span class="o">{</span> <span class="m">137</span>, <span class="m">138</span><span class="o">}</span> counter drop comment <span class="s2">&quot;silently drop NetBios&quot;</span>
 
         meta pkttype broadcast counter drop comment <span class="s2">&quot;silently drop unsollicited broadcast&quot;</span>
         meta pkttype multicast counter drop comment <span class="s2">&quot;silently drop unsollicited multicast&quot;</span>
-        ip daddr 255.255.255.255/32 counter drop comment <span class="s2">&quot;really drop unsollicited IPv4 broadcast&quot;</span>
+        ip daddr <span class="m">255</span>.255.255.255/32 counter drop comment <span class="s2">&quot;really drop unsollicited IPv4 broadcast&quot;</span>
 
-        <span class="c"># Log to NetFilter, so that logs don&#39;t fills up and debugging is quick</span>
-        <span class="c">#limit rate 1/second log prefix &quot;[IN DROP] &quot; comment &quot;log to kernel logs&quot;</span>
-        counter limit rate 10/second log prefix <span class="s2">&quot;[IN DROP] &quot;</span> group 0 comment <span class="s2">&quot;log to NFLOG&quot;</span>
+        <span class="c1"># Log to NetFilter, so that logs don&#39;t fills up and debugging is quick</span>
+        <span class="c1">#limit rate 1/second log prefix &quot;[IN DROP] &quot; comment &quot;log to kernel logs&quot;</span>
+        counter limit rate <span class="m">10</span>/second log prefix <span class="s2">&quot;[IN DROP] &quot;</span> group <span class="m">0</span> comment <span class="s2">&quot;log to NFLOG&quot;</span>
         ip protocol tcp counter reject with tcp reset comment <span class="s2">&quot;reject IPv4 TCP input with TCP RST&quot;</span>
         ip6 nexthdr tcp counter reject with tcp reset comment <span class="s2">&quot;reject IPv6 TCP input with TCP RST&quot;</span>
-        ip protocol udp counter reject with icmp <span class="nb">type </span>port-unreachable comment <span class="s2">&quot;reject IPv4 UDP input with ICMP port unreachable&quot;</span>
-        ip6 nexthdr udp counter reject with icmpv6 <span class="nb">type </span>port-unreachable comment <span class="s2">&quot;reject IPv6 UDP input with ICMPv6 port unreachable&quot;</span>
+        ip protocol udp counter reject with icmp <span class="nb">type</span> port-unreachable comment <span class="s2">&quot;reject IPv4 UDP input with ICMP port unreachable&quot;</span>
+        ip6 nexthdr udp counter reject with icmpv6 <span class="nb">type</span> port-unreachable comment <span class="s2">&quot;reject IPv6 UDP input with ICMPv6 port unreachable&quot;</span>
         ip protocol icmp counter drop comment <span class="s2">&quot;drop IPv4 ICMP input&quot;</span>
         ip6 nexthdr icmpv6 counter drop comment <span class="s2">&quot;drop IPv6 ICMPv6 input&quot;</span>
-        counter reject with icmp <span class="nb">type </span>prot-unreachable comment <span class="s2">&quot;reject unknown IPv4 protocol with ICMP protocol unreachable&quot;</span>
-        counter reject with icmpx <span class="nb">type </span>port-unreachable comment <span class="s2">&quot;reject everything remaining with ICMP port unreachable&quot;</span>
+        counter reject with icmp <span class="nb">type</span> prot-unreachable comment <span class="s2">&quot;reject unknown IPv4 protocol with ICMP protocol unreachable&quot;</span>
+        counter reject with icmpx <span class="nb">type</span> port-unreachable comment <span class="s2">&quot;reject everything remaining with ICMP port unreachable&quot;</span>
     <span class="o">}</span>
 
     chain prerouting <span class="o">{</span>
-        <span class="nb">type </span>filter hook prerouting priority 0; policy accept;
-        <span class="c"># Requires Linux &gt;= 4.10 and nft &gt;= 0.7</span>
-        fib saddr . iif oif eq 0 counter drop comment <span class="s2">&quot;implement Reverse Path filtering&quot;</span>
+        <span class="nb">type</span> filter hook prerouting priority <span class="m">0</span><span class="p">;</span> policy accept<span class="p">;</span>
+        <span class="c1"># Requires Linux &gt;= 4.10 and nft &gt;= 0.7</span>
+        fib saddr . iif oif eq <span class="m">0</span> counter drop comment <span class="s2">&quot;implement Reverse Path filtering&quot;</span>
     <span class="o">}</span>
 
     chain forward <span class="o">{</span>
-        <span class="nb">type </span>filter hook forward priority 0; policy drop;
-        rt <span class="nb">type </span>0 counter drop comment <span class="s2">&quot;disable processing of any RH0 packet to prevent ping-pong&quot;</span>
+        <span class="nb">type</span> filter hook forward priority <span class="m">0</span><span class="p">;</span> policy drop<span class="p">;</span>
+        rt <span class="nb">type</span> <span class="m">0</span> counter drop comment <span class="s2">&quot;disable processing of any RH0 packet to prevent ping-pong&quot;</span>
         drop
     <span class="o">}</span>
 
     chain output <span class="o">{</span>
-        <span class="nb">type </span>filter hook output priority 0; policy accept;
-        rt <span class="nb">type </span>0 counter drop comment <span class="s2">&quot;disable processing of any RH0 packet to prevent ping-pong&quot;</span>
+        <span class="nb">type</span> filter hook output priority <span class="m">0</span><span class="p">;</span> policy accept<span class="p">;</span>
+        rt <span class="nb">type</span> <span class="m">0</span> counter drop comment <span class="s2">&quot;disable processing of any RH0 packet to prevent ping-pong&quot;</span>
         iifname <span class="s2">&quot;lo&quot;</span> accept comment <span class="s2">&quot;trust local loopback&quot;</span>
         ip protocol icmp counter accept comment <span class="s2">&quot;accept sending ICMPv4&quot;</span>
         ip6 nexthdr ipv6-icmp counter accept comment <span class="s2">&quot;accept sending ICMPv6&quot;</span>
         tcp flags rst comment <span class="s2">&quot;accept sending TCP RST&quot;</span>
-        tcp flags &amp; <span class="o">(</span>fin|ack<span class="o">)</span> <span class="o">==</span> fin|ack comment <span class="s2">&quot;accept sending TCP FIN+ACK&quot;</span>
+        tcp flags <span class="p">&amp;</span> <span class="o">(</span>fin<span class="p">|</span>ack<span class="o">)</span> <span class="o">==</span> fin<span class="p">|</span>ack comment <span class="s2">&quot;accept sending TCP FIN+ACK&quot;</span>
 
-        ip daddr 255.255.255.255/32 counter drop comment <span class="s2">&quot;do not emit IPv4 broadcast&quot;</span>
+        ip daddr <span class="m">255</span>.255.255.255/32 counter drop comment <span class="s2">&quot;do not emit IPv4 broadcast&quot;</span>
         ct state invalid counter drop comment <span class="s2">&quot;drop invalid connections&quot;</span>
-        tcp sport <span class="o">{</span> 1024-65535<span class="o">}</span> counter accept comment <span class="s2">&quot;accept TCP client&quot;</span>
-        udp sport <span class="o">{</span> 1024-65535<span class="o">}</span> counter accept comment <span class="s2">&quot;accept UDP client&quot;</span>
+        tcp sport <span class="o">{</span> <span class="m">1024</span>-65535<span class="o">}</span> counter accept comment <span class="s2">&quot;accept TCP client&quot;</span>
+        udp sport <span class="o">{</span> <span class="m">1024</span>-65535<span class="o">}</span> counter accept comment <span class="s2">&quot;accept UDP client&quot;</span>
 
-        tcp sport 22 counter accept comment <span class="s2">&quot;accept SSH&quot;</span>
-        tcp sport <span class="o">{</span> 80, 443<span class="o">}</span> counter accept comment <span class="s2">&quot;accept HTTP and HTTPS&quot;</span>
-        <span class="c">#tcp sport { 25, 143, 587, 993} counter accept comment &quot;accept SMTP, IMAP, SMTPS, IMAPS&quot;</span>
-        udp sport 123 udp dport 123 counter accept comment <span class="s2">&quot;accept NTP&quot;</span>
+        tcp sport <span class="m">22</span> counter accept comment <span class="s2">&quot;accept SSH&quot;</span>
+        tcp sport <span class="o">{</span> <span class="m">80</span>, <span class="m">443</span><span class="o">}</span> counter accept comment <span class="s2">&quot;accept HTTP and HTTPS&quot;</span>
+        <span class="c1">#tcp sport { 25, 143, 587, 993} counter accept comment &quot;accept SMTP, IMAP, SMTPS, IMAPS&quot;</span>
+        udp sport <span class="m">123</span> udp dport <span class="m">123</span> counter accept comment <span class="s2">&quot;accept NTP&quot;</span>
 
-        counter limit rate 10/second log prefix <span class="s2">&quot;[OUT DROP] &quot;</span> group 0 comment <span class="s2">&quot;log to NFLOG&quot;</span>
+        counter limit rate <span class="m">10</span>/second log prefix <span class="s2">&quot;[OUT DROP] &quot;</span> group <span class="m">0</span> comment <span class="s2">&quot;log to NFLOG&quot;</span>
         counter reject
     <span class="o">}</span>
 <span class="o">}</span>
@@ -165,37 +154,38 @@ table inet filter <span class="o">{</span>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="iptables/iptables-server.rules.raw.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc/iptables/iptables-server.rules</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/iptables/iptables-server.rules</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="ntp.conf.raw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">etc/ntp.conf</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/etc/nftables-server.conf.raw.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/ntp.conf</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/etc/nftables-server.conf.raw.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -207,13 +197,13 @@ table inet filter <span class="o">{</span>
         <li class="right" >
           <a href="iptables/iptables-server.rules.raw.html" title="etc/iptables/iptables-server.rules"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

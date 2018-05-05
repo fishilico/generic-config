@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Notes about Arch Linux packages &mdash; Generic Config</title>
-    
+    <title>Notes about Arch Linux packages &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Some information of Debian systems" href="debian.html" />
     <link rel="prev" title="Some notes and tips&amp;tricks about system administration" href="index.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,15 +30,15 @@
         <li class="right" >
           <a href="index.html" title="Some notes and tips&amp;tricks about system administration"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="notes-about-arch-linux-packages">
 <h1>Notes about Arch Linux packages<a class="headerlink" href="#notes-about-arch-linux-packages" title="Permalink to this headline">¶</a></h1>
@@ -58,21 +47,21 @@
 <h2>Building packages<a class="headerlink" href="#building-packages" title="Permalink to this headline">¶</a></h2>
 <p>Arch Linux packages can be found in two main places: official repositories and
 Arch User Repository (AUR). Official repositories are managed throw the Arch
-Build System (ABS). Users interact with them thanks to <tt class="docutils literal"><span class="pre">pacman</span></tt>. AUR is
+Build System (ABS). Users interact with them thanks to <code class="docutils literal notranslate"><span class="pre">pacman</span></code>. AUR is
 managed by users and only contain sources, not binary packages.</p>
-<p>To build a package, you need to install <tt class="docutils literal"><span class="pre">base-devel</span></tt> and use <tt class="docutils literal"><span class="pre">makepkg</span></tt>.
-The main component of a package is the <tt class="docutils literal"><span class="pre">PKGBUILD</span></tt> description file, which
+<p>To build a package, you need to install <code class="docutils literal notranslate"><span class="pre">base-devel</span></code> and use <code class="docutils literal notranslate"><span class="pre">makepkg</span></code>.
+The main component of a package is the <code class="docutils literal notranslate"><span class="pre">PKGBUILD</span></code> description file, which
 describes where to download sources and how to compile binary files. Once you
-have a <tt class="docutils literal"><span class="pre">PKGBUILD</span></tt> (and additionnal files such as patches) in a directory,
+have a <code class="docutils literal notranslate"><span class="pre">PKGBUILD</span></code> (and additionnal files such as patches) in a directory,
 to build and install the package you just need to issue:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">makepkg</span> <span class="o">-</span><span class="n">si</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">makepkg</span> <span class="o">-</span><span class="n">si</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">-s</span></tt> option means <em>install missing dependencies using pacman</em>.
-<tt class="docutils literal"><span class="pre">-i</span></tt> option means <em>install the package after it is built</em>.</p>
-<p>You should customize your <tt class="docutils literal"><span class="pre">/etc/makepkg.conf</span></tt> file before launching the build,
+<p><code class="docutils literal notranslate"><span class="pre">-s</span></code> option means <em>install missing dependencies using pacman</em>.
+<code class="docutils literal notranslate"><span class="pre">-i</span></code> option means <em>install the package after it is built</em>.</p>
+<p>You should customize your <code class="docutils literal notranslate"><span class="pre">/etc/makepkg.conf</span></code> file before launching the build,
 for example to set up the packager name:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">PACKAGER</span><span class="o">=</span><span class="s">&quot;Myself &lt;root@localhost&gt;&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PACKAGER</span><span class="o">=</span><span class="s2">&quot;Myself &lt;root@localhost&gt;&quot;</span>
 </pre></div>
 </div>
 <p>For more information read the wiki! Here are some links:</p>
@@ -88,25 +77,25 @@ for example to set up the packager name:</p>
 </div>
 <div class="section" id="yaourt-and-pacaur">
 <h2>Yaourt and pacaur<a class="headerlink" href="#yaourt-and-pacaur" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">yaourt</span></tt> (Yet AnOther User Repository Tool) and <tt class="docutils literal"><span class="pre">pacaur</span></tt> ease the
+<p><code class="docutils literal notranslate"><span class="pre">yaourt</span></code> (Yet AnOther User Repository Tool) and <code class="docutils literal notranslate"><span class="pre">pacaur</span></code> ease the
 installation of packages from the AUR. Their interfaces are similar to
-<tt class="docutils literal"><span class="pre">pacman</span></tt> but they can download, build and install user packages too, wrapping
-both <tt class="docutils literal"><span class="pre">makepkg</span></tt> and <tt class="docutils literal"><span class="pre">pacman</span></tt>.</p>
-<p><tt class="docutils literal"><span class="pre">yaourt</span></tt> includes <tt class="docutils literal"><span class="pre">-G</span></tt> option (<tt class="docutils literal"><span class="pre">--getpkgbuild</span></tt>) to get a <tt class="docutils literal"><span class="pre">PKGBUILD</span></tt> file
+<code class="docutils literal notranslate"><span class="pre">pacman</span></code> but they can download, build and install user packages too, wrapping
+both <code class="docutils literal notranslate"><span class="pre">makepkg</span></code> and <code class="docutils literal notranslate"><span class="pre">pacman</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">yaourt</span></code> includes <code class="docutils literal notranslate"><span class="pre">-G</span></code> option (<code class="docutils literal notranslate"><span class="pre">--getpkgbuild</span></code>) to get a <code class="docutils literal notranslate"><span class="pre">PKGBUILD</span></code> file
 for a specified package.</p>
-<p><tt class="docutils literal"><span class="pre">pacaur</span></tt> main advantage lies in keeping the downloaded PKGBUILD and their git
-history in a directory, <tt class="docutils literal"><span class="pre">$HOME/.cache/pacaur/</span></tt>, which allows tracking changes
+<p><code class="docutils literal notranslate"><span class="pre">pacaur</span></code> main advantage lies in keeping the downloaded PKGBUILD and their git
+history in a directory, <code class="docutils literal notranslate"><span class="pre">$HOME/.cache/pacaur/</span></code>, which allows tracking changes
 when upgrading AUR packages.</p>
 </div>
 <div class="section" id="debug-build">
 <h2>Debug build<a class="headerlink" href="#debug-build" title="Permalink to this headline">¶</a></h2>
-<p>To build packages with debug symbols, you need to change <tt class="docutils literal"><span class="pre">OPTIONS</span></tt> variable
-in <tt class="docutils literal"><span class="pre">/etc/makepkg.conf</span></tt>. Here is the default configuration:</p>
-<div class="highlight-python"><div class="highlight"><pre>OPTIONS=(strip docs !libtool !staticlibs emptydirs zipman purge !upx !debug)
+<p>To build packages with debug symbols, you need to change <code class="docutils literal notranslate"><span class="pre">OPTIONS</span></code> variable
+in <code class="docutils literal notranslate"><span class="pre">/etc/makepkg.conf</span></code>. Here is the default configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>OPTIONS=(strip docs !libtool !staticlibs emptydirs zipman purge !upx !debug)
 </pre></div>
 </div>
 <p>You just need to add and remove some bangs following your needs:</p>
-<div class="highlight-python"><div class="highlight"><pre>OPTIONS=(!strip docs !libtool !staticlibs emptydirs zipman purge !upx debug)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>OPTIONS=(!strip docs !libtool !staticlibs emptydirs zipman purge !upx debug)
 </pre></div>
 </div>
 </div>
@@ -116,7 +105,7 @@ in <tt class="docutils literal"><span class="pre">/etc/makepkg.conf</span></tt>.
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -134,29 +123,30 @@ in <tt class="docutils literal"><span class="pre">/etc/makepkg.conf</span></tt>.
   <h4>Next topic</h4>
   <p class="topless"><a href="debian.html"
                         title="next chapter">Some information of Debian systems</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/sysadmin/archlinux-pkg.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sysadmin/archlinux-pkg.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -168,13 +158,13 @@ in <tt class="docutils literal"><span class="pre">/etc/makepkg.conf</span></tt>.
         <li class="right" >
           <a href="index.html" title="Some notes and tips&amp;tricks about system administration"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

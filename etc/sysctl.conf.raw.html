@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>etc/sysctl.conf &mdash; Generic Config</title>
-    
+    <title>etc/sysctl.conf &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="/etc" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="/etc for Desktop" href="../etc-desktop/index.html" />
     <link rel="prev" title="etc/sudoers" href="sudoers.raw.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,145 +30,145 @@
         <li class="right" >
           <a href="sudoers.raw.html" title="etc/sudoers"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="etc-sysctl-conf">
-<h1><tt class="docutils literal"><span class="pre">etc/sysctl.conf</span></tt><a class="headerlink" href="#etc-sysctl-conf" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference download internal" href="../_downloads/sysctl.conf"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c"># /etc/sysctl.conf - Configuration file for setting system variables</span>
-<span class="c"># See /etc/sysctl.d/ for additional system variables.</span>
-<span class="c"># See sysctl.conf (5) for information.</span>
-<span class="c">#</span>
-<span class="c"># Documentation:</span>
-<span class="c"># * https://www.kernel.org/doc/Documentation/sysctl/</span>
-<span class="c"># * https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt</span>
+<h1><code class="docutils literal notranslate"><span class="pre">etc/sysctl.conf</span></code><a class="headerlink" href="#etc-sysctl-conf" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../_downloads/sysctl.conf" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># /etc/sysctl.conf - Configuration file for setting system variables</span>
+<span class="c1"># See /etc/sysctl.d/ for additional system variables.</span>
+<span class="c1"># See sysctl.conf (5) for information.</span>
+<span class="c1">#</span>
+<span class="c1"># Documentation:</span>
+<span class="c1"># * https://www.kernel.org/doc/Documentation/sysctl/</span>
+<span class="c1"># * https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt</span>
 
 
-<span class="c">###################################################################</span>
-<span class="c"># Basic system settings</span>
-<span class="c">#</span>
+<span class="c1">###################################################################</span>
+<span class="c1"># Basic system settings</span>
+<span class="c1">#</span>
 
-<span class="c"># Stop low-level messages on console (default 4 4 1 4)</span>
-<span class="c">#kernel.printk = 3 4 1 3</span>
+<span class="c1"># Stop low-level messages on console (default 4 4 1 4)</span>
+<span class="c1">#kernel.printk = 3 4 1 3</span>
 
-<span class="c"># Tweak how the flow of kernel messages is throttled.</span>
-<span class="c">#kernel.printk_ratelimit_burst = 10</span>
-<span class="c">#kernel.printk_ratelimit = 5</span>
+<span class="c1"># Tweak how the flow of kernel messages is throttled.</span>
+<span class="c1">#kernel.printk_ratelimit_burst = 10</span>
+<span class="c1">#kernel.printk_ratelimit = 5</span>
 
-<span class="c"># Have the CD-ROM close when you use it, and open when you are done</span>
-<span class="c">#dev.cdrom.autoclose = 1</span>
-<span class="c">#dev.cdrom.autoeject = 1</span>
+<span class="c1"># Have the CD-ROM close when you use it, and open when you are done</span>
+<span class="c1">#dev.cdrom.autoclose = 1</span>
+<span class="c1">#dev.cdrom.autoeject = 1</span>
 
-<span class="c"># Reboot 600 seconds after kernel panic or oops.</span>
-<span class="c">#kernel.panic_on_oops = 1</span>
-<span class="c">#kernel.panic = 600</span>
-
-
-<span class="c">###################################################################</span>
-<span class="c"># Performance settings</span>
-<span class="c">#</span>
-
-<span class="c"># Increase TCP max buffer size setable using setsockopt (default 6291456)</span>
-<span class="c">#net.ipv4.tcp_rmem = 4096 87380 8388608</span>
-<span class="c">#net.ipv4.tcp_wmem = 4096 87380 8388608</span>
-
-<span class="c"># Increase auto tuning TCP buffer limits (default 212992 212992 1000 1)</span>
-<span class="c">#net.core.rmem_max = 8388608</span>
-<span class="c">#net.core.wmem_max = 8388608</span>
-<span class="c">#net.core.netdev_max_backlog = 5000</span>
-<span class="c">#net.ipv4.tcp_window_scaling = 1</span>
-
-<span class="c"># Disable laptop mode</span>
-<span class="c">#vm.laptop_mode = 0</span>
-
-<span class="c"># Control swap usage (low = less aggressive swapping)</span>
-<span class="c">#vm.swappiness = 60</span>
-
-<span class="c"># Some disk syncing parameters</span>
-<span class="c">#vm.dirty_background_ratio = 10</span>
-<span class="c">#vm.dirty_ratio = 40</span>
-<span class="c">#vm.vfs_cache_pressure = 100</span>
+<span class="c1"># Reboot 600 seconds after kernel panic or oops.</span>
+<span class="c1">#kernel.panic_on_oops = 1</span>
+<span class="c1">#kernel.panic = 600</span>
 
 
-<span class="c">###################################################################</span>
-<span class="c"># Network security</span>
-<span class="c">#</span>
+<span class="c1">###################################################################</span>
+<span class="c1"># Performance settings</span>
+<span class="c1">#</span>
 
-<span class="c"># Enable Reverse Path filter (spoof protection) in all interfaces</span>
-net.ipv4.conf.default.rp_filter <span class="o">=</span> 1
-net.ipv4.conf.all.rp_filter <span class="o">=</span> 1
+<span class="c1"># Increase TCP max buffer size setable using setsockopt (default 6291456)</span>
+<span class="c1">#net.ipv4.tcp_rmem = 4096 87380 8388608</span>
+<span class="c1">#net.ipv4.tcp_wmem = 4096 87380 8388608</span>
 
-<span class="c"># Enable TCP/IP SYN cookies for IPv4 and IPv6</span>
-<span class="c"># See http://lwn.net/Articles/277146/</span>
-net.ipv4.tcp_syncookies <span class="o">=</span> 1
+<span class="c1"># Increase auto tuning TCP buffer limits (default 212992 212992 1000 1)</span>
+<span class="c1">#net.core.rmem_max = 8388608</span>
+<span class="c1">#net.core.wmem_max = 8388608</span>
+<span class="c1">#net.core.netdev_max_backlog = 5000</span>
+<span class="c1">#net.ipv4.tcp_window_scaling = 1</span>
 
-<span class="c"># Don&#39;t reply to broadcast/multicast ping</span>
-net.ipv4.icmp_echo_ignore_broadcasts <span class="o">=</span> 1
+<span class="c1"># Disable laptop mode</span>
+<span class="c1">#vm.laptop_mode = 0</span>
 
-<span class="c"># Do not accept ICMP redirects (prevent MITM attacks)</span>
-net.ipv4.conf.default.accept_redirects <span class="o">=</span> 0
-net.ipv4.conf.all.accept_redirects <span class="o">=</span> 0
-net.ipv6.conf.default.accept_redirects <span class="o">=</span> 0
-net.ipv6.conf.all.accept_redirects <span class="o">=</span> 0
+<span class="c1"># Control swap usage (low = less aggressive swapping)</span>
+<span class="c1">#vm.swappiness = 60</span>
 
-<span class="c"># Do not accept ICMP redirects from gateways listed in default gateway list</span>
-net.ipv4.conf.default.secure_redirects <span class="o">=</span> 0
-net.ipv4.conf.all.secure_redirects <span class="o">=</span> 0
-
-<span class="c"># Do not accept IP source route packets</span>
-net.ipv4.conf.default.accept_source_route <span class="o">=</span> 0
-net.ipv4.conf.all.accept_source_route <span class="o">=</span> 0
-net.ipv6.conf.default.accept_source_route <span class="o">=</span> 0
-net.ipv6.conf.all.accept_source_route <span class="o">=</span> 0
-
-<span class="c"># Use IPv6 temporary addresses and prefer them over public addresses</span>
-net.ipv6.conf.default.use_tempaddr <span class="o">=</span> 2
-net.ipv6.conf.all.use_tempaddr <span class="o">=</span> 2
-
-<span class="c"># Log Martian Packets (disabled)</span>
-<span class="c">#net.ipv4.conf.all.log_martians = 1</span>
-
-<span class="c"># Tweak the port range used for outgoing connections over IPv4 and IPv6</span>
-<span class="c">#net.ipv4.ip_local_port_range = 32768 61000</span>
+<span class="c1"># Some disk syncing parameters</span>
+<span class="c1">#vm.dirty_background_ratio = 10</span>
+<span class="c1">#vm.dirty_ratio = 40</span>
+<span class="c1">#vm.vfs_cache_pressure = 100</span>
 
 
-<span class="c">###################################################################</span>
-<span class="c"># Non-router network configuration (change these options on a router)</span>
-<span class="c">#</span>
+<span class="c1">###################################################################</span>
+<span class="c1"># Network security</span>
+<span class="c1">#</span>
 
-<span class="c"># Disable packet forwarding</span>
-net.ipv4.ip_forward <span class="o">=</span> 0
-net.ipv6.conf.default.forwarding <span class="o">=</span> 0
-net.ipv6.conf.all.forwarding <span class="o">=</span> 0
+<span class="c1"># Enable Reverse Path filter (spoof protection) in all interfaces</span>
+net.ipv4.conf.default.rp_filter <span class="o">=</span> <span class="m">1</span>
+net.ipv4.conf.all.rp_filter <span class="o">=</span> <span class="m">1</span>
 
-<span class="c"># Do not send ICMP redirects</span>
-net.ipv4.conf.default.send_redirects <span class="o">=</span> 0
-net.ipv4.conf.all.send_redirects <span class="o">=</span> 0
+<span class="c1"># Enable TCP/IP SYN cookies for IPv4 and IPv6</span>
+<span class="c1"># See http://lwn.net/Articles/277146/</span>
+net.ipv4.tcp_syncookies <span class="o">=</span> <span class="m">1</span>
+
+<span class="c1"># Don&#39;t reply to broadcast/multicast ping</span>
+net.ipv4.icmp_echo_ignore_broadcasts <span class="o">=</span> <span class="m">1</span>
+
+<span class="c1"># Do not accept ICMP redirects (prevent MITM attacks)</span>
+net.ipv4.conf.default.accept_redirects <span class="o">=</span> <span class="m">0</span>
+net.ipv4.conf.all.accept_redirects <span class="o">=</span> <span class="m">0</span>
+net.ipv6.conf.default.accept_redirects <span class="o">=</span> <span class="m">0</span>
+net.ipv6.conf.all.accept_redirects <span class="o">=</span> <span class="m">0</span>
+
+<span class="c1"># Do not accept ICMP redirects from gateways listed in default gateway list</span>
+net.ipv4.conf.default.secure_redirects <span class="o">=</span> <span class="m">0</span>
+net.ipv4.conf.all.secure_redirects <span class="o">=</span> <span class="m">0</span>
+
+<span class="c1"># Do not accept IP source route packets</span>
+net.ipv4.conf.default.accept_source_route <span class="o">=</span> <span class="m">0</span>
+net.ipv4.conf.all.accept_source_route <span class="o">=</span> <span class="m">0</span>
+net.ipv6.conf.default.accept_source_route <span class="o">=</span> <span class="m">0</span>
+net.ipv6.conf.all.accept_source_route <span class="o">=</span> <span class="m">0</span>
+
+<span class="c1"># Use IPv6 temporary addresses and prefer them over public addresses</span>
+net.ipv6.conf.default.use_tempaddr <span class="o">=</span> <span class="m">2</span>
+net.ipv6.conf.all.use_tempaddr <span class="o">=</span> <span class="m">2</span>
+
+<span class="c1"># Log Martian Packets (disabled)</span>
+<span class="c1">#net.ipv4.conf.all.log_martians = 1</span>
+
+<span class="c1"># Tweak the port range used for outgoing connections over IPv4 and IPv6</span>
+<span class="c1">#net.ipv4.ip_local_port_range = 32768 61000</span>
 
 
-<span class="c">###################################################################</span>
-<span class="c"># System security settings</span>
+<span class="c1">###################################################################</span>
+<span class="c1"># Non-router network configuration (change these options on a router)</span>
+<span class="c1">#</span>
 
-<span class="c"># Restrict dmesg</span>
-kernel.dmesg_restrict <span class="o">=</span> 1
+<span class="c1"># Disable packet forwarding</span>
+net.ipv4.ip_forward <span class="o">=</span> <span class="m">0</span>
+net.ipv6.conf.default.forwarding <span class="o">=</span> <span class="m">0</span>
+net.ipv6.conf.all.forwarding <span class="o">=</span> <span class="m">0</span>
 
-<span class="c"># Nullify kernel pointers in messages</span>
-kernel.kptr_restrict <span class="o">=</span> 2
+<span class="c1"># Do not send ICMP redirects</span>
+net.ipv4.conf.default.send_redirects <span class="o">=</span> <span class="m">0</span>
+net.ipv4.conf.all.send_redirects <span class="o">=</span> <span class="m">0</span>
 
-<span class="c"># Enable ASLR for everything in process memory</span>
-kernel.randomize_va_space <span class="o">=</span> 2
 
-<span class="c"># Restrict Magic SysRq to control keyboard, sync, RO-remount and reboot/poweroff</span>
-<span class="c"># To completely disable SysRq, set this value to zero</span>
-kernel.sysrq <span class="o">=</span> 180
+<span class="c1">###################################################################</span>
+<span class="c1"># System security settings</span>
+
+<span class="c1"># Restrict dmesg</span>
+kernel.dmesg_restrict <span class="o">=</span> <span class="m">1</span>
+
+<span class="c1"># Nullify kernel pointers in messages</span>
+kernel.kptr_restrict <span class="o">=</span> <span class="m">2</span>
+
+<span class="c1"># Enable ASLR for everything in process memory</span>
+kernel.randomize_va_space <span class="o">=</span> <span class="m">2</span>
+
+<span class="c1"># Restrict Magic SysRq to control keyboard, sync, RO-remount and reboot/poweroff</span>
+<span class="c1"># To completely disable SysRq, set this value to zero</span>
+kernel.sysrq <span class="o">=</span> <span class="m">180</span>
 </pre></div>
 </div>
 </div>
@@ -188,37 +177,38 @@ kernel.sysrq <span class="o">=</span> 180
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="sudoers.raw.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc/sudoers</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/sudoers</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../etc-desktop/index.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Desktop</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/etc/sysctl.conf.raw.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Desktop</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/etc/sysctl.conf.raw.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -230,13 +220,13 @@ kernel.sysrq <span class="o">=</span> 180
         <li class="right" >
           <a href="sudoers.raw.html" title="etc/sudoers"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

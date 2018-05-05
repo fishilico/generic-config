@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>ejabberd configuration &mdash; Generic Config</title>
-    
+    <title>ejabberd configuration &#8212; Generic Config</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../../index.html" />
-    <link rel="up" title="/etc for Server" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Mail server configuration with Postfix and dovecot" href="../mail.html" />
     <link rel="prev" title="etc-server/dns/unbound.conf" href="../dns/unbound.conf.raw.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,84 +30,84 @@
         <li class="right" >
           <a href="../dns/unbound.conf.raw.html" title="etc-server/dns/unbound.conf"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="ejabberd-configuration">
 <h1>ejabberd configuration<a class="headerlink" href="#ejabberd-configuration" title="Permalink to this headline">¶</a></h1>
 <p>Here is how ejabberd can be installed and configured on a Debian system.</p>
 <p>First install the package:</p>
-<div class="highlight-python"><div class="highlight"><pre>apt-get install ejabberd
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ejabberd</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">debconf</span></tt> asks for several things:</p>
+<p><code class="docutils literal notranslate"><span class="pre">debconf</span></code> asks for several things:</p>
 <ul class="simple">
-<li>a domain name, like <tt class="docutils literal"><span class="pre">example.com</span></tt></li>
-<li>an account to administrate the server, let&#8217;s call it <tt class="docutils literal"><span class="pre">admin</span></tt></li>
+<li>a domain name, like <code class="docutils literal notranslate"><span class="pre">example.com</span></code></li>
+<li>an account to administrate the server, let’s call it <code class="docutils literal notranslate"><span class="pre">admin</span></code></li>
 </ul>
-<p>Then, the configuration file (<tt class="docutils literal"><span class="pre">/etc/ejabberd/ejabberd.cfg</span></tt>) looks like:</p>
-<div class="highlight-python"><div class="highlight"><pre>%% Options which are set by Debconf and managed by ucf
+<p>Then, the configuration file (<code class="docutils literal notranslate"><span class="pre">/etc/ejabberd/ejabberd.cfg</span></code>) looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span> <span class="n">Options</span> <span class="n">which</span> <span class="n">are</span> <span class="nb">set</span> <span class="n">by</span> <span class="n">Debconf</span> <span class="ow">and</span> <span class="n">managed</span> <span class="n">by</span> <span class="n">ucf</span>
 
-%% Admin user
-{acl, admin, {user, &quot;admin&quot;, &quot;example.com&quot;}}.
+<span class="o">%%</span> <span class="n">Admin</span> <span class="n">user</span>
+<span class="p">{</span><span class="n">acl</span><span class="p">,</span> <span class="n">admin</span><span class="p">,</span> <span class="p">{</span><span class="n">user</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;example.com&quot;</span><span class="p">}}</span><span class="o">.</span>
 
-%% Hostname
-{hosts, [&quot;example.com&quot;]}.
+<span class="o">%%</span> <span class="n">Hostname</span>
+<span class="p">{</span><span class="n">hosts</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;example.com&quot;</span><span class="p">]}</span><span class="o">.</span>
 </pre></div>
 </div>
 <p>By default, ejabberd listens on 3 TCP ports:</p>
-<div class="highlight-python"><div class="highlight"><pre>{listen,
- [
-  {5222, ejabberd_c2s, [
-    {access, c2s},
-    {shaper, c2s_shaper},
-    {max_stanza_size, 65536},
-    %%zlib,
-    starttls, {certfile, &quot;/etc/ejabberd/ejabberd.pem&quot;}
-    ]},
-  {5269, ejabberd_s2s_in, [
-    {shaper, s2s_shaper},
-    {max_stanza_size, 131072}
-    ]},
-  {5280, ejabberd_http, [
-    %%{request_handlers,
-    %% [
-    %%  {[&quot;pub&quot;, &quot;archive&quot;], mod_http_fileserver}
-    %% ]},
-    %%captcha,
-    http_bind,
-    http_poll,
-    web_admin
-    ]}
- ]}.
-{s2s_use_starttls, true}.
-{s2s_certfile, &quot;/etc/ejabberd/ejabberd.pem&quot;}.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">listen</span><span class="p">,</span>
+ <span class="p">[</span>
+  <span class="p">{</span><span class="mi">5222</span><span class="p">,</span> <span class="n">ejabberd_c2s</span><span class="p">,</span> <span class="p">[</span>
+    <span class="p">{</span><span class="n">access</span><span class="p">,</span> <span class="n">c2s</span><span class="p">},</span>
+    <span class="p">{</span><span class="n">shaper</span><span class="p">,</span> <span class="n">c2s_shaper</span><span class="p">},</span>
+    <span class="p">{</span><span class="n">max_stanza_size</span><span class="p">,</span> <span class="mi">65536</span><span class="p">},</span>
+    <span class="o">%%</span><span class="n">zlib</span><span class="p">,</span>
+    <span class="n">starttls</span><span class="p">,</span> <span class="p">{</span><span class="n">certfile</span><span class="p">,</span> <span class="s2">&quot;/etc/ejabberd/ejabberd.pem&quot;</span><span class="p">}</span>
+    <span class="p">]},</span>
+  <span class="p">{</span><span class="mi">5269</span><span class="p">,</span> <span class="n">ejabberd_s2s_in</span><span class="p">,</span> <span class="p">[</span>
+    <span class="p">{</span><span class="n">shaper</span><span class="p">,</span> <span class="n">s2s_shaper</span><span class="p">},</span>
+    <span class="p">{</span><span class="n">max_stanza_size</span><span class="p">,</span> <span class="mi">131072</span><span class="p">}</span>
+    <span class="p">]},</span>
+  <span class="p">{</span><span class="mi">5280</span><span class="p">,</span> <span class="n">ejabberd_http</span><span class="p">,</span> <span class="p">[</span>
+    <span class="o">%%</span><span class="p">{</span><span class="n">request_handlers</span><span class="p">,</span>
+    <span class="o">%%</span> <span class="p">[</span>
+    <span class="o">%%</span>  <span class="p">{[</span><span class="s2">&quot;pub&quot;</span><span class="p">,</span> <span class="s2">&quot;archive&quot;</span><span class="p">],</span> <span class="n">mod_http_fileserver</span><span class="p">}</span>
+    <span class="o">%%</span> <span class="p">]},</span>
+    <span class="o">%%</span><span class="n">captcha</span><span class="p">,</span>
+    <span class="n">http_bind</span><span class="p">,</span>
+    <span class="n">http_poll</span><span class="p">,</span>
+    <span class="n">web_admin</span>
+    <span class="p">]}</span>
+ <span class="p">]}</span><span class="o">.</span>
+<span class="p">{</span><span class="n">s2s_use_starttls</span><span class="p">,</span> <span class="n">true</span><span class="p">}</span><span class="o">.</span>
+<span class="p">{</span><span class="n">s2s_certfile</span><span class="p">,</span> <span class="s2">&quot;/etc/ejabberd/ejabberd.pem&quot;</span><span class="p">}</span><span class="o">.</span>
 </pre></div>
 </div>
 <p>This enable web administration on an HTTP server running on port 5280. Use an
 URL such as to access to administration <a class="reference external" href="http://example.com:5280/admin/">http://example.com:5280/admin/</a>. Note
 that this is note secure (no HTTPS) so you may want to set-up a front-end to
-access to this server (reverse proxy, VPN, firewall, ...).</p>
+access to this server (reverse proxy, VPN, firewall, …).</p>
 <p>To add a new user, you just need to run:</p>
-<div class="highlight-python"><div class="highlight"><pre>ejabberdctl register mynewuser example.com &#39;UserPassword&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ejabberdctl</span> <span class="n">register</span> <span class="n">mynewuser</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="s1">&#39;UserPassword&#39;</span>
 </pre></div>
 </div>
 <div class="section" id="dns-configuration">
 <h2>DNS configuration<a class="headerlink" href="#dns-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Here is how a DNS zone may be configured:</p>
-<div class="highlight-python"><div class="highlight"><pre>;service.proto.name          class rr   pri weight port target
-_jabber._tcp.example.com.      IN  SRV  10    0    5269 jabber.example.com.
-_xmpp-server._tcp.example.com. IN  SRV  10    0    5269 jabber.example.com.
-_xmpp-client._tcp.example.com. IN  SRV  10    0    5222 jabber.example.com.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">;</span><span class="n">service</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">name</span>          <span class="k">class</span> <span class="nc">rr</span>   <span class="n">pri</span> <span class="n">weight</span> <span class="n">port</span> <span class="n">target</span>
+<span class="n">_jabber</span><span class="o">.</span><span class="n">_tcp</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">.</span>      <span class="n">IN</span>  <span class="n">SRV</span>  <span class="mi">10</span>    <span class="mi">0</span>    <span class="mi">5269</span> <span class="n">jabber</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">.</span>
+<span class="n">_xmpp</span><span class="o">-</span><span class="n">server</span><span class="o">.</span><span class="n">_tcp</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">.</span> <span class="n">IN</span>  <span class="n">SRV</span>  <span class="mi">10</span>    <span class="mi">0</span>    <span class="mi">5269</span> <span class="n">jabber</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">.</span>
+<span class="n">_xmpp</span><span class="o">-</span><span class="n">client</span><span class="o">.</span><span class="n">_tcp</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">.</span> <span class="n">IN</span>  <span class="n">SRV</span>  <span class="mi">10</span>    <span class="mi">0</span>    <span class="mi">5222</span> <span class="n">jabber</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">.</span>
 
-jabber IN A 10.22.33.44
+<span class="n">jabber</span> <span class="n">IN</span> <span class="n">A</span> <span class="mf">10.22</span><span class="o">.</span><span class="mf">33.44</span>
 </pre></div>
 </div>
 </div>
@@ -126,13 +115,13 @@ jabber IN A 10.22.33.44
 <h2>Bitlbee configutation<a class="headerlink" href="#bitlbee-configutation" title="Permalink to this headline">¶</a></h2>
 <p>Bitlbee can be used to interact with jabber through an IRC server.
 Here are some useful commands from <a class="reference external" href="http://wiki.bitlbee.org/quickstart">http://wiki.bitlbee.org/quickstart</a>:</p>
-<div class="highlight-python"><div class="highlight"><pre>account add jabber bitlbee@example.com UserPassword
-account jabber on
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="n">add</span> <span class="n">jabber</span> <span class="n">bitlbee</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span> <span class="n">UserPassword</span>
+<span class="n">account</span> <span class="n">jabber</span> <span class="n">on</span>
 </pre></div>
 </div>
-<p>In <tt class="docutils literal"><span class="pre">account</span> <span class="pre">list</span></tt>, this new account is associated with an ID (like 0). Once
+<p>In <code class="docutils literal notranslate"><span class="pre">account</span> <span class="pre">list</span></code>, this new account is associated with an ID (like 0). Once
 you know this ID, you may run:</p>
-<div class="highlight-python"><div class="highlight"><pre>add 0 myuser@example.com
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">add</span> <span class="mi">0</span> <span class="n">myuser</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span>
 </pre></div>
 </div>
 </div>
@@ -146,7 +135,7 @@ you know this ID, you may run:</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -160,33 +149,34 @@ you know this ID, you may run:</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="../dns/unbound.conf.raw.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc-server/dns/unbound.conf</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound.conf</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../mail.html"
                         title="next chapter">Mail server configuration with Postfix and dovecot</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../../_sources/etc-server/jabber/ejabberd.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/etc-server/jabber/ejabberd.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -198,13 +188,13 @@ you know this ID, you may run:</p>
         <li class="right" >
           <a href="../dns/unbound.conf.raw.html" title="etc-server/dns/unbound.conf"
              >previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

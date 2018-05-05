@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Sound Configuration &mdash; Generic Config</title>
-    
+    <title>Sound Configuration &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="systemd configuration" href="systemd.html" />
     <link rel="prev" title="Some notes about my SELinux installation" href="selinux.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,15 +30,15 @@
         <li class="right" >
           <a href="selinux.html" title="Some notes about my SELinux installation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="sound-configuration">
 <h1>Sound Configuration<a class="headerlink" href="#sound-configuration" title="Permalink to this headline">¶</a></h1>
@@ -57,45 +46,45 @@
 <div class="section" id="mpd-and-pulseaudio">
 <h2>MPD and PulseAudio<a class="headerlink" href="#mpd-and-pulseaudio" title="Permalink to this headline">¶</a></h2>
 <p>MPD (Music Player Daemon) is a system daemon which plays music from files,
-playlists... It needs to interact with PulseAudio to get the sound out (using
+playlists… It needs to interact with PulseAudio to get the sound out (using
 ALSA) to enable multiplexing several audio output streams (like the ones which
 are played by the Desktop Environment to signal important events to the user).</p>
 <p>As it is discouraged to run PulseAudio as a system daemon, I use the standard
 setup which spawns one PulseAudio server per logged user. However to allow
 multiplexing MPD needs to use the same server as my user. Hence on my system
 MPD is running with my user ID.</p>
-<p>ArchLinux&#8217; MPD wiki article give some tips to set up such configuration.
+<p>ArchLinux’ MPD wiki article give some tips to set up such configuration.
 First, configure these two files:</p>
-<p><tt class="docutils literal"><span class="pre">/etc/systemd/system/mpd-MYUSER.service</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>.include /usr/lib/systemd/system/mpd.service
+<p><code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/mpd-MYUSER.service</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">include</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">mpd</span><span class="o">.</span><span class="n">service</span>
 
-[Unit]
-Description=Music Player Daemon (running as MYUSER)
+<span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Music</span> <span class="n">Player</span> <span class="n">Daemon</span> <span class="p">(</span><span class="n">running</span> <span class="k">as</span> <span class="n">MYUSER</span><span class="p">)</span>
 
-[Service]
-User=MYUSER
-PAMName=system-local-login
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">User</span><span class="o">=</span><span class="n">MYUSER</span>
+<span class="n">PAMName</span><span class="o">=</span><span class="n">system</span><span class="o">-</span><span class="n">local</span><span class="o">-</span><span class="n">login</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">/etc/mpd.conf</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>music_directory &quot;/home/public/music&quot;
-playlist_directory &quot;/var/lib/mpd/playlists&quot;
-db_file &quot;/var/lib/mpd/mpd.db&quot;
-pid_file &quot;/var/lib/mpd/mpd.pid&quot;
-state_file &quot;/var/lib/mpd/mpdstate&quot;
+<p><code class="docutils literal notranslate"><span class="pre">/etc/mpd.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">music_directory</span> <span class="s2">&quot;/home/public/music&quot;</span>
+<span class="n">playlist_directory</span> <span class="s2">&quot;/var/lib/mpd/playlists&quot;</span>
+<span class="n">db_file</span> <span class="s2">&quot;/var/lib/mpd/mpd.db&quot;</span>
+<span class="n">pid_file</span> <span class="s2">&quot;/var/lib/mpd/mpd.pid&quot;</span>
+<span class="n">state_file</span> <span class="s2">&quot;/var/lib/mpd/mpdstate&quot;</span>
 
-user &quot;MYUSER&quot;
-audio_output {
-    type            &quot;pulse&quot;
-    name            &quot;MPD Pulse Output&quot;
-}
+<span class="n">user</span> <span class="s2">&quot;MYUSER&quot;</span>
+<span class="n">audio_output</span> <span class="p">{</span>
+    <span class="nb">type</span>            <span class="s2">&quot;pulse&quot;</span>
+    <span class="n">name</span>            <span class="s2">&quot;MPD Pulse Output&quot;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Then disable the system-wide MPD service and enable the new one:</p>
-<div class="highlight-sh"><div class="highlight"><pre>systemctl disable mpd
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl disable mpd
 systemctl stop mpd
 systemctl start mpd-MYUSER
-systemctl <span class="nb">enable </span>mpd-MYUSER
+systemctl <span class="nb">enable</span> mpd-MYUSER
 </pre></div>
 </div>
 <p>Documentation:
@@ -104,24 +93,24 @@ systemctl <span class="nb">enable </span>mpd-MYUSER
 </div>
 <div class="section" id="network">
 <h2>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h2>
-<p>Streaming audio stream over the network is quite easy with PulseAudio. Let&#8217;s
-suppose host <tt class="docutils literal"><span class="pre">192.0.2.42</span></tt> wants to send its audio output to a PulseAudio
-server running on host <tt class="docutils literal"><span class="pre">192.0.2.1</span></tt>.</p>
-<p>First setup the listener (<tt class="docutils literal"><span class="pre">192.0.2.1</span></tt>) to accept connections from the sender
-(<tt class="docutils literal"><span class="pre">192.0.2.42</span></tt>). <tt class="docutils literal"><span class="pre">/etc/pulse/default.pa</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1;192.0.2.42
+<p>Streaming audio stream over the network is quite easy with PulseAudio. Let’s
+suppose host <code class="docutils literal notranslate"><span class="pre">192.0.2.42</span></code> wants to send its audio output to a PulseAudio
+server running on host <code class="docutils literal notranslate"><span class="pre">192.0.2.1</span></code>.</p>
+<p>First setup the listener (<code class="docutils literal notranslate"><span class="pre">192.0.2.1</span></code>) to accept connections from the sender
+(<code class="docutils literal notranslate"><span class="pre">192.0.2.42</span></code>). <code class="docutils literal notranslate"><span class="pre">/etc/pulse/default.pa</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span><span class="o">-</span><span class="n">module</span> <span class="n">module</span><span class="o">-</span><span class="n">native</span><span class="o">-</span><span class="n">protocol</span><span class="o">-</span><span class="n">tcp</span> <span class="n">auth</span><span class="o">-</span><span class="n">ip</span><span class="o">-</span><span class="n">acl</span><span class="o">=</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">;</span><span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span>
 </pre></div>
 </div>
 <p>Or here is the unsecure configuration:</p>
-<div class="highlight-python"><div class="highlight"><pre>load-module module-native-protocol-tcp listen=0.0.0.0 auth-anonymous=1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span><span class="o">-</span><span class="n">module</span> <span class="n">module</span><span class="o">-</span><span class="n">native</span><span class="o">-</span><span class="n">protocol</span><span class="o">-</span><span class="n">tcp</span> <span class="n">listen</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="n">auth</span><span class="o">-</span><span class="n">anonymous</span><span class="o">=</span><span class="mi">1</span>
 </pre></div>
 </div>
-<p>Then configure the sender to send its audio output. <tt class="docutils literal"><span class="pre">/etc/pulse/default.pa</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>load-module module-rtp-send destination=192.0.2.1 port=16001
+<p>Then configure the sender to send its audio output. <code class="docutils literal notranslate"><span class="pre">/etc/pulse/default.pa</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span><span class="o">-</span><span class="n">module</span> <span class="n">module</span><span class="o">-</span><span class="n">rtp</span><span class="o">-</span><span class="n">send</span> <span class="n">destination</span><span class="o">=</span><span class="mf">192.0</span><span class="o">.</span><span class="mf">2.1</span> <span class="n">port</span><span class="o">=</span><span class="mi">16001</span>
 </pre></div>
 </div>
 <p>To sync the configuration of PulseAudio with X11, there may be needed to run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">pax11publish</span> <span class="o">-</span><span class="n">e</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pax11publish</span> <span class="o">-</span><span class="n">e</span>
 </pre></div>
 </div>
 </div>
@@ -131,7 +120,7 @@ server running on host <tt class="docutils literal"><span class="pre">192.0.2.1<
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -148,29 +137,30 @@ server running on host <tt class="docutils literal"><span class="pre">192.0.2.1<
   <h4>Next topic</h4>
   <p class="topless"><a href="systemd.html"
                         title="next chapter">systemd configuration</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/sysadmin/sound.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sysadmin/sound.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -182,13 +172,13 @@ server running on host <tt class="docutils literal"><span class="pre">192.0.2.1<
         <li class="right" >
           <a href="selinux.html" title="Some notes about my SELinux installation"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

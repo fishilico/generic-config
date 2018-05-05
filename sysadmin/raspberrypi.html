@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Configuration tweaks on a Raspberry Pi &mdash; Generic Config</title>
-    
+    <title>Configuration tweaks on a Raspberry Pi &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Some notes about my SELinux installation" href="selinux.html" />
     <link rel="prev" title="QEmu-KVM notes" href="qemu.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,33 +30,33 @@
         <li class="right" >
           <a href="qemu.html" title="QEmu-KVM notes"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="configuration-tweaks-on-a-raspberry-pi">
 <h1>Configuration tweaks on a Raspberry Pi<a class="headerlink" href="#configuration-tweaks-on-a-raspberry-pi" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="raspbian-installation">
 <h2>Raspbian installation<a class="headerlink" href="#raspbian-installation" title="Permalink to this headline">¶</a></h2>
 <p>Download Raspbian image from <a class="reference external" href="http://www.raspberrypi.org/downloads">http://www.raspberrypi.org/downloads</a>.</p>
-<p>Each time the SD card is mounted and files modified, <tt class="docutils literal"><span class="pre">/etc/fake-hwtime</span></tt> or
-<tt class="docutils literal"><span class="pre">/etc/fake-hwclock.data</span></tt> needs to be updated with current date and time in
-<tt class="docutils literal"><span class="pre">YYYY-MM-DD</span> <span class="pre">HH:MM:SS</span></tt> format. Otherwise the system may experience some
+<p>Each time the SD card is mounted and files modified, <code class="docutils literal notranslate"><span class="pre">/etc/fake-hwtime</span></code> or
+<code class="docutils literal notranslate"><span class="pre">/etc/fake-hwclock.data</span></code> needs to be updated with current date and time in
+<code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD</span> <span class="pre">HH:MM:SS</span></code> format. Otherwise the system may experience some
 timing-related issues (and fails to mount the root filesystem).
 This can be done with:</p>
-<div class="highlight-python"><div class="highlight"><pre>date &#39;+%Y-%m-%d %H:%M:%S&#39; &gt; /etc/fake-hwclock.data
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="s1">&#39;+%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fake</span><span class="o">-</span><span class="n">hwclock</span><span class="o">.</span><span class="n">data</span>
 </pre></div>
 </div>
-<p>You may run the system on the SD card in QEMU if you don&#8217;t have an HDMI screen.
+<p>You may run the system on the SD card in QEMU if you don’t have an HDMI screen.
 <a class="reference external" href="http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/">http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/</a> describes how to
 achieve that, by downloading a special kernel of qemu-arm and running:</p>
-<div class="highlight-sh"><div class="highlight"><pre>qemu-system-arm -kernel kernel-qemu -cpu arm1176 -m 256 -M versatilepb <span class="se">\</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>qemu-system-arm -kernel kernel-qemu -cpu arm1176 -m <span class="m">256</span> -M versatilepb <span class="se">\</span>
     -no-reboot -serial stdio -append <span class="s2">&quot;root=/dev/sda2 panic=1&quot;</span> -hda /dev/sdb
 </pre></div>
 </div>
@@ -80,14 +69,14 @@ for an ARM11 (ARMv6) versatile board, which requires a patch to be applied:
 <h2>Post-install configuration<a class="headerlink" href="#post-install-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Like all Debian systems, some files needs updating after the initial setup:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">/etc/mailname</span></tt> (with the name to be used in mailing)</li>
-<li><tt class="docutils literal"><span class="pre">/etc/sudoers</span></tt> (remove <tt class="docutils literal"><span class="pre">pi</span> <span class="pre">ALL=(ALL)</span> <span class="pre">NOPASSWD:</span> <span class="pre">ALL</span></tt>)</li>
-<li><tt class="docutils literal"><span class="pre">/etc/ntp.conf</span></tt> (remove <tt class="docutils literal"><span class="pre">restrict</span> <span class="pre">::1</span></tt> if IPv6 module is not loaded)</li>
-<li>Reconfigure the keyboard: <tt class="docutils literal"><span class="pre">keyboard-configuration</span></tt></li>
-<li>Change timezone: <tt class="docutils literal"><span class="pre">tzselect</span></tt> (<tt class="docutils literal"><span class="pre">TZ='Europe/Paris';</span> <span class="pre">export</span> <span class="pre">TZ</span></tt>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">/etc/mailname</span></code> (with the name to be used in mailing)</li>
+<li><code class="docutils literal notranslate"><span class="pre">/etc/sudoers</span></code> (remove <code class="docutils literal notranslate"><span class="pre">pi</span> <span class="pre">ALL=(ALL)</span> <span class="pre">NOPASSWD:</span> <span class="pre">ALL</span></code>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">/etc/ntp.conf</span></code> (remove <code class="docutils literal notranslate"><span class="pre">restrict</span> <span class="pre">::1</span></code> if IPv6 module is not loaded)</li>
+<li>Reconfigure the keyboard: <code class="docutils literal notranslate"><span class="pre">keyboard-configuration</span></code></li>
+<li>Change timezone: <code class="docutils literal notranslate"><span class="pre">tzselect</span></code> (<code class="docutils literal notranslate"><span class="pre">TZ='Europe/Paris';</span> <span class="pre">export</span> <span class="pre">TZ</span></code>)</li>
 </ul>
-<p>Moreover, <tt class="docutils literal"><span class="pre">/etc/sysctl.conf</span></tt> contains Raspberry Pi-specific configuration:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># rpi tweaks</span>
+<p>Moreover, <code class="docutils literal notranslate"><span class="pre">/etc/sysctl.conf</span></code> contains Raspberry Pi-specific configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># rpi tweaks</span>
 <span class="n">vm</span><span class="o">.</span><span class="n">swappiness</span><span class="o">=</span><span class="mi">1</span>
 <span class="n">vm</span><span class="o">.</span><span class="n">min_free_kbytes</span> <span class="o">=</span> <span class="mi">8192</span>
 </pre></div>
@@ -95,38 +84,38 @@ for an ARM11 (ARMv6) versatile board, which requires a patch to be applied:
 </div>
 <div class="section" id="networking">
 <h2>Networking<a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">/etc/network/interfaces</span></tt> with a dynamic configuration:</p>
-<div class="highlight-python"><div class="highlight"><pre>auto lo
-# Add contents:
-allow-hotplug eth0
+<p><code class="docutils literal notranslate"><span class="pre">/etc/network/interfaces</span></code> with a dynamic configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="n">lo</span>
+<span class="c1"># Add contents:</span>
+<span class="n">allow</span><span class="o">-</span><span class="n">hotplug</span> <span class="n">eth0</span>
 
-iface lo inet loopback
-iface eth0 inet dhcp
+<span class="n">iface</span> <span class="n">lo</span> <span class="n">inet</span> <span class="n">loopback</span>
+<span class="n">iface</span> <span class="n">eth0</span> <span class="n">inet</span> <span class="n">dhcp</span>
 
-allow-hotplug wlan0
-iface wlan0 inet manual
-wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
-iface default inet dhcp
+<span class="n">allow</span><span class="o">-</span><span class="n">hotplug</span> <span class="n">wlan0</span>
+<span class="n">iface</span> <span class="n">wlan0</span> <span class="n">inet</span> <span class="n">manual</span>
+<span class="n">wpa</span><span class="o">-</span><span class="n">roam</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">wpa_supplicant</span><span class="o">/</span><span class="n">wpa_supplicant</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">iface</span> <span class="n">default</span> <span class="n">inet</span> <span class="n">dhcp</span>
 </pre></div>
 </div>
 <p>Static configuration may be used with the following lines:</p>
-<div class="highlight-python"><div class="highlight"><pre>iface eth0 inet static
-    address 192.0.2.2
-    netmask 255.255.255.0
-    gateway 192.0.2.1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iface</span> <span class="n">eth0</span> <span class="n">inet</span> <span class="n">static</span>
+    <span class="n">address</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.2</span>
+    <span class="n">netmask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+    <span class="n">gateway</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.1</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="enable-ipv6">
 <h2>Enable IPv6<a class="headerlink" href="#enable-ipv6" title="Permalink to this headline">¶</a></h2>
 <p>To enable IPv6, use the following commands:</p>
-<div class="highlight-sh"><div class="highlight"><pre>modprobe ipv6
-sysctl -w net.ipv6.conf.default.use_tempaddr<span class="o">=</span>2
-sysctl -w net.ipv6.conf.all.use_tempaddr<span class="o">=</span>2
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>modprobe ipv6
+sysctl -w net.ipv6.conf.default.use_tempaddr<span class="o">=</span><span class="m">2</span>
+sysctl -w net.ipv6.conf.all.use_tempaddr<span class="o">=</span><span class="m">2</span>
 </pre></div>
 </div>
-<p>To make these changes persistent, add <tt class="docutils literal"><span class="pre">ipv6</span></tt> to <tt class="docutils literal"><span class="pre">/etc/modules</span></tt> and
-<tt class="docutils literal"><span class="pre">net.ipv6.conf.default.use_tempaddr</span> <span class="pre">=</span> <span class="pre">2</span></tt> to <tt class="docutils literal"><span class="pre">/etc/sysctl.conf</span></tt>.</p>
+<p>To make these changes persistent, add <code class="docutils literal notranslate"><span class="pre">ipv6</span></code> to <code class="docutils literal notranslate"><span class="pre">/etc/modules</span></code> and
+<code class="docutils literal notranslate"><span class="pre">net.ipv6.conf.default.use_tempaddr</span> <span class="pre">=</span> <span class="pre">2</span></code> to <code class="docutils literal notranslate"><span class="pre">/etc/sysctl.conf</span></code>.</p>
 </div>
 <div class="section" id="some-useful-system-information">
 <h2>Some useful system information<a class="headerlink" href="#some-useful-system-information" title="Permalink to this headline">¶</a></h2>
@@ -135,15 +124,15 @@ Raspberry Pi, model B.</p>
 <ul class="simple">
 <li>As some people consider a Serial Number and a MAC address as being sensitive
 information, each potential sensitive hexadecimal byte has been replaced here
-by <tt class="docutils literal"><span class="pre">XX</span></tt>.</li>
-<li>Information about used kernel is not relevant here. So these outputs don&#8217;t
+by <code class="docutils literal notranslate"><span class="pre">XX</span></code>.</li>
+<li>Information about used kernel is not relevant here. So these outputs don’t
 include kernel version and kernel pointers have been protected
-(<tt class="docutils literal"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.kptr_restrict=2</span></tt>).</li>
-<li>Address space is randomized (ALSR, <tt class="docutils literal"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.randomize_va_space=2</span></tt>)
-so when dumping <tt class="docutils literal"><span class="pre">/proc/*/maps</span></tt>, random parts of addresses have been
-replaced by <tt class="docutils literal"><span class="pre">X</span></tt>.</li>
+(<code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.kptr_restrict=2</span></code>).</li>
+<li>Address space is randomized (ALSR, <code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.randomize_va_space=2</span></code>)
+so when dumping <code class="docutils literal notranslate"><span class="pre">/proc/*/maps</span></code>, random parts of addresses have been
+replaced by <code class="docutils literal notranslate"><span class="pre">X</span></code>.</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre>$ uname -m
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uname -m
 armv6l
 
 $ cat /proc/cpuinfo
@@ -239,7 +228,7 @@ raspberrypi
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -259,29 +248,30 @@ raspberrypi
   <h4>Next topic</h4>
   <p class="topless"><a href="selinux.html"
                         title="next chapter">Some notes about my SELinux installation</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/sysadmin/raspberrypi.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sysadmin/raspberrypi.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -293,13 +283,13 @@ raspberrypi
         <li class="right" >
           <a href="qemu.html" title="QEmu-KVM notes"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

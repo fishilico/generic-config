@@ -1,33 +1,23 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Generic Configuration README &mdash; Generic Config</title>
-    
+    <title>Generic Configuration README &#8212; Generic Config</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="index.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="WinDbg-kd, Windows Kernel Debugging" href="windows/windbg-kd.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -36,14 +26,14 @@
         <li class="right" >
           <a href="windows/windbg-kd.html" title="WinDbg-kd, Windows Kernel Debugging"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Generic Config</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Generic Config</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="generic-configuration-readme">
 <h1>Generic Configuration README<a class="headerlink" href="#generic-configuration-readme" title="Permalink to this headline">¶</a></h1>
@@ -59,27 +49,27 @@ files I need to modify to get a system which fits my needs.</p>
 <p><em>This project is NOT intended to be a tutorial or a reference for anyone else</em>.
 There is absolutely <strong>NO WARRANTY</strong> for the content of this project to give you
 a safe and usable configuration. Please consider this files as a cheat-set or as
-last resort documentation if you really don&#8217;t know how to configure a software.</p>
+last resort documentation if you really don’t know how to configure a software.</p>
 </div>
 <div class="section" id="history">
 <h2>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
 <p>Every time I install a new Linux machine there are config files that need to be
-edited. For example, on a server it&#8217;s a good idea to disable remote root login
+edited. For example, on a server it’s a good idea to disable remote root login
 after an administrator account has been created. Another example is given by a
 desktop host which may need a basic firewall (just for this host not to be
 open to the four winds), which rules should I put?</p>
-<p>At first I&#8217;ve written some text files and memos to keep things. However, system
+<p>At first I’ve written some text files and memos to keep things. However, system
 administration of a few personal hosts (servers and desktop workstations) is
-really hard when you don&#8217;t have a way to keep configuration &#8220;in sync with your
-mind&#8221;.</p>
+really hard when you don’t have a way to keep configuration “in sync with your
+mind”.</p>
 <p>Soon another problem came. One of my friends who was new to IPv6 wanted to know
 what ip6tables rules I was using in the firewall of my server. I gave him a
-kind of &#8220;anonymous file&#8221; with rules which were not specific to my server and he
+kind of “anonymous file” with rules which were not specific to my server and he
 found out that there were some problems with IPv6 fragmentation. So I needed to
 add some rules and to update the firewall of every hosts I had.</p>
-<p>So I&#8217;ve started my <cite>Generic Configuration</cite> project to create a place where I
+<p>So I’ve started my <cite>Generic Configuration</cite> project to create a place where I
 could write down the non-specific files I can show to my friends and to other
-people. So when you are reading the files I&#8217;ve written, please keep in mind that
+people. So when you are reading the files I’ve written, please keep in mind that
 no host in this world can run with only the things I describe but need some
 slight customization from sysadmins.</p>
 <p>Finally, I use a version control system (Git) to ease the way people can
@@ -90,11 +80,11 @@ request to help me improve this project, what would be really nice!</p>
 <h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h2>
 <p>This project is organized in folders by field:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">etc</span></tt>: common files in <tt class="docutils literal"><span class="pre">/etc</span></tt> folder which are in every host</li>
-<li><tt class="docutils literal"><span class="pre">etc-desktop</span></tt>: desktop-specific configuration of some <tt class="docutils literal"><span class="pre">/etc</span></tt> files</li>
-<li><tt class="docutils literal"><span class="pre">etc-server</span></tt>: config files of services which can be found on a server</li>
-<li><tt class="docutils literal"><span class="pre">sysadmin</span></tt>: some thoughts and tips&amp;tricks about system administration</li>
-<li><tt class="docutils literal"><span class="pre">www</span></tt>: content of <tt class="docutils literal"><span class="pre">/var/www</span></tt> on a web server without specific purpose</li>
+<li><code class="docutils literal notranslate"><span class="pre">etc</span></code>: common files in <code class="docutils literal notranslate"><span class="pre">/etc</span></code> folder which are in every host</li>
+<li><code class="docutils literal notranslate"><span class="pre">etc-desktop</span></code>: desktop-specific configuration of some <code class="docutils literal notranslate"><span class="pre">/etc</span></code> files</li>
+<li><code class="docutils literal notranslate"><span class="pre">etc-server</span></code>: config files of services which can be found on a server</li>
+<li><code class="docutils literal notranslate"><span class="pre">sysadmin</span></code>: some thoughts and tips&amp;tricks about system administration</li>
+<li><code class="docutils literal notranslate"><span class="pre">www</span></code>: content of <code class="docutils literal notranslate"><span class="pre">/var/www</span></code> on a web server without specific purpose</li>
 </ul>
 </div>
 </div>
@@ -103,7 +93,7 @@ request to help me improve this project, what would be really nice!</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -119,29 +109,30 @@ request to help me improve this project, what would be really nice!</p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="windows/windbg-kd.html"
                         title="previous chapter">WinDbg-kd, Windows Kernel Debugging</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/README.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/README.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -150,12 +141,12 @@ request to help me improve this project, what would be really nice!</p>
         <li class="right" >
           <a href="windows/windbg-kd.html" title="WinDbg-kd, Windows Kernel Debugging"
              >previous</a> |</li>
-        <li><a href="index.html">Generic Config</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Generic Config</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

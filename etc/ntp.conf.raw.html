@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>etc/ntp.conf &mdash; Generic Config</title>
-    
+    <title>etc/ntp.conf &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="/etc" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="etc/resolv.conf" href="resolv.conf.raw.html" />
     <link rel="prev" title="etc/nftables-server.conf" href="nftables-server.conf.raw.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,63 +30,63 @@
         <li class="right" >
           <a href="nftables-server.conf.raw.html" title="etc/nftables-server.conf"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="etc-ntp-conf">
-<h1><tt class="docutils literal"><span class="pre">etc/ntp.conf</span></tt><a class="headerlink" href="#etc-ntp-conf" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference download internal" href="../_downloads/ntp.conf"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c"># /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help</span>
+<h1><code class="docutils literal notranslate"><span class="pre">etc/ntp.conf</span></code><a class="headerlink" href="#etc-ntp-conf" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../_downloads/ntp.conf" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help</span>
 
-<span class="c"># Location of drift file</span>
+<span class="c1"># Location of drift file</span>
 driftfile /var/lib/ntp/ntp.drift
 
 
-<span class="c"># Enable this if you want statistics to be logged.</span>
-<span class="c">#statsdir /var/log/ntpstats/</span>
+<span class="c1"># Enable this if you want statistics to be logged.</span>
+<span class="c1">#statsdir /var/log/ntpstats/</span>
 
 statistics loopstats peerstats clockstats
-filegen loopstats file loopstats <span class="nb">type </span>day <span class="nb">enable</span>
-filegen peerstats file peerstats <span class="nb">type </span>day <span class="nb">enable</span>
-filegen clockstats file clockstats <span class="nb">type </span>day <span class="nb">enable</span>
+filegen loopstats file loopstats <span class="nb">type</span> day <span class="nb">enable</span>
+filegen peerstats file peerstats <span class="nb">type</span> day <span class="nb">enable</span>
+filegen clockstats file clockstats <span class="nb">type</span> day <span class="nb">enable</span>
 
 
-<span class="c"># You do need to talk to an NTP server or two (or three).</span>
-<span class="c">#server ntp.your-provider.example</span>
+<span class="c1"># You do need to talk to an NTP server or two (or three).</span>
+<span class="c1">#server ntp.your-provider.example</span>
 
-<span class="c"># pool.ntp.org maps to about 1000 low-stratum NTP servers.  Your server will</span>
-<span class="c"># pick a different set every time it starts up.  Please consider joining the</span>
-<span class="c"># pool: &lt;http://www.pool.ntp.org/join.html&gt;</span>
-<span class="c">#</span>
-<span class="c"># You may change these names with your distribution (*.debian.pool.ntp.org) or</span>
-<span class="c"># your country (*.fr.pool.ntp.org)</span>
-server 0.pool.ntp.org iburst
-server 1.pool.ntp.org iburst
-server 2.pool.ntp.org iburst
-server 3.pool.ntp.org iburst
+<span class="c1"># pool.ntp.org maps to about 1000 low-stratum NTP servers.  Your server will</span>
+<span class="c1"># pick a different set every time it starts up.  Please consider joining the</span>
+<span class="c1"># pool: &lt;http://www.pool.ntp.org/join.html&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># You may change these names with your distribution (*.debian.pool.ntp.org) or</span>
+<span class="c1"># your country (*.fr.pool.ntp.org)</span>
+server <span class="m">0</span>.pool.ntp.org iburst
+server <span class="m">1</span>.pool.ntp.org iburst
+server <span class="m">2</span>.pool.ntp.org iburst
+server <span class="m">3</span>.pool.ntp.org iburst
 
 
-<span class="c"># Access control configuration</span>
-<span class="c"># The web page &lt;http://support.ntp.org/bin/view/Support/AccessRestrictions&gt;</span>
-<span class="c"># might be helpful.</span>
-<span class="c">#</span>
-<span class="c"># Note that &quot;restrict&quot; applies to both servers and clients, so a configuration</span>
-<span class="c"># that might be intended to block requests from certain clients could also end</span>
-<span class="c"># up blocking replies from your own upstream servers.</span>
+<span class="c1"># Access control configuration</span>
+<span class="c1"># The web page &lt;http://support.ntp.org/bin/view/Support/AccessRestrictions&gt;</span>
+<span class="c1"># might be helpful.</span>
+<span class="c1">#</span>
+<span class="c1"># Note that &quot;restrict&quot; applies to both servers and clients, so a configuration</span>
+<span class="c1"># that might be intended to block requests from certain clients could also end</span>
+<span class="c1"># up blocking replies from your own upstream servers.</span>
 
-<span class="c"># By default, exchange time with everybody, but don&#39;t allow configuration.</span>
+<span class="c1"># By default, exchange time with everybody, but don&#39;t allow configuration.</span>
 restrict -4 default kod notrap nomodify nopeer noquery
 restrict -6 default kod notrap nomodify nopeer noquery
 
-<span class="c"># Local users may interrogate the ntp server more closely.</span>
-restrict 127.0.0.1
+<span class="c1"># Local users may interrogate the ntp server more closely.</span>
+restrict <span class="m">127</span>.0.0.1
 restrict ::1
 </pre></div>
 </div>
@@ -107,37 +96,38 @@ restrict ::1
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="nftables-server.conf.raw.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc/nftables-server.conf</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/nftables-server.conf</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="resolv.conf.raw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">etc/resolv.conf</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/etc/ntp.conf.raw.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/resolv.conf</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/etc/ntp.conf.raw.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -149,13 +139,13 @@ restrict ::1
         <li class="right" >
           <a href="nftables-server.conf.raw.html" title="etc/nftables-server.conf"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

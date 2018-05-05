@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>etc/ssh/sshd_config.default &mdash; Generic Config</title>
-    
+    <title>etc/ssh/sshd_config.default &#8212; Generic Config</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../../index.html" />
-    <link rel="up" title="/etc" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="etc/ssh/sshd_config" href="sshd_config.raw.html" />
     <link rel="prev" title="etc/resolv.conf" href="../resolv.conf.raw.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,146 +30,146 @@
         <li class="right" >
           <a href="../resolv.conf.raw.html" title="etc/resolv.conf"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="etc-ssh-sshd-config-default">
-<h1><tt class="docutils literal"><span class="pre">etc/ssh/sshd_config.default</span></tt><a class="headerlink" href="#etc-ssh-sshd-config-default" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference download internal" href="../../_downloads/sshd_config.default"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c">#    $OpenBSD: sshd_config,v 1.89 2013/02/06 00:20:42 dtucker Exp $</span>
+<h1><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config.default</span></code><a class="headerlink" href="#etc-ssh-sshd-config-default" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../../_downloads/sshd_config.default" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1">#    $OpenBSD: sshd_config,v 1.89 2013/02/06 00:20:42 dtucker Exp $</span>
 
-<span class="c"># This is the sshd server system-wide configuration file.  See</span>
-<span class="c"># sshd_config(5) for more information.</span>
+<span class="c1"># This is the sshd server system-wide configuration file.  See</span>
+<span class="c1"># sshd_config(5) for more information.</span>
 
-<span class="c"># This sshd was compiled with PATH=/usr/bin:/bin:/usr/sbin:/sbin</span>
+<span class="c1"># This sshd was compiled with PATH=/usr/bin:/bin:/usr/sbin:/sbin</span>
 
-<span class="c"># The strategy used for options in the default sshd_config shipped with</span>
-<span class="c"># OpenSSH is to specify options with their default value where</span>
-<span class="c"># possible, but leave them commented.  Uncommented options override the</span>
-<span class="c"># default value.</span>
+<span class="c1"># The strategy used for options in the default sshd_config shipped with</span>
+<span class="c1"># OpenSSH is to specify options with their default value where</span>
+<span class="c1"># possible, but leave them commented.  Uncommented options override the</span>
+<span class="c1"># default value.</span>
 
-<span class="c">#Port 22</span>
-<span class="c">#AddressFamily any</span>
-<span class="c">#ListenAddress 0.0.0.0</span>
-<span class="c">#ListenAddress ::</span>
+<span class="c1">#Port 22</span>
+<span class="c1">#AddressFamily any</span>
+<span class="c1">#ListenAddress 0.0.0.0</span>
+<span class="c1">#ListenAddress ::</span>
 
-<span class="c"># The default requires explicit activation of protocol 1</span>
-<span class="c">#Protocol 2</span>
+<span class="c1"># The default requires explicit activation of protocol 1</span>
+<span class="c1">#Protocol 2</span>
 
-<span class="c"># HostKey for protocol version 1</span>
-<span class="c">#HostKey /etc/ssh/ssh_host_key</span>
-<span class="c"># HostKeys for protocol version 2</span>
-<span class="c">#HostKey /etc/ssh/ssh_host_rsa_key</span>
-<span class="c">#HostKey /etc/ssh/ssh_host_dsa_key</span>
-<span class="c">#HostKey /etc/ssh/ssh_host_ecdsa_key</span>
+<span class="c1"># HostKey for protocol version 1</span>
+<span class="c1">#HostKey /etc/ssh/ssh_host_key</span>
+<span class="c1"># HostKeys for protocol version 2</span>
+<span class="c1">#HostKey /etc/ssh/ssh_host_rsa_key</span>
+<span class="c1">#HostKey /etc/ssh/ssh_host_dsa_key</span>
+<span class="c1">#HostKey /etc/ssh/ssh_host_ecdsa_key</span>
 
-<span class="c"># Lifetime and size of ephemeral version 1 server key</span>
-<span class="c">#KeyRegenerationInterval 1h</span>
-<span class="c">#ServerKeyBits 1024</span>
+<span class="c1"># Lifetime and size of ephemeral version 1 server key</span>
+<span class="c1">#KeyRegenerationInterval 1h</span>
+<span class="c1">#ServerKeyBits 1024</span>
 
-<span class="c"># Logging</span>
-<span class="c"># obsoletes QuietMode and FascistLogging</span>
-<span class="c">#SyslogFacility AUTH</span>
-<span class="c">#LogLevel INFO</span>
+<span class="c1"># Logging</span>
+<span class="c1"># obsoletes QuietMode and FascistLogging</span>
+<span class="c1">#SyslogFacility AUTH</span>
+<span class="c1">#LogLevel INFO</span>
 
-<span class="c"># Authentication:</span>
+<span class="c1"># Authentication:</span>
 
-<span class="c">#LoginGraceTime 2m</span>
-<span class="c">#PermitRootLogin yes</span>
-<span class="c">#StrictModes yes</span>
-<span class="c">#MaxAuthTries 6</span>
-<span class="c">#MaxSessions 10</span>
+<span class="c1">#LoginGraceTime 2m</span>
+<span class="c1">#PermitRootLogin yes</span>
+<span class="c1">#StrictModes yes</span>
+<span class="c1">#MaxAuthTries 6</span>
+<span class="c1">#MaxSessions 10</span>
 
-<span class="c">#RSAAuthentication yes</span>
-<span class="c">#PubkeyAuthentication yes</span>
+<span class="c1">#RSAAuthentication yes</span>
+<span class="c1">#PubkeyAuthentication yes</span>
 
-<span class="c"># The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2</span>
-<span class="c"># but this is overridden so installations will only check .ssh/authorized_keys</span>
+<span class="c1"># The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2</span>
+<span class="c1"># but this is overridden so installations will only check .ssh/authorized_keys</span>
 AuthorizedKeysFile    .ssh/authorized_keys
 
-<span class="c">#AuthorizedPrincipalsFile none</span>
+<span class="c1">#AuthorizedPrincipalsFile none</span>
 
-<span class="c">#AuthorizedKeysCommand none</span>
-<span class="c">#AuthorizedKeysCommandUser nobody</span>
+<span class="c1">#AuthorizedKeysCommand none</span>
+<span class="c1">#AuthorizedKeysCommandUser nobody</span>
 
-<span class="c"># For this to work you will also need host keys in /etc/ssh/ssh_known_hosts</span>
-<span class="c">#RhostsRSAAuthentication no</span>
-<span class="c"># similar for protocol version 2</span>
-<span class="c">#HostbasedAuthentication no</span>
-<span class="c"># Change to yes if you don&#39;t trust ~/.ssh/known_hosts for</span>
-<span class="c"># RhostsRSAAuthentication and HostbasedAuthentication</span>
-<span class="c">#IgnoreUserKnownHosts no</span>
-<span class="c"># Don&#39;t read the user&#39;s ~/.rhosts and ~/.shosts files</span>
-<span class="c">#IgnoreRhosts yes</span>
+<span class="c1"># For this to work you will also need host keys in /etc/ssh/ssh_known_hosts</span>
+<span class="c1">#RhostsRSAAuthentication no</span>
+<span class="c1"># similar for protocol version 2</span>
+<span class="c1">#HostbasedAuthentication no</span>
+<span class="c1"># Change to yes if you don&#39;t trust ~/.ssh/known_hosts for</span>
+<span class="c1"># RhostsRSAAuthentication and HostbasedAuthentication</span>
+<span class="c1">#IgnoreUserKnownHosts no</span>
+<span class="c1"># Don&#39;t read the user&#39;s ~/.rhosts and ~/.shosts files</span>
+<span class="c1">#IgnoreRhosts yes</span>
 
-<span class="c"># To disable tunneled clear text passwords, change to no here!</span>
-<span class="c">#PasswordAuthentication yes</span>
-<span class="c">#PermitEmptyPasswords no</span>
+<span class="c1"># To disable tunneled clear text passwords, change to no here!</span>
+<span class="c1">#PasswordAuthentication yes</span>
+<span class="c1">#PermitEmptyPasswords no</span>
 
-<span class="c"># Change to no to disable s/key passwords</span>
+<span class="c1"># Change to no to disable s/key passwords</span>
 ChallengeResponseAuthentication no
 
-<span class="c"># Kerberos options</span>
-<span class="c">#KerberosAuthentication no</span>
-<span class="c">#KerberosOrLocalPasswd yes</span>
-<span class="c">#KerberosTicketCleanup yes</span>
-<span class="c">#KerberosGetAFSToken no</span>
+<span class="c1"># Kerberos options</span>
+<span class="c1">#KerberosAuthentication no</span>
+<span class="c1">#KerberosOrLocalPasswd yes</span>
+<span class="c1">#KerberosTicketCleanup yes</span>
+<span class="c1">#KerberosGetAFSToken no</span>
 
-<span class="c"># GSSAPI options</span>
-<span class="c">#GSSAPIAuthentication no</span>
-<span class="c">#GSSAPICleanupCredentials yes</span>
+<span class="c1"># GSSAPI options</span>
+<span class="c1">#GSSAPIAuthentication no</span>
+<span class="c1">#GSSAPICleanupCredentials yes</span>
 
-<span class="c"># Set this to &#39;yes&#39; to enable PAM authentication, account processing,</span>
-<span class="c"># and session processing. If this is enabled, PAM authentication will</span>
-<span class="c"># be allowed through the ChallengeResponseAuthentication and</span>
-<span class="c"># PasswordAuthentication.  Depending on your PAM configuration,</span>
-<span class="c"># PAM authentication via ChallengeResponseAuthentication may bypass</span>
-<span class="c"># the setting of &quot;PermitRootLogin without-password&quot;.</span>
-<span class="c"># If you just want the PAM account and session checks to run without</span>
-<span class="c"># PAM authentication, then enable this but set PasswordAuthentication</span>
-<span class="c"># and ChallengeResponseAuthentication to &#39;no&#39;.</span>
+<span class="c1"># Set this to &#39;yes&#39; to enable PAM authentication, account processing,</span>
+<span class="c1"># and session processing. If this is enabled, PAM authentication will</span>
+<span class="c1"># be allowed through the ChallengeResponseAuthentication and</span>
+<span class="c1"># PasswordAuthentication.  Depending on your PAM configuration,</span>
+<span class="c1"># PAM authentication via ChallengeResponseAuthentication may bypass</span>
+<span class="c1"># the setting of &quot;PermitRootLogin without-password&quot;.</span>
+<span class="c1"># If you just want the PAM account and session checks to run without</span>
+<span class="c1"># PAM authentication, then enable this but set PasswordAuthentication</span>
+<span class="c1"># and ChallengeResponseAuthentication to &#39;no&#39;.</span>
 UsePAM yes
 
-<span class="c">#AllowAgentForwarding yes</span>
-<span class="c">#AllowTcpForwarding yes</span>
-<span class="c">#GatewayPorts no</span>
-<span class="c">#X11Forwarding no</span>
-<span class="c">#X11DisplayOffset 10</span>
-<span class="c">#X11UseLocalhost yes</span>
-PrintMotd no <span class="c"># pam does that</span>
-<span class="c">#PrintLastLog yes</span>
-<span class="c">#TCPKeepAlive yes</span>
-<span class="c">#UseLogin no</span>
-UsePrivilegeSeparation sandbox        <span class="c"># Default for new installations.</span>
-<span class="c">#PermitUserEnvironment no</span>
-<span class="c">#Compression delayed</span>
-<span class="c">#ClientAliveInterval 0</span>
-<span class="c">#ClientAliveCountMax 3</span>
-<span class="c">#UseDNS yes</span>
-<span class="c">#PidFile /run/sshd.pid</span>
-<span class="c">#MaxStartups 10:30:100</span>
-<span class="c">#PermitTunnel no</span>
-<span class="c">#ChrootDirectory none</span>
-<span class="c">#VersionAddendum none</span>
+<span class="c1">#AllowAgentForwarding yes</span>
+<span class="c1">#AllowTcpForwarding yes</span>
+<span class="c1">#GatewayPorts no</span>
+<span class="c1">#X11Forwarding no</span>
+<span class="c1">#X11DisplayOffset 10</span>
+<span class="c1">#X11UseLocalhost yes</span>
+PrintMotd no <span class="c1"># pam does that</span>
+<span class="c1">#PrintLastLog yes</span>
+<span class="c1">#TCPKeepAlive yes</span>
+<span class="c1">#UseLogin no</span>
+UsePrivilegeSeparation sandbox        <span class="c1"># Default for new installations.</span>
+<span class="c1">#PermitUserEnvironment no</span>
+<span class="c1">#Compression delayed</span>
+<span class="c1">#ClientAliveInterval 0</span>
+<span class="c1">#ClientAliveCountMax 3</span>
+<span class="c1">#UseDNS yes</span>
+<span class="c1">#PidFile /run/sshd.pid</span>
+<span class="c1">#MaxStartups 10:30:100</span>
+<span class="c1">#PermitTunnel no</span>
+<span class="c1">#ChrootDirectory none</span>
+<span class="c1">#VersionAddendum none</span>
 
-<span class="c"># no default banner path</span>
-<span class="c">#Banner none</span>
+<span class="c1"># no default banner path</span>
+<span class="c1">#Banner none</span>
 
-<span class="c"># override default of no subsystems</span>
+<span class="c1"># override default of no subsystems</span>
 Subsystem    sftp    /usr/lib/ssh/sftp-server
 
-<span class="c"># Example of overriding settings on a per-user basis</span>
-<span class="c">#Match User anoncvs</span>
-<span class="c">#    X11Forwarding no</span>
-<span class="c">#    AllowTcpForwarding no</span>
-<span class="c">#    ForceCommand cvs server</span>
+<span class="c1"># Example of overriding settings on a per-user basis</span>
+<span class="c1">#Match User anoncvs</span>
+<span class="c1">#    X11Forwarding no</span>
+<span class="c1">#    AllowTcpForwarding no</span>
+<span class="c1">#    ForceCommand cvs server</span>
 </pre></div>
 </div>
 </div>
@@ -189,37 +178,38 @@ Subsystem    sftp    /usr/lib/ssh/sftp-server
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="../resolv.conf.raw.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc/resolv.conf</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/resolv.conf</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="sshd_config.raw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">etc/ssh/sshd_config</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../../_sources/etc/ssh/sshd_config.default.raw.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/etc/ssh/sshd_config.default.raw.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -231,13 +221,13 @@ Subsystem    sftp    /usr/lib/ssh/sftp-server
         <li class="right" >
           <a href="../resolv.conf.raw.html" title="etc/resolv.conf"
              >previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

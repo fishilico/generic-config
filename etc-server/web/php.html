@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>PHP Configuration Customization &mdash; Generic Config</title>
-    
+    <title>PHP Configuration Customization &#8212; Generic Config</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../../index.html" />
-    <link rel="up" title="/etc for Server" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="SSL configuration on a web server" href="ssl.html" />
     <link rel="prev" title="etc-server/web/nginx.conf" href="nginx.conf.raw.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,55 +30,55 @@
         <li class="right" >
           <a href="nginx.conf.raw.html" title="etc-server/web/nginx.conf"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="php-configuration-customization">
 <h1>PHP Configuration Customization<a class="headerlink" href="#php-configuration-customization" title="Permalink to this headline">¶</a></h1>
 <p>Here are some tips &amp; tricks to configure a php.ini file.</p>
 <div class="section" id="php-ini-configuration">
-<h2><tt class="docutils literal"><span class="pre">php.ini</span></tt> configuration<a class="headerlink" href="#php-ini-configuration" title="Permalink to this headline">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">php.ini</span></code> configuration<a class="headerlink" href="#php-ini-configuration" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="common-important-configuration-options">
 <h3>Common important configuration options<a class="headerlink" href="#common-important-configuration-options" title="Permalink to this headline">¶</a></h3>
 <p>Here are some options I use in both development and production environments:</p>
-<div class="highlight-python"><div class="highlight"><pre>; Decides whether PHP may expose the fact that it is installed on the server
-; (e.g. by adding its signature to the Web server header).  It is no security
-; threat in any way, but it makes it possible to determine whether you use PHP
-; on your server or not.
-; http://php.net/expose-php
-;;expose_php = On
-expose_php = Off
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">;</span> <span class="n">Decides</span> <span class="n">whether</span> <span class="n">PHP</span> <span class="n">may</span> <span class="n">expose</span> <span class="n">the</span> <span class="n">fact</span> <span class="n">that</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">installed</span> <span class="n">on</span> <span class="n">the</span> <span class="n">server</span>
+<span class="p">;</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">by</span> <span class="n">adding</span> <span class="n">its</span> <span class="n">signature</span> <span class="n">to</span> <span class="n">the</span> <span class="n">Web</span> <span class="n">server</span> <span class="n">header</span><span class="p">)</span><span class="o">.</span>  <span class="n">It</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">security</span>
+<span class="p">;</span> <span class="n">threat</span> <span class="ow">in</span> <span class="nb">any</span> <span class="n">way</span><span class="p">,</span> <span class="n">but</span> <span class="n">it</span> <span class="n">makes</span> <span class="n">it</span> <span class="n">possible</span> <span class="n">to</span> <span class="n">determine</span> <span class="n">whether</span> <span class="n">you</span> <span class="n">use</span> <span class="n">PHP</span>
+<span class="p">;</span> <span class="n">on</span> <span class="n">your</span> <span class="n">server</span> <span class="ow">or</span> <span class="ow">not</span><span class="o">.</span>
+<span class="p">;</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">php</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">expose</span><span class="o">-</span><span class="n">php</span>
+<span class="p">;;</span><span class="n">expose_php</span> <span class="o">=</span> <span class="n">On</span>
+<span class="n">expose_php</span> <span class="o">=</span> <span class="n">Off</span>
 
-include_path = &quot;.:/usr/share/pear:/usr/share/php&quot;
+<span class="n">include_path</span> <span class="o">=</span> <span class="s2">&quot;.:/usr/share/pear:/usr/share/php&quot;</span>
 
-; Whether to allow the treatment of URLs (like http:// or ftp://) as files.
-; http://php.net/allow-url-fopen
-;;allow_url_fopen = On
-allow_url_fopen = Off
+<span class="p">;</span> <span class="n">Whether</span> <span class="n">to</span> <span class="n">allow</span> <span class="n">the</span> <span class="n">treatment</span> <span class="n">of</span> <span class="n">URLs</span> <span class="p">(</span><span class="n">like</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span> <span class="ow">or</span> <span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="p">)</span> <span class="k">as</span> <span class="n">files</span><span class="o">.</span>
+<span class="p">;</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">php</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">allow</span><span class="o">-</span><span class="n">url</span><span class="o">-</span><span class="n">fopen</span>
+<span class="p">;;</span><span class="n">allow_url_fopen</span> <span class="o">=</span> <span class="n">On</span>
+<span class="n">allow_url_fopen</span> <span class="o">=</span> <span class="n">Off</span>
 
-; Whether to allow include/require to open URLs (like http:// or ftp://) as files.
-; http://php.net/allow-url-include
-allow_url_include = Off
+<span class="p">;</span> <span class="n">Whether</span> <span class="n">to</span> <span class="n">allow</span> <span class="n">include</span><span class="o">/</span><span class="n">require</span> <span class="n">to</span> <span class="nb">open</span> <span class="n">URLs</span> <span class="p">(</span><span class="n">like</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span> <span class="ow">or</span> <span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="p">)</span> <span class="k">as</span> <span class="n">files</span><span class="o">.</span>
+<span class="p">;</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">php</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">allow</span><span class="o">-</span><span class="n">url</span><span class="o">-</span><span class="n">include</span>
+<span class="n">allow_url_include</span> <span class="o">=</span> <span class="n">Off</span>
 
-[Date]
-; Defines the default timezone used by the date functions
-; http://php.net/date.timezone
-;date.timezone =
-date.timezone = &quot;Europe/Paris&quot;
+<span class="p">[</span><span class="n">Date</span><span class="p">]</span>
+<span class="p">;</span> <span class="n">Defines</span> <span class="n">the</span> <span class="n">default</span> <span class="n">timezone</span> <span class="n">used</span> <span class="n">by</span> <span class="n">the</span> <span class="n">date</span> <span class="n">functions</span>
+<span class="p">;</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">php</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">date</span><span class="o">.</span><span class="n">timezone</span>
+<span class="p">;</span><span class="n">date</span><span class="o">.</span><span class="n">timezone</span> <span class="o">=</span>
+<span class="n">date</span><span class="o">.</span><span class="n">timezone</span> <span class="o">=</span> <span class="s2">&quot;Europe/Paris&quot;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="development-vs-production-options">
 <h3>Development vs. Production options<a class="headerlink" href="#development-vs-production-options" title="Permalink to this headline">¶</a></h3>
 <p>Here are the options which are likely to be different in dev and in prod:</p>
-<div class="highlight-python"><div class="highlight"><pre>; open_basedir, if set, limits all file operations to the defined directory
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>; open_basedir, if set, limits all file operations to the defined directory
 ; and below.  This directive makes most sense if used in a per-directory
 ; or per-virtualhost web server configuration file. This directive is
 ; *NOT* affected by whether Safe Mode is turned On or Off.
@@ -187,32 +176,32 @@ display_startup_errors = On
 <div class="section" id="php-size-limits">
 <h3>PHP size limits<a class="headerlink" href="#php-size-limits" title="Permalink to this headline">¶</a></h3>
 <p>In some configurations it may be needed to raise the limits on memory resource
-usage.  Here are some relevant options in <tt class="docutils literal"><span class="pre">php.ini</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>; Maximum amount of memory a script may consume (128MB)
-; http://php.net/memory-limit
-;memory_limit = 128M
-memory_limit = 1G
+usage.  Here are some relevant options in <code class="docutils literal notranslate"><span class="pre">php.ini</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">;</span> <span class="n">Maximum</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">memory</span> <span class="n">a</span> <span class="n">script</span> <span class="n">may</span> <span class="n">consume</span> <span class="p">(</span><span class="mi">128</span><span class="n">MB</span><span class="p">)</span>
+<span class="p">;</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">php</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">memory</span><span class="o">-</span><span class="n">limit</span>
+<span class="p">;</span><span class="n">memory_limit</span> <span class="o">=</span> <span class="mi">128</span><span class="n">M</span>
+<span class="n">memory_limit</span> <span class="o">=</span> <span class="mi">1</span><span class="n">G</span>
 
-; Maximum size of POST data that PHP will accept.
-; Its value may be 0 to disable the limit. It is ignored if POST data reading
-; is disabled through enable_post_data_reading.
-; http://php.net/post-max-size
-;post_max_size = 8M
-post_max_size = 2G
+<span class="p">;</span> <span class="n">Maximum</span> <span class="n">size</span> <span class="n">of</span> <span class="n">POST</span> <span class="n">data</span> <span class="n">that</span> <span class="n">PHP</span> <span class="n">will</span> <span class="n">accept</span><span class="o">.</span>
+<span class="p">;</span> <span class="n">Its</span> <span class="n">value</span> <span class="n">may</span> <span class="n">be</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">disable</span> <span class="n">the</span> <span class="n">limit</span><span class="o">.</span> <span class="n">It</span> <span class="ow">is</span> <span class="n">ignored</span> <span class="k">if</span> <span class="n">POST</span> <span class="n">data</span> <span class="n">reading</span>
+<span class="p">;</span> <span class="ow">is</span> <span class="n">disabled</span> <span class="n">through</span> <span class="n">enable_post_data_reading</span><span class="o">.</span>
+<span class="p">;</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">php</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">post</span><span class="o">-</span><span class="nb">max</span><span class="o">-</span><span class="n">size</span>
+<span class="p">;</span><span class="n">post_max_size</span> <span class="o">=</span> <span class="mi">8</span><span class="n">M</span>
+<span class="n">post_max_size</span> <span class="o">=</span> <span class="mi">2</span><span class="n">G</span>
 
-; Maximum allowed size for uploaded files.
-; http://php.net/upload-max-filesize
-;upload_max_filesize = 2M
-upload_max_filesize = 2G
+<span class="p">;</span> <span class="n">Maximum</span> <span class="n">allowed</span> <span class="n">size</span> <span class="k">for</span> <span class="n">uploaded</span> <span class="n">files</span><span class="o">.</span>
+<span class="p">;</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">php</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">upload</span><span class="o">-</span><span class="nb">max</span><span class="o">-</span><span class="n">filesize</span>
+<span class="p">;</span><span class="n">upload_max_filesize</span> <span class="o">=</span> <span class="mi">2</span><span class="n">M</span>
+<span class="n">upload_max_filesize</span> <span class="o">=</span> <span class="mi">2</span><span class="n">G</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="debian-default-configuration-file">
 <h3>Debian default configuration file<a class="headerlink" href="#debian-default-configuration-file" title="Permalink to this headline">¶</a></h3>
 <p>With PHP 5, the default configuration file that Debian ships is installed in
-<tt class="docutils literal"><span class="pre">/usr/share/php5/php.ini-production</span></tt>. Each time this file gets updated it is
-possible to re-sync <tt class="docutils literal"><span class="pre">php.ini</span></tt> with a command like:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">vimdiff</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">php5</span><span class="o">/</span><span class="n">fpm</span><span class="o">/</span><span class="n">php</span><span class="o">.</span><span class="n">ini</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">php5</span><span class="o">/</span><span class="n">php</span><span class="o">.</span><span class="n">ini</span><span class="o">-</span><span class="n">production</span>
+<code class="docutils literal notranslate"><span class="pre">/usr/share/php5/php.ini-production</span></code>. Each time this file gets updated it is
+possible to re-sync <code class="docutils literal notranslate"><span class="pre">php.ini</span></code> with a command like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vimdiff</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">php5</span><span class="o">/</span><span class="n">fpm</span><span class="o">/</span><span class="n">php</span><span class="o">.</span><span class="n">ini</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">php5</span><span class="o">/</span><span class="n">php</span><span class="o">.</span><span class="n">ini</span><span class="o">-</span><span class="n">production</span>
 </pre></div>
 </div>
 </div>
@@ -221,53 +210,53 @@ possible to re-sync <tt class="docutils literal"><span class="pre">php.ini</span
 <h2>Extensions list<a class="headerlink" href="#extensions-list" title="Permalink to this headline">¶</a></h2>
 <p>Here are some extensions to enable for most common-purpose websites:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">curl</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">gd</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">gettext</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">iconv</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">mcrypt</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">mysqli</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">mysql</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">pdo_mysql</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">pdo_pgsql</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">pdo_sqlite</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">pgsql</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">sqlite3</span></tt></li>
+<li><code class="docutils literal notranslate"><span class="pre">curl</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">gd</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">gettext</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">iconv</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">mcrypt</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">mysqli</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">mysql</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">pdo_mysql</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">pdo_pgsql</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">pdo_sqlite</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">pgsql</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">sqlite3</span></code></li>
 </ul>
 </div>
 <div class="section" id="apache-configuration">
 <h2>Apache configuration<a class="headerlink" href="#apache-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Apache has a module to run PHP. On Debian its installation is simple:</p>
-<div class="highlight-python"><div class="highlight"><pre>apt-get install libapache2-mod-php5
-a2enmod php5
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libapache2</span><span class="o">-</span><span class="n">mod</span><span class="o">-</span><span class="n">php5</span>
+<span class="n">a2enmod</span> <span class="n">php5</span>
 </pre></div>
 </div>
-<p>This will automatically load <tt class="docutils literal"><span class="pre">/usr/lib/apache2/modules/libphp5.so</span></tt> and
-configure Apache so that <tt class="docutils literal"><span class="pre">.php</span></tt> files (and other extensions) are handled to
+<p>This will automatically load <code class="docutils literal notranslate"><span class="pre">/usr/lib/apache2/modules/libphp5.so</span></code> and
+configure Apache so that <code class="docutils literal notranslate"><span class="pre">.php</span></code> files (and other extensions) are handled to
 PHP module for execution.</p>
-<p>To disable the PHP engine for some folders, use <tt class="docutils literal"><span class="pre">php_admin_value</span></tt> directive
-in <tt class="docutils literal"><span class="pre">&lt;Directory&gt;</span></tt> sections. For example this disables PHP in home directories:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;IfModule mod_userdir.c&gt;
-    &lt;Directory /home/*/public_html&gt;
-        php_admin_value engine Off
-    &lt;/Directory&gt;
-&lt;/IfModule&gt;
+<p>To disable the PHP engine for some folders, use <code class="docutils literal notranslate"><span class="pre">php_admin_value</span></code> directive
+in <code class="docutils literal notranslate"><span class="pre">&lt;Directory&gt;</span></code> sections. For example this disables PHP in home directories:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IfModule</span> <span class="n">mod_userdir</span><span class="o">.</span><span class="n">c</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">home</span><span class="o">/*/</span><span class="n">public_html</span><span class="o">&gt;</span>
+        <span class="n">php_admin_value</span> <span class="n">engine</span> <span class="n">Off</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">IfModule</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <div class="section" id="rewrite-module">
 <h3>Rewrite module<a class="headerlink" href="#rewrite-module" title="Permalink to this headline">¶</a></h3>
-<p>To have nicer URLs, many websites setup a hook to call <tt class="docutils literal"><span class="pre">index.php</span></tt> with a part of the path in its parameter. In Apache, this behavior is achieved thanks to the rewrite module. To enable this module on Debian, run:</p>
-<div class="highlight-python"><div class="highlight"><pre>a2enmod rewrite
+<p>To have nicer URLs, many websites setup a hook to call <code class="docutils literal notranslate"><span class="pre">index.php</span></code> with a part of the path in its parameter. In Apache, this behavior is achieved thanks to the rewrite module. To enable this module on Debian, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a2enmod</span> <span class="n">rewrite</span>
 </pre></div>
 </div>
 <p>Then ensure that you have this directive in your virtual host configuration, to
-allow <tt class="docutils literal"><span class="pre">.htaccess</span></tt> files:</p>
-<div class="highlight-python"><div class="highlight"><pre>AllowOverride All
+allow <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> files:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AllowOverride</span> <span class="n">All</span>
 </pre></div>
 </div>
-<p>Finally, put a <tt class="docutils literal"><span class="pre">.htaccess</span></tt> file where you want to split the path and write
+<p>Finally, put a <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> file where you want to split the path and write
 lines such as these ones in it:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;IfModule mod_rewrite.c&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;IfModule mod_rewrite.c&gt;
     RewriteEngine on
     RewriteBase /path/to/current/directory
     # Only rewrite non-existing files and directories
@@ -282,16 +271,16 @@ lines such as these ones in it:</p>
 </div>
 <div class="section" id="nginx-configuration">
 <h2>Nginx configuration<a class="headerlink" href="#nginx-configuration" title="Permalink to this headline">¶</a></h2>
-<p>Nginx doesn&#8217;t use PHP as a module so you have to run another daemon which
-provides a CGI-like gateway. For example, you may use <tt class="docutils literal"><span class="pre">php5-fpm</span></tt> daemon,
+<p>Nginx doesn’t use PHP as a module so you have to run another daemon which
+provides a CGI-like gateway. For example, you may use <code class="docutils literal notranslate"><span class="pre">php5-fpm</span></code> daemon,
 which installation is trivial on Debian:</p>
-<div class="highlight-python"><div class="highlight"><pre>apt-get install php5-fpm
-update-rc.d php5-fpm defaults
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">php5</span><span class="o">-</span><span class="n">fpm</span>
+<span class="n">update</span><span class="o">-</span><span class="n">rc</span><span class="o">.</span><span class="n">d</span> <span class="n">php5</span><span class="o">-</span><span class="n">fpm</span> <span class="n">defaults</span>
 </pre></div>
 </div>
-<p>This daemon creates an Unix socket in <tt class="docutils literal"><span class="pre">/var/run/php5-fpm.sock</span></tt>.
+<p>This daemon creates an Unix socket in <code class="docutils literal notranslate"><span class="pre">/var/run/php5-fpm.sock</span></code>.
 Use something like this to connect nginx to php5-fpm:</p>
-<div class="highlight-python"><div class="highlight"><pre>server {
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server {
     listen 80;
     listen [::]:80;
 
@@ -307,8 +296,8 @@ Use something like this to connect nginx to php5-fpm:</p>
 </pre></div>
 </div>
 <p>Indeed all the mandatory parameters for fastcgi interface are already defined
-in <tt class="docutils literal"><span class="pre">/etc/nginx/fastcgi_params</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>fastcgi_param   QUERY_STRING            $query_string;
+in <code class="docutils literal notranslate"><span class="pre">/etc/nginx/fastcgi_params</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>fastcgi_param   QUERY_STRING            $query_string;
 fastcgi_param   REQUEST_METHOD          $request_method;
 fastcgi_param   CONTENT_TYPE            $content_type;
 fastcgi_param   CONTENT_LENGTH          $content_length;
@@ -336,7 +325,7 @@ fastcgi_param   REDIRECT_STATUS         200;
 </pre></div>
 </div>
 <p>PHP can also be enabled only in a specific subdirectory of a location:</p>
-<div class="highlight-python"><div class="highlight"><pre>server {
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server {
     [...]
     # The trailing slash makes nginx redirect &quot;/subdir&quot; to &quot;/subdir/&quot;
     location /subdir/ {
@@ -357,9 +346,9 @@ fastcgi_param   REDIRECT_STATUS         200;
 <div class="section" id="rewrite-directive">
 <h3>Rewrite directive<a class="headerlink" href="#rewrite-directive" title="Permalink to this headline">¶</a></h3>
 <p>Nginx provides an HTTP rewrite module to change URIs dynamically. This directive
-sets up pseudo subdirectories in <tt class="docutils literal"><span class="pre">/path</span></tt> URI which are handled by <tt class="docutils literal"><span class="pre">page.php</span></tt>
+sets up pseudo subdirectories in <code class="docutils literal notranslate"><span class="pre">/path</span></code> URI which are handled by <code class="docutils literal notranslate"><span class="pre">page.php</span></code>
 script:</p>
-<div class="highlight-python"><div class="highlight"><pre>rewrite ^/path(/.*)$ /page.php$1 last;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rewrite ^/path(/.*)$ /page.php$1 last;
 </pre></div>
 </div>
 <p>Module doc: <a class="reference external" href="http://nginx.org/en/docs/http/ngx_http_rewrite_module.html">http://nginx.org/en/docs/http/ngx_http_rewrite_module.html</a></p>
@@ -373,17 +362,17 @@ PHP-FPM.  Here are some documentation links:</p>
 <li><a class="reference external" href="http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_ConfigurationOptions#mod_fastcgi-fastcgi">http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_ConfigurationOptions#mod_fastcgi-fastcgi</a></li>
 <li><a class="reference external" href="https://wiki.archlinux.org/index.php/lighttpd#Using_php-fpm">https://wiki.archlinux.org/index.php/lighttpd#Using_php-fpm</a></li>
 </ul>
-<p>And here is what <tt class="docutils literal"><span class="pre">/etc/lighttpd/lighttpd.conf</span></tt> looks like, once it is linked
+<p>And here is what <code class="docutils literal notranslate"><span class="pre">/etc/lighttpd/lighttpd.conf</span></code> looks like, once it is linked
 with PHP-FPM:</p>
-<div class="highlight-python"><div class="highlight"><pre>server.modules += ( &quot;mod_fastcgi&quot; )
-index-file.names += ( &quot;index.php&quot; )
-fastcgi.server += (
-    &quot;.php&quot; =&gt; (&quot;localhost&quot; =&gt; (
-        &quot;socket&quot; =&gt; &quot;/var/run/php5-fpm.sock&quot;,
-        &quot;broken-scriptfilename&quot; =&gt; &quot;enable&quot;
-    ))
-)
-alias.url += ( &quot;/my-php-pages&quot; =&gt; &quot;/srv/http/my-php-pages&quot; )
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span><span class="o">.</span><span class="n">modules</span> <span class="o">+=</span> <span class="p">(</span> <span class="s2">&quot;mod_fastcgi&quot;</span> <span class="p">)</span>
+<span class="n">index</span><span class="o">-</span><span class="n">file</span><span class="o">.</span><span class="n">names</span> <span class="o">+=</span> <span class="p">(</span> <span class="s2">&quot;index.php&quot;</span> <span class="p">)</span>
+<span class="n">fastcgi</span><span class="o">.</span><span class="n">server</span> <span class="o">+=</span> <span class="p">(</span>
+    <span class="s2">&quot;.php&quot;</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="s2">&quot;localhost&quot;</span> <span class="o">=&gt;</span> <span class="p">(</span>
+        <span class="s2">&quot;socket&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;/var/run/php5-fpm.sock&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;broken-scriptfilename&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;enable&quot;</span>
+    <span class="p">))</span>
+<span class="p">)</span>
+<span class="n">alias</span><span class="o">.</span><span class="n">url</span> <span class="o">+=</span> <span class="p">(</span> <span class="s2">&quot;/my-php-pages&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;/srv/http/my-php-pages&quot;</span> <span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -393,12 +382,12 @@ alias.url += ( &quot;/my-php-pages&quot; =&gt; &quot;/srv/http/my-php-pages&quot
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">PHP Configuration Customization</a><ul>
-<li><a class="reference internal" href="#php-ini-configuration"><tt class="docutils literal"><span class="pre">php.ini</span></tt> configuration</a><ul>
+<li><a class="reference internal" href="#php-ini-configuration"><code class="docutils literal notranslate"><span class="pre">php.ini</span></code> configuration</a><ul>
 <li><a class="reference internal" href="#common-important-configuration-options">Common important configuration options</a></li>
 <li><a class="reference internal" href="#development-vs-production-options">Development vs. Production options</a></li>
 <li><a class="reference internal" href="#php-size-limits">PHP size limits</a></li>
@@ -421,33 +410,34 @@ alias.url += ( &quot;/my-php-pages&quot; =&gt; &quot;/srv/http/my-php-pages&quot
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="nginx.conf.raw.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc-server/web/nginx.conf</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/web/nginx.conf</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="ssl.html"
                         title="next chapter">SSL configuration on a web server</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../../_sources/etc-server/web/php.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/etc-server/web/php.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -459,13 +449,13 @@ alias.url += ( &quot;/my-php-pages&quot; =&gt; &quot;/srv/http/my-php-pages&quot
         <li class="right" >
           <a href="nginx.conf.raw.html" title="etc-server/web/nginx.conf"
              >previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

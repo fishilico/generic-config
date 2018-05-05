@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Linux NAT router &mdash; Generic Config</title>
-    
+    <title>Linux NAT router &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Network configuration" href="netconfig.html" />
     <link rel="prev" title="MySQL tips and tricks" href="mysql.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,15 +30,15 @@
         <li class="right" >
           <a href="mysql.html" title="MySQL tips and tricks"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="linux-nat-router">
 <h1>Linux NAT router<a class="headerlink" href="#linux-nat-router" title="Permalink to this headline">¶</a></h1>
@@ -61,45 +50,45 @@ assigned to a network.</p>
 <h2>Network architecture<a class="headerlink" href="#network-architecture" title="Permalink to this headline">¶</a></h2>
 <p>For the sake of clarity, this document uses following interface names and
 network addresses:</p>
-<div class="highlight-python"><div class="highlight"><pre>               +--------------------------------+
-               |             Linux              |      Private Network
-Internet ------| eth0        Router        eth1 |----- (Wifi, VPN...)
-               | 192.0.2.42          10.13.37.1 |       10.13.37.0/24
-               +--------------------------------+             |
-                                                              |
-                                                         +---------+
-                                                         | Private |
-                                                         |  Host   |
-                                                         +---------+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>               <span class="o">+--------------------------------+</span>
+               <span class="o">|</span>             <span class="n">Linux</span>              <span class="o">|</span>      <span class="n">Private</span> <span class="n">Network</span>
+<span class="n">Internet</span> <span class="o">------|</span> <span class="n">eth0</span>        <span class="n">Router</span>        <span class="n">eth1</span> <span class="o">|-----</span> <span class="p">(</span><span class="n">Wifi</span><span class="p">,</span> <span class="n">VPN</span><span class="o">...</span><span class="p">)</span>
+               <span class="o">|</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span>          <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.1</span> <span class="o">|</span>       <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.0</span><span class="o">/</span><span class="mi">24</span>
+               <span class="o">+--------------------------------+</span>             <span class="o">|</span>
+                                                              <span class="o">|</span>
+                                                         <span class="o">+---------+</span>
+                                                         <span class="o">|</span> <span class="n">Private</span> <span class="o">|</span>
+                                                         <span class="o">|</span>  <span class="n">Host</span>   <span class="o">|</span>
+                                                         <span class="o">+---------+</span>
 </pre></div>
 </div>
-<p>Hosts connected to the private network don&#8217;t have public IPv4 addresses and are
-configured to connect to the Internet via a router sitting at <tt class="docutils literal"><span class="pre">10.13.37.1</span></tt>.</p>
+<p>Hosts connected to the private network don’t have public IPv4 addresses and are
+configured to connect to the Internet via a router sitting at <code class="docutils literal notranslate"><span class="pre">10.13.37.1</span></code>.</p>
 <p>To configure the router so that the private host gets access to the Internet,
 you need to issue following commands on the Linux router:</p>
 <ul>
 <li><p class="first">Configure the firewall to do NAT:</p>
-<div class="highlight-python"><div class="highlight"><pre># If the public address (192.0.2.42) is static, use this command
-iptables -t nat -A POSTROUTING -s 10.13.37.0/24 -o eth0 -j SNAT --to-source 192.0.2.42
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># If the public address (192.0.2.42) is static, use this command</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">A</span> <span class="n">POSTROUTING</span> <span class="o">-</span><span class="n">s</span> <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.0</span><span class="o">/</span><span class="mi">24</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">j</span> <span class="n">SNAT</span> <span class="o">--</span><span class="n">to</span><span class="o">-</span><span class="n">source</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span>
 
-# Otherwise if the public address is dynamic, use this command
-iptables -t nat -A POSTROUTING -s 10.13.37.0/24 -o eth0 -j MASQUERADE
+<span class="c1"># Otherwise if the public address is dynamic, use this command</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">A</span> <span class="n">POSTROUTING</span> <span class="o">-</span><span class="n">s</span> <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.0</span><span class="o">/</span><span class="mi">24</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">j</span> <span class="n">MASQUERADE</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Configure the firewall to allow packet forwarding:</p>
-<div class="highlight-python"><div class="highlight"><pre>iptables -A FORWARD -s 10.13.37.0/24 -i eth1 -o eth0 -j ACCEPT
-iptables -A FORWARD -d 10.13.37.0/24 -i eth0 -o eth1 -j ACCEPT
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">FORWARD</span> <span class="o">-</span><span class="n">s</span> <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.0</span><span class="o">/</span><span class="mi">24</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth1</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">FORWARD</span> <span class="o">-</span><span class="n">d</span> <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.0</span><span class="o">/</span><span class="mi">24</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth1</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Enable packet forwarding via sysctl (<tt class="docutils literal"><span class="pre">sysctl</span> <span class="pre">-w</span></tt> writes to <tt class="docutils literal"><span class="pre">/proc/sys/...</span></tt>):</p>
-<div class="highlight-python"><div class="highlight"><pre>sysctl -w net.ipv4.conf.eth0.forwarding=1
-sysctl -w net.ipv4.conf.eth1.forwarding=1
+<li><p class="first">Enable packet forwarding via sysctl (<code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span></code> writes to <code class="docutils literal notranslate"><span class="pre">/proc/sys/...</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sysctl</span> <span class="o">-</span><span class="n">w</span> <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">eth0</span><span class="o">.</span><span class="n">forwarding</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">sysctl</span> <span class="o">-</span><span class="n">w</span> <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">eth1</span><span class="o">.</span><span class="n">forwarding</span><span class="o">=</span><span class="mi">1</span>
 
-# Previous entries may not exists in old kernels. In such case, use:
-# sysctl -w net.ipv4.ip_forward=1
-# ... which acts like: sysctl -w net.ipv4.conf.all.forwarding=1
+<span class="c1"># Previous entries may not exists in old kernels. In such case, use:</span>
+<span class="c1"># sysctl -w net.ipv4.ip_forward=1</span>
+<span class="c1"># ... which acts like: sysctl -w net.ipv4.conf.all.forwarding=1</span>
 </pre></div>
 </div>
 </li>
@@ -109,27 +98,27 @@ sysctl -w net.ipv4.conf.eth1.forwarding=1
 <h2>Persistent configuration<a class="headerlink" href="#persistent-configuration" title="Permalink to this headline">¶</a></h2>
 <p>You may create following files to write your configuration in a way it is kept
 across rebooting.</p>
-<p><tt class="docutils literal"><span class="pre">/etc/iptables/iptables.rules</span></tt> (please adapt this path according to your Linux
+<p><code class="docutils literal notranslate"><span class="pre">/etc/iptables/iptables.rules</span></code> (please adapt this path according to your Linux
 distribution):</p>
-<div class="highlight-python"><div class="highlight"><pre>*filter
-:INPUT DROP [0:0]
-:FORWARD DROP [0:0]
-:OUTPUT DROP [0:0]
-# (... INPUT and OUTPUT filters ...)
--A FORWARD -s 10.13.37.0/24 -i eth1 -o eth0 -j ACCEPT
--A FORWARD -d 10.13.37.0/24 -i eth0 -o eth1 -j ACCEPT
-COMMIT
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="nb">filter</span>
+<span class="p">:</span><span class="n">INPUT</span> <span class="n">DROP</span> <span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">:</span><span class="n">FORWARD</span> <span class="n">DROP</span> <span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">:</span><span class="n">OUTPUT</span> <span class="n">DROP</span> <span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>
+<span class="c1"># (... INPUT and OUTPUT filters ...)</span>
+<span class="o">-</span><span class="n">A</span> <span class="n">FORWARD</span> <span class="o">-</span><span class="n">s</span> <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.0</span><span class="o">/</span><span class="mi">24</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth1</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+<span class="o">-</span><span class="n">A</span> <span class="n">FORWARD</span> <span class="o">-</span><span class="n">d</span> <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.0</span><span class="o">/</span><span class="mi">24</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth1</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+<span class="n">COMMIT</span>
 
-*nat
-:PREROUTING ACCEPT [0:0]
-:POSTROUTING ACCEPT [0:0]
-:OUTPUT ACCEPT [0:0]
--A POSTROUTING -s 10.13.37.0/24 -o eth0 -j SNAT --to-source 192.0.2.42
-COMMIT
+<span class="o">*</span><span class="n">nat</span>
+<span class="p">:</span><span class="n">PREROUTING</span> <span class="n">ACCEPT</span> <span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">:</span><span class="n">POSTROUTING</span> <span class="n">ACCEPT</span> <span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">:</span><span class="n">OUTPUT</span> <span class="n">ACCEPT</span> <span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">-</span><span class="n">A</span> <span class="n">POSTROUTING</span> <span class="o">-</span><span class="n">s</span> <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.0</span><span class="o">/</span><span class="mi">24</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">j</span> <span class="n">SNAT</span> <span class="o">--</span><span class="n">to</span><span class="o">-</span><span class="n">source</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span>
+<span class="n">COMMIT</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">/etc/sysctl.d/ip_forward.conf</span></tt> (or <tt class="docutils literal"><span class="pre">/etc/sysctl.conf</span></tt> on old systems):</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">eth0</span><span class="o">.</span><span class="n">forwarding</span><span class="o">=</span><span class="mi">1</span>
+<p><code class="docutils literal notranslate"><span class="pre">/etc/sysctl.d/ip_forward.conf</span></code> (or <code class="docutils literal notranslate"><span class="pre">/etc/sysctl.conf</span></code> on old systems):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">eth0</span><span class="o">.</span><span class="n">forwarding</span><span class="o">=</span><span class="mi">1</span>
 <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">eth1</span><span class="o">.</span><span class="n">forwarding</span><span class="o">=</span><span class="mi">1</span>
 </pre></div>
 </div>
@@ -140,7 +129,7 @@ COMMIT
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -157,29 +146,30 @@ COMMIT
   <h4>Next topic</h4>
   <p class="topless"><a href="netconfig.html"
                         title="next chapter">Network configuration</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/sysadmin/nat.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sysadmin/nat.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -191,13 +181,13 @@ COMMIT
         <li class="right" >
           <a href="mysql.html" title="MySQL tips and tricks"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

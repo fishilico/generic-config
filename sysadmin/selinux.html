@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Some notes about my SELinux installation &mdash; Generic Config</title>
-    
+    <title>Some notes about my SELinux installation &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Sound Configuration" href="sound.html" />
     <link rel="prev" title="Configuration tweaks on a Raspberry Pi" href="raspberrypi.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,19 +30,19 @@
         <li class="right" >
           <a href="raspberrypi.html" title="Configuration tweaks on a Raspberry Pi"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="some-notes-about-my-selinux-installation">
 <h1>Some notes about my SELinux installation<a class="headerlink" href="#some-notes-about-my-selinux-installation" title="Permalink to this headline">¶</a></h1>
-<p>This document doesn&#8217;t document how to install SELinux. If you want to install
+<p>This document doesn’t document how to install SELinux. If you want to install
 it, please read one of these websites:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://wiki.debian.org/SELinux">https://wiki.debian.org/SELinux</a></li>
@@ -88,112 +77,112 @@ it, please read one of these websites:</p>
 <li><a class="reference external" href="http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html">http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html</a>
 (The SELinux Notebook - The Foundations)</li>
 </ul>
-<p>The present document will focus on some pitfalls I&#8217;ve encountered since
+<p>The present document will focus on some pitfalls I’ve encountered since
 installing SELinux on systems running Debian or ArchLinux.</p>
 <div class="section" id="install-a-strict-policy">
 <h2>Install a strict policy<a class="headerlink" href="#install-a-strict-policy" title="Permalink to this headline">¶</a></h2>
 <p>On Debian by default a targeted policy is installed, daemons are confined but
 not users. To make users confined, you need to remove the unconfined module.
 To do this:</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c"># Set up staff accounts</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up staff accounts</span>
 semanage login -a -s staff_u userlogin
 
-<span class="c"># Confine other users</span>
+<span class="c1"># Confine other users</span>
 semanage login -m -s user_u -r s0 __default__
 
-<span class="c"># Map root to root instead of unconfined_u</span>
+<span class="c1"># Map root to root instead of unconfined_u</span>
 semanage login -m -s root root
 
-<span class="c"># Remove the unconfined module</span>
+<span class="c1"># Remove the unconfined module</span>
 semodule -r unconfined
 </pre></div>
 </div>
 </div>
 <div class="section" id="use-run-init-as-root-without-a-password">
-<h2>Use <tt class="docutils literal"><span class="pre">run_init</span></tt> as root without a password<a class="headerlink" href="#use-run-init-as-root-without-a-password" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">run_init</span></tt> command (to manage services) authenticates the real user with PAM
-before making a transition to <tt class="docutils literal"><span class="pre">system_u:system_r:init_t</span></tt> context. The default
+<h2>Use <code class="docutils literal notranslate"><span class="pre">run_init</span></code> as root without a password<a class="headerlink" href="#use-run-init-as-root-without-a-password" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">run_init</span></code> command (to manage services) authenticates the real user with PAM
+before making a transition to <code class="docutils literal notranslate"><span class="pre">system_u:system_r:init_t</span></code> context. The default
 configuration tell PAM to ask for a password to authenticate but this may be
 annoying on non-critical systems where root needs to restart services.
 To disable the password prompt for root, add this at the beginning of
-<tt class="docutils literal"><span class="pre">/etc/pam.d/run_init</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>auth       sufficient   pam_rootok.so
+<code class="docutils literal notranslate"><span class="pre">/etc/pam.d/run_init</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auth</span>       <span class="n">sufficient</span>   <span class="n">pam_rootok</span><span class="o">.</span><span class="n">so</span>
 </pre></div>
 </div>
-<p>Moreover make sure that you allow <tt class="docutils literal"><span class="pre">run_init_t</span></tt> to use <tt class="docutils literal"><span class="pre">pam_rootok.so</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>allow run_init_t self:passwd rootok;
+<p>Moreover make sure that you allow <code class="docutils literal notranslate"><span class="pre">run_init_t</span></code> to use <code class="docutils literal notranslate"><span class="pre">pam_rootok.so</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">allow</span> <span class="n">run_init_t</span> <span class="bp">self</span><span class="p">:</span><span class="n">passwd</span> <span class="n">rootok</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="fix-tmp-labeling">
-<h2>Fix <tt class="docutils literal"><span class="pre">/tmp</span></tt> labeling<a class="headerlink" href="#fix-tmp-labeling" title="Permalink to this headline">¶</a></h2>
-<p>If <tt class="docutils literal"><span class="pre">mount</span></tt> shows:</p>
-<div class="highlight-python"><div class="highlight"><pre>tmpfs on /tmp type tmpfs (rw,nosuid,nodev,relatime,rootcontext=system_u:object_r:file_t:s0,seclabel)
+<h2>Fix <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> labeling<a class="headerlink" href="#fix-tmp-labeling" title="Permalink to this headline">¶</a></h2>
+<p>If <code class="docutils literal notranslate"><span class="pre">mount</span></code> shows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tmpfs</span> <span class="n">on</span> <span class="o">/</span><span class="n">tmp</span> <span class="nb">type</span> <span class="n">tmpfs</span> <span class="p">(</span><span class="n">rw</span><span class="p">,</span><span class="n">nosuid</span><span class="p">,</span><span class="n">nodev</span><span class="p">,</span><span class="n">relatime</span><span class="p">,</span><span class="n">rootcontext</span><span class="o">=</span><span class="n">system_u</span><span class="p">:</span><span class="n">object_r</span><span class="p">:</span><span class="n">file_t</span><span class="p">:</span><span class="n">s0</span><span class="p">,</span><span class="n">seclabel</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>... or if <tt class="docutils literal"><span class="pre">ls</span> <span class="pre">-Zd</span> <span class="pre">/tmp</span></tt> shows:</p>
-<div class="highlight-python"><div class="highlight"><pre>system_u:object_r:file_t:SystemLow /tmp
+<p>… or if <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-Zd</span> <span class="pre">/tmp</span></code> shows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">system_u</span><span class="p">:</span><span class="n">object_r</span><span class="p">:</span><span class="n">file_t</span><span class="p">:</span><span class="n">SystemLow</span> <span class="o">/</span><span class="n">tmp</span>
 </pre></div>
 </div>
-<p>... <tt class="docutils literal"><span class="pre">/tmp</span></tt> is incorrectly labeled <tt class="docutils literal"><span class="pre">file_t</span></tt> instead of <tt class="docutils literal"><span class="pre">tmp_t</span></tt>.</p>
-<p>To fix the label, you need to restore the context of the <tt class="docutils literal"><span class="pre">/tmp</span></tt> folder of the
-root filesystem to <tt class="docutils literal"><span class="pre">system_u:object_r:tmp_t:s0</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>mount --bind / /mnt
-setfiles -r /mnt /etc/selinux/default/contexts/files/file_contexts /mnt
-umount /mnt
+<p>… <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> is incorrectly labeled <code class="docutils literal notranslate"><span class="pre">file_t</span></code> instead of <code class="docutils literal notranslate"><span class="pre">tmp_t</span></code>.</p>
+<p>To fix the label, you need to restore the context of the <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> folder of the
+root filesystem to <code class="docutils literal notranslate"><span class="pre">system_u:object_r:tmp_t:s0</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mount</span> <span class="o">--</span><span class="n">bind</span> <span class="o">/</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">setfiles</span> <span class="o">-</span><span class="n">r</span> <span class="o">/</span><span class="n">mnt</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">selinux</span><span class="o">/</span><span class="n">default</span><span class="o">/</span><span class="n">contexts</span><span class="o">/</span><span class="n">files</span><span class="o">/</span><span class="n">file_contexts</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">umount</span> <span class="o">/</span><span class="n">mnt</span>
 </pre></div>
 </div>
-<p>It is also possible to use such a line in <tt class="docutils literal"><span class="pre">/etc/fstab</span></tt> (without <tt class="docutils literal"><span class="pre">:s0</span></tt> suffix
+<p>It is also possible to use such a line in <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code> (without <code class="docutils literal notranslate"><span class="pre">:s0</span></code> suffix
 when using a policy without MLS):</p>
-<div class="highlight-python"><div class="highlight"><pre>tmpfs /tmp tmpfs nodev,nosuid,rootcontext=system_u:object_r:tmp_t:s0 0 0
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tmpfs</span> <span class="o">/</span><span class="n">tmp</span> <span class="n">tmpfs</span> <span class="n">nodev</span><span class="p">,</span><span class="n">nosuid</span><span class="p">,</span><span class="n">rootcontext</span><span class="o">=</span><span class="n">system_u</span><span class="p">:</span><span class="n">object_r</span><span class="p">:</span><span class="n">tmp_t</span><span class="p">:</span><span class="n">s0</span> <span class="mi">0</span> <span class="mi">0</span>
 </pre></div>
 </div>
-<p>If <tt class="docutils literal"><span class="pre">ls</span> <span class="pre">-Zd</span> <span class="pre">/tmp</span></tt> shows type <tt class="docutils literal"><span class="pre">tmpfs_t</span></tt> instead of <tt class="docutils literal"><span class="pre">tmp_t</span></tt>, it is also
-needed to modify <tt class="docutils literal"><span class="pre">/etc/fstab</span></tt> accordingly.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-Zd</span> <span class="pre">/tmp</span></code> shows type <code class="docutils literal notranslate"><span class="pre">tmpfs_t</span></code> instead of <code class="docutils literal notranslate"><span class="pre">tmp_t</span></code>, it is also
+needed to modify <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code> accordingly.</p>
 </div>
 <div class="section" id="configure-selinux-booleans">
 <h2>Configure SELinux booleans<a class="headerlink" href="#configure-selinux-booleans" title="Permalink to this headline">¶</a></h2>
 <p>Here are some booleans I use is almost all my SELinux systems:</p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c"># Allow users to send ping</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Allow users to send ping</span>
 setsebool -P user_ping on
 
-<span class="c"># Enable reading of urandom for all domains</span>
+<span class="c1"># Enable reading of urandom for all domains</span>
 setsebool -P global_ssp on
 
-<span class="c"># Use CGI with nginx (eg. for gitweb)</span>
+<span class="c1"># Use CGI with nginx (eg. for gitweb)</span>
 setsebool -P httpd_enable_cgi on
 setsebool -P nginx_enable_http_server on
 
-<span class="c"># Make GPG agent to work</span>
+<span class="c1"># Make GPG agent to work</span>
 setsebool -P gpg_agent_env_file on
 
-<span class="c"># Disable NX memory protection for some applications (eg. Firefox)</span>
+<span class="c1"># Disable NX memory protection for some applications (eg. Firefox)</span>
 setsebool -P allow_execmem on
 
-<span class="c"># Print logs on some tty (like tty12)</span>
+<span class="c1"># Print logs on some tty (like tty12)</span>
 setsebool -P logging_syslogd_use_tty on
 </pre></div>
 </div>
 </div>
 <div class="section" id="fix-labels-for-files-in-home">
-<h2>Fix labels for files in <tt class="docutils literal"><span class="pre">/home</span></tt><a class="headerlink" href="#fix-labels-for-files-in-home" title="Permalink to this headline">¶</a></h2>
-<p>By default, files under <tt class="docutils literal"><span class="pre">/home</span></tt> are labeled as user home directories. On some
-system, <tt class="docutils literal"><span class="pre">/home</span></tt> is on the largest disk partition and there are other things,
-like database files (instead of <tt class="docutils literal"><span class="pre">/var/lib/...</span></tt> folders) or Git repositories.
+<h2>Fix labels for files in <code class="docutils literal notranslate"><span class="pre">/home</span></code><a class="headerlink" href="#fix-labels-for-files-in-home" title="Permalink to this headline">¶</a></h2>
+<p>By default, files under <code class="docutils literal notranslate"><span class="pre">/home</span></code> are labeled as user home directories. On some
+system, <code class="docutils literal notranslate"><span class="pre">/home</span></code> is on the largest disk partition and there are other things,
+like database files (instead of <code class="docutils literal notranslate"><span class="pre">/var/lib/...</span></code> folders) or Git repositories.
 For such folders, you must a command like this to specify the real file context
 to use:</p>
-<div class="highlight-python"><div class="highlight"><pre>semanage fcontext -a -t httpd_sys_content_t &quot;/home/git(/.*)?&quot;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">semanage</span> <span class="n">fcontext</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">t</span> <span class="n">httpd_sys_content_t</span> <span class="s2">&quot;/home/git(/.*)?&quot;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="generate-interface-file-for-audit2allow-r">
-<h2>Generate interface file for <tt class="docutils literal"><span class="pre">audit2allow</span> <span class="pre">-R</span></tt><a class="headerlink" href="#generate-interface-file-for-audit2allow-r" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">audit2allow</span> <span class="pre">-R</span></tt> needs <tt class="docutils literal"><span class="pre">/var/lib/sepolgen/interface_info</span></tt>, which is created
-by <tt class="docutils literal"><span class="pre">sepolgen-ifgen</span></tt>. However, as the <tt class="docutils literal"><span class="pre">-p</span></tt> parameter of this command is
-buggy, your interface files need to be located in the <tt class="docutils literal"><span class="pre">default</span></tt> policy, ie.
-in <tt class="docutils literal"><span class="pre">/usr/share/selinux/default/include</span></tt> directory. For example, add a symlink
-<tt class="docutils literal"><span class="pre">/usr/share/selinux/default</span></tt> to your policy directory:</p>
-<div class="highlight-sh"><div class="highlight"><pre>. /etc/selinux/config
+<h2>Generate interface file for <code class="docutils literal notranslate"><span class="pre">audit2allow</span> <span class="pre">-R</span></code><a class="headerlink" href="#generate-interface-file-for-audit2allow-r" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">audit2allow</span> <span class="pre">-R</span></code> needs <code class="docutils literal notranslate"><span class="pre">/var/lib/sepolgen/interface_info</span></code>, which is created
+by <code class="docutils literal notranslate"><span class="pre">sepolgen-ifgen</span></code>. However, as the <code class="docutils literal notranslate"><span class="pre">-p</span></code> parameter of this command is
+buggy, your interface files need to be located in the <code class="docutils literal notranslate"><span class="pre">default</span></code> policy, ie.
+in <code class="docutils literal notranslate"><span class="pre">/usr/share/selinux/default/include</span></code> directory. For example, add a symlink
+<code class="docutils literal notranslate"><span class="pre">/usr/share/selinux/default</span></code> to your policy directory:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>. /etc/selinux/config
 <span class="nb">cd</span> /usr/share/selinux <span class="o">&amp;&amp;</span> ln -s <span class="nv">$SELINUXTYPE</span> default
 sepolgen-ifgen
 </pre></div>
@@ -201,28 +190,28 @@ sepolgen-ifgen
 </div>
 <div class="section" id="activate-some-selinux-modules">
 <h2>Activate some SELinux modules<a class="headerlink" href="#activate-some-selinux-modules" title="Permalink to this headline">¶</a></h2>
-<p>To reload modules, go to <tt class="docutils literal"><span class="pre">/usr/share/selinux/$(policyname)</span></tt> and run:</p>
-<div class="highlight-python"><div class="highlight"><pre>semodule --verbose -b base.pp -s $(basename $(pwd)) -n -i module1.pp -i ...
+<p>To reload modules, go to <code class="docutils literal notranslate"><span class="pre">/usr/share/selinux/$(policyname)</span></code> and run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>semodule --verbose -b base.pp -s $(basename $(pwd)) -n -i module1.pp -i ...
 </pre></div>
 </div>
 </div>
 <div class="section" id="allow-staff-u-to-read-root-when-running-sudo">
-<h2>Allow <tt class="docutils literal"><span class="pre">staff_u</span></tt> to read <tt class="docutils literal"><span class="pre">/root</span></tt> when running <tt class="docutils literal"><span class="pre">sudo</span></tt><a class="headerlink" href="#allow-staff-u-to-read-root-when-running-sudo" title="Permalink to this headline">¶</a></h2>
-<p>By default <tt class="docutils literal"><span class="pre">/etc/selinux/default/modules/active/file_contexts.homedirs</span></tt>
-defines <tt class="docutils literal"><span class="pre">/root</span></tt> to be labeled <tt class="docutils literal"><span class="pre">root:object_r:user_home_t</span></tt>, which <tt class="docutils literal"><span class="pre">staff_u</span></tt>
-can&#8217;t access (there is a constraint for it). To solve this issue, change the
-constraint or (much sumpler) change the user associated to <tt class="docutils literal"><span class="pre">root</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>chcon -u staff_u /root -R
+<h2>Allow <code class="docutils literal notranslate"><span class="pre">staff_u</span></code> to read <code class="docutils literal notranslate"><span class="pre">/root</span></code> when running <code class="docutils literal notranslate"><span class="pre">sudo</span></code><a class="headerlink" href="#allow-staff-u-to-read-root-when-running-sudo" title="Permalink to this headline">¶</a></h2>
+<p>By default <code class="docutils literal notranslate"><span class="pre">/etc/selinux/default/modules/active/file_contexts.homedirs</span></code>
+defines <code class="docutils literal notranslate"><span class="pre">/root</span></code> to be labeled <code class="docutils literal notranslate"><span class="pre">root:object_r:user_home_t</span></code>, which <code class="docutils literal notranslate"><span class="pre">staff_u</span></code>
+can’t access (there is a constraint for it). To solve this issue, change the
+constraint or (much sumpler) change the user associated to <code class="docutils literal notranslate"><span class="pre">root</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chcon</span> <span class="o">-</span><span class="n">u</span> <span class="n">staff_u</span> <span class="o">/</span><span class="n">root</span> <span class="o">-</span><span class="n">R</span>
 </pre></div>
 </div>
 <p>Alternatively it is possible to consider root as an usual staff user:</p>
-<div class="highlight-python"><div class="highlight"><pre>semanage login -m -s staff_u root
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">semanage</span> <span class="n">login</span> <span class="o">-</span><span class="n">m</span> <span class="o">-</span><span class="n">s</span> <span class="n">staff_u</span> <span class="n">root</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="export-local-configuration-done-with-semanage">
-<h2>Export local configuration done with <tt class="docutils literal"><span class="pre">semanage</span></tt><a class="headerlink" href="#export-local-configuration-done-with-semanage" title="Permalink to this headline">¶</a></h2>
-<p>To export all local changes done with <tt class="docutils literal"><span class="pre">semanage</span></tt>, there is an option:</p>
+<h2>Export local configuration done with <code class="docutils literal notranslate"><span class="pre">semanage</span></code><a class="headerlink" href="#export-local-configuration-done-with-semanage" title="Permalink to this headline">¶</a></h2>
+<p>To export all local changes done with <code class="docutils literal notranslate"><span class="pre">semanage</span></code>, there is an option:</p>
 <blockquote>
 <div>semanage -o</div></blockquote>
 <p>To import exported data back to the local configuration:</p>
@@ -231,10 +220,10 @@ constraint or (much sumpler) change the user associated to <tt class="docutils l
 </div>
 <div class="section" id="bugs-still-present-in-october-2014">
 <h2>Bugs still present in October 2014<a class="headerlink" href="#bugs-still-present-in-october-2014" title="Permalink to this headline">¶</a></h2>
-<p>In ArchLinux, <tt class="docutils literal"><span class="pre">/sys</span></tt> is not labelled correctly on boot. It needs to be labeled
-by systemd using <tt class="docutils literal"><span class="pre">tmpfiles.d</span></tt> configuration. Therefore you need to add this in
-<tt class="docutils literal"><span class="pre">/etc/tmpfiles.d/sysfs.conf</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>Z /sys/devices/system/cpu/online 0444 root root
+<p>In ArchLinux, <code class="docutils literal notranslate"><span class="pre">/sys</span></code> is not labelled correctly on boot. It needs to be labeled
+by systemd using <code class="docutils literal notranslate"><span class="pre">tmpfiles.d</span></code> configuration. Therefore you need to add this in
+<code class="docutils literal notranslate"><span class="pre">/etc/tmpfiles.d/sysfs.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Z</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">devices</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">cpu</span><span class="o">/</span><span class="n">online</span> <span class="mi">0444</span> <span class="n">root</span> <span class="n">root</span>
 </pre></div>
 </div>
 <p>For further information, please read:</p>
@@ -249,20 +238,20 @@ by systemd using <tt class="docutils literal"><span class="pre">tmpfiles.d</span
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Some notes about my SELinux installation</a><ul>
 <li><a class="reference internal" href="#install-a-strict-policy">Install a strict policy</a></li>
-<li><a class="reference internal" href="#use-run-init-as-root-without-a-password">Use <tt class="docutils literal"><span class="pre">run_init</span></tt> as root without a password</a></li>
-<li><a class="reference internal" href="#fix-tmp-labeling">Fix <tt class="docutils literal"><span class="pre">/tmp</span></tt> labeling</a></li>
+<li><a class="reference internal" href="#use-run-init-as-root-without-a-password">Use <code class="docutils literal notranslate"><span class="pre">run_init</span></code> as root without a password</a></li>
+<li><a class="reference internal" href="#fix-tmp-labeling">Fix <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> labeling</a></li>
 <li><a class="reference internal" href="#configure-selinux-booleans">Configure SELinux booleans</a></li>
-<li><a class="reference internal" href="#fix-labels-for-files-in-home">Fix labels for files in <tt class="docutils literal"><span class="pre">/home</span></tt></a></li>
-<li><a class="reference internal" href="#generate-interface-file-for-audit2allow-r">Generate interface file for <tt class="docutils literal"><span class="pre">audit2allow</span> <span class="pre">-R</span></tt></a></li>
+<li><a class="reference internal" href="#fix-labels-for-files-in-home">Fix labels for files in <code class="docutils literal notranslate"><span class="pre">/home</span></code></a></li>
+<li><a class="reference internal" href="#generate-interface-file-for-audit2allow-r">Generate interface file for <code class="docutils literal notranslate"><span class="pre">audit2allow</span> <span class="pre">-R</span></code></a></li>
 <li><a class="reference internal" href="#activate-some-selinux-modules">Activate some SELinux modules</a></li>
-<li><a class="reference internal" href="#allow-staff-u-to-read-root-when-running-sudo">Allow <tt class="docutils literal"><span class="pre">staff_u</span></tt> to read <tt class="docutils literal"><span class="pre">/root</span></tt> when running <tt class="docutils literal"><span class="pre">sudo</span></tt></a></li>
-<li><a class="reference internal" href="#export-local-configuration-done-with-semanage">Export local configuration done with <tt class="docutils literal"><span class="pre">semanage</span></tt></a></li>
+<li><a class="reference internal" href="#allow-staff-u-to-read-root-when-running-sudo">Allow <code class="docutils literal notranslate"><span class="pre">staff_u</span></code> to read <code class="docutils literal notranslate"><span class="pre">/root</span></code> when running <code class="docutils literal notranslate"><span class="pre">sudo</span></code></a></li>
+<li><a class="reference internal" href="#export-local-configuration-done-with-semanage">Export local configuration done with <code class="docutils literal notranslate"><span class="pre">semanage</span></code></a></li>
 <li><a class="reference internal" href="#bugs-still-present-in-october-2014">Bugs still present in October 2014</a></li>
 </ul>
 </li>
@@ -274,29 +263,30 @@ by systemd using <tt class="docutils literal"><span class="pre">tmpfiles.d</span
   <h4>Next topic</h4>
   <p class="topless"><a href="sound.html"
                         title="next chapter">Sound Configuration</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/sysadmin/selinux.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sysadmin/selinux.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -308,13 +298,13 @@ by systemd using <tt class="docutils literal"><span class="pre">tmpfiles.d</span
         <li class="right" >
           <a href="raspberrypi.html" title="Configuration tweaks on a Raspberry Pi"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

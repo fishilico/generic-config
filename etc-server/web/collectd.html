@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Collectd &mdash; Generic Config</title>
-    
+    <title>Collectd &#8212; Generic Config</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../../index.html" />
-    <link rel="up" title="/etc for Server" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Git Web and CGit" href="gitweb.html" />
     <link rel="prev" title="etc-server/web/apache.conf" href="apache.conf.raw.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,15 +30,15 @@
         <li class="right" >
           <a href="apache.conf.raw.html" title="etc-server/web/apache.conf"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="collectd">
 <h1>Collectd<a class="headerlink" href="#collectd" title="Permalink to this headline">¶</a></h1>
@@ -64,48 +53,48 @@ files. It is basically a backend daemon and several front-end exist to navigate 
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Collectd is packaged for some Linux distribution. In Debian, this command
 installs collectd with the default configuration:</p>
-<div class="highlight-python"><div class="highlight"><pre>apt-get install collectd
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">collectd</span>
 </pre></div>
 </div>
-<p>The configuration is done in <tt class="docutils literal"><span class="pre">/etc/collectd/collectd.conf</span></tt>. It is quite
+<p>The configuration is done in <code class="docutils literal notranslate"><span class="pre">/etc/collectd/collectd.conf</span></code>. It is quite
 straightforward and the wiki helps understanding the few tricky fields
 (<a class="reference external" href="https://collectd.org/wiki/index.php/Table_of_Plugins">https://collectd.org/wiki/index.php/Table_of_Plugins</a>).</p>
 <p>Here is a basic configuration:</p>
-<div class="highlight-python"><div class="highlight"><pre>LoadPlugin syslog
-&lt;Plugin syslog&gt;
-    LogLevel info
-&lt;/Plugin&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LoadPlugin</span> <span class="n">syslog</span>
+<span class="o">&lt;</span><span class="n">Plugin</span> <span class="n">syslog</span><span class="o">&gt;</span>
+    <span class="n">LogLevel</span> <span class="n">info</span>
+<span class="o">&lt;/</span><span class="n">Plugin</span><span class="o">&gt;</span>
 
-LoadPlugin cpu
-LoadPlugin df
-LoadPlugin disk
-LoadPlugin interface
-#LoadPlugin irq
-LoadPlugin load
-LoadPlugin memory
-LoadPlugin rrdtool
-#LoadPlugin sensors
-LoadPlugin swap
+<span class="n">LoadPlugin</span> <span class="n">cpu</span>
+<span class="n">LoadPlugin</span> <span class="n">df</span>
+<span class="n">LoadPlugin</span> <span class="n">disk</span>
+<span class="n">LoadPlugin</span> <span class="n">interface</span>
+<span class="c1">#LoadPlugin irq</span>
+<span class="n">LoadPlugin</span> <span class="n">load</span>
+<span class="n">LoadPlugin</span> <span class="n">memory</span>
+<span class="n">LoadPlugin</span> <span class="n">rrdtool</span>
+<span class="c1">#LoadPlugin sensors</span>
+<span class="n">LoadPlugin</span> <span class="n">swap</span>
 
-&lt;Plugin df&gt;
-    Device &quot;rootfs&quot;
-    # MountPoint &quot;/home&quot;
-    FSType &quot;cgroup&quot;
-    FSType &quot;devtmpfs&quot;
-    FSType &quot;tmpfs&quot;
-    IgnoreSelected true
-    ReportByDevice false
-    ReportReserved true
-    ReportInodes true
-&lt;/Plugin&gt;
-&lt;Plugin interface&gt;
-    # Don&#39;t collect statistitics about loopback interface
-    Interface &quot;lo&quot;
-    IgnoreSelected true
-&lt;/Plugin&gt;
-&lt;Plugin rrdtool&gt;
-    DataDir &quot;/var/lib/collectd/rrd/&quot;
-&lt;/Plugin&gt;
+<span class="o">&lt;</span><span class="n">Plugin</span> <span class="n">df</span><span class="o">&gt;</span>
+    <span class="n">Device</span> <span class="s2">&quot;rootfs&quot;</span>
+    <span class="c1"># MountPoint &quot;/home&quot;</span>
+    <span class="n">FSType</span> <span class="s2">&quot;cgroup&quot;</span>
+    <span class="n">FSType</span> <span class="s2">&quot;devtmpfs&quot;</span>
+    <span class="n">FSType</span> <span class="s2">&quot;tmpfs&quot;</span>
+    <span class="n">IgnoreSelected</span> <span class="n">true</span>
+    <span class="n">ReportByDevice</span> <span class="n">false</span>
+    <span class="n">ReportReserved</span> <span class="n">true</span>
+    <span class="n">ReportInodes</span> <span class="n">true</span>
+<span class="o">&lt;/</span><span class="n">Plugin</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">Plugin</span> <span class="n">interface</span><span class="o">&gt;</span>
+    <span class="c1"># Don&#39;t collect statistitics about loopback interface</span>
+    <span class="n">Interface</span> <span class="s2">&quot;lo&quot;</span>
+    <span class="n">IgnoreSelected</span> <span class="n">true</span>
+<span class="o">&lt;/</span><span class="n">Plugin</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">Plugin</span> <span class="n">rrdtool</span><span class="o">&gt;</span>
+    <span class="n">DataDir</span> <span class="s2">&quot;/var/lib/collectd/rrd/&quot;</span>
+<span class="o">&lt;/</span><span class="n">Plugin</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -115,30 +104,30 @@ LoadPlugin swap
 (<a class="reference external" href="https://collectd.org/wiki/index.php/Plugin:Network">https://collectd.org/wiki/index.php/Plugin:Network</a>). If your collectd daemon
 is recent enough, you may use authenticated and encrypted communication channels
 using a password.</p>
-<p>On the server, the configuration looks like this in <tt class="docutils literal"><span class="pre">collectd.conf</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;Plugin network&gt;
-    # Server IP and UDP port to listen to
-    &lt;Listen &quot;10.0.0.1&quot; &quot;25826&quot;&gt;
-        SecurityLevel Sign
-        # This file contains for each user with password &quot;secret&quot;:
-        #     user: secret
-        AuthFile &quot;/etc/collectd/passwd&quot;
-        Interface &quot;eth0&quot;
-    &lt;/Listen&gt;
-    MaxPacketSize 1024
-&lt;/Plugin&gt;
+<p>On the server, the configuration looks like this in <code class="docutils literal notranslate"><span class="pre">collectd.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Plugin</span> <span class="n">network</span><span class="o">&gt;</span>
+    <span class="c1"># Server IP and UDP port to listen to</span>
+    <span class="o">&lt;</span><span class="n">Listen</span> <span class="s2">&quot;10.0.0.1&quot;</span> <span class="s2">&quot;25826&quot;</span><span class="o">&gt;</span>
+        <span class="n">SecurityLevel</span> <span class="n">Sign</span>
+        <span class="c1"># This file contains for each user with password &quot;secret&quot;:</span>
+        <span class="c1">#     user: secret</span>
+        <span class="n">AuthFile</span> <span class="s2">&quot;/etc/collectd/passwd&quot;</span>
+        <span class="n">Interface</span> <span class="s2">&quot;eth0&quot;</span>
+    <span class="o">&lt;/</span><span class="n">Listen</span><span class="o">&gt;</span>
+    <span class="n">MaxPacketSize</span> <span class="mi">1024</span>
+<span class="o">&lt;/</span><span class="n">Plugin</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>On each client, <tt class="docutils literal"><span class="pre">collectd.conf</span></tt> may contain:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;Plugin network&gt;
-    &lt;Server &quot;10.0.0.1&quot; &quot;25826&quot;&gt;
-        SecurityLevel Encrypt
-        Username &quot;user&quot;
-        Password &quot;secret&quot;
-        Interface &quot;eth0&quot;
-    &lt;/Server&gt;
-    TimeToLive &quot;128&quot;
-&lt;/Plugin&gt;
+<p>On each client, <code class="docutils literal notranslate"><span class="pre">collectd.conf</span></code> may contain:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Plugin</span> <span class="n">network</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">Server</span> <span class="s2">&quot;10.0.0.1&quot;</span> <span class="s2">&quot;25826&quot;</span><span class="o">&gt;</span>
+        <span class="n">SecurityLevel</span> <span class="n">Encrypt</span>
+        <span class="n">Username</span> <span class="s2">&quot;user&quot;</span>
+        <span class="n">Password</span> <span class="s2">&quot;secret&quot;</span>
+        <span class="n">Interface</span> <span class="s2">&quot;eth0&quot;</span>
+    <span class="o">&lt;/</span><span class="n">Server</span><span class="o">&gt;</span>
+    <span class="n">TimeToLive</span> <span class="s2">&quot;128&quot;</span>
+<span class="o">&lt;/</span><span class="n">Plugin</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -146,41 +135,41 @@ using a password.</p>
 <h2>Collection3 front-end<a class="headerlink" href="#collection3-front-end" title="Permalink to this headline">¶</a></h2>
 <p>Collectd package often provides front-end examples among which is Collection3.
 This front-end is a web front-end written as a CGI script in Perl.
-By default it will look for RRD files in <tt class="docutils literal"><span class="pre">/var/lib/collectd/rrd</span></tt> but this
-can be changed by editing <tt class="docutils literal"><span class="pre">etc/collection.conf</span></tt> which contains by default:</p>
-<div class="highlight-python"><div class="highlight"><pre>DataDir &quot;/var/lib/collectd/rrd&quot;
+By default it will look for RRD files in <code class="docutils literal notranslate"><span class="pre">/var/lib/collectd/rrd</span></code> but this
+can be changed by editing <code class="docutils literal notranslate"><span class="pre">etc/collection.conf</span></code> which contains by default:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DataDir</span> <span class="s2">&quot;/var/lib/collectd/rrd&quot;</span>
 </pre></div>
 </div>
 <p>Collection3 needs some Perl modules:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">Config::General</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">Regexp::Common</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">HTML::Entities</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">RRDs</span></tt></li>
+<li><code class="docutils literal notranslate"><span class="pre">Config::General</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">Regexp::Common</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">HTML::Entities</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">RRDs</span></code></li>
 </ul>
 <p>On a Debian server, this command installs the needed modules:</p>
-<div class="highlight-python"><div class="highlight"><pre>apt-get install lib{config-general,regexp-common,html-parser,rrds}-perl
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">lib</span><span class="p">{</span><span class="n">config</span><span class="o">-</span><span class="n">general</span><span class="p">,</span><span class="n">regexp</span><span class="o">-</span><span class="n">common</span><span class="p">,</span><span class="n">html</span><span class="o">-</span><span class="n">parser</span><span class="p">,</span><span class="n">rrds</span><span class="p">}</span><span class="o">-</span><span class="n">perl</span>
 </pre></div>
 </div>
 <div class="section" id="apache-virtual-host-configuration">
 <h3>Apache virtual host configuration<a class="headerlink" href="#apache-virtual-host-configuration" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>&lt;VirtualHost *:80&gt;
-    Alias /collection3/ /usr/share/doc/collectd-core/examples/collection3/
-    ScriptAlias /collection3/bin/ /usr/share/doc/collectd-core/examples/collection3/bin/
-    &lt;Directory /usr/share/doc/collectd-core/examples/collection3/&gt;
-        AddHandler cgi-script .cgi
-        DirectoryIndex bin/index.cgi
-        Options +ExecCGI
-        Order Allow,Deny
-        Allow from all
-    &lt;/Directory&gt;
-&lt;/VirtualHost&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+    <span class="n">Alias</span> <span class="o">/</span><span class="n">collection3</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">collectd</span><span class="o">-</span><span class="n">core</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">collection3</span><span class="o">/</span>
+    <span class="n">ScriptAlias</span> <span class="o">/</span><span class="n">collection3</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">collectd</span><span class="o">-</span><span class="n">core</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">collection3</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
+    <span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">collectd</span><span class="o">-</span><span class="n">core</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">collection3</span><span class="o">/&gt;</span>
+        <span class="n">AddHandler</span> <span class="n">cgi</span><span class="o">-</span><span class="n">script</span> <span class="o">.</span><span class="n">cgi</span>
+        <span class="n">DirectoryIndex</span> <span class="nb">bin</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">cgi</span>
+        <span class="n">Options</span> <span class="o">+</span><span class="n">ExecCGI</span>
+        <span class="n">Order</span> <span class="n">Allow</span><span class="p">,</span><span class="n">Deny</span>
+        <span class="n">Allow</span> <span class="kn">from</span> <span class="nn">all</span>
+    <span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="nginx-server-configuration">
 <h3>Nginx server configuration<a class="headerlink" href="#nginx-server-configuration" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>server {
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server {
     listen 80 default_server;
     location /collection3 {
         alias /usr/share/doc/collectd-core/examples/collection3;
@@ -201,7 +190,7 @@ can be changed by editing <tt class="docutils literal"><span class="pre">etc/col
 </div>
 <div class="section" id="lighttpd-server-configuration">
 <h3>Lighttpd server configuration<a class="headerlink" href="#lighttpd-server-configuration" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre># Note: if the config already enables mod_alias, you must remove it from
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Note: if the config already enables mod_alias, you must remove it from
 # the next line
 server.modules += ( &quot;mod_alias&quot; &quot;mod_cgi&quot; )
 alias.url += ( &quot;/collection3&quot; =&gt; &quot;/usr/share/doc/collectd-core/examples/collection3/&quot; )
@@ -220,10 +209,10 @@ written in PHP. To install it, you just need to download lastest release from
 <a class="reference external" href="https://github.com/pommi/CGP/releases">https://github.com/pommi/CGP/releases</a> in a folder and to configure your web
 server accordingly.</p>
 <p>Official website: <a class="reference external" href="http://pommi.nethuis.nl/category/cgp/">http://pommi.nethuis.nl/category/cgp/</a></p>
-<p>To enable <tt class="docutils literal"><span class="pre">jsrrdgraph</span></tt> (to have Javascript-rendered graphs in which you can
-navigate with your mouse), you just need to enable the <tt class="docutils literal"><span class="pre">canvas</span></tt> mode. This
-is done by creating <tt class="docutils literal"><span class="pre">conf/config.local.php</span></tt> with:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;?php
+<p>To enable <code class="docutils literal notranslate"><span class="pre">jsrrdgraph</span></code> (to have Javascript-rendered graphs in which you can
+navigate with your mouse), you just need to enable the <code class="docutils literal notranslate"><span class="pre">canvas</span></code> mode. This
+is done by creating <code class="docutils literal notranslate"><span class="pre">conf/config.local.php</span></code> with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?php
 $CONFIG[&#39;graph_type&#39;] = &#39;canvas&#39;;
 
 // Here are some other useful options
@@ -240,7 +229,7 @@ $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
@@ -260,33 +249,34 @@ $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="apache.conf.raw.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc-server/web/apache.conf</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/web/apache.conf</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="gitweb.html"
                         title="next chapter">Git Web and CGit</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../../_sources/etc-server/web/collectd.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/etc-server/web/collectd.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -298,13 +288,13 @@ $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
         <li class="right" >
           <a href="apache.conf.raw.html" title="etc-server/web/apache.conf"
              >previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt> for Server</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

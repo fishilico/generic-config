@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Build a development environment for Debian &mdash; Generic Config</title>
-    
+    <title>Build a development environment for Debian &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="GDB, The GNU Project Debugger" href="gdb.html" />
     <link rel="prev" title="Some information of Debian systems" href="debian.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,15 +30,15 @@
         <li class="right" >
           <a href="debian.html" title="Some information of Debian systems"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="build-a-development-environment-for-debian">
 <h1>Build a development environment for Debian<a class="headerlink" href="#build-a-development-environment-for-debian" title="Permalink to this headline">¶</a></h1>
@@ -58,82 +47,82 @@
 <h2>Compile a Debian package in debug mode<a class="headerlink" href="#compile-a-debian-package-in-debug-mode" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes a program crashes and you need to reinstall it to be able to debug it.
 With debug symbols, you may attach a process with gdb and then follow the
-execution with commands such as <tt class="docutils literal"><span class="pre">layout</span> <span class="pre">src</span></tt> and <tt class="docutils literal"><span class="pre">layout</span> <span class="pre">split</span></tt> instead of
-<tt class="docutils literal"><span class="pre">layout</span> <span class="pre">regs</span></tt> and <tt class="docutils literal"><span class="pre">layout</span> <span class="pre">asm</span></tt>. There are several ways to get a program
-built with debug symbols in Debian. For the rest of this section, let&#8217;s state
-that the program you want to debug is in a package which name is <tt class="docutils literal"><span class="pre">foo</span></tt>.</p>
-<p>First, there is occasionally a debug package for <tt class="docutils literal"><span class="pre">foo</span></tt>, named <tt class="docutils literal"><span class="pre">foo-dbg</span></tt> or
+execution with commands such as <code class="docutils literal notranslate"><span class="pre">layout</span> <span class="pre">src</span></code> and <code class="docutils literal notranslate"><span class="pre">layout</span> <span class="pre">split</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">layout</span> <span class="pre">regs</span></code> and <code class="docutils literal notranslate"><span class="pre">layout</span> <span class="pre">asm</span></code>. There are several ways to get a program
+built with debug symbols in Debian. For the rest of this section, let’s state
+that the program you want to debug is in a package which name is <code class="docutils literal notranslate"><span class="pre">foo</span></code>.</p>
+<p>First, there is occasionally a debug package for <code class="docutils literal notranslate"><span class="pre">foo</span></code>, named <code class="docutils literal notranslate"><span class="pre">foo-dbg</span></code> or
 something like that. In such case, you have a clean solution and nothing to do
 more than to replace a package.</p>
-<p>For most of the cases, such package doesn&#8217;t exist and you need to recompile
-package <tt class="docutils literal"><span class="pre">foo</span></tt> by adding some options to <tt class="docutils literal"><span class="pre">debuild</span></tt>. This can be done in a
+<p>For most of the cases, such package doesn’t exist and you need to recompile
+package <code class="docutils literal notranslate"><span class="pre">foo</span></code> by adding some options to <code class="docutils literal notranslate"><span class="pre">debuild</span></code>. This can be done in a
 clean temporary directory by issuing the following commands:</p>
-<div class="highlight-python"><div class="highlight"><pre>sudo apt-get build foo
-apt-get source foo
-cd foo-*/
-export DEB_BUILD_OPTIONS=&quot;nostrip noopt&quot;
-debuild -uc -us
-sudo dpkg -i ../foo_*.deb
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">build</span> <span class="n">foo</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">source</span> <span class="n">foo</span>
+<span class="n">cd</span> <span class="n">foo</span><span class="o">-*/</span>
+<span class="n">export</span> <span class="n">DEB_BUILD_OPTIONS</span><span class="o">=</span><span class="s2">&quot;nostrip noopt&quot;</span>
+<span class="n">debuild</span> <span class="o">-</span><span class="n">uc</span> <span class="o">-</span><span class="n">us</span>
+<span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="o">../</span><span class="n">foo_</span><span class="o">*.</span><span class="n">deb</span>
 </pre></div>
 </div>
 <p>Theses commands first install all the necessary build dependency and extract
-the Debian-patched version of <tt class="docutils literal"><span class="pre">foo</span></tt> in a <tt class="docutils literal"><span class="pre">foo-version</span></tt> directory. Running
-<tt class="docutils literal"><span class="pre">debuild</span></tt> into this directory is enough to build a <tt class="docutils literal"><span class="pre">foo_version_arch.deb</span></tt>
+the Debian-patched version of <code class="docutils literal notranslate"><span class="pre">foo</span></code> in a <code class="docutils literal notranslate"><span class="pre">foo-version</span></code> directory. Running
+<code class="docutils literal notranslate"><span class="pre">debuild</span></code> into this directory is enough to build a <code class="docutils literal notranslate"><span class="pre">foo_version_arch.deb</span></code>
 file in the main folder, the options are here to tweak the compiling process
 (disable stripping symbols from executable files and disable optimization) and
-the build process (don&#8217;t sign any produced files). Instead of calling debuild,
-calling <tt class="docutils literal"><span class="pre">dpkg-buildpackage</span> <span class="pre">-rfakeroot</span></tt> may work, as some documents suggest.</p>
+the build process (don’t sign any produced files). Instead of calling debuild,
+calling <code class="docutils literal notranslate"><span class="pre">dpkg-buildpackage</span> <span class="pre">-rfakeroot</span></code> may work, as some documents suggest.</p>
 </div>
 <div class="section" id="set-up-your-own-debian-repository">
 <h2>Set up your own Debian repository<a class="headerlink" href="#set-up-your-own-debian-repository" title="Permalink to this headline">¶</a></h2>
 <p>You may want to install some package you compiled in several systems or to make
-this package publicly available. This can be achieved thanks to <tt class="docutils literal"><span class="pre">reprepro</span></tt>,
-which is a simple tool to maintain a repository tree. To do that, let&#8217;s assume
-you want a package tree in <tt class="docutils literal"><span class="pre">/var/packages/debian</span></tt>.</p>
-<p>First, create <tt class="docutils literal"><span class="pre">/var/packages/debian/conf/distributions</span></tt> with something like:</p>
-<div class="highlight-python"><div class="highlight"><pre>Origin: My Repository
-Label: My Repository
-Suite: unstable
-Codename: sid
-Architectures: i386 amd64 source
-Components: main
-Description: My APT repositories
-DebOverride: override.sid
-DscOverride: override.sid
-SignWith: 12345678
+this package publicly available. This can be achieved thanks to <code class="docutils literal notranslate"><span class="pre">reprepro</span></code>,
+which is a simple tool to maintain a repository tree. To do that, let’s assume
+you want a package tree in <code class="docutils literal notranslate"><span class="pre">/var/packages/debian</span></code>.</p>
+<p>First, create <code class="docutils literal notranslate"><span class="pre">/var/packages/debian/conf/distributions</span></code> with something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Origin</span><span class="p">:</span> <span class="n">My</span> <span class="n">Repository</span>
+<span class="n">Label</span><span class="p">:</span> <span class="n">My</span> <span class="n">Repository</span>
+<span class="n">Suite</span><span class="p">:</span> <span class="n">unstable</span>
+<span class="n">Codename</span><span class="p">:</span> <span class="n">sid</span>
+<span class="n">Architectures</span><span class="p">:</span> <span class="n">i386</span> <span class="n">amd64</span> <span class="n">source</span>
+<span class="n">Components</span><span class="p">:</span> <span class="n">main</span>
+<span class="n">Description</span><span class="p">:</span> <span class="n">My</span> <span class="n">APT</span> <span class="n">repositories</span>
+<span class="n">DebOverride</span><span class="p">:</span> <span class="n">override</span><span class="o">.</span><span class="n">sid</span>
+<span class="n">DscOverride</span><span class="p">:</span> <span class="n">override</span><span class="o">.</span><span class="n">sid</span>
+<span class="n">SignWith</span><span class="p">:</span> <span class="mi">12345678</span>
 </pre></div>
 </div>
-<p>(<tt class="docutils literal"><span class="pre">SignWith</span></tt> is an optional line which identifies a PGP key which is used to
+<p>(<code class="docutils literal notranslate"><span class="pre">SignWith</span></code> is an optional line which identifies a PGP key which is used to
 sign the package tree)</p>
-<p>Then create <tt class="docutils literal"><span class="pre">/var/packages/debian/conf/options</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">verbose</span>
+<p>Then create <code class="docutils literal notranslate"><span class="pre">/var/packages/debian/conf/options</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">verbose</span>
 <span class="n">ask</span><span class="o">-</span><span class="n">passphrase</span>
 <span class="n">basedir</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">debian</span>
 </pre></div>
 </div>
-<p>And create <tt class="docutils literal"><span class="pre">/var/packages/debian/conf/override.sid</span></tt>, which can be empty but
+<p>And create <code class="docutils literal notranslate"><span class="pre">/var/packages/debian/conf/override.sid</span></code>, which can be empty but
 may also contains lines which override package descriptions such as:</p>
-<div class="highlight-python"><div class="highlight"><pre>my-package Priority optional
-my-package Section net
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my</span><span class="o">-</span><span class="n">package</span> <span class="n">Priority</span> <span class="n">optional</span>
+<span class="n">my</span><span class="o">-</span><span class="n">package</span> <span class="n">Section</span> <span class="n">net</span>
 </pre></div>
 </div>
-<p>Then you can add <tt class="docutils literal"><span class="pre">.deb</span></tt> files with:</p>
-<div class="highlight-python"><div class="highlight"><pre>reprepro includedeb sid /path/to/mypackage.deb
+<p>Then you can add <code class="docutils literal notranslate"><span class="pre">.deb</span></code> files with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reprepro</span> <span class="n">includedeb</span> <span class="n">sid</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">mypackage</span><span class="o">.</span><span class="n">deb</span>
 </pre></div>
 </div>
 <p>and source, changes and deb files all at once with:</p>
-<div class="highlight-python"><div class="highlight"><pre>reprepro include sid /path/to/mypackage.dsc
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reprepro</span> <span class="n">include</span> <span class="n">sid</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">mypackage</span><span class="o">.</span><span class="n">dsc</span>
 </pre></div>
 </div>
-<p>To serve this repo with a web server, you may want to exclude <tt class="docutils literal"><span class="pre">conf/</span></tt> and
-<tt class="docutils literal"><span class="pre">db/</span></tt> directories from direct browsing to protect your specific configuration.</p>
+<p>To serve this repo with a web server, you may want to exclude <code class="docutils literal notranslate"><span class="pre">conf/</span></code> and
+<code class="docutils literal notranslate"><span class="pre">db/</span></code> directories from direct browsing to protect your specific configuration.</p>
 <p>Finally, you need to add at least the first line in the
-<tt class="docutils literal"><span class="pre">/etc/apt/sources.list</span></tt> of each host which uses this new APT repository:</p>
-<div class="highlight-python"><div class="highlight"><pre>deb http://my-host.tld/debian sid main
-deb-src http://my-host.tld/debian sid main
+<code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list</span></code> of each host which uses this new APT repository:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">my</span><span class="o">-</span><span class="n">host</span><span class="o">.</span><span class="n">tld</span><span class="o">/</span><span class="n">debian</span> <span class="n">sid</span> <span class="n">main</span>
+<span class="n">deb</span><span class="o">-</span><span class="n">src</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">my</span><span class="o">-</span><span class="n">host</span><span class="o">.</span><span class="n">tld</span><span class="o">/</span><span class="n">debian</span> <span class="n">sid</span> <span class="n">main</span>
 </pre></div>
 </div>
-<p>And also use <tt class="docutils literal"><span class="pre">apt-key</span> <span class="pre">add</span></tt> to add the GPG public key of the repository to your
+<p>And also use <code class="docutils literal notranslate"><span class="pre">apt-key</span> <span class="pre">add</span></code> to add the GPG public key of the repository to your
 GPG keychain.</p>
 <p>More detail in the Debian official wiki:
 <a class="reference external" href="https://wiki.debian.org/SettingUpSignedAptRepositoryWithReprepro">https://wiki.debian.org/SettingUpSignedAptRepositoryWithReprepro</a></p>
@@ -146,104 +135,104 @@ GPG keychain.</p>
 <li><a class="reference external" href="https://wiki.debian.org/Python/Packaging">https://wiki.debian.org/Python/Packaging</a></li>
 <li><a class="reference external" href="https://wiki.debian.org/Python/LibraryStyleGuide">https://wiki.debian.org/Python/LibraryStyleGuide</a></li>
 </ul>
-<p>In this section, let&#8217;s suppose you have a Python library which is packaged with
-<tt class="docutils literal"><span class="pre">distutils</span></tt>, <tt class="docutils literal"><span class="pre">setuptools</span></tt>, <tt class="docutils literal"><span class="pre">distribute</span></tt> or whatever. This library provides
-a <tt class="docutils literal"><span class="pre">setup.py</span></tt> file which can be used to install it on the system.</p>
-<p>Debian wiki documents command line tools such as <tt class="docutils literal"><span class="pre">py2dsc</span></tt>. This tool is a
+<p>In this section, let’s suppose you have a Python library which is packaged with
+<code class="docutils literal notranslate"><span class="pre">distutils</span></code>, <code class="docutils literal notranslate"><span class="pre">setuptools</span></code>, <code class="docutils literal notranslate"><span class="pre">distribute</span></code> or whatever. This library provides
+a <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> file which can be used to install it on the system.</p>
+<p>Debian wiki documents command line tools such as <code class="docutils literal notranslate"><span class="pre">py2dsc</span></code>. This tool is a
 shortcut for some of the initial steps but this section will focus on lower
 level tools which help understanding how Debian packaging work.</p>
-<p>For the sake of clarity, let&#8217;s say you&#8217;re working on library <tt class="docutils literal"><span class="pre">mylibrary</span></tt>
-version <tt class="docutils literal"><span class="pre">0.0.1</span></tt>.</p>
+<p>For the sake of clarity, let’s say you’re working on library <code class="docutils literal notranslate"><span class="pre">mylibrary</span></code>
+version <code class="docutils literal notranslate"><span class="pre">0.0.1</span></code>.</p>
 <p>The starting point of every Debian package is the <em>original files archive</em>. This
 archive is the one that may be downloaded from the websites which provide a
 <cite>download link</cite>. For example, if your library is on PyPI, you would download
 <a class="reference external" href="https://pypi.python.org/packages/source/m/mylibrary/mylibrary-0.0.1.tar.gz">https://pypi.python.org/packages/source/m/mylibrary/mylibrary-0.0.1.tar.gz</a>.
 This file should be put in the parent directory of the folder where
-<tt class="docutils literal"><span class="pre">mylibrary</span></tt> lies, and named <tt class="docutils literal"><span class="pre">mylibrary_0.0.1.orig.tar.gz</span></tt>
-(name, underscore, version). <tt class="docutils literal"><span class="pre">setup.py</span></tt> can be used to create this file:</p>
-<div class="highlight-python"><div class="highlight"><pre>python setup.py sdist
-cp dist/mylibrary-0.0.1.tar.gz ../mylibrary_0.0.1.orig.tar.gz
+<code class="docutils literal notranslate"><span class="pre">mylibrary</span></code> lies, and named <code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1.orig.tar.gz</span></code>
+(name, underscore, version). <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> can be used to create this file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span>
+<span class="n">cp</span> <span class="n">dist</span><span class="o">/</span><span class="n">mylibrary</span><span class="o">-</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">1.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="o">../</span><span class="n">mylibrary_0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">.</span><span class="n">orig</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
 </pre></div>
 </div>
-<p>Side note: if you&#8217;re the author of the library, the command to upload it to
+<p>Side note: if you’re the author of the library, the command to upload it to
 PyPI is:</p>
-<div class="highlight-python"><div class="highlight"><pre>python setup.py sdist register upload
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span> <span class="n">register</span> <span class="n">upload</span>
 </pre></div>
 </div>
 <p>Once you have a proper original files archive the next step is to create a
-<tt class="docutils literal"><span class="pre">debian</span></tt> directory in the current directory. There are two ways to achieve
+<code class="docutils literal notranslate"><span class="pre">debian</span></code> directory in the current directory. There are two ways to achieve
 this:</p>
 <ul>
-<li><p class="first">Invoke magic from <tt class="docutils literal"><span class="pre">python-stdeb</span></tt> package:</p>
-<div class="highlight-python"><div class="highlight"><pre>python setup.py --command-packages=stdeb.command debianize
+<li><p class="first">Invoke magic from <code class="docutils literal notranslate"><span class="pre">python-stdeb</span></code> package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">command</span><span class="o">-</span><span class="n">packages</span><span class="o">=</span><span class="n">stdeb</span><span class="o">.</span><span class="n">command</span> <span class="n">debianize</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Read Debian&#8217;s packaging documentation and create files by hand.
-To create/update <tt class="docutils literal"><span class="pre">debian/changelog</span></tt> file, you may use for example:</p>
-<div class="highlight-python"><div class="highlight"><pre>dch --create -v 0.0.1-1 --package mylibrary
+<li><p class="first">Read Debian’s packaging documentation and create files by hand.
+To create/update <code class="docutils literal notranslate"><span class="pre">debian/changelog</span></code> file, you may use for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dch</span> <span class="o">--</span><span class="n">create</span> <span class="o">-</span><span class="n">v</span> <span class="mf">0.0</span><span class="o">.</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span> <span class="o">--</span><span class="n">package</span> <span class="n">mylibrary</span>
 </pre></div>
 </div>
 </li>
 </ul>
 <p>When you feel the package is almost ready, you need to test building the package
 without running tests nor signing anything:</p>
-<div class="highlight-python"><div class="highlight"><pre>DEB_BUILD_OPTIONS=nocheck debuild -uc -us
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEB_BUILD_OPTIONS</span><span class="o">=</span><span class="n">nocheck</span> <span class="n">debuild</span> <span class="o">-</span><span class="n">uc</span> <span class="o">-</span><span class="n">us</span>
 </pre></div>
 </div>
-<p>Usually <tt class="docutils literal"><span class="pre">lintian</span></tt> will get angry and print error messages at this step because
-it&#8217;s really hard to follow all of the Debian packaging rules the first time.
+<p>Usually <code class="docutils literal notranslate"><span class="pre">lintian</span></code> will get angry and print error messages at this step because
+it’s really hard to follow all of the Debian packaging rules the first time.
 This is where the packaging process takes time, as you need to edit files in
-<tt class="docutils literal"><span class="pre">debian</span></tt> folder to fix the issues reported by <tt class="docutils literal"><span class="pre">lintian</span></tt>.</p>
-<p>Often the <tt class="docutils literal"><span class="pre">clean</span></tt> function of the package doesn&#8217;t remove the <tt class="docutils literal"><span class="pre">.egg-info</span></tt>
-folder which is created by <tt class="docutils literal"><span class="pre">setup.py</span> <span class="pre">build</span></tt>. This is an issue because
-<tt class="docutils literal"><span class="pre">debuild</span></tt> finds out that <tt class="docutils literal"><span class="pre">mylibrary.egg-info</span></tt> doesn&#8217;t exist in the original
+<code class="docutils literal notranslate"><span class="pre">debian</span></code> folder to fix the issues reported by <code class="docutils literal notranslate"><span class="pre">lintian</span></code>.</p>
+<p>Often the <code class="docutils literal notranslate"><span class="pre">clean</span></code> function of the package doesn’t remove the <code class="docutils literal notranslate"><span class="pre">.egg-info</span></code>
+folder which is created by <code class="docutils literal notranslate"><span class="pre">setup.py</span> <span class="pre">build</span></code>. This is an issue because
+<code class="docutils literal notranslate"><span class="pre">debuild</span></code> finds out that <code class="docutils literal notranslate"><span class="pre">mylibrary.egg-info</span></code> doesn’t exist in the original
 files and thus treats it as a <cite>Debian-specific patch</cite>. To prevent this behavior,
-you need to add this line to <tt class="docutils literal"><span class="pre">debian/clean</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>mylibrary.egg-info/*
+you need to add this line to <code class="docutils literal notranslate"><span class="pre">debian/clean</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mylibrary</span><span class="o">.</span><span class="n">egg</span><span class="o">-</span><span class="n">info</span><span class="o">/*</span>
 </pre></div>
 </div>
-<p>Once <tt class="docutils literal"><span class="pre">lintian</span></tt> has no more things to say, you can build the final package
+<p>Once <code class="docutils literal notranslate"><span class="pre">lintian</span></code> has no more things to say, you can build the final package
 and sign it with your GPG key:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">debuild</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">debuild</span>
 </pre></div>
 </div>
 <p>The parent directory now contains the following files (here on a 64-bit system):</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">mylibrary_0.0.1-1_all.deb</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">mylibrary_0.0.1-1_amd64.build</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">mylibrary_0.0.1-1_amd64.changes</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">mylibrary_0.0.1-1.debian.tar.gz</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">mylibrary_0.0.1-1.dsc</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">mylibrary_0.0.1.orig.tar.gz</span></tt></li>
+<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1_all.deb</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1_amd64.build</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1_amd64.changes</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1.debian.tar.gz</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1.dsc</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1.orig.tar.gz</span></code></li>
 </ul>
-<p>Now you would directly install the package using <tt class="docutils literal"><span class="pre">dpkg</span> <span class="pre">-i</span></tt> or upload it to
+<p>Now you would directly install the package using <code class="docutils literal notranslate"><span class="pre">dpkg</span> <span class="pre">-i</span></code> or upload it to
 a Debian package repository or wherever you like.</p>
 </div>
 <div class="section" id="test-patches-in-git-code-with-a-clean-package">
 <h2>Test patches in git code with a clean package<a class="headerlink" href="#test-patches-in-git-code-with-a-clean-package" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s say you&#8217;re working on <tt class="docutils literal"><span class="pre">mysoftware</span></tt> (add features, fix bugs...) and you
-need to test it &#8220;for real&#8221; on your Debian system. To make the installation
+<p>Let’s say you’re working on <code class="docutils literal notranslate"><span class="pre">mysoftware</span></code> (add features, fix bugs…) and you
+need to test it “for real” on your Debian system. To make the installation
 process really looks like a common installation, the best way is to build a
-package out of the current development version. Let&#8217;s suppose <tt class="docutils literal"><span class="pre">mysoftware</span></tt>
+package out of the current development version. Let’s suppose <code class="docutils literal notranslate"><span class="pre">mysoftware</span></code>
 uses git to manage its code. Here is how to build and install such test package:</p>
 <ul>
-<li><p class="first">First, update <tt class="docutils literal"><span class="pre">debian/</span></tt> directory (new entry in <tt class="docutils literal"><span class="pre">debian/Changelog</span></tt>, no
-patches...).
-For the sake of the example, let&#8217;s say your testing version is <tt class="docutils literal"><span class="pre">0.99-1</span></tt>.</p>
+<li><p class="first">First, update <code class="docutils literal notranslate"><span class="pre">debian/</span></code> directory (new entry in <code class="docutils literal notranslate"><span class="pre">debian/Changelog</span></code>, no
+patches…).
+For the sake of the example, let’s say your testing version is <code class="docutils literal notranslate"><span class="pre">0.99-1</span></code>.</p>
 </li>
 <li><p class="first">Create the original files archive:</p>
-<div class="highlight-python"><div class="highlight"><pre>git archive --prefix=mysoftware_0.99/ -o ../mysoftware_0.99.orig.tar.gz master
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">archive</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=</span><span class="n">mysoftware_0</span><span class="o">.</span><span class="mi">99</span><span class="o">/</span> <span class="o">-</span><span class="n">o</span> <span class="o">../</span><span class="n">mysoftware_0</span><span class="o">.</span><span class="mf">99.</span><span class="n">orig</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="n">master</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Build the package (without signing anything):</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">debuild</span> <span class="o">-</span><span class="n">uc</span> <span class="o">-</span><span class="n">us</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">debuild</span> <span class="o">-</span><span class="n">uc</span> <span class="o">-</span><span class="n">us</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Install it:</p>
-<div class="highlight-python"><div class="highlight"><pre>sudo dpkg -i ../mysoftware_0.99-1_*.deb
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="o">../</span><span class="n">mysoftware_0</span><span class="o">.</span><span class="mi">99</span><span class="o">-</span><span class="mi">1</span><span class="n">_</span><span class="o">*.</span><span class="n">deb</span>
 </pre></div>
 </div>
 </li>
@@ -255,7 +244,7 @@ For the sake of the example, let&#8217;s say your testing version is <tt class="
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -274,29 +263,30 @@ For the sake of the example, let&#8217;s say your testing version is <tt class="
   <h4>Next topic</h4>
   <p class="topless"><a href="gdb.html"
                         title="next chapter">GDB, The GNU Project Debugger</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/sysadmin/debian-dev.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sysadmin/debian-dev.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -308,13 +298,13 @@ For the sake of the example, let&#8217;s say your testing version is <tt class="
         <li class="right" >
           <a href="debian.html" title="Some information of Debian systems"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

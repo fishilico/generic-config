@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Configure a server to handle network boot (PXE) &mdash; Generic Config</title>
-    
+    <title>Configure a server to handle network boot (PXE) &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="QEmu-KVM notes" href="qemu.html" />
     <link rel="prev" title="Kernel Network Console (netconsole module)" href="netconsole.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,19 +30,19 @@
         <li class="right" >
           <a href="netconsole.html" title="Kernel Network Console (netconsole module)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="configure-a-server-to-handle-network-boot-pxe">
 <h1>Configure a server to handle network boot (PXE)<a class="headerlink" href="#configure-a-server-to-handle-network-boot-pxe" title="Permalink to this headline">¶</a></h1>
-<p><em>PXE</em> (Pre-Execution Environment) is a way to boot a computer which can&#8217;t boot
+<p><em>PXE</em> (Pre-Execution Environment) is a way to boot a computer which can’t boot
 from a physical drive (CD, DVD, USB). The computer gets an IP address from the
 network using DHCP and then download a PXE image from a TFTP (Trivial File
 Transfer Protocol) server. On Linux, Dnsmasq does all the networking stuff and
@@ -62,31 +51,31 @@ configuration files for Syslinux and a compressed file system which can be used
 by network boot.</p>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<p>1- Configure the PXE server network (IP address, DNS...) and make it up and
+<p>1- Configure the PXE server network (IP address, DNS…) and make it up and
 running.</p>
-<p>2- Uncompress or mount an ISO image of an Ubuntu LiveCD to <tt class="docutils literal"><span class="pre">/tmp/iso</span></tt>.
+<p>2- Uncompress or mount an ISO image of an Ubuntu LiveCD to <code class="docutils literal notranslate"><span class="pre">/tmp/iso</span></code>.
 This may work too with other distributions, but this example has only been
 tested with Ubuntu.</p>
 <p>3- Prepare a TFTP directory:</p>
-<div class="highlight-sh"><div class="highlight"><pre>mkdir -p /srv/tftpboot
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir -p /srv/tftpboot
 cp -a /tmp/iso/isolinux/* /srv/tftpboot/
 mkdir /srv/tftpboot/pxelinux.cfg
 mv /srv/tftpboot/isolinux.cfg /srv/tftpboot/pxelinux.cfg/default
 
 cp -r /tmp/iso/casper /src/tftpboot
 
-<span class="c"># This requires Syslinux to be installed</span>
+<span class="c1"># This requires Syslinux to be installed</span>
 cp /usr/lib/syslinux/pxelinux.0 /srv/tftpboot
 </pre></div>
 </div>
 <p>4- Configure DNSMasq to be both a DHCP server and a TFTP one. To do so, edit
-<tt class="docutils literal"><span class="pre">/etc/dnsmasq.conf</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre># Uncomment following line if you want to restrict to one interface
-#interface=eth0
-dhcp-range=192.168.0.50,192.168.0.150,12h
-dhcp-boot=pxelinux.0
-enable-tftp
-tftp-root=/srv/tftpboot
+<code class="docutils literal notranslate"><span class="pre">/etc/dnsmasq.conf</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment following line if you want to restrict to one interface</span>
+<span class="c1">#interface=eth0</span>
+<span class="n">dhcp</span><span class="o">-</span><span class="nb">range</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.50</span><span class="p">,</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.150</span><span class="p">,</span><span class="mi">12</span><span class="n">h</span>
+<span class="n">dhcp</span><span class="o">-</span><span class="n">boot</span><span class="o">=</span><span class="n">pxelinux</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">enable</span><span class="o">-</span><span class="n">tftp</span>
+<span class="n">tftp</span><span class="o">-</span><span class="n">root</span><span class="o">=/</span><span class="n">srv</span><span class="o">/</span><span class="n">tftpboot</span>
 </pre></div>
 </div>
 <p>5- (Re)Start Dnsmasq service and enjoy your PXE server !</p>
@@ -101,13 +90,13 @@ server to boot Debian netinstall.</p>
 <li>64-bit version:
 <a class="reference external" href="ftp://ftp.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/">ftp://ftp.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/</a></li>
 </ul>
-<p>On this FTP, only <tt class="docutils literal"><span class="pre">initrd.gz</span></tt>, <tt class="docutils literal"><span class="pre">linux</span></tt> and <tt class="docutils literal"><span class="pre">pxelinux.0</span></tt> are really useful.
-<tt class="docutils literal"><span class="pre">pxelinux.cfg/default</span></tt> can be rewritten in a much simpler version:</p>
-<div class="highlight-python"><div class="highlight"><pre>DEFAULT linux
-LABEL linux
-    kernel linux
-    append vga=normal initrd=initrd.gz --
-TIMEOUT 0
+<p>On this FTP, only <code class="docutils literal notranslate"><span class="pre">initrd.gz</span></code>, <code class="docutils literal notranslate"><span class="pre">linux</span></code> and <code class="docutils literal notranslate"><span class="pre">pxelinux.0</span></code> are really useful.
+<code class="docutils literal notranslate"><span class="pre">pxelinux.cfg/default</span></code> can be rewritten in a much simpler version:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEFAULT</span> <span class="n">linux</span>
+<span class="n">LABEL</span> <span class="n">linux</span>
+    <span class="n">kernel</span> <span class="n">linux</span>
+    <span class="n">append</span> <span class="n">vga</span><span class="o">=</span><span class="n">normal</span> <span class="n">initrd</span><span class="o">=</span><span class="n">initrd</span><span class="o">.</span><span class="n">gz</span> <span class="o">--</span>
+<span class="n">TIMEOUT</span> <span class="mi">0</span>
 </pre></div>
 </div>
 </div>
@@ -117,7 +106,7 @@ TIMEOUT 0
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -134,29 +123,30 @@ TIMEOUT 0
   <h4>Next topic</h4>
   <p class="topless"><a href="qemu.html"
                         title="next chapter">QEmu-KVM notes</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/sysadmin/pxe-boot-server.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sysadmin/pxe-boot-server.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -168,13 +158,13 @@ TIMEOUT 0
         <li class="right" >
           <a href="netconsole.html" title="Kernel Network Console (netconsole module)"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

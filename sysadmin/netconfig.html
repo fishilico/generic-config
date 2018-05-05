@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Network configuration &mdash; Generic Config</title>
-    
+    <title>Network configuration &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Kernel Network Console (netconsole module)" href="netconsole.html" />
     <link rel="prev" title="Linux NAT router" href="nat.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,35 +30,35 @@
         <li class="right" >
           <a href="nat.html" title="Linux NAT router"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="network-configuration">
 <h1>Network configuration<a class="headerlink" href="#network-configuration" title="Permalink to this headline">¶</a></h1>
 <p>This short document is a quick reference to some commands you would like to
-know when you&#8217;re connecting to a network and asking &#8220;What&#8217;s the conf, here?&#8221;
-If there is a kind of &#8220;automatic configuration&#8221; taking place, you may want to
+know when you’re connecting to a network and asking “What’s the conf, here?”
+If there is a kind of “automatic configuration” taking place, you may want to
 know what information the network is giving you. In the other case, you need to
 know how to set up a manual configuration by hand.</p>
 <div class="section" id="ipv4-configuration">
 <h2>IPv4 configuration<a class="headerlink" href="#ipv4-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Automatic IPv4 configuration is quite straightforward: run a DHCP client! For
-example, to discover a DHCP server on <tt class="docutils literal"><span class="pre">eth0</span></tt> interface:</p>
-<div class="highlight-python"><div class="highlight"><pre>dhclient eth0
-# or
-dhcpcd eth0
+example, to discover a DHCP server on <code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dhclient</span> <span class="n">eth0</span>
+<span class="c1"># or</span>
+<span class="n">dhcpcd</span> <span class="n">eth0</span>
 </pre></div>
 </div>
-<p>Static IPv4 configuration can be achieved thanks to <tt class="docutils literal"><span class="pre">ip</span></tt> command:</p>
-<div class="highlight-python"><div class="highlight"><pre>ip addr add 192.168.0.42/24 dev eth0
-ip route add default via 192.168.0.1 dev eth0
+<p>Static IPv4 configuration can be achieved thanks to <code class="docutils literal notranslate"><span class="pre">ip</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="n">addr</span> <span class="n">add</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.42</span><span class="o">/</span><span class="mi">24</span> <span class="n">dev</span> <span class="n">eth0</span>
+<span class="n">ip</span> <span class="n">route</span> <span class="n">add</span> <span class="n">default</span> <span class="n">via</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">dev</span> <span class="n">eth0</span>
 </pre></div>
 </div>
 <p>This presupposes that you know what IP address your gateway uses. Without this
@@ -79,38 +68,38 @@ knowledge, you need to sniff and/or scan the network to find it.</p>
 <h2>IPv6 configuration<a class="headerlink" href="#ipv6-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Automatic IPv6 configuration is more straightforward than IPv4: it is done by
 the kernel and you have nothing to do! Sometimes you may want to ignore the
-automatic configuration. This command disables it on <tt class="docutils literal"><span class="pre">eth0</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>sysctl -w sys.net.ipv6.conf.accept_ra=0
+automatic configuration. This command disables it on <code class="docutils literal notranslate"><span class="pre">eth0</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sysctl</span> <span class="o">-</span><span class="n">w</span> <span class="n">sys</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">ipv6</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">accept_ra</span><span class="o">=</span><span class="mi">0</span>
 </pre></div>
 </div>
 <p>Automatic configuration works because when a host sends a Router Solicitation
 message (ICMPv6 type 133), the gateways answer with a Router Advertisement
 (ICMPv6 type 134) containing information similar to DHCP. To send a RS by hand,
-install <tt class="docutils literal"><span class="pre">ndisc6</span></tt> package and run:</p>
-<div class="highlight-python"><div class="highlight"><pre>rdisc6 eth0
+install <code class="docutils literal notranslate"><span class="pre">ndisc6</span></code> package and run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rdisc6</span> <span class="n">eth0</span>
 </pre></div>
 </div>
-<p>Like with IPv4, static IPv6 can be configured with <tt class="docutils literal"><span class="pre">ip</span></tt> command:</p>
-<div class="highlight-python"><div class="highlight"><pre>ip addr add 2001:db8::42/64 dev eth0
-ip -6 route add default via 2001:db8::1 dev eth0
+<p>Like with IPv4, static IPv6 can be configured with <code class="docutils literal notranslate"><span class="pre">ip</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="n">addr</span> <span class="n">add</span> <span class="mi">2001</span><span class="p">:</span><span class="n">db8</span><span class="p">::</span><span class="mi">42</span><span class="o">/</span><span class="mi">64</span> <span class="n">dev</span> <span class="n">eth0</span>
+<span class="n">ip</span> <span class="o">-</span><span class="mi">6</span> <span class="n">route</span> <span class="n">add</span> <span class="n">default</span> <span class="n">via</span> <span class="mi">2001</span><span class="p">:</span><span class="n">db8</span><span class="p">::</span><span class="mi">1</span> <span class="n">dev</span> <span class="n">eth0</span>
 </pre></div>
 </div>
 <p>However, unlike IPv4, there is a smart way to find the gateway: multicast. More
-precisely, IPv6 defines <tt class="docutils literal"><span class="pre">ff02::2</span></tt> as being a multicast address for all
+precisely, IPv6 defines <code class="docutils literal notranslate"><span class="pre">ff02::2</span></code> as being a multicast address for all
 routers on a link (a Linux machine answers as a router when
-<tt class="docutils literal"><span class="pre">sys.net.ipv6.conf.forwarding</span></tt> is 1). If your gateway answers to ping request,
+<code class="docutils literal notranslate"><span class="pre">sys.net.ipv6.conf.forwarding</span></code> is 1). If your gateway answers to ping request,
 you can run this command to get its IPv6 address:</p>
-<div class="highlight-python"><div class="highlight"><pre>ping6 -c1 ff02::2%eth0
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ping6</span> <span class="o">-</span><span class="n">c1</span> <span class="n">ff02</span><span class="p">::</span><span class="mi">2</span><span class="o">%</span><span class="n">eth0</span>
 </pre></div>
 </div>
 <p>The result would look like:</p>
-<div class="highlight-python"><div class="highlight"><pre>PING ff02::2%eth0(ff02::2) 56 data bytes
-64 bytes from fe80::4242:42ff:fe42:4242: icmp_seq=1 ttl=64 time=0.420 ms
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PING</span> <span class="n">ff02</span><span class="p">::</span><span class="mi">2</span><span class="o">%</span><span class="n">eth0</span><span class="p">(</span><span class="n">ff02</span><span class="p">::</span><span class="mi">2</span><span class="p">)</span> <span class="mi">56</span> <span class="n">data</span> <span class="nb">bytes</span>
+<span class="mi">64</span> <span class="nb">bytes</span> <span class="kn">from</span> <span class="nn">fe80</span><span class="p">::</span><span class="mi">4242</span><span class="p">:</span><span class="mi">42</span><span class="n">ff</span><span class="p">:</span><span class="n">fe42</span><span class="p">:</span><span class="mi">4242</span><span class="p">:</span> <span class="n">icmp_seq</span><span class="o">=</span><span class="mi">1</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">64</span> <span class="n">time</span><span class="o">=</span><span class="mf">0.420</span> <span class="n">ms</span>
 </pre></div>
 </div>
 <p>In such case, you may configure your default route with this link-local address
-(in <tt class="docutils literal"><span class="pre">fe80::/64</span></tt>):</p>
-<div class="highlight-python"><div class="highlight"><pre>ip -6 route add default via fe80::4242:42ff:fe42:4242 dev eth0
+(in <code class="docutils literal notranslate"><span class="pre">fe80::/64</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="o">-</span><span class="mi">6</span> <span class="n">route</span> <span class="n">add</span> <span class="n">default</span> <span class="n">via</span> <span class="n">fe80</span><span class="p">::</span><span class="mi">4242</span><span class="p">:</span><span class="mi">42</span><span class="n">ff</span><span class="p">:</span><span class="n">fe42</span><span class="p">:</span><span class="mi">4242</span> <span class="n">dev</span> <span class="n">eth0</span>
 </pre></div>
 </div>
 </div>
@@ -119,13 +108,13 @@ you can run this command to get its IPv6 address:</p>
 <p>In automatic configurations, the IP addresses of the local DNS servers and the
 search domains are found in DHCP headers and RA options. If you use a software
 like NetworkManager or resolvconf or wicd, this information is directly written
-in <tt class="docutils literal"><span class="pre">/etc/resolv.conf</span></tt>.</p>
+in <code class="docutils literal notranslate"><span class="pre">/etc/resolv.conf</span></code>.</p>
 <p>In manual configuration, edit this file with lines like these:</p>
-<div class="highlight-python"><div class="highlight"><pre># resolver1.opendns.com and resolver2.opendns.com
-nameserver 208.67.222.222
-nameserver 208.67.220.220
-domain example.com
-search example.com
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># resolver1.opendns.com and resolver2.opendns.com</span>
+<span class="n">nameserver</span> <span class="mf">208.67</span><span class="o">.</span><span class="mf">222.222</span>
+<span class="n">nameserver</span> <span class="mf">208.67</span><span class="o">.</span><span class="mf">220.220</span>
+<span class="n">domain</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">search</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span>
 </pre></div>
 </div>
 </div>
@@ -133,13 +122,13 @@ search example.com
 <h2>Systemd network configuration<a class="headerlink" href="#systemd-network-configuration" title="Permalink to this headline">¶</a></h2>
 <p>On a server which provides an ens42 wired connection with a static IP
 configuration, it is possible to use systemd-networkd with the following
-configuration in <tt class="docutils literal"><span class="pre">/etc/systemd/network/wired.network</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>[Match]
-Name=ens42
+configuration in <code class="docutils literal notranslate"><span class="pre">/etc/systemd/network/wired.network</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Match</span><span class="p">]</span>
+<span class="n">Name</span><span class="o">=</span><span class="n">ens42</span>
 
-[Network]
-Address=192.168.0.42/24
-Gateway=192.168.0.1
+<span class="p">[</span><span class="n">Network</span><span class="p">]</span>
+<span class="n">Address</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.42</span><span class="o">/</span><span class="mi">24</span>
+<span class="n">Gateway</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.1</span>
 </pre></div>
 </div>
 </div>
@@ -147,31 +136,31 @@ Gateway=192.168.0.1
 <h2>Broadcast ping<a class="headerlink" href="#broadcast-ping" title="Permalink to this headline">¶</a></h2>
 <p>To discover pingable hosts on your network, send an Echo Request (ping) to
 every host. In IPv4 this broadcasts an ICMP type 8 message:</p>
-<div class="highlight-python"><div class="highlight"><pre>ping -b 255.255.255.255 -I eth0
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ping</span> <span class="o">-</span><span class="n">b</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.255</span> <span class="o">-</span><span class="n">I</span> <span class="n">eth0</span>
 </pre></div>
 </div>
 <p>In IPv6 this multicasts an ICMPv6 type 128 message to all nodes:</p>
-<div class="highlight-python"><div class="highlight"><pre>ping6 ff02::1%eth0
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ping6</span> <span class="n">ff02</span><span class="p">::</span><span class="mi">1</span><span class="o">%</span><span class="n">eth0</span>
 </pre></div>
 </div>
 <p>After such command, you may list every link-layer addresses of your neighbors by
 issuing:</p>
-<div class="highlight-python"><div class="highlight"><pre>ip neigh show
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="n">neigh</span> <span class="n">show</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="link-layer-ping">
 <h2>Link-layer ping<a class="headerlink" href="#link-layer-ping" title="Permalink to this headline">¶</a></h2>
-<p>When the network don&#8217;t give your host an IP address, you need to find an unused
+<p>When the network don’t give your host an IP address, you need to find an unused
 one. In IPv4 you can test whether an IP address is free or used by sending ARP
-requests (what doesn&#8217;t require an IPv4 address to be configured, unlike
-<tt class="docutils literal"><span class="pre">ping</span></tt>):</p>
-<div class="highlight-python"><div class="highlight"><pre>arping 192.168.0.42 -I eth0
+requests (what doesn’t require an IPv4 address to be configured, unlike
+<code class="docutils literal notranslate"><span class="pre">ping</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arping</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.42</span> <span class="o">-</span><span class="n">I</span> <span class="n">eth0</span>
 </pre></div>
 </div>
 <p>In IPv6, ARP requests are replaced with Neighbor Solicitation (ICMPv6 type 135
 messages):</p>
-<div class="highlight-python"><div class="highlight"><pre>ndisc6 2001:db8::42 eth0
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ndisc6</span> <span class="mi">2001</span><span class="p">:</span><span class="n">db8</span><span class="p">::</span><span class="mi">42</span> <span class="n">eth0</span>
 </pre></div>
 </div>
 </div>
@@ -181,7 +170,7 @@ messages):</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -202,29 +191,30 @@ messages):</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="netconsole.html"
                         title="next chapter">Kernel Network Console (netconsole module)</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/sysadmin/netconfig.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sysadmin/netconfig.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -236,13 +226,13 @@ messages):</p>
         <li class="right" >
           <a href="nat.html" title="Linux NAT router"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

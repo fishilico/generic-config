@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>etc/ssh/sshd_config &mdash; Generic Config</title>
-    
+    <title>etc/ssh/sshd_config &#8212; Generic Config</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../../index.html" />
-    <link rel="up" title="/etc" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="etc/sudoers" href="../sudoers.raw.html" />
     <link rel="prev" title="etc/ssh/sshd_config.default" href="sshd_config.default.raw.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,26 +30,26 @@
         <li class="right" >
           <a href="sshd_config.default.raw.html" title="etc/ssh/sshd_config.default"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U"><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="etc-ssh-sshd-config">
-<h1><tt class="docutils literal"><span class="pre">etc/ssh/sshd_config</span></tt><a class="headerlink" href="#etc-ssh-sshd-config" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference download internal" href="../../_downloads/sshd_config"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">file</span></tt></a></p>
-<div class="highlight-sh"><div class="highlight"><pre><span class="c"># Here is a general configuration file for SSH server</span>
+<h1><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config</span></code><a class="headerlink" href="#etc-ssh-sshd-config" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" href="../../_downloads/sshd_config" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here is a general configuration file for SSH server</span>
 
-<span class="c"># Authentication mechanisms: allow public key, disable password access</span>
+<span class="c1"># Authentication mechanisms: allow public key, disable password access</span>
 PubkeyAuthentication yes
 PasswordAuthentication no
 
-<span class="c"># Some other config values</span>
+<span class="c1"># Some other config values</span>
 PermitRootLogin no
 PermitEmptyPasswords no
 ChallengeResponseAuthentication no
@@ -69,14 +58,14 @@ X11Forwarding no
 UseDNS yes
 PermitTunnel no
 
-<span class="c"># Restrict allowed users</span>
-<span class="c">#AllowUsers user</span>
-<span class="c">#AllowGroups adm sudo wheel</span>
+<span class="c1"># Restrict allowed users</span>
+<span class="c1">#AllowUsers user</span>
+<span class="c1">#AllowGroups adm sudo wheel</span>
 
-<span class="c"># This configuration jails users in sftpusers group to only use sftp.</span>
-<span class="c"># Their home directory must belong to root, otherwise sshd complains with:</span>
-<span class="c">#    fatal: bad ownership or modes for chroot directory &quot;/home/user&quot;</span>
-<span class="c"># Documentation: https://wiki.archlinux.org/index.php/SFTP_chroot</span>
+<span class="c1"># This configuration jails users in sftpusers group to only use sftp.</span>
+<span class="c1"># Their home directory must belong to root, otherwise sshd complains with:</span>
+<span class="c1">#    fatal: bad ownership or modes for chroot directory &quot;/home/user&quot;</span>
+<span class="c1"># Documentation: https://wiki.archlinux.org/index.php/SFTP_chroot</span>
 Subsystem sftp internal-sftp
 Match Group sftpusers
    ChrootDirectory /home/%u
@@ -91,37 +80,38 @@ Match Group sftpusers
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="sshd_config.default.raw.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">etc/ssh/sshd_config.default</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config.default</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../sudoers.raw.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">etc/sudoers</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../../_sources/etc/ssh/sshd_config.raw.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/sudoers</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/etc/ssh/sshd_config.raw.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -133,13 +123,13 @@ Match Group sftpusers
         <li class="right" >
           <a href="sshd_config.default.raw.html" title="etc/ssh/sshd_config.default"
              >previous</a> |</li>
-        <li><a href="../../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="../index.html" ><tt class="docutils literal"><span class="pre">/etc</span></tt></a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

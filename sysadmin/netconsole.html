@@ -1,35 +1,24 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Kernel Network Console (netconsole module) &mdash; Generic Config</title>
-    
+    <title>Kernel Network Console (netconsole module) &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Generic Config" href="../index.html" />
-    <link rel="up" title="Some notes and tips&amp;tricks about system administration" href="index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Configure a server to handle network boot (PXE)" href="pxe-boot-server.html" />
     <link rel="prev" title="Network configuration" href="netconfig.html" /> 
-  </head>
-  <body>
-    <div class="related">
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -41,22 +30,22 @@
         <li class="right" >
           <a href="netconfig.html" title="Network configuration"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="kernel-network-console-netconsole-module">
 <h1>Kernel Network Console (netconsole module)<a class="headerlink" href="#kernel-network-console-netconsole-module" title="Permalink to this headline">¶</a></h1>
-<p>To debug hosts when a display is not available, or in other circumstances, it&#8217;s
+<p>To debug hosts when a display is not available, or in other circumstances, it’s
 possible to set up a network console so that kernel messages go through the
-network to a destination host which can display these messages. Let&#8217;s say the
-source host (which sends messages) has an ethernet interface <tt class="docutils literal"><span class="pre">eth0</span></tt> which is
+network to a destination host which can display these messages. Let’s say the
+source host (which sends messages) has an ethernet interface <code class="docutils literal notranslate"><span class="pre">eth0</span></code> which is
 linked to the destination host (which receives messages).
 The addresses of each interface is as follows:</p>
 <table border="1" class="docutils">
@@ -75,77 +64,77 @@ The addresses of each interface is as follows:</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Source</td>
-<td><tt class="docutils literal"><span class="pre">00:00:00:00:00:01</span></tt></td>
-<td><tt class="docutils literal"><span class="pre">fe80::0200:00ff:fe00:0001</span></tt></td>
+<td><code class="docutils literal notranslate"><span class="pre">00:00:00:00:00:01</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">fe80::0200:00ff:fe00:0001</span></code></td>
 <td>6665</td>
 </tr>
 <tr class="row-odd"><td>Destination</td>
-<td><tt class="docutils literal"><span class="pre">00:00:00:00:00:02</span></tt></td>
-<td><tt class="docutils literal"><span class="pre">fe80::0200:00ff:fe00:0002</span></tt></td>
+<td><code class="docutils literal notranslate"><span class="pre">00:00:00:00:00:02</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">fe80::0200:00ff:fe00:0002</span></code></td>
 <td>6666</td>
 </tr>
 </tbody>
 </table>
 <p>The configuration of netconsole module is documented like this:</p>
-<div class="highlight-python"><div class="highlight"><pre>netconsole=[src-port]@[src-ip]/[&lt;dev&gt;],[tgt-port]@&lt;tgt-ip&gt;/[tgt-macaddr]
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">netconsole</span><span class="o">=</span><span class="p">[</span><span class="n">src</span><span class="o">-</span><span class="n">port</span><span class="p">]</span><span class="o">@</span><span class="p">[</span><span class="n">src</span><span class="o">-</span><span class="n">ip</span><span class="p">]</span><span class="o">/</span><span class="p">[</span><span class="o">&lt;</span><span class="n">dev</span><span class="o">&gt;</span><span class="p">],[</span><span class="n">tgt</span><span class="o">-</span><span class="n">port</span><span class="p">]</span><span class="o">@&lt;</span><span class="n">tgt</span><span class="o">-</span><span class="n">ip</span><span class="o">&gt;/</span><span class="p">[</span><span class="n">tgt</span><span class="o">-</span><span class="n">macaddr</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>where:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">src-port</span></tt> source for UDP packets (defaults to 6665)</li>
-<li><tt class="docutils literal"><span class="pre">src-ip</span></tt> source IP to use (interface address)</li>
-<li><tt class="docutils literal"><span class="pre">dev</span> <span class="pre">network</span></tt> interface (eth0)</li>
-<li><tt class="docutils literal"><span class="pre">tgt-port</span></tt> port for logging agent (6666)</li>
-<li><tt class="docutils literal"><span class="pre">tgt-ip</span></tt> IP address for logging agent</li>
-<li><tt class="docutils literal"><span class="pre">tgt-macaddr</span></tt> ethernet MAC address for logging agent (broadcast)</li>
+<li><code class="docutils literal notranslate"><span class="pre">src-port</span></code> source for UDP packets (defaults to 6665)</li>
+<li><code class="docutils literal notranslate"><span class="pre">src-ip</span></code> source IP to use (interface address)</li>
+<li><code class="docutils literal notranslate"><span class="pre">dev</span> <span class="pre">network</span></code> interface (eth0)</li>
+<li><code class="docutils literal notranslate"><span class="pre">tgt-port</span></code> port for logging agent (6666)</li>
+<li><code class="docutils literal notranslate"><span class="pre">tgt-ip</span></code> IP address for logging agent</li>
+<li><code class="docutils literal notranslate"><span class="pre">tgt-macaddr</span></code> ethernet MAC address for logging agent (broadcast)</li>
 </ul>
 <p>Hence in the previous scenario, the configuration line is:</p>
-<div class="highlight-python"><div class="highlight"><pre>netconsole=6665@fe80::0200:00ff:fe00:0001/eth0,6666@fe80::0200:00ff:fe00:0002/00:00:00:00:00:02
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">netconsole</span><span class="o">=</span><span class="mi">6665</span><span class="nd">@fe80</span><span class="p">::</span><span class="mi">0200</span><span class="p">:</span><span class="mi">00</span><span class="n">ff</span><span class="p">:</span><span class="n">fe00</span><span class="p">:</span><span class="mi">0001</span><span class="o">/</span><span class="n">eth0</span><span class="p">,</span><span class="mi">6666</span><span class="nd">@fe80</span><span class="p">::</span><span class="mi">0200</span><span class="p">:</span><span class="mi">00</span><span class="n">ff</span><span class="p">:</span><span class="n">fe00</span><span class="p">:</span><span class="mi">0002</span><span class="o">/</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">02</span>
 </pre></div>
 </div>
 <p>This line can be set as-is either on boot:</p>
-<div class="highlight-python"><div class="highlight"><pre>linux loglevel=5 netconsole=...
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">linux</span> <span class="n">loglevel</span><span class="o">=</span><span class="mi">5</span> <span class="n">netconsole</span><span class="o">=...</span>
 </pre></div>
 </div>
 <p>or when loading the module:</p>
-<div class="highlight-python"><div class="highlight"><pre>modprobe netconsole netconsole=...
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modprobe</span> <span class="n">netconsole</span> <span class="n">netconsole</span><span class="o">=...</span>
 </pre></div>
 </div>
 <p>Once the source host is configured, you would normally set up something which
 is listening for incoming messages on the destination host. For example with
-<tt class="docutils literal"><span class="pre">socat</span></tt> by doing so:</p>
-<div class="highlight-python"><div class="highlight"><pre>socat UDP6-RECV:6666 -
+<code class="docutils literal notranslate"><span class="pre">socat</span></code> by doing so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">socat</span> <span class="n">UDP6</span><span class="o">-</span><span class="n">RECV</span><span class="p">:</span><span class="mi">6666</span> <span class="o">-</span>
 </pre></div>
 </div>
 <p>To test the communication between the 2 hosts, you may send a raw UDP packet:</p>
-<div class="highlight-python"><div class="highlight"><pre>echo test | socat - &#39;UDP6:[fe80::0200:00ff:fe00:0002]:6666,sourceport=6665&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="n">test</span> <span class="o">|</span> <span class="n">socat</span> <span class="o">-</span> <span class="s1">&#39;UDP6:[fe80::0200:00ff:fe00:0002]:6666,sourceport=6665&#39;</span>
 </pre></div>
 </div>
 <p>and if this worked, trigger a kernel message on the source host:</p>
-<div class="highlight-python"><div class="highlight"><pre>echo h &gt; /proc/sysrq-trigger
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="n">h</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">sysrq</span><span class="o">-</span><span class="n">trigger</span>
 </pre></div>
 </div>
 <div class="section" id="dynamic-configuration">
 <h2>Dynamic configuration<a class="headerlink" href="#dynamic-configuration" title="Permalink to this headline">¶</a></h2>
-<p>To dynamically change netconsole&#8217;s settings, you need to mount the kernel
+<p>To dynamically change netconsole’s settings, you need to mount the kernel
 config filesystem:</p>
-<div class="highlight-python"><div class="highlight"><pre>modprobe configfs
-mount none -t configfs /sys/kernel/config
-# /sys/kernel/config/netconsole would exist if netconsole module is loaded
-mkdir /sys/kernel/config/netconsole/target
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modprobe</span> <span class="n">configfs</span>
+<span class="n">mount</span> <span class="n">none</span> <span class="o">-</span><span class="n">t</span> <span class="n">configfs</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">config</span>
+<span class="c1"># /sys/kernel/config/netconsole would exist if netconsole module is loaded</span>
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">netconsole</span><span class="o">/</span><span class="n">target</span>
 </pre></div>
 </div>
-<p>Now, <tt class="docutils literal"><span class="pre">/sys/kernel/config/netconsole/target</span></tt> would contain some files.
+<p>Now, <code class="docutils literal notranslate"><span class="pre">/sys/kernel/config/netconsole/target</span></code> would contain some files.
 To configure this new netconsole target, you need to write the values to each
-file before writing 1 to <tt class="docutils literal"><span class="pre">enabled</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd /sys/kernel/config/netconsole/target
-echo eth0 &gt; dev_name
-echo fe80::0200:00ff:fe00:0001 &gt; local_ip
-echo 6665 &gt; local_port
-echo fe80::0200:00ff:fe00:0002 &gt; remote_ip
-echo 00:00:00:00:00:02 &gt; remote_mac
-echo 6666 &gt; remote_port
-echo 1 &gt; enabled
+file before writing 1 to <code class="docutils literal notranslate"><span class="pre">enabled</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">netconsole</span><span class="o">/</span><span class="n">target</span>
+<span class="n">echo</span> <span class="n">eth0</span> <span class="o">&gt;</span> <span class="n">dev_name</span>
+<span class="n">echo</span> <span class="n">fe80</span><span class="p">::</span><span class="mi">0200</span><span class="p">:</span><span class="mi">00</span><span class="n">ff</span><span class="p">:</span><span class="n">fe00</span><span class="p">:</span><span class="mi">0001</span> <span class="o">&gt;</span> <span class="n">local_ip</span>
+<span class="n">echo</span> <span class="mi">6665</span> <span class="o">&gt;</span> <span class="n">local_port</span>
+<span class="n">echo</span> <span class="n">fe80</span><span class="p">::</span><span class="mi">0200</span><span class="p">:</span><span class="mi">00</span><span class="n">ff</span><span class="p">:</span><span class="n">fe00</span><span class="p">:</span><span class="mi">0002</span> <span class="o">&gt;</span> <span class="n">remote_ip</span>
+<span class="n">echo</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">02</span> <span class="o">&gt;</span> <span class="n">remote_mac</span>
+<span class="n">echo</span> <span class="mi">6666</span> <span class="o">&gt;</span> <span class="n">remote_port</span>
+<span class="n">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">enabled</span>
 </pre></div>
 </div>
 </div>
@@ -153,17 +142,17 @@ echo 1 &gt; enabled
 <h2>Firewall configuration<a class="headerlink" href="#firewall-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Here are the iptables rules to add to the firewall to accept the communication.</p>
 <p>Source host:</p>
-<div class="highlight-python"><div class="highlight"><pre>iptables -A OUTPUT -p udp -m udp --sport 6665 --dport 6666 -j ACCEPT
-ip6tables -A OUTPUT -p udp -m udp --sport 6665 --dport 6666 -j ACCEPT
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">OUTPUT</span> <span class="o">-</span><span class="n">p</span> <span class="n">udp</span> <span class="o">-</span><span class="n">m</span> <span class="n">udp</span> <span class="o">--</span><span class="n">sport</span> <span class="mi">6665</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">6666</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+<span class="n">ip6tables</span> <span class="o">-</span><span class="n">A</span> <span class="n">OUTPUT</span> <span class="o">-</span><span class="n">p</span> <span class="n">udp</span> <span class="o">-</span><span class="n">m</span> <span class="n">udp</span> <span class="o">--</span><span class="n">sport</span> <span class="mi">6665</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">6666</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
 </pre></div>
 </div>
 <p>Destination host:</p>
-<div class="highlight-python"><div class="highlight"><pre># You would add some specific filtering:
-# * by interface: -i eth0
-# * by MAC address: -m mac --mac-source 00:00:00:00:00:01
-# * by source IP address: -s fe80::0200:00ff:fe00:0001
-iptables -A INPUT -p udp -m udp --sport 6665 --dport 6666 -j ACCEPT
-ip6tables -A INPUT -p udp -m udp --sport 6665 --dport 6666 -j ACCEPT
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># You would add some specific filtering:</span>
+<span class="c1"># * by interface: -i eth0</span>
+<span class="c1"># * by MAC address: -m mac --mac-source 00:00:00:00:00:01</span>
+<span class="c1"># * by source IP address: -s fe80::0200:00ff:fe00:0001</span>
+<span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">p</span> <span class="n">udp</span> <span class="o">-</span><span class="n">m</span> <span class="n">udp</span> <span class="o">--</span><span class="n">sport</span> <span class="mi">6665</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">6666</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+<span class="n">ip6tables</span> <span class="o">-</span><span class="n">A</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">p</span> <span class="n">udp</span> <span class="o">-</span><span class="n">m</span> <span class="n">udp</span> <span class="o">--</span><span class="n">sport</span> <span class="mi">6665</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">6666</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
 </pre></div>
 </div>
 </div>
@@ -184,7 +173,7 @@ Ubuntu wiki</li>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -202,29 +191,30 @@ Ubuntu wiki</li>
   <h4>Next topic</h4>
   <p class="topless"><a href="pxe-boot-server.html"
                         title="next chapter">Configure a server to handle network boot (PXE)</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/sysadmin/netconsole.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/sysadmin/netconsole.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -236,13 +226,13 @@ Ubuntu wiki</li>
         <li class="right" >
           <a href="netconfig.html" title="Network configuration"
              >previous</a> |</li>
-        <li><a href="../index.html">Generic Config</a> &raquo;</li>
-          <li><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2013-2016, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2016, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>
