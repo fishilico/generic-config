@@ -9,10 +9,11 @@
     <title>Some notes about my SELinux installation &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Sound Configuration" href="sound.html" />
@@ -52,12 +53,10 @@ it, please read one of these websites:</p>
 </ul>
 <p>To develop the SELinux policy, here are the relevant git repositories:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/TresysTechnology/refpolicy/commits/master">https://github.com/TresysTechnology/refpolicy/commits/master</a> (Reference Policy)</li>
-<li><a class="reference external" href="https://github.com/TresysTechnology/refpolicy-contrib/commits/master">https://github.com/TresysTechnology/refpolicy-contrib/commits/master</a>
-(refpol contrib modules)</li>
+<li><a class="reference external" href="https://github.com/SELinuxProject/refpolicy">https://github.com/SELinuxProject/refpolicy</a> (Reference Policy)</li>
 <li><a class="reference external" href="https://gitweb.gentoo.org/proj/hardened-refpolicy.git/">https://gitweb.gentoo.org/proj/hardened-refpolicy.git/</a> (Gentoo)</li>
-<li><a class="reference external" href="https://github.com/selinux-policy/selinux-policy/tree/rawhide-base">https://github.com/selinux-policy/selinux-policy/tree/rawhide-base</a> (Fedora)</li>
-<li><a class="reference external" href="http://anonscm.debian.org/cgit/selinux/refpolicy.git/log/">http://anonscm.debian.org/cgit/selinux/refpolicy.git/log/</a> (Debian)</li>
+<li><a class="reference external" href="https://github.com/selinux-policy/selinux-policy/tree/rawhide">https://github.com/selinux-policy/selinux-policy/tree/rawhide</a> (Fedora)</li>
+<li><a class="reference external" href="https://salsa.debian.org/selinux-team/refpolicy/tree/debian">https://salsa.debian.org/selinux-team/refpolicy/tree/debian</a> (Debian)</li>
 </ul>
 <p>And here is some documentation related with writing the policy:</p>
 <ul class="simple">
@@ -76,6 +75,10 @@ it, please read one of these websites:</p>
 (SELinux userland libraries and tools repository)</li>
 <li><a class="reference external" href="http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html">http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html</a>
 (The SELinux Notebook - The Foundations)</li>
+<li><a class="reference external" href="https://lore.kernel.org/selinux/">https://lore.kernel.org/selinux/</a>
+SELinux Mailing List Archive on lore.kernel.org</li>
+<li><a class="reference external" href="https://lore.kernel.org/selinux-refpolicy/">https://lore.kernel.org/selinux-refpolicy/</a>
+SELinux-Refpolicy Mailing List Archive on lore.kernel.org</li>
 </ul>
 <p>The present document will focus on some pitfalls I’ve encountered since
 installing SELinux on systems running Debian or ArchLinux.</p>
@@ -240,7 +243,7 @@ by systemd using <code class="docutils literal notranslate"><span class="pre">tm
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Some notes about my SELinux installation</a><ul>
 <li><a class="reference internal" href="#install-a-strict-policy">Install a strict policy</a></li>
@@ -304,7 +307,7 @@ by systemd using <code class="docutils literal notranslate"><span class="pre">tm
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2018, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
     </div>
   </body>
 </html>

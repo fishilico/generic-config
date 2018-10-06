@@ -350,9 +350,25 @@ with the following content:
 Once this is configured, an ARM QEmu-static chroot can be built by:
 
 * creating a base chroot (with ``debootstrap`` for Debian, ``pacstrap`` for
-  Arch Linux, and
+  Arch Linux), and
 * copying ``/usr/bin/qemu-arm-static`` in the ``/usr/bin`` directory of the
   chroot.
+
+On debian, there also exists command ``qemu-debootstrap``:
+
+.. code-block:: sh
+
+    apt-get install qemu qemu-user-static qemu-utils binfmt-support debootstrap
+
+    # arm64 for ARMv8
+    qemu-debootstrap --arch=arm64 sid /opt/arm64/ http://ftp.debian.org/debian
+
+    # armhf for ARMv7 (hardware floating-point)
+    qemu-debootstrap --arch=armhf sid /opt/armhf/ http://ftp.debian.org/debian
+
+    # armel for ARMv4 (software floating-point, Little Endian)
+    qemu-debootstrap --arch=armel sid /opt/armel/ http://ftp.debian.org/debian
+
 
 This allows using usual programs but some have some issues running with
 ``qemu-user-static``, like ``strace`` because the ``ptrace`` syscall is not
@@ -422,6 +438,11 @@ Here are some links to online articles and documentation relevant with QEmu:
 * http://blog.oddbit.com/2014/07/21/tracking-down-a-kernel-bug-wit/
 * https://www.berrange.com/posts/2011/06/07/what-benefits-does-libvirt-offer-to-developers-targetting-qemukvm/
   (This article explains what libvirt does)
+
+* https://wiki.debian.org/QemuUserEmulation
+  How to setup and use QEMU user emulation in a "transparent" fashion
+* https://github.com/ixty/xarch_shellcode/blob/master/README.md
+  Build portable, architecture independant shellcode from C code
 
 A quick glance at Docker
 ------------------------

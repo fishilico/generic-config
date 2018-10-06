@@ -11,12 +11,10 @@ it, please read one of these websites:
 
 To develop the SELinux policy, here are the relevant git repositories:
 
-* https://github.com/TresysTechnology/refpolicy/commits/master (Reference Policy)
-* https://github.com/TresysTechnology/refpolicy-contrib/commits/master
-  (refpol contrib modules)
+* https://github.com/SELinuxProject/refpolicy (Reference Policy)
 * https://gitweb.gentoo.org/proj/hardened-refpolicy.git/ (Gentoo)
-* https://github.com/selinux-policy/selinux-policy/tree/rawhide-base (Fedora)
-* http://anonscm.debian.org/cgit/selinux/refpolicy.git/log/ (Debian)
+* https://github.com/selinux-policy/selinux-policy/tree/rawhide (Fedora)
+* https://salsa.debian.org/selinux-team/refpolicy/tree/debian (Debian)
 
 And here is some documentation related with writing the policy:
 
@@ -35,6 +33,10 @@ And while listing websites, here are some more:
   (SELinux userland libraries and tools repository)
 * http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html
   (The SELinux Notebook - The Foundations)
+* https://lore.kernel.org/selinux/
+  SELinux Mailing List Archive on lore.kernel.org
+* https://lore.kernel.org/selinux-refpolicy/
+  SELinux-Refpolicy Mailing List Archive on lore.kernel.org
 
 The present document will focus on some pitfalls I've encountered since
 installing SELinux on systems running Debian or ArchLinux.

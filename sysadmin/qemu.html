@@ -9,10 +9,11 @@
     <title>QEmu-KVM notes &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Configuration tweaks on a Raspberry Pi" href="raspberrypi.html" />
@@ -344,10 +345,23 @@ mask ffffffffffffff00fffffffffffffffffeffffff
 <p>Once this is configured, an ARM QEmu-static chroot can be built by:</p>
 <ul class="simple">
 <li>creating a base chroot (with <code class="docutils literal notranslate"><span class="pre">debootstrap</span></code> for Debian, <code class="docutils literal notranslate"><span class="pre">pacstrap</span></code> for
-Arch Linux, and</li>
+Arch Linux), and</li>
 <li>copying <code class="docutils literal notranslate"><span class="pre">/usr/bin/qemu-arm-static</span></code> in the <code class="docutils literal notranslate"><span class="pre">/usr/bin</span></code> directory of the
 chroot.</li>
 </ul>
+<p>On debian, there also exists command <code class="docutils literal notranslate"><span class="pre">qemu-debootstrap</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>apt-get install qemu qemu-user-static qemu-utils binfmt-support debootstrap
+
+<span class="c1"># arm64 for ARMv8</span>
+qemu-debootstrap --arch<span class="o">=</span>arm64 sid /opt/arm64/ http://ftp.debian.org/debian
+
+<span class="c1"># armhf for ARMv7 (hardware floating-point)</span>
+qemu-debootstrap --arch<span class="o">=</span>armhf sid /opt/armhf/ http://ftp.debian.org/debian
+
+<span class="c1"># armel for ARMv4 (software floating-point, Little Endian)</span>
+qemu-debootstrap --arch<span class="o">=</span>armel sid /opt/armel/ http://ftp.debian.org/debian
+</pre></div>
+</div>
 <p>This allows using usual programs but some have some issues running with
 <code class="docutils literal notranslate"><span class="pre">qemu-user-static</span></code>, like <code class="docutils literal notranslate"><span class="pre">strace</span></code> because the <code class="docutils literal notranslate"><span class="pre">ptrace</span></code> syscall is not
 implemented.  Nevertheless <code class="docutils literal notranslate"><span class="pre">qemu-user-static</span></code> has an option to show the
@@ -410,6 +424,10 @@ with <code class="docutils literal notranslate"><span class="pre">virsh</span> <
 <li><a class="reference external" href="http://blog.oddbit.com/2014/07/21/tracking-down-a-kernel-bug-wit/">http://blog.oddbit.com/2014/07/21/tracking-down-a-kernel-bug-wit/</a></li>
 <li><a class="reference external" href="https://www.berrange.com/posts/2011/06/07/what-benefits-does-libvirt-offer-to-developers-targetting-qemukvm/">https://www.berrange.com/posts/2011/06/07/what-benefits-does-libvirt-offer-to-developers-targetting-qemukvm/</a>
 (This article explains what libvirt does)</li>
+<li><a class="reference external" href="https://wiki.debian.org/QemuUserEmulation">https://wiki.debian.org/QemuUserEmulation</a>
+How to setup and use QEMU user emulation in a “transparent” fashion</li>
+<li><a class="reference external" href="https://github.com/ixty/xarch_shellcode/blob/master/README.md">https://github.com/ixty/xarch_shellcode/blob/master/README.md</a>
+Build portable, architecture independant shellcode from C code</li>
 </ul>
 </div>
 <div class="section" id="a-quick-glance-at-docker">
@@ -437,7 +455,7 @@ install:</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">QEmu-KVM notes</a><ul>
 <li><a class="reference internal" href="#simple-qemu-invocation-commands">Simple QEmu invocation commands</a></li>
@@ -502,7 +520,7 @@ install:</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2018, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
     </div>
   </body>
 </html>
