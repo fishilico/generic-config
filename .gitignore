@@ -5,3 +5,4 @@
 
 *.raw.rst
 /_build
+.vagrant/

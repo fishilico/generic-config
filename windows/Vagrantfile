@@ -1,0 +1,22 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # cf. vagrant.rst for instructions on downloading and importing windows/win10-edge box
+  config.vm.box = "windows/win10-edge"
+
+  # Configure remote access
+  config.ssh.username = "IEUser"
+  config.ssh.password = "Passw0rd!"
+
+  # Use Windows Remote Management protocol (WinRM)
+  config.vm.communicator = "winrm"
+  config.winrm.username = "IEUser"
+  config.winrm.password = "Passw0rd!"
+
+  # Use 2 CPU and 4GB of RAM
+  config.vm.provider :libvirt do |v|
+    v.cpus = 2
+    v.memory = 4096
+  end
+end
