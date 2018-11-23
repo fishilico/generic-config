@@ -157,41 +157,33 @@ drivers:</p>
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="software-to-install">
-<h2>Software to install<a class="headerlink" href="#software-to-install" title="Permalink to this headline">¶</a></h2>
-<p>Here is a list of software which can be useful in a Windows virtual machine:</p>
-<ul>
-<li><p class="first">Notepad++: <a class="reference external" href="https://notepad-plus-plus.org/">https://notepad-plus-plus.org/</a> (the sha1sums of the downloaded files can be verified)</p>
-</li>
-<li><p class="first">Windows Development Kits, debugger (WinDbg…):</p>
-<ul class="simple">
-<li><a class="reference external" href="https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit">https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit</a></li>
-<li>Create a shortcut to <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Windows</span> <span class="pre">Kits\10\Debuggers\x64</span></code></li>
-</ul>
-</li>
-<li><p class="first">msys2 environment: <a class="reference external" href="https://www.msys2.org/">https://www.msys2.org/</a> , and install some software:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PATH</span><span class="o">=</span><span class="s2">&quot;/cygdrive/c/msys64/usr/bin:$PATH&quot;</span>
-<span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span>
-<span class="n">pacman</span> <span class="o">-</span><span class="n">Sy</span> <span class="n">git</span> <span class="n">mingw</span><span class="o">-</span><span class="n">w64</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">toolchain</span>
+<p>In order to install a French keyboard layout:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PowerShell</span> <span class="n">Set</span><span class="o">-</span><span class="n">WinUserLanguageList</span> <span class="n">fr</span><span class="o">-</span><span class="n">FR</span><span class="p">,</span><span class="n">en</span><span class="o">-</span><span class="n">US</span>
+<span class="n">PowerShell</span> <span class="n">Get</span><span class="o">-</span><span class="n">WinUserLanguageList</span>
 </pre></div>
 </div>
-</li>
-<li><p class="first">Python: <a class="reference external" href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></p>
-</li>
-<li><p class="first">Some Sysinternals tools:</p>
-<ul class="simple">
-<li>Process Explorer <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processexplorer">https://technet.microsoft.com/en-us/sysinternals/processexplorer</a></li>
-<li>Process Monitor <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processmonitor">https://technet.microsoft.com/en-us/sysinternals/processmonitor</a></li>
-<li>DebugView <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/debugview">https://technet.microsoft.com/en-us/sysinternals/debugview</a></li>
-<li>WinObj <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/winobj">https://technet.microsoft.com/en-us/sysinternals/winobj</a></li>
-<li>AccessEnum <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/accessenum">https://technet.microsoft.com/en-us/sysinternals/accessenum</a></li>
-</ul>
-</li>
-</ul>
+</div>
+<div class="section" id="remote-access">
+<h2>Remote access<a class="headerlink" href="#remote-access" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rdp-connection">
+<h3>RDP connection<a class="headerlink" href="#rdp-connection" title="Permalink to this headline">¶</a></h3>
+<p>In order to use the graphical interface, Vagrant supports using RDP (Remote
+Desktop Protocol), using <code class="docutils literal notranslate"><span class="pre">freerdp</span></code> (<code class="docutils literal notranslate"><span class="pre">rdesktop</span></code> can also be used if CredSSP
+is disabled on the Windows virtual machine).
+Before being able to connect, the RDP server needs to be started and the
+firewall opened:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Set</span><span class="o">-</span><span class="n">ItemProperty</span> <span class="o">-</span><span class="n">Path</span> <span class="s2">&quot;HKLM:\System\CurrentControlSet\Control\Terminal Server&quot;</span> <span class="o">-</span><span class="n">Name</span> <span class="s2">&quot;fDenyTSConnections&quot;</span> <span class="o">-</span><span class="n">Value</span> <span class="mi">0</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Enable</span><span class="o">-</span><span class="n">NetFirewallRule</span> <span class="o">-</span><span class="n">DisplayGroup</span> <span class="s2">&quot;Remote Desktop&quot;</span>
+</pre></div>
+</div>
+<p>Then, one of these command should work (from a shell on the host):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">rdp</span>
+<span class="n">xfreerdp</span> <span class="o">/</span><span class="n">u</span><span class="p">:</span><span class="n">IEUser</span> <span class="s1">&#39;/p:Passw0rd!&#39;</span> <span class="s2">&quot;/v:$(vagrant ssh-config | sed -n &#39;s/ *HostName *//p&#39;):3389&quot;</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="using-winrm">
-<h2>Using WinRM<a class="headerlink" href="#using-winrm" title="Permalink to this headline">¶</a></h2>
+<h3>Using WinRM<a class="headerlink" href="#using-winrm" title="Permalink to this headline">¶</a></h3>
 <p>In order to use WinRM to connect to the machine, add the following information
 to the <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use Windows Remote Management protocol (WinRM)</span>
@@ -273,6 +265,120 @@ Tunnel adapter Teredo Tunneling Pseudo-Interface:
 </pre></div>
 </div>
 </div>
+<div class="section" id="install-windows-openssh-server">
+<h3>Install Windows OpenSSH server<a class="headerlink" href="#install-windows-openssh-server" title="Permalink to this headline">¶</a></h3>
+<p>Since Windows 10 Fall Creators Update (1709 or 10.0.16299), Microsoft provides
+OpenSSH client (installed by default) and server (installed on demand):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PS C:\&gt; Get-WindowsCapability -Online | ? Name -like &#39;OpenSSH*&#39;
+Name  : OpenSSH.Client~~~~0.0.1.0
+State : Installed
+
+Name  : OpenSSH.Server~~~~0.0.1.0
+State : NotPresent
+</pre></div>
+</div>
+<p>These capabilities are available in the graphical interface in
+“Settings/Apps/Apps &amp; features/Manage optional features”.
+In order to install OpenSSH server, the following command can also be used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Add</span><span class="o">-</span><span class="n">WindowsCapability</span> <span class="o">-</span><span class="n">Online</span> <span class="o">-</span><span class="n">Name</span> <span class="s2">&quot;OpenSSH.Server~~~~0.0.1.0&quot;</span>
+</pre></div>
+</div>
+<p>If the install fails with error code <code class="docutils literal notranslate"><span class="pre">0x80070002</span></code>, the issue was likely caused
+by Windows Update service (e.g. it is not running, there are pending updates,
+etc.). If this happens, check the state of Windows Update, reboot and try again.</p>
+<p>OpenSSH server files are installed in <code class="docutils literal notranslate"><span class="pre">C:\Windows\System32\OpenSSH</span></code> (the
+server is <code class="docutils literal notranslate"><span class="pre">sshd.exe</span></code> and the default configuration <code class="docutils literal notranslate"><span class="pre">sshd_config_default</span></code>).</p>
+<p>In order to use it, the firewall needs to be configured, if it is not already:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Get</span><span class="o">-</span><span class="n">NetFirewallRule</span> <span class="o">-</span><span class="n">DisplayName</span> <span class="n">ssh</span>
+<span class="n">Name</span>                  <span class="p">:</span> <span class="p">{</span><span class="mi">4</span><span class="n">C9D3CE5</span><span class="o">-</span><span class="n">D9ED</span><span class="o">-</span><span class="mi">42</span><span class="n">F1</span><span class="o">-</span><span class="mi">95</span><span class="n">A3</span><span class="o">-</span><span class="mi">1</span><span class="n">FEB069DBF34</span><span class="p">}</span>
+<span class="n">DisplayName</span>           <span class="p">:</span> <span class="n">ssh</span>
+<span class="n">Description</span>           <span class="p">:</span>
+<span class="n">DisplayGroup</span>          <span class="p">:</span>
+<span class="n">Group</span>                 <span class="p">:</span>
+<span class="n">Enabled</span>               <span class="p">:</span> <span class="kc">True</span>
+<span class="n">Profile</span>               <span class="p">:</span> <span class="n">Any</span>
+<span class="n">Platform</span>              <span class="p">:</span> <span class="p">{}</span>
+<span class="n">Direction</span>             <span class="p">:</span> <span class="n">Inbound</span>
+<span class="n">Action</span>                <span class="p">:</span> <span class="n">Allow</span>
+<span class="n">EdgeTraversalPolicy</span>   <span class="p">:</span> <span class="n">Block</span>
+<span class="n">LooseSourceMapping</span>    <span class="p">:</span> <span class="kc">False</span>
+<span class="n">LocalOnlyMapping</span>      <span class="p">:</span> <span class="kc">False</span>
+<span class="n">Owner</span>                 <span class="p">:</span>
+<span class="n">PrimaryStatus</span>         <span class="p">:</span> <span class="n">OK</span>
+<span class="n">Status</span>                <span class="p">:</span> <span class="n">The</span> <span class="n">rule</span> <span class="n">was</span> <span class="n">parsed</span> <span class="n">successfully</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">store</span><span class="o">.</span> <span class="p">(</span><span class="mi">65536</span><span class="p">)</span>
+<span class="n">EnforcementStatus</span>     <span class="p">:</span> <span class="n">NotApplicable</span>
+<span class="n">PolicyStoreSource</span>     <span class="p">:</span> <span class="n">PersistentStore</span>
+<span class="n">PolicyStoreSourceType</span> <span class="p">:</span> <span class="n">Local</span>
+
+<span class="c1"># If the above rule is not returned:</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">New</span><span class="o">-</span><span class="n">NetFirewallRule</span> <span class="o">-</span><span class="n">Protocol</span> <span class="n">TCP</span> <span class="o">-</span><span class="n">LocalPort</span> <span class="mi">22</span> <span class="o">-</span><span class="n">Direction</span> <span class="n">Inbound</span> <span class="o">-</span><span class="n">Action</span> <span class="n">Allow</span> <span class="o">-</span><span class="n">DisplayName</span> <span class="n">ssh</span>
+</pre></div>
+</div>
+<p>There are some services related to SSH (add <code class="docutils literal notranslate"><span class="pre">|</span> <span class="pre">Format-list</span> <span class="pre">*</span></code> to list more properties):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PS C:\&gt; Get-Service | ? Name -like &#39;*ssh*&#39;
+Status   Name               DisplayName
+------   ----               -----------
+Running  OpenSSHd           OpenSSH Server
+Stopped  ssh-agent          OpenSSH Authentication Agent
+Stopped  sshd               OpenSSH SSH Server
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">OpenSSHd</span></code> is the server provided by Cygwin, installed on Vagrant images by
+Microsoft in <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\OpenSSH\usr\sbin\sshd.exe</span></code>.
+In order to switch to the native OpenSSH server (<code class="docutils literal notranslate"><span class="pre">sshd</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Stop</span><span class="o">-</span><span class="n">Service</span> <span class="o">-</span><span class="n">Name</span> <span class="n">OpenSSHd</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Start</span><span class="o">-</span><span class="n">Service</span> <span class="o">-</span><span class="n">Name</span> <span class="n">sshd</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Set</span><span class="o">-</span><span class="n">Service</span> <span class="o">-</span><span class="n">Name</span> <span class="n">OpenSSHd</span> <span class="o">-</span><span class="n">StartupType</span> <span class="n">Disabled</span>  <span class="c1"># (or Manual)</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Set</span><span class="o">-</span><span class="n">Service</span> <span class="o">-</span><span class="n">Name</span> <span class="n">sshd</span> <span class="o">-</span><span class="n">StartupType</span> <span class="n">Automatic</span>
+
+<span class="c1"># Verify with: Get-Service | ? Name -like &#39;*ssh*&#39; | Format-List Status,StartType,Name,DisplayName</span>
+</pre></div>
+</div>
+<p>After the switch, the SSH prompt given by Vagrant becomes a real <code class="docutils literal notranslate"><span class="pre">cmd.exe</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ vagrant ssh
+IEUser@192.168.121.61&#39;s password:
+Microsoft Windows [Version 10.0.17134.345]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+ieuser@MSEDGEWIN10 C:\Users\IEUser&gt;
+</pre></div>
+</div>
+<p>In order to change the number of columns (ie. the line width):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">mode</span> <span class="n">con</span> <span class="n">cols</span><span class="o">=</span><span class="mi">80</span>
+<span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">mode</span>
+<span class="n">Status</span> <span class="k">for</span> <span class="n">device</span> <span class="n">COM1</span><span class="p">:</span>
+<span class="o">-----------------------</span>
+    <span class="n">Baud</span><span class="p">:</span>            <span class="mi">1200</span>
+    <span class="n">Parity</span><span class="p">:</span>          <span class="kc">None</span>
+    <span class="n">Data</span> <span class="n">Bits</span><span class="p">:</span>       <span class="mi">7</span>
+    <span class="n">Stop</span> <span class="n">Bits</span><span class="p">:</span>       <span class="mi">1</span>
+    <span class="n">Timeout</span><span class="p">:</span>         <span class="n">OFF</span>
+    <span class="n">XON</span><span class="o">/</span><span class="n">XOFF</span><span class="p">:</span>        <span class="n">OFF</span>
+    <span class="n">CTS</span> <span class="n">handshaking</span><span class="p">:</span> <span class="n">OFF</span>
+    <span class="n">DSR</span> <span class="n">handshaking</span><span class="p">:</span> <span class="n">OFF</span>
+    <span class="n">DSR</span> <span class="n">sensitivity</span><span class="p">:</span> <span class="n">OFF</span>
+    <span class="n">DTR</span> <span class="n">circuit</span><span class="p">:</span>     <span class="n">ON</span>
+    <span class="n">RTS</span> <span class="n">circuit</span><span class="p">:</span>     <span class="n">ON</span>
+
+
+<span class="n">Status</span> <span class="k">for</span> <span class="n">device</span> <span class="n">CON</span><span class="p">:</span>
+<span class="o">----------------------</span>
+    <span class="n">Lines</span><span class="p">:</span>          <span class="mi">9999</span>
+    <span class="n">Columns</span><span class="p">:</span>        <span class="mi">80</span>
+    <span class="n">Keyboard</span> <span class="n">rate</span><span class="p">:</span>  <span class="mi">31</span>
+    <span class="n">Keyboard</span> <span class="n">delay</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="n">Code</span> <span class="n">page</span><span class="p">:</span>      <span class="mi">437</span>
+</pre></div>
+</div>
+<p>In order to authenticate with an RSA key generated by vagrant, the public key
+needs to be written to <code class="docutils literal notranslate"><span class="pre">C:\Users\IEUser\.ssh\authorized_keys</span></code>.
+This public key can be provisioned with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ssh-keygen -y -f .vagrant/machines/default/libvirt/private_key | \
+    ssh IEUser@$VMIP PowerShell &quot;Read-Host &gt; .ssh/authorized_keys&quot;
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="ensable-the-windows-subsystem-for-linux">
 <h2>Ensable the Windows Subsystem for Linux<a class="headerlink" href="#ensable-the-windows-subsystem-for-linux" title="Permalink to this headline">¶</a></h2>
 <p>To install WSL (Windows Subsystem for Linux), run this command as Administrator:</p>
@@ -322,6 +428,102 @@ Installation guide for servers</li>
 Release notes</li>
 </ul>
 </div>
+<div class="section" id="software-to-install">
+<h2>Software to install<a class="headerlink" href="#software-to-install" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="manual-installation">
+<h3>Manual installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
+<p>Here is a list of software which can be useful in a Windows virtual machine:</p>
+<ul>
+<li><p class="first">Notepad++: <a class="reference external" href="https://notepad-plus-plus.org/">https://notepad-plus-plus.org/</a> (the sha1sums of the downloaded files can be verified)</p>
+</li>
+<li><p class="first">Windows Development Kits, debugger (WinDbg…):</p>
+<ul class="simple">
+<li><a class="reference external" href="https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit">https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit</a></li>
+<li>Create a shortcut to <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Windows</span> <span class="pre">Kits\10\Debuggers\x64</span></code></li>
+</ul>
+</li>
+<li><p class="first">msys2 environment: <a class="reference external" href="https://www.msys2.org/">https://www.msys2.org/</a> , and install some software:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PATH</span><span class="o">=</span><span class="s2">&quot;/cygdrive/c/msys64/usr/bin:$PATH&quot;</span>
+<span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span>
+<span class="n">pacman</span> <span class="o">-</span><span class="n">Sy</span> <span class="n">git</span> <span class="n">mingw</span><span class="o">-</span><span class="n">w64</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">toolchain</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Python: <a class="reference external" href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></p>
+</li>
+<li><p class="first">Some Sysinternals tools:</p>
+<ul class="simple">
+<li>Process Explorer <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processexplorer">https://technet.microsoft.com/en-us/sysinternals/processexplorer</a></li>
+<li>Process Monitor <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processmonitor">https://technet.microsoft.com/en-us/sysinternals/processmonitor</a></li>
+<li>DebugView <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/debugview">https://technet.microsoft.com/en-us/sysinternals/debugview</a></li>
+<li>WinObj <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/winobj">https://technet.microsoft.com/en-us/sysinternals/winobj</a></li>
+<li>AccessEnum <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/accessenum">https://technet.microsoft.com/en-us/sysinternals/accessenum</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="debloat-windows">
+<h3>Debloat Windows<a class="headerlink" href="#debloat-windows" title="Permalink to this headline">¶</a></h3>
+<p>Windows 10 comes with many features which are better disabled:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/W4RH4WK/Debloat-Windows-10">https://github.com/W4RH4WK/Debloat-Windows-10</a></li>
+<li><a class="reference external" href="https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html">https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html</a></li>
+</ul>
+<p>With Git installed, in a PowerShell administrator console:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">W4RH4WK</span><span class="o">/</span><span class="n">Debloat</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="mi">10</span>
+<span class="n">cd</span> <span class="n">Debloat</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="mi">10</span>\<span class="n">scripts</span>
+<span class="o">.</span>\<span class="n">block</span><span class="o">-</span><span class="n">telemetry</span><span class="o">.</span><span class="n">ps1</span>
+<span class="o">.</span>\<span class="n">disable</span><span class="o">-</span><span class="n">services</span><span class="o">.</span><span class="n">ps1</span>
+<span class="c1"># .\disable-windows-defender.ps1</span>
+<span class="c1"># .\experimental_unfuckery.ps1 # Uncomment some apps there</span>
+<span class="o">.</span>\<span class="n">fix</span><span class="o">-</span><span class="n">privacy</span><span class="o">-</span><span class="n">settings</span><span class="o">.</span><span class="n">ps1</span>
+<span class="o">.</span>\<span class="n">optimize</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="n">interface</span><span class="o">.</span><span class="n">ps1</span>
+<span class="o">.</span>\<span class="n">optimize</span><span class="o">-</span><span class="n">windows</span><span class="o">-</span><span class="n">update</span><span class="o">.</span><span class="n">ps1</span>
+<span class="o">.</span>\<span class="n">remove</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">apps</span><span class="o">.</span><span class="n">ps1</span>
+<span class="o">.</span>\<span class="n">remove</span><span class="o">-</span><span class="n">onedrive</span><span class="o">.</span><span class="n">ps1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="automatic-installation">
+<h3>Automatic installation<a class="headerlink" href="#automatic-installation" title="Permalink to this headline">¶</a></h3>
+<p>In order to ease the installation of these software, a package manager such as
+Chocolatey can be used.
+Its website gives some installation commands
+(<a class="reference external" href="https://chocolatey.org/docs/installation#install-with-cmdexe">https://chocolatey.org/docs/installation#install-with-cmdexe</a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># For cmd.exe</span>
+<span class="o">@</span><span class="s2">&quot;%SystemRoot%\System32\WindowsPowerShell</span><span class="se">\v</span><span class="s2">1.0\powershell.exe&quot;</span> <span class="o">-</span><span class="n">NoProfile</span> <span class="o">-</span><span class="n">InputFormat</span> <span class="kc">None</span> <span class="o">-</span><span class="n">ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-</span><span class="n">Command</span> <span class="s2">&quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot;</span> <span class="o">&amp;&amp;</span> <span class="n">SET</span> <span class="s2">&quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey</span><span class="se">\b</span><span class="s2">in&quot;</span>
+<span class="c1"># For PowerShell</span>
+<span class="n">Set</span><span class="o">-</span><span class="n">ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-</span><span class="n">Scope</span> <span class="n">Process</span> <span class="o">-</span><span class="n">Force</span><span class="p">;</span> <span class="n">iex</span> <span class="p">((</span><span class="n">New</span><span class="o">-</span><span class="n">Object</span> <span class="n">System</span><span class="o">.</span><span class="n">Net</span><span class="o">.</span><span class="n">WebClient</span><span class="p">)</span><span class="o">.</span><span class="n">DownloadString</span><span class="p">(</span><span class="s1">&#39;https://chocolatey.org/install.ps1&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Chocolatey adds itselt to <code class="docutils literal notranslate"><span class="pre">%PATH%</span></code> environment variable, and this can be
+verified in the registry:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Get</span><span class="o">-</span><span class="n">ItemProperty</span> <span class="o">-</span><span class="n">Path</span> <span class="s1">&#39;Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment&#39;</span> <span class="o">-</span><span class="n">Name</span> <span class="n">PATH</span>
+<span class="c1"># It should ends with C:\ProgramData\chocolatey\bin;</span>
+
+<span class="c1"># Or with cmd.exe:</span>
+<span class="n">reg</span> <span class="n">query</span> <span class="s2">&quot;HKLM\System\CurrentControlSet\Control\Session Manager\Environment&quot;</span> <span class="o">/</span><span class="n">v</span> <span class="n">PATH</span>
+</pre></div>
+</div>
+<p>Then, to install software:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">choco</span> <span class="n">install</span> <span class="n">notepadplusplus</span> <span class="n">notepadplusplus</span><span class="o">.</span><span class="n">commandline</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">windbg</span> <span class="o">-</span><span class="n">y</span>
+<span class="c1"># https://chocolatey.org/packages?q=sysinternals</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">procexp</span> <span class="n">procmon</span> <span class="n">autoruns</span> <span class="n">psexec</span> <span class="n">procdump</span> <span class="n">adexplorer</span> <span class="n">sigcheck</span> <span class="n">dbgview</span> <span class="n">winobj</span> <span class="n">accesschk</span> <span class="n">accessenum</span> <span class="o">-</span><span class="n">y</span>
+
+<span class="c1"># MSys2 is installed in C:\tools\msys64</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">git</span> <span class="n">msys2</span> <span class="n">python3</span> <span class="o">-</span><span class="n">y</span>
+<span class="c1"># Add &#39;PATH=&quot;$PATH:/c/Program Files/Git/cmd&quot;&#39; to C:/tools/msys64/home/IEUser/.bashrc</span>
+<span class="c1"># Launch MSys with C:/tools/msys64/usr/bin/bash.exe</span>
+</pre></div>
+</div>
+<p>In the end: reboot! (Remember that we are talking about Windows…)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># &quot;Powershell Restart-Computer&quot; may also work</span>
+<span class="n">shutdown</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">t</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -335,9 +537,19 @@ Release notes</li>
 <li><a class="reference internal" href="#">Windows Virtual Machine with Vagrant</a><ul>
 <li><a class="reference internal" href="#create-a-libvirt-box">Create a libvirt box</a></li>
 <li><a class="reference internal" href="#first-configuration">First configuration</a></li>
-<li><a class="reference internal" href="#software-to-install">Software to install</a></li>
+<li><a class="reference internal" href="#remote-access">Remote access</a><ul>
+<li><a class="reference internal" href="#rdp-connection">RDP connection</a></li>
 <li><a class="reference internal" href="#using-winrm">Using WinRM</a></li>
+<li><a class="reference internal" href="#install-windows-openssh-server">Install Windows OpenSSH server</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#ensable-the-windows-subsystem-for-linux">Ensable the Windows Subsystem for Linux</a></li>
+<li><a class="reference internal" href="#software-to-install">Software to install</a><ul>
+<li><a class="reference internal" href="#manual-installation">Manual installation</a></li>
+<li><a class="reference internal" href="#debloat-windows">Debloat Windows</a></li>
+<li><a class="reference internal" href="#automatic-installation">Automatic installation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
