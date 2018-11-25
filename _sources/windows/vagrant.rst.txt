@@ -439,8 +439,9 @@ Automatic installation
 ~~~~~~~~~~~~~~~~~~~~~~
 
 In order to ease the installation of these software, a package manager such as
-Chocolatey can be used.
-Its website gives some installation commands
+`Ninite <https://ninite.com/>`_ or `Chocolatey <https://chocolatey.org/>`_ can be
+used (cf. https://chocolatey.org/docs/chocolatey-vs-ninite).
+Chocolatey's website gives some installation commands
 (https://chocolatey.org/docs/installation#install-with-cmdexe)::
 
     # For cmd.exe

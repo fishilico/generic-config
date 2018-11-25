@@ -487,8 +487,9 @@ Release notes</li>
 <div class="section" id="automatic-installation">
 <h3>Automatic installation<a class="headerlink" href="#automatic-installation" title="Permalink to this headline">¶</a></h3>
 <p>In order to ease the installation of these software, a package manager such as
-Chocolatey can be used.
-Its website gives some installation commands
+<a class="reference external" href="https://ninite.com/">Ninite</a> or <a class="reference external" href="https://chocolatey.org/">Chocolatey</a> can be
+used (cf. <a class="reference external" href="https://chocolatey.org/docs/chocolatey-vs-ninite">https://chocolatey.org/docs/chocolatey-vs-ninite</a>).
+Chocolatey’s website gives some installation commands
 (<a class="reference external" href="https://chocolatey.org/docs/installation#install-with-cmdexe">https://chocolatey.org/docs/installation#install-with-cmdexe</a>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># For cmd.exe</span>
 <span class="o">@</span><span class="s2">&quot;%SystemRoot%\System32\WindowsPowerShell</span><span class="se">\v</span><span class="s2">1.0\powershell.exe&quot;</span> <span class="o">-</span><span class="n">NoProfile</span> <span class="o">-</span><span class="n">InputFormat</span> <span class="kc">None</span> <span class="o">-</span><span class="n">ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-</span><span class="n">Command</span> <span class="s2">&quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot;</span> <span class="o">&amp;&amp;</span> <span class="n">SET</span> <span class="s2">&quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey</span><span class="se">\b</span><span class="s2">in&quot;</span>
