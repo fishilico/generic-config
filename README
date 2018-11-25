@@ -68,3 +68,9 @@ This project is organized in folders by field:
 - `<sysadmin/>`_: some thoughts and tips&tricks about system administration
 - `<windows/>`_: content related to using Microsoft Windows systems
 - `<www/>`_: content of ``/var/www`` on a web server without specific purpose
+
+License
+-------
+This project is licensed under
+`Creative Commons Attribution Share Alike 4.0 International <https://creativecommons.org/licenses/by-sa/4.0/legalcode>`_
+(`CC-BY-SA-4.0 <https://spdx.org/licenses/CC-BY-SA-4.0.html>`_).
