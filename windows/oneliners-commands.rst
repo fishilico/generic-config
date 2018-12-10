@@ -55,12 +55,77 @@ Export WiFi profiles (username and password) to ``%APPDATA%\<profile>.xml``::
 Source: https://securelist.com/shedding-skin-turlas-fresh-faces/88069/
 
 
-Enumerate all processes
------------------------
+User and group management
+-------------------------
+
+Some commands to list and manage users and groups
+
+.. code-block:: sh
+
+    # Local users and groups manager
+    lusrmgr.msc
+
+    # net command on local accounts
+    net user
+    net localgroup
+
+    # net command on Active Directory accounts
+    net user /domain
+    net group
+
+    # query command
+    query user
+
+    # PowerShell, with MS Exchange cmdlet
+    # Add-PSSnapin Microsoft.Exchange.Management.PowerShell.E2010
+    Get-User | Export-CSV C:\Temp\AllUsers.csv -NoTypeInfo
+
+    # WMI (PowerShell)
+    Get-CimInstance -ClassName Win32_UserAccount
+    Get-CimInstance -ClassName WIn32_Group
+
+
+Enumerate live objects
+----------------------
+
+Enumerate all processes::
+
+    query process *
+    Get-Process
+
+Enumerate all services::
+
+    Get-Service | Export-CSV C:\Temp\AllServices.csv -NoTypeInfo
+
+
+Local Group Policy
+------------------
 
 ::
 
-    query process *
+    gpedit.msc
+    secpol.msc
+
+    secedit /export /cfg system_config.cfg
+
+
+Installed software
+------------------
+
+::
+
+    wmic product get name,version /format:csv > applications.csv
+
+
+Firewall
+--------
+
+::
+
+    wf.msc
+
+    Get-NetFirewallProfile
+    Show-NetFirewallRule
 
 
 TCP port forwarding with netsh
