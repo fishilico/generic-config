@@ -1,5 +1,5 @@
-Oneliners commands
-==================
+One-liners commands
+===================
 
 Here are some useful short commands for Windows systems that may be useful.
 
@@ -53,6 +53,28 @@ Export WiFi profiles (username and password) to ``%APPDATA%\<profile>.xml``::
     cmd.exe /c netsh wlan export profile key=clear folder="%APPDATA%"
 
 Source: https://securelist.com/shedding-skin-turlas-fresh-faces/88069/
+
+In PowerShell, without writing any file::
+
+    $results = (netsh wlan show profiles) |
+        Select-String '\:(.+)$' | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | \
+        %{(netsh wlan show profile name=$name key=clear)} | \
+        Select-String 'Key Content\W+\:(.+)$' | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | \
+        %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }}
+
+    # Display the results or record them in files
+    $results
+    $results | Format-Table -Wrap
+    $results | Format-Table -AutoSize
+    $results | Out-GridView
+    $results | Export-Csv -Path .\wifi.csv -NoTypeInformation -Encoding ASCII
+    $results | Out-File -FilePath .\wifi.txt -Encoding ASCII
+
+Sources:
+
+* https://jocha.se/blog/tech/display-all-saved-wifi-passwords
+* https://www.tenforums.com/tutorials/27997-see-wireless-network-security-key-password-windows-10-a.html
+* https://community.idera.com/database-tools/powershell/ask_the_experts/f/learn_powershell_from_don_jones-24/19610/convert-one-liner-to-more-readable-code
 
 
 User and group management
