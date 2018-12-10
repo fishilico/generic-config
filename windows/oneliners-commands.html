@@ -6,14 +6,13 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Oneliners commands &#8212; Generic Config</title>
+    <title>One-liners commands &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Set hardware clock to UTC" href="utc-clock.html" />
@@ -41,9 +40,14 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="oneliners-commands">
-<h1>Oneliners commands<a class="headerlink" href="#oneliners-commands" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="one-liners-commands">
+<h1>One-liners commands<a class="headerlink" href="#one-liners-commands" title="Permalink to this headline">¶</a></h1>
 <p>Here are some useful short commands for Windows systems that may be useful.</p>
+<p>In order to find a specific Powershell command from a keyword, this can be used:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># List commands using &quot;WMI&quot; in their names</span>
+Get-Command -noun *WMI*
+</pre></div>
+</div>
 <div class="section" id="download-and-run">
 <h2>Download and run<a class="headerlink" href="#download-and-run" title="Permalink to this headline">¶</a></h2>
 <p>Download and run a script</p>
@@ -71,7 +75,7 @@
 # Save to a file
 Invoke-WebRequest -Uri http://webserver/file.txt -OutFile file.txt -UseBasicParsing
 
-# With BITS (Background Intelligent Transfer Service)
+# With BITS (Background Intelligent Transfer Service) (ipmo = Import-Module)
 ipmo BitsTransfer;Start-BitsTransfer -Source &quot;http://webserver/file.txt&quot; -Destination C:\Windows\Temp\
 </pre></div>
 </div>
@@ -80,6 +84,7 @@ ipmo BitsTransfer;Start-BitsTransfer -Source &quot;http://webserver/file.txt&quo
 <h2>Proxy settings<a class="headerlink" href="#proxy-settings" title="Permalink to this headline">¶</a></h2>
 <p>Get the HTTP proxy which is currently configured:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reg</span> <span class="n">query</span> <span class="s2">&quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</span> <span class="o">/</span><span class="n">v</span> <span class="n">ProxyServer</span>
+<span class="n">reg</span> <span class="n">query</span> <span class="s2">&quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</span> <span class="o">/</span><span class="n">v</span> <span class="n">ProxyEnable</span>
 </pre></div>
 </div>
 </div>
@@ -94,10 +99,97 @@ ipmo BitsTransfer;Start-BitsTransfer -Source &quot;http://webserver/file.txt&quo
 </pre></div>
 </div>
 <p>Source: <a class="reference external" href="https://securelist.com/shedding-skin-turlas-fresh-faces/88069/">https://securelist.com/shedding-skin-turlas-fresh-faces/88069/</a></p>
+<p>In PowerShell, without writing any file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$results = (netsh wlan show profiles) |
+    Select-String &#39;\:(.+)$&#39; | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | \
+    %{(netsh wlan show profile name=$name key=clear)} | \
+    Select-String &#39;Key Content\W+\:(.+)$&#39; | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | \
+    %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }}
+
+# Display the results or record them in files
+$results
+$results | Format-Table -Wrap
+$results | Format-Table -AutoSize
+$results | Out-GridView
+$results | Export-Csv -Path .\wifi.csv -NoTypeInformation -Encoding ASCII
+$results | Out-File -FilePath .\wifi.txt -Encoding ASCII
+</pre></div>
 </div>
-<div class="section" id="enumerate-all-processes">
-<h2>Enumerate all processes<a class="headerlink" href="#enumerate-all-processes" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="n">process</span> <span class="o">*</span>
+<p>Sources:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://jocha.se/blog/tech/display-all-saved-wifi-passwords">https://jocha.se/blog/tech/display-all-saved-wifi-passwords</a></li>
+<li><a class="reference external" href="https://www.tenforums.com/tutorials/27997-see-wireless-network-security-key-password-windows-10-a.html">https://www.tenforums.com/tutorials/27997-see-wireless-network-security-key-password-windows-10-a.html</a></li>
+<li><a class="reference external" href="https://community.idera.com/database-tools/powershell/ask_the_experts/f/learn_powershell_from_don_jones-24/19610/convert-one-liner-to-more-readable-code">https://community.idera.com/database-tools/powershell/ask_the_experts/f/learn_powershell_from_don_jones-24/19610/convert-one-liner-to-more-readable-code</a></li>
+</ul>
+</div>
+<div class="section" id="user-and-group-management">
+<h2>User and group management<a class="headerlink" href="#user-and-group-management" title="Permalink to this headline">¶</a></h2>
+<p>Some commands to list and manage users and groups</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Local users and groups manager</span>
+lusrmgr.msc
+
+<span class="c1"># net command on local accounts</span>
+net user
+net localgroup
+
+<span class="c1"># net command on Active Directory accounts</span>
+net user /domain
+net group
+
+<span class="c1"># query command</span>
+query user
+
+<span class="c1"># PowerShell, with MS Exchange cmdlet</span>
+<span class="c1"># Add-PSSnapin Microsoft.Exchange.Management.PowerShell.E2010</span>
+Get-User <span class="p">|</span> Export-CSV C:<span class="se">\T</span>emp<span class="se">\A</span>llUsers.csv -NoTypeInfo
+
+<span class="c1"># WMI (PowerShell)</span>
+Get-WmiObject Win32_UserAccount
+Get-CimInstance -ClassName Win32_UserAccount
+Get-CimInstance -ClassName Win32_Group
+</pre></div>
+</div>
+</div>
+<div class="section" id="enumerate-live-objects">
+<h2>Enumerate live objects<a class="headerlink" href="#enumerate-live-objects" title="Permalink to this headline">¶</a></h2>
+<p>Enumerate all processes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tasklist</span>
+<span class="n">query</span> <span class="n">process</span> <span class="o">*</span>
+<span class="n">Get</span><span class="o">-</span><span class="n">Process</span>
+</pre></div>
+</div>
+<p>Enumerate all services:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Get</span><span class="o">-</span><span class="n">Service</span> <span class="o">|</span> <span class="n">Export</span><span class="o">-</span><span class="n">CSV</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Temp</span>\<span class="n">AllServices</span><span class="o">.</span><span class="n">csv</span> <span class="o">-</span><span class="n">NoTypeInfo</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="local-group-policy">
+<h2>Local Group Policy<a class="headerlink" href="#local-group-policy" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpedit</span><span class="o">.</span><span class="n">msc</span>
+<span class="n">secpol</span><span class="o">.</span><span class="n">msc</span>
+
+<span class="n">secedit</span> <span class="o">/</span><span class="n">export</span> <span class="o">/</span><span class="n">cfg</span> <span class="n">system_config</span><span class="o">.</span><span class="n">cfg</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="boot-configuration">
+<h2>Boot configuration<a class="headerlink" href="#boot-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">msconfig</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="installed-software">
+<h2>Installed software<a class="headerlink" href="#installed-software" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wmic</span> <span class="n">product</span> <span class="n">get</span> <span class="n">name</span><span class="p">,</span><span class="n">version</span> <span class="o">/</span><span class="nb">format</span><span class="p">:</span><span class="n">csv</span> <span class="o">&gt;</span> <span class="n">applications</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="firewall">
+<h2>Firewall<a class="headerlink" href="#firewall" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wf</span><span class="o">.</span><span class="n">msc</span>
+
+<span class="n">Get</span><span class="o">-</span><span class="n">NetFirewallProfile</span>
+<span class="n">Show</span><span class="o">-</span><span class="n">NetFirewallRule</span>
 </pre></div>
 </div>
 </div>
@@ -107,14 +199,24 @@ ipmo BitsTransfer;Start-BitsTransfer -Source &quot;http://webserver/file.txt&quo
 </pre></div>
 </div>
 </div>
-<div class="section" id="csv-viewer">
-<h2>CSV Viewer<a class="headerlink" href="#csv-viewer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="csv-and-table-viewer">
+<h2>CSV and table viewer<a class="headerlink" href="#csv-and-table-viewer" title="Permalink to this headline">¶</a></h2>
 <p>Display a simple CSV file in a simple GUI, from a PowerShell prompt:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Import</span><span class="o">-</span><span class="n">Csv</span> <span class="o">-</span><span class="n">Path</span> <span class="n">file</span><span class="o">.</span><span class="n">csv</span> <span class="o">|</span> <span class="n">Out</span><span class="o">-</span><span class="n">GridView</span>
 </pre></div>
 </div>
 <p>In order to produce a CSV from a PowerShell command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span> <span class="o">|</span> <span class="n">Sort</span><span class="o">-</span><span class="n">Object</span> <span class="o">-</span><span class="n">Property</span> <span class="n">Timestamp</span> <span class="o">|</span> <span class="n">export4</span><span class="o">-</span><span class="n">csv</span> <span class="n">file</span><span class="o">.</span><span class="n">csv</span> <span class="o">-</span><span class="n">notypeinformation</span>
+</pre></div>
+</div>
+<p>For a table in the CLI:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span> <span class="o">|</span> <span class="n">Format</span><span class="o">-</span><span class="n">Table</span>
+<span class="o">...</span> <span class="o">|</span> <span class="n">ft</span>
+</pre></div>
+</div>
+<p>In order to show a table as a list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span> <span class="o">|</span> <span class="n">Format</span><span class="o">-</span><span class="n">List</span>
+<span class="o">...</span> <span class="o">|</span> <span class="n">fl</span>
 </pre></div>
 </div>
 </div>
@@ -128,13 +230,18 @@ ipmo BitsTransfer;Start-BitsTransfer -Source &quot;http://webserver/file.txt&quo
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Oneliners commands</a><ul>
+<li><a class="reference internal" href="#">One-liners commands</a><ul>
 <li><a class="reference internal" href="#download-and-run">Download and run</a></li>
 <li><a class="reference internal" href="#proxy-settings">Proxy settings</a></li>
 <li><a class="reference internal" href="#wifi-profiles">WiFi profiles</a></li>
-<li><a class="reference internal" href="#enumerate-all-processes">Enumerate all processes</a></li>
+<li><a class="reference internal" href="#user-and-group-management">User and group management</a></li>
+<li><a class="reference internal" href="#enumerate-live-objects">Enumerate live objects</a></li>
+<li><a class="reference internal" href="#local-group-policy">Local Group Policy</a></li>
+<li><a class="reference internal" href="#boot-configuration">Boot configuration</a></li>
+<li><a class="reference internal" href="#installed-software">Installed software</a></li>
+<li><a class="reference internal" href="#firewall">Firewall</a></li>
 <li><a class="reference internal" href="#tcp-port-forwarding-with-netsh">TCP port forwarding with netsh</a></li>
-<li><a class="reference internal" href="#csv-viewer">CSV Viewer</a></li>
+<li><a class="reference internal" href="#csv-and-table-viewer">CSV and table viewer</a></li>
 </ul>
 </li>
 </ul>
@@ -186,7 +293,7 @@ ipmo BitsTransfer;Start-BitsTransfer -Source &quot;http://webserver/file.txt&quo
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2018, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>
 </html>

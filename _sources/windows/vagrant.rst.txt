@@ -213,6 +213,14 @@ The Windows version can be gathered using this PowerShell command::
     OS Name:                   Microsoft Windows 10 Enterprise Evaluation
     OS Version:                10.0.17134 N/A Build 17134
 
+Or with::
+
+    PS C:\> [System.Environment]::OSVersion
+
+    Platform ServicePack Version      VersionString
+    -------- ----------- -------      -------------
+     Win32NT             10.0.17134.0 Microsoft Windows NT 10.0.17134.0
+
 
 Install Windows OpenSSH server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
