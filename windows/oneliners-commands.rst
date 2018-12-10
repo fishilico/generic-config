@@ -3,6 +3,14 @@ One-liners commands
 
 Here are some useful short commands for Windows systems that may be useful.
 
+In order to find a specific Powershell command from a keyword, this can be used:
+
+.. code-block:: sh
+
+    # List commands using "WMI" in their names
+    Get-Command -noun *WMI*
+
+
 Download and run
 ----------------
 
@@ -29,7 +37,7 @@ Downloading files with PowerShell::
     # Save to a file
     Invoke-WebRequest -Uri http://webserver/file.txt -OutFile file.txt -UseBasicParsing
 
-    # With BITS (Background Intelligent Transfer Service)
+    # With BITS (Background Intelligent Transfer Service) (ipmo = Import-Module)
     ipmo BitsTransfer;Start-BitsTransfer -Source "http://webserver/file.txt" -Destination C:\Windows\Temp\
 
 
@@ -39,6 +47,7 @@ Proxy settings
 Get the HTTP proxy which is currently configured::
 
     reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyServer
+    reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyEnable
 
 
 WiFi profiles
@@ -103,8 +112,9 @@ Some commands to list and manage users and groups
     Get-User | Export-CSV C:\Temp\AllUsers.csv -NoTypeInfo
 
     # WMI (PowerShell)
+    Get-WmiObject Win32_UserAccount
     Get-CimInstance -ClassName Win32_UserAccount
-    Get-CimInstance -ClassName WIn32_Group
+    Get-CimInstance -ClassName Win32_Group
 
 
 Enumerate live objects
@@ -112,6 +122,7 @@ Enumerate live objects
 
 Enumerate all processes::
 
+    tasklist
     query process *
     Get-Process
 
@@ -129,6 +140,14 @@ Local Group Policy
     secpol.msc
 
     secedit /export /cfg system_config.cfg
+
+
+Boot configuration
+------------------
+
+::
+
+    msconfig
 
 
 Installed software
@@ -158,8 +177,8 @@ TCP port forwarding with netsh
     netsh interface portproxy add v4tov4 listenport=1234 listenaddress=192.0.2.42 connectport=80 connectaddress=10.13.37.1
 
 
-CSV Viewer
-----------
+CSV and table viewer
+--------------------
 
 Display a simple CSV file in a simple GUI, from a PowerShell prompt::
 
@@ -168,3 +187,13 @@ Display a simple CSV file in a simple GUI, from a PowerShell prompt::
 In order to produce a CSV from a PowerShell command::
 
     ... | Sort-Object -Property Timestamp | export4-csv file.csv -notypeinformation
+
+For a table in the CLI::
+
+    ... | Format-Table
+    ... | ft
+
+In order to show a table as a list::
+
+    ... | Format-List
+    ... | fl
