@@ -199,6 +199,28 @@ Get-CimInstance -ClassName Win32_Group
 </pre></div>
 </div>
 </div>
+<div class="section" id="alternate-data-streams">
+<h2>Alternate Data Streams<a class="headerlink" href="#alternate-data-streams" title="Permalink to this headline">¶</a></h2>
+<p>Get files with <code class="docutils literal notranslate"><span class="pre">Zone.Identifier</span></code> alternate data stream (ADS):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Get</span><span class="o">-</span><span class="n">ChildItem</span> <span class="o">-</span><span class="n">Recurse</span> <span class="o">|</span> <span class="n">Get</span><span class="o">-</span><span class="n">Item</span> <span class="o">-</span><span class="n">Stream</span> <span class="n">Zone</span><span class="o">.</span><span class="n">Identifier</span> <span class="o">-</span><span class="n">ErrorAction</span> <span class="n">SilentlyContinue</span> <span class="o">|</span> <span class="n">Select</span><span class="o">-</span><span class="n">Object</span> <span class="n">FileName</span>
+</pre></div>
+</div>
+<p>Read an ADS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Get</span><span class="o">-</span><span class="n">Content</span> <span class="o">-</span><span class="n">Stream</span> <span class="n">Zone</span><span class="o">.</span><span class="n">Identifier</span> <span class="o">.</span>\<span class="n">my</span><span class="o">-</span><span class="n">application</span><span class="o">.</span><span class="n">exe</span>
+</pre></div>
+</div>
+<p>Remove an ADS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Remove</span><span class="o">-</span><span class="n">Item</span> <span class="o">.</span>\<span class="n">my</span><span class="o">-</span><span class="n">application</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">Stream</span> <span class="n">Zone</span><span class="o">.</span><span class="n">Identifier</span>
+</pre></div>
+</div>
+<p>When downloading a file from the Internet, <code class="docutils literal notranslate"><span class="pre">dir</span></code> shows a filename with suffix <code class="docutils literal notranslate"><span class="pre">:Zone.Identifier:$DATA</span></code> and with 26 bytes (each lines are ended by <code class="docutils literal notranslate"><span class="pre">&quot;\r\n&quot;</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">ZoneTransfer</span><span class="p">]</span>
+<span class="n">ZoneId</span><span class="o">=</span><span class="mi">3</span>
+</pre></div>
+</div>
+<p>The Zone identifier is 0 for the local machine, 1 for the local intranet, 2 for trusted sites, 3 for the Internet or 4 for restricted sites.</p>
+<p>The ADS <code class="docutils literal notranslate"><span class="pre">Zone.Identifier</span></code> may contain other fields such as <code class="docutils literal notranslate"><span class="pre">ReferrerUrl=...</span></code>.</p>
+</div>
 <div class="section" id="csv-and-table-viewer">
 <h2>CSV and table viewer<a class="headerlink" href="#csv-and-table-viewer" title="Permalink to this headline">¶</a></h2>
 <p>Display a simple CSV file in a simple GUI, from a PowerShell prompt:</p>
@@ -241,6 +263,7 @@ Get-CimInstance -ClassName Win32_Group
 <li><a class="reference internal" href="#installed-software">Installed software</a></li>
 <li><a class="reference internal" href="#firewall">Firewall</a></li>
 <li><a class="reference internal" href="#tcp-port-forwarding-with-netsh">TCP port forwarding with netsh</a></li>
+<li><a class="reference internal" href="#alternate-data-streams">Alternate Data Streams</a></li>
 <li><a class="reference internal" href="#csv-and-table-viewer">CSV and table viewer</a></li>
 </ul>
 </li>

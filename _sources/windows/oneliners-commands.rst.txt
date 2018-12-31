@@ -177,6 +177,31 @@ TCP port forwarding with netsh
     netsh interface portproxy add v4tov4 listenport=1234 listenaddress=192.0.2.42 connectport=80 connectaddress=10.13.37.1
 
 
+Alternate Data Streams
+----------------------
+
+Get files with ``Zone.Identifier`` alternate data stream (ADS)::
+
+    Get-ChildItem -Recurse | Get-Item -Stream Zone.Identifier -ErrorAction SilentlyContinue | Select-Object FileName
+
+Read an ADS::
+
+    Get-Content -Stream Zone.Identifier .\my-application.exe
+
+Remove an ADS::
+
+    Remove-Item .\my-application.exe -Stream Zone.Identifier
+
+When downloading a file from the Internet, ``dir`` shows a filename with suffix ``:Zone.Identifier:$DATA`` and with 26 bytes (each lines are ended by ``"\r\n"``::
+
+    [ZoneTransfer]
+    ZoneId=3
+
+The Zone identifier is 0 for the local machine, 1 for the local intranet, 2 for trusted sites, 3 for the Internet or 4 for restricted sites.
+
+The ADS ``Zone.Identifier`` may contain other fields such as ``ReferrerUrl=...``.
+
+
 CSV and table viewer
 --------------------
 
