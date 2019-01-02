@@ -1,13 +1,13 @@
 Windows Virtual Machine with Vagrant
 ====================================
 
-Microsoft provides free Windows VM (which expire after 90 days) on
-https://developer.microsoft.com/en-us/microsoft-edge/ .
+Microsoft provides free Windows Vircual Machines (which expire after 90 days) on
+https://developer.microsoft.com/en-us/microsoft-edge/.
 Among the available VM are Vagrant machines. Here are instructions to setup
 a Windows VM through Vagrant using Libvirt and QEmu-KVM as backend.
 
 
-Create a libvirt box
+Create a Libvirt box
 --------------------
 
 * Download a ZIP from https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/, like
@@ -61,7 +61,8 @@ This is because the virtual machine needs to boot in UEFI mode and the network
 drivers are missing. For the network issue, the next section provides a way to
 fix the issue. For UEFI boot, Libvirt needs to be configured to support this
 boot mode. For Arch Linux, this is documented in
-https://wiki.archlinux.org/index.php/libvirt#UEFI_Support :
+https://wiki.archlinux.org/index.php/libvirt#UEFI_Support. Here are some
+instructions:
 
 * Install package ``ovmf``.
 * Add the following statements to ``/etc/libvirt/qemu.conf``::
@@ -70,10 +71,12 @@ https://wiki.archlinux.org/index.php/libvirt#UEFI_Support :
         "/usr/share/ovmf/x64/OVMF_CODE.fd:/usr/share/ovmf/x64/OVMF_VARS.fd"
     ]
 
-* Restart ``libvirtd``.
+* Restart ``libvirtd`` (for example with ``systemctl restart libvirtd``).
 * Run ``virsh edit windows_default`` (replacing ``windows_default`` with the
   name of the domain) and insert a ``<loader>`` tag into the ``<os>`` one.
-  It should looks like::
+  It should looks like:
+
+  .. code-block:: xml
 
       <os>
         <type arch='x86_64' machine='pc-i440fx-3.0'>hvm</type>
@@ -91,8 +94,8 @@ in a ``virtio-win`` package:
 https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/
 
 * Download the floppy disk of the drivers, https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd
-* Powerthe virtual machine off and add the floppy drive to the Virtual Machine,
-  with ``virt-manager`` (GUI) or ``virsh edit windows_default`` (CLI)::
+* Power the virtual machine off and add the floppy drive to the VM   with
+  ``virt-manager`` (GUI) or ``virsh edit windows_default`` (CLI)::
 
     <disk type='file' device='floppy'>
       <driver name='qemu' type='raw'/>
@@ -102,15 +105,15 @@ https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machine
       <address type='drive' controller='0' bus='0' target='0' unit='0'/>
     </disk>
 
-* Then power the machine on (through Libvirt), open the Explorer (``Win``+``E``),
-  go to directory ``A:\amd64\Win10\`` and install all ``.inf`` files. There are
-  3 drivers:
+* Then power the machine on (through Libvirt), open the Explorer (``Win`` +
+  ``E``), go to directory ``A:\amd64\Win10\`` and install all ``.inf`` files.
+  There are 3 drivers:
 
   - ``netkvm.inf`` for the Virtio Ethernet Adapter,
   - ``vioscsi.inf`` for the VirtIO SCSI pass-through controller,
   - ``viostor.inf`` for the VirtIO SCSI controller.
 
-In order to install a French keyboard layout::
+These commands install a French keyboard layout::
 
     PowerShell Set-WinUserLanguageList fr-FR,en-US
     PowerShell Get-WinUserLanguageList
@@ -130,7 +133,9 @@ firewall opened::
     PS C:\> Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Value 0
     PS C:\> Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 
-Then, one of these command should work (from a shell on the host)::
+Then, one of these command should work (from a shell on the host):
+
+.. code-block:: sh
 
     vagrant rdp
     xfreerdp /u:IEUser '/p:Passw0rd!' "/v:$(vagrant ssh-config | sed -n 's/ *HostName *//p'):3389"
@@ -147,7 +152,7 @@ to the ``Vagrantfile``::
     config.winrm.username = "IEUser"
     config.winrm.password = "Passw0rd!"
 
-In a command-line prompt (eg. in ``vagrant ssh``) run::
+In a command-line prompt (eg. in ``vagrant ssh``), run::
 
     powershell -Command Enable-PSRemoting
 
@@ -346,8 +351,8 @@ This public key can be provisioned with::
         ssh IEUser@$VMIP PowerShell "Read-Host > .ssh/authorized_keys"
 
 
-Ensable the Windows Subsystem for Linux
----------------------------------------
+Enable the Windows Subsystem for Linux
+--------------------------------------
 
 To install WSL (Windows Subsystem for Linux), run this command as Administrator::
 
@@ -404,7 +409,7 @@ Software to install
 Automatic installation
 ~~~~~~~~~~~~~~~~~~~~~~
 
-In order to ease the installation of these software, a package manager such as
+In order to ease the installation of software, a package manager such as
 `Ninite <https://ninite.com/>`_ or `Chocolatey <https://chocolatey.org/>`_ can be
 used (cf. https://chocolatey.org/docs/chocolatey-vs-ninite).
 Chocolatey's website gives some installation commands
@@ -415,7 +420,7 @@ Chocolatey's website gives some installation commands
     # For PowerShell
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-Chocolatey adds itselt to ``%PATH%`` environment variable, and this can be
+Chocolatey adds itself to ``%PATH%`` environment variable, and this can be
 verified in the registry::
 
     PS C:\> Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH
@@ -456,7 +461,7 @@ These commands install the following software:
 * Git: https://git-scm.com/
 * Python: https://www.python.org/downloads/windows/
 
-* MSys2 environment: https://www.msys2.org/ . Additionnal software like GCC
+* MSys2 environment: https://www.msys2.org/. Additionnal software like GCC
   (to compile C programs) can be installed with::
 
     c:\tools\msys64\usr\bin\bash.exe
@@ -473,12 +478,14 @@ In the end: reboot! (Remember that we are talking about Windows...)
 Debloat Windows
 ~~~~~~~~~~~~~~~
 
-Windows 10 comes with many features which are better disabled:
+Windows 10 comes with many features which are better disabled. Here are some
+websites describing them:
 
 * https://github.com/W4RH4WK/Debloat-Windows-10
 * https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html
 
-With Git installed, in a PowerShell administrator console::
+Here are commands that can be issued once Git has been installed, in a
+PowerShell administrator console::
 
     git clone https://github.com/W4RH4WK/Debloat-Windows-10
     cd Debloat-Windows-10\scripts
