@@ -19,7 +19,7 @@ Create a libvirt box
 
     unzip MSEdge.Win10.Vagrant.zip
 
-* Import the VirtualBox-Vagrant box and mutate it to use libvirt::
+* Import the VirtualBox-Vagrant box and mutate it to use provider ``libvirt``::
 
     vagrant plugin install vagrant-mutate
     vagrant box add windows/win10-edge 'MSEdge - Win10.box'
@@ -50,9 +50,16 @@ Create a libvirt box
 
     vagrant up --provider libvirt --no-destroy-on-error
 
-It will fail, because it needs to boot in UEFI mode and because the network
+This command will fail and the console on the virtual machine will display:
+
+.. code-block:: text
+
+    Booting from Hard disk...
+    No bootable device.
+
+This is because the virtual machine needs to boot in UEFI mode and the network
 drivers are missing. For the network issue, the next section provides a way to
-fix the issue. For UEFI boot, libvirt needs to be configured to support this
+fix the issue. For UEFI boot, Libvirt needs to be configured to support this
 boot mode. For Arch Linux, this is documented in
 https://wiki.archlinux.org/index.php/libvirt#UEFI_Support :
 
@@ -63,14 +70,14 @@ https://wiki.archlinux.org/index.php/libvirt#UEFI_Support :
         "/usr/share/ovmf/x64/OVMF_CODE.fd:/usr/share/ovmf/x64/OVMF_VARS.fd"
     ]
 
-* Restart libvirtd.
+* Restart ``libvirtd``.
 * Run ``virsh edit windows_default`` (replacing ``windows_default`` with the
   name of the domain) and insert a ``<loader>`` tag into the ``<os>`` one.
   It should looks like::
 
       <os>
         <type arch='x86_64' machine='pc-i440fx-3.0'>hvm</type>
-        <loader readonly='yes' secure='no' type='rom'>/usr/share/ovmf/x64/OVMF_CODE.fd</loader
+        <loader readonly='yes' secure='no' type='rom'>/usr/share/ovmf/x64/OVMF_CODE.fd</loader>
         <boot dev='hd'/>
       </os>
 
@@ -84,8 +91,8 @@ in a ``virtio-win`` package:
 https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/
 
 * Download the floppy disk of the drivers, https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd
-* Poweroff the virtual machine and add the floppy drive to the Virtual Machine,
-  with virt-manager or ``virsh edit windows_default``::
+* Powerthe virtual machine off and add the floppy drive to the Virtual Machine,
+  with ``virt-manager`` (GUI) or ``virsh edit windows_default`` (CLI)::
 
     <disk type='file' device='floppy'>
       <driver name='qemu' type='raw'/>
@@ -95,9 +102,9 @@ https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machine
       <address type='drive' controller='0' bus='0' target='0' unit='0'/>
     </disk>
 
-* Then power on the machine again through libvirt, open the Explorer (Win+E), go
-  to directory ``A:\amd64\Win10\`` and install all ``.inf`` files. There are 3
-  drivers:
+* Then power the machine on (through Libvirt), open the Explorer (``Win``+``E``),
+  go to directory ``A:\amd64\Win10\`` and install all ``.inf`` files. There are
+  3 drivers:
 
   - ``netkvm.inf`` for the Virtio Ethernet Adapter,
   - ``vioscsi.inf`` for the VirtIO SCSI pass-through controller,
@@ -284,7 +291,8 @@ There are some services related to SSH (add ``| Format-list *`` to list more pro
     Stopped  sshd               OpenSSH SSH Server
 
 ``OpenSSHd`` is the server provided by Cygwin, installed on Vagrant images by
-Microsoft in ``C:\Program Files\OpenSSH\usr\sbin\sshd.exe``.
+Microsoft in ``C:\Program Files\OpenSSH\usr\sbin\sshd.exe`` (it comes from
+https://www.mls-software.com/opensshd.html).
 In order to switch to the native OpenSSH server (``sshd``)::
 
     PS C:\> Stop-Service -Name OpenSSHd
@@ -393,56 +401,6 @@ Documentation about WSL:
 Software to install
 -------------------
 
-Manual installation
-~~~~~~~~~~~~~~~~~~~
-
-Here is a list of software which can be useful in a Windows virtual machine:
-
-* Notepad++: https://notepad-plus-plus.org/ (the sha1sums of the downloaded files can be verified)
-* Windows Development Kits, debugger (WinDbg...):
-
-  - https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit
-  - Create a shortcut to ``C:\Program Files (x86)\Windows Kits\10\Debuggers\x64``
-
-* msys2 environment: https://www.msys2.org/ , and install some software::
-
-    PATH="/cygdrive/c/msys64/usr/bin:$PATH"
-    pacman -Syu
-    pacman -Sy git mingw-w64-x86_64-toolchain
-
-* Python: https://www.python.org/downloads/windows/
-
-* Some Sysinternals tools:
-
-  - Process Explorer https://technet.microsoft.com/en-us/sysinternals/processexplorer
-  - Process Monitor https://technet.microsoft.com/en-us/sysinternals/processmonitor
-  - DebugView https://technet.microsoft.com/en-us/sysinternals/debugview
-  - WinObj https://technet.microsoft.com/en-us/sysinternals/winobj
-  - AccessEnum https://technet.microsoft.com/en-us/sysinternals/accessenum
-
-Debloat Windows
-~~~~~~~~~~~~~~~
-
-Windows 10 comes with many features which are better disabled:
-
-* https://github.com/W4RH4WK/Debloat-Windows-10
-* https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html
-
-With Git installed, in a PowerShell administrator console::
-
-    git clone https://github.com/W4RH4WK/Debloat-Windows-10
-    cd Debloat-Windows-10\scripts
-    .\block-telemetry.ps1
-    .\disable-services.ps1
-    # .\disable-windows-defender.ps1
-    # .\experimental_unfuckery.ps1 # Uncomment some apps there
-    .\fix-privacy-settings.ps1
-    .\optimize-user-interface.ps1
-    .\optimize-windows-update.ps1
-    .\remove-default-apps.ps1
-    .\remove-onedrive.ps1
-
-
 Automatic installation
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -474,9 +432,35 @@ Then, to install software::
     choco install procexp procmon autoruns psexec procdump adexplorer sigcheck dbgview winobj accesschk accessenum -y
 
     # MSys2 is installed in C:\tools\msys64
-    choco install git msys2 python3 -y
+    choco install git python3 msys2 -y
     # Add 'PATH="$PATH:/c/Program Files/Git/cmd"' to C:/tools/msys64/home/IEUser/.bashrc
     # Launch MSys with C:/tools/msys64/usr/bin/bash.exe
+
+These commands install the following software:
+
+* Notepad++: https://notepad-plus-plus.org/ (the sha1sums of the downloaded files can be verified)
+* Windows Development Kits, debugger (WinDbg...):
+
+  - https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit
+  - Create a shortcut to ``C:\Program Files (x86)\Windows Kits\10\Debuggers\x64``
+
+* Some Sysinternals tools:
+
+  - Process Explorer https://technet.microsoft.com/en-us/sysinternals/processexplorer
+  - Process Monitor https://technet.microsoft.com/en-us/sysinternals/processmonitor
+  - DebugView https://technet.microsoft.com/en-us/sysinternals/debugview
+  - WinObj https://technet.microsoft.com/en-us/sysinternals/winobj
+  - AccessEnum https://technet.microsoft.com/en-us/sysinternals/accessenum
+  - etc.
+
+* Git: https://git-scm.com/
+* Python: https://www.python.org/downloads/windows/
+
+* MSys2 environment: https://www.msys2.org/ . Additionnal software like GCC
+  (to compile C programs) can be installed with::
+
+    c:\tools\msys64\usr\bin\bash.exe
+    pacman -Sy base-devel mingw-w64-x86_64-toolchain
 
 In the end: reboot! (Remember that we are talking about Windows...)
 
@@ -484,3 +468,26 @@ In the end: reboot! (Remember that we are talking about Windows...)
 
     # "Powershell Restart-Computer" may also work
     shutdown -r -t 0
+
+
+Debloat Windows
+~~~~~~~~~~~~~~~
+
+Windows 10 comes with many features which are better disabled:
+
+* https://github.com/W4RH4WK/Debloat-Windows-10
+* https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html
+
+With Git installed, in a PowerShell administrator console::
+
+    git clone https://github.com/W4RH4WK/Debloat-Windows-10
+    cd Debloat-Windows-10\scripts
+    .\block-telemetry.ps1
+    .\disable-services.ps1
+    # .\disable-windows-defender.ps1
+    # .\experimental_unfuckery.ps1 # Uncomment some apps there
+    .\fix-privacy-settings.ps1
+    .\optimize-user-interface.ps1
+    .\optimize-windows-update.ps1
+    .\remove-default-apps.ps1
+    .\remove-onedrive.ps1
