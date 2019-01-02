@@ -85,6 +85,11 @@ ipmo BitsTransfer;Start-BitsTransfer -Source &quot;http://webserver/file.txt&quo
 <p>Get the HTTP proxy which is currently configured:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reg</span> <span class="n">query</span> <span class="s2">&quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</span> <span class="o">/</span><span class="n">v</span> <span class="n">ProxyServer</span>
 <span class="n">reg</span> <span class="n">query</span> <span class="s2">&quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</span> <span class="o">/</span><span class="n">v</span> <span class="n">ProxyEnable</span>
+<span class="n">netsh</span> <span class="n">winhttp</span> <span class="n">dump</span>
+</pre></div>
+</div>
+<p>Add a HTTP proxy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">netsh</span> <span class="n">winhttp</span> <span class="nb">set</span> <span class="n">proxy</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">3128</span>
 </pre></div>
 </div>
 </div>
@@ -315,7 +320,7 @@ Get-CimInstance -ClassName Win32_Group
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2018, Nicolas Iooss.
+        &#169; Copyright 2013-2019, Nicolas Iooss.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>

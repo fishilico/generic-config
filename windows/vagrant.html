@@ -60,7 +60,7 @@ a Windows VM through Vagrant using Libvirt and QEmu-KVM as backend.</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Import the VirtualBox-Vagrant box and mutate it to use libvirt:</p>
+<li><p class="first">Import the VirtualBox-Vagrant box and mutate it to use provider <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">plugin</span> <span class="n">install</span> <span class="n">vagrant</span><span class="o">-</span><span class="n">mutate</span>
 <span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="n">windows</span><span class="o">/</span><span class="n">win10</span><span class="o">-</span><span class="n">edge</span> <span class="s1">&#39;MSEdge - Win10.box&#39;</span>
 <span class="n">vagrant</span> <span class="n">mutate</span> <span class="n">windows</span><span class="o">/</span><span class="n">win10</span><span class="o">-</span><span class="n">edge</span> <span class="n">libvirt</span>
@@ -95,9 +95,14 @@ final <code class="docutils literal notranslate"><span class="pre">end</span></c
 </div>
 </li>
 </ul>
-<p>It will fail, because it needs to boot in UEFI mode and because the network
+<p>This command will fail and the console on the virtual machine will display:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Booting from Hard disk...
+No bootable device.
+</pre></div>
+</div>
+<p>This is because the virtual machine needs to boot in UEFI mode and the network
 drivers are missing. For the network issue, the next section provides a way to
-fix the issue. For UEFI boot, libvirt needs to be configured to support this
+fix the issue. For UEFI boot, Libvirt needs to be configured to support this
 boot mode. For Arch Linux, this is documented in
 <a class="reference external" href="https://wiki.archlinux.org/index.php/libvirt#UEFI_Support">https://wiki.archlinux.org/index.php/libvirt#UEFI_Support</a> :</p>
 <ul>
@@ -110,14 +115,14 @@ boot mode. For Arch Linux, this is documented in
 </pre></div>
 </div>
 </li>
-<li><p class="first">Restart libvirtd.</p>
+<li><p class="first">Restart <code class="docutils literal notranslate"><span class="pre">libvirtd</span></code>.</p>
 </li>
 <li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">edit</span> <span class="pre">windows_default</span></code> (replacing <code class="docutils literal notranslate"><span class="pre">windows_default</span></code> with the
 name of the domain) and insert a <code class="docutils literal notranslate"><span class="pre">&lt;loader&gt;</span></code> tag into the <code class="docutils literal notranslate"><span class="pre">&lt;os&gt;</span></code> one.
 It should looks like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">os</span><span class="o">&gt;</span>
   <span class="o">&lt;</span><span class="nb">type</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;x86_64&#39;</span> <span class="n">machine</span><span class="o">=</span><span class="s1">&#39;pc-i440fx-3.0&#39;</span><span class="o">&gt;</span><span class="n">hvm</span><span class="o">&lt;/</span><span class="nb">type</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="n">loader</span> <span class="n">readonly</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span> <span class="n">secure</span><span class="o">=</span><span class="s1">&#39;no&#39;</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;rom&#39;</span><span class="o">&gt;/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">ovmf</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">OVMF_CODE</span><span class="o">.</span><span class="n">fd</span><span class="o">&lt;/</span><span class="n">loader</span>
+  <span class="o">&lt;</span><span class="n">loader</span> <span class="n">readonly</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span> <span class="n">secure</span><span class="o">=</span><span class="s1">&#39;no&#39;</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;rom&#39;</span><span class="o">&gt;/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">ovmf</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">OVMF_CODE</span><span class="o">.</span><span class="n">fd</span><span class="o">&lt;/</span><span class="n">loader</span><span class="o">&gt;</span>
   <span class="o">&lt;</span><span class="n">boot</span> <span class="n">dev</span><span class="o">=</span><span class="s1">&#39;hd&#39;</span><span class="o">/&gt;</span>
 <span class="o">&lt;/</span><span class="n">os</span><span class="o">&gt;</span>
 </pre></div>
@@ -134,8 +139,8 @@ in a <code class="docutils literal notranslate"><span class="pre">virtio-win</sp
 <ul>
 <li><p class="first">Download the floppy disk of the drivers, <a class="reference external" href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd">https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd</a></p>
 </li>
-<li><p class="first">Poweroff the virtual machine and add the floppy drive to the Virtual Machine,
-with virt-manager or <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">edit</span> <span class="pre">windows_default</span></code>:</p>
+<li><p class="first">Powerthe virtual machine off and add the floppy drive to the Virtual Machine,
+with <code class="docutils literal notranslate"><span class="pre">virt-manager</span></code> (GUI) or <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">edit</span> <span class="pre">windows_default</span></code> (CLI):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">disk</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;floppy&#39;</span><span class="o">&gt;</span>
   <span class="o">&lt;</span><span class="n">driver</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;qemu&#39;</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="o">/&gt;</span>
   <span class="o">&lt;</span><span class="n">source</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;/path/to/virtio-win_amd64.vfd&#39;</span><span class="o">/&gt;</span>
@@ -146,9 +151,9 @@ with virt-manager or <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 </li>
-<li><p class="first">Then power on the machine again through libvirt, open the Explorer (Win+E), go
-to directory <code class="docutils literal notranslate"><span class="pre">A:\amd64\Win10\</span></code> and install all <code class="docutils literal notranslate"><span class="pre">.inf</span></code> files. There are 3
-drivers:</p>
+<li><p class="first">Then power the machine on (through Libvirt), open the Explorer (<code class="docutils literal notranslate"><span class="pre">Win``+``E</span></code>),
+go to directory <code class="docutils literal notranslate"><span class="pre">A:\amd64\Win10\</span></code> and install all <code class="docutils literal notranslate"><span class="pre">.inf</span></code> files. There are
+3 drivers:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">netkvm.inf</span></code> for the Virtio Ethernet Adapter,</li>
 <li><code class="docutils literal notranslate"><span class="pre">vioscsi.inf</span></code> for the VirtIO SCSI pass-through controller,</li>
@@ -331,7 +336,8 @@ Stopped  sshd               OpenSSH SSH Server
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">OpenSSHd</span></code> is the server provided by Cygwin, installed on Vagrant images by
-Microsoft in <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\OpenSSH\usr\sbin\sshd.exe</span></code>.
+Microsoft in <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\OpenSSH\usr\sbin\sshd.exe</span></code> (it comes from
+<a class="reference external" href="https://www.mls-software.com/opensshd.html">https://www.mls-software.com/opensshd.html</a>).
 In order to switch to the native OpenSSH server (<code class="docutils literal notranslate"><span class="pre">sshd</span></code>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Stop</span><span class="o">-</span><span class="n">Service</span> <span class="o">-</span><span class="n">Name</span> <span class="n">OpenSSHd</span>
 <span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Start</span><span class="o">-</span><span class="n">Service</span> <span class="o">-</span><span class="n">Name</span> <span class="n">sshd</span>
@@ -437,60 +443,6 @@ Release notes</li>
 </div>
 <div class="section" id="software-to-install">
 <h2>Software to install<a class="headerlink" href="#software-to-install" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="manual-installation">
-<h3>Manual installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
-<p>Here is a list of software which can be useful in a Windows virtual machine:</p>
-<ul>
-<li><p class="first">Notepad++: <a class="reference external" href="https://notepad-plus-plus.org/">https://notepad-plus-plus.org/</a> (the sha1sums of the downloaded files can be verified)</p>
-</li>
-<li><p class="first">Windows Development Kits, debugger (WinDbg…):</p>
-<ul class="simple">
-<li><a class="reference external" href="https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit">https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit</a></li>
-<li>Create a shortcut to <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Windows</span> <span class="pre">Kits\10\Debuggers\x64</span></code></li>
-</ul>
-</li>
-<li><p class="first">msys2 environment: <a class="reference external" href="https://www.msys2.org/">https://www.msys2.org/</a> , and install some software:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PATH</span><span class="o">=</span><span class="s2">&quot;/cygdrive/c/msys64/usr/bin:$PATH&quot;</span>
-<span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span>
-<span class="n">pacman</span> <span class="o">-</span><span class="n">Sy</span> <span class="n">git</span> <span class="n">mingw</span><span class="o">-</span><span class="n">w64</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">toolchain</span>
-</pre></div>
-</div>
-</li>
-<li><p class="first">Python: <a class="reference external" href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></p>
-</li>
-<li><p class="first">Some Sysinternals tools:</p>
-<ul class="simple">
-<li>Process Explorer <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processexplorer">https://technet.microsoft.com/en-us/sysinternals/processexplorer</a></li>
-<li>Process Monitor <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processmonitor">https://technet.microsoft.com/en-us/sysinternals/processmonitor</a></li>
-<li>DebugView <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/debugview">https://technet.microsoft.com/en-us/sysinternals/debugview</a></li>
-<li>WinObj <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/winobj">https://technet.microsoft.com/en-us/sysinternals/winobj</a></li>
-<li>AccessEnum <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/accessenum">https://technet.microsoft.com/en-us/sysinternals/accessenum</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="section" id="debloat-windows">
-<h3>Debloat Windows<a class="headerlink" href="#debloat-windows" title="Permalink to this headline">¶</a></h3>
-<p>Windows 10 comes with many features which are better disabled:</p>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/W4RH4WK/Debloat-Windows-10">https://github.com/W4RH4WK/Debloat-Windows-10</a></li>
-<li><a class="reference external" href="https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html">https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html</a></li>
-</ul>
-<p>With Git installed, in a PowerShell administrator console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">W4RH4WK</span><span class="o">/</span><span class="n">Debloat</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="mi">10</span>
-<span class="n">cd</span> <span class="n">Debloat</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="mi">10</span>\<span class="n">scripts</span>
-<span class="o">.</span>\<span class="n">block</span><span class="o">-</span><span class="n">telemetry</span><span class="o">.</span><span class="n">ps1</span>
-<span class="o">.</span>\<span class="n">disable</span><span class="o">-</span><span class="n">services</span><span class="o">.</span><span class="n">ps1</span>
-<span class="c1"># .\disable-windows-defender.ps1</span>
-<span class="c1"># .\experimental_unfuckery.ps1 # Uncomment some apps there</span>
-<span class="o">.</span>\<span class="n">fix</span><span class="o">-</span><span class="n">privacy</span><span class="o">-</span><span class="n">settings</span><span class="o">.</span><span class="n">ps1</span>
-<span class="o">.</span>\<span class="n">optimize</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="n">interface</span><span class="o">.</span><span class="n">ps1</span>
-<span class="o">.</span>\<span class="n">optimize</span><span class="o">-</span><span class="n">windows</span><span class="o">-</span><span class="n">update</span><span class="o">.</span><span class="n">ps1</span>
-<span class="o">.</span>\<span class="n">remove</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">apps</span><span class="o">.</span><span class="n">ps1</span>
-<span class="o">.</span>\<span class="n">remove</span><span class="o">-</span><span class="n">onedrive</span><span class="o">.</span><span class="n">ps1</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="automatic-installation">
 <h3>Automatic installation<a class="headerlink" href="#automatic-installation" title="Permalink to this headline">¶</a></h3>
 <p>In order to ease the installation of these software, a package manager such as
@@ -520,14 +472,68 @@ verified in the registry:</p>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">procexp</span> <span class="n">procmon</span> <span class="n">autoruns</span> <span class="n">psexec</span> <span class="n">procdump</span> <span class="n">adexplorer</span> <span class="n">sigcheck</span> <span class="n">dbgview</span> <span class="n">winobj</span> <span class="n">accesschk</span> <span class="n">accessenum</span> <span class="o">-</span><span class="n">y</span>
 
 <span class="c1"># MSys2 is installed in C:\tools\msys64</span>
-<span class="n">choco</span> <span class="n">install</span> <span class="n">git</span> <span class="n">msys2</span> <span class="n">python3</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">git</span> <span class="n">python3</span> <span class="n">msys2</span> <span class="o">-</span><span class="n">y</span>
 <span class="c1"># Add &#39;PATH=&quot;$PATH:/c/Program Files/Git/cmd&quot;&#39; to C:/tools/msys64/home/IEUser/.bashrc</span>
 <span class="c1"># Launch MSys with C:/tools/msys64/usr/bin/bash.exe</span>
 </pre></div>
 </div>
+<p>These commands install the following software:</p>
+<ul>
+<li><p class="first">Notepad++: <a class="reference external" href="https://notepad-plus-plus.org/">https://notepad-plus-plus.org/</a> (the sha1sums of the downloaded files can be verified)</p>
+</li>
+<li><p class="first">Windows Development Kits, debugger (WinDbg…):</p>
+<ul class="simple">
+<li><a class="reference external" href="https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit">https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit</a></li>
+<li>Create a shortcut to <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Windows</span> <span class="pre">Kits\10\Debuggers\x64</span></code></li>
+</ul>
+</li>
+<li><p class="first">Some Sysinternals tools:</p>
+<ul class="simple">
+<li>Process Explorer <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processexplorer">https://technet.microsoft.com/en-us/sysinternals/processexplorer</a></li>
+<li>Process Monitor <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processmonitor">https://technet.microsoft.com/en-us/sysinternals/processmonitor</a></li>
+<li>DebugView <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/debugview">https://technet.microsoft.com/en-us/sysinternals/debugview</a></li>
+<li>WinObj <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/winobj">https://technet.microsoft.com/en-us/sysinternals/winobj</a></li>
+<li>AccessEnum <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/accessenum">https://technet.microsoft.com/en-us/sysinternals/accessenum</a></li>
+<li>etc.</li>
+</ul>
+</li>
+<li><p class="first">Git: <a class="reference external" href="https://git-scm.com/">https://git-scm.com/</a></p>
+</li>
+<li><p class="first">Python: <a class="reference external" href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></p>
+</li>
+<li><p class="first">MSys2 environment: <a class="reference external" href="https://www.msys2.org/">https://www.msys2.org/</a> . Additionnal software like GCC
+(to compile C programs) can be installed with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="p">:</span>\<span class="n">tools</span>\<span class="n">msys64</span>\<span class="n">usr</span>\<span class="nb">bin</span>\<span class="n">bash</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">pacman</span> <span class="o">-</span><span class="n">Sy</span> <span class="n">base</span><span class="o">-</span><span class="n">devel</span> <span class="n">mingw</span><span class="o">-</span><span class="n">w64</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">toolchain</span>
+</pre></div>
+</div>
+</li>
+</ul>
 <p>In the end: reboot! (Remember that we are talking about Windows…)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># &quot;Powershell Restart-Computer&quot; may also work</span>
 <span class="n">shutdown</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">t</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="debloat-windows">
+<h3>Debloat Windows<a class="headerlink" href="#debloat-windows" title="Permalink to this headline">¶</a></h3>
+<p>Windows 10 comes with many features which are better disabled:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/W4RH4WK/Debloat-Windows-10">https://github.com/W4RH4WK/Debloat-Windows-10</a></li>
+<li><a class="reference external" href="https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html">https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html</a></li>
+</ul>
+<p>With Git installed, in a PowerShell administrator console:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">W4RH4WK</span><span class="o">/</span><span class="n">Debloat</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="mi">10</span>
+<span class="n">cd</span> <span class="n">Debloat</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="mi">10</span>\<span class="n">scripts</span>
+<span class="o">.</span>\<span class="n">block</span><span class="o">-</span><span class="n">telemetry</span><span class="o">.</span><span class="n">ps1</span>
+<span class="o">.</span>\<span class="n">disable</span><span class="o">-</span><span class="n">services</span><span class="o">.</span><span class="n">ps1</span>
+<span class="c1"># .\disable-windows-defender.ps1</span>
+<span class="c1"># .\experimental_unfuckery.ps1 # Uncomment some apps there</span>
+<span class="o">.</span>\<span class="n">fix</span><span class="o">-</span><span class="n">privacy</span><span class="o">-</span><span class="n">settings</span><span class="o">.</span><span class="n">ps1</span>
+<span class="o">.</span>\<span class="n">optimize</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="n">interface</span><span class="o">.</span><span class="n">ps1</span>
+<span class="o">.</span>\<span class="n">optimize</span><span class="o">-</span><span class="n">windows</span><span class="o">-</span><span class="n">update</span><span class="o">.</span><span class="n">ps1</span>
+<span class="o">.</span>\<span class="n">remove</span><span class="o">-</span><span class="n">default</span><span class="o">-</span><span class="n">apps</span><span class="o">.</span><span class="n">ps1</span>
+<span class="o">.</span>\<span class="n">remove</span><span class="o">-</span><span class="n">onedrive</span><span class="o">.</span><span class="n">ps1</span>
 </pre></div>
 </div>
 </div>
@@ -553,9 +559,8 @@ verified in the registry:</p>
 </li>
 <li><a class="reference internal" href="#ensable-the-windows-subsystem-for-linux">Ensable the Windows Subsystem for Linux</a></li>
 <li><a class="reference internal" href="#software-to-install">Software to install</a><ul>
-<li><a class="reference internal" href="#manual-installation">Manual installation</a></li>
-<li><a class="reference internal" href="#debloat-windows">Debloat Windows</a></li>
 <li><a class="reference internal" href="#automatic-installation">Automatic installation</a></li>
+<li><a class="reference internal" href="#debloat-windows">Debloat Windows</a></li>
 </ul>
 </li>
 </ul>
@@ -608,7 +613,7 @@ verified in the registry:</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2018, Nicolas Iooss.
+        &#169; Copyright 2013-2019, Nicolas Iooss.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>

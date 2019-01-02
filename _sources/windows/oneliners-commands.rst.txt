@@ -48,6 +48,11 @@ Get the HTTP proxy which is currently configured::
 
     reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyServer
     reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyEnable
+    netsh winhttp dump
+
+Add a HTTP proxy::
+
+    netsh winhttp set proxy 127.0.0.1:3128
 
 
 WiFi profiles
