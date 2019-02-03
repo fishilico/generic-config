@@ -5,7 +5,7 @@ Some OS like GNU/Linux and MacOS set up the hardware clock to use UTC instead
 of local time.  This helps when dealing with daylight saving time, as the real
 clock does not need to be updated accordingly.
 
-Windows expects the hardward clock to give "local time" by default.  The reason
+Windows expects the hardware clock to give "local time" by default.  The reason
 is, according to Microsoft, so that users are not confused in BIOS menu
 (http://blogs.msdn.com/b/oldnewthing/archive/2004/09/02/224672.aspx).
 

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>etc/audit/audit.rules &#8212; Generic Config</title>
+    <title>etc/samba/smb.conf &#8212; Generic Config</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -16,8 +16,8 @@
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="etc/hosts" href="../hosts.raw.html" />
-    <link rel="prev" title="/etc" href="../index.html" /> 
+    <link rel="next" title="etc/ssh/sshd_config.default" href="../ssh/sshd_config.default.raw.html" />
+    <link rel="prev" title="etc/resolv.conf" href="../resolv.conf.raw.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -26,10 +26,10 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../hosts.raw.html" title="etc/hosts"
+          <a href="../ssh/sshd_config.default.raw.html" title="etc/ssh/sshd_config.default"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../index.html" title="/etc"
+          <a href="../resolv.conf.raw.html" title="etc/resolv.conf"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
@@ -41,50 +41,41 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="etc-audit-audit-rules">
-<h1><code class="docutils literal notranslate"><span class="pre">etc/audit/audit.rules</span></code><a class="headerlink" href="#etc-audit-audit-rules" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference download internal" download="" href="../../_downloads/3e32e3d8835acc60280ff7ea24577a3c/audit.rules"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reload this file with:</span>
-<span class="c1">#    auditctl -D &amp;&amp; auditctl -R /etc/audit/audit.rules</span>
-<span class="c1">#</span>
-<span class="c1"># Then list rules with:</span>
-<span class="c1">#    auditctl -l</span>
-<span class="c1">#</span>
-<span class="c1"># and generate report with:</span>
-<span class="c1">#    aureport -i -k --summary</span>
+  <div class="section" id="etc-samba-smb-conf">
+<h1><code class="docutils literal notranslate"><span class="pre">etc/samba/smb.conf</span></code><a class="headerlink" href="#etc-samba-smb-conf" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" download="" href="../../_downloads/504b4b908fc9cf35bb2cfff4c65a11ed/smb.conf"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuration file for Samba client (smbclient, gvfs-smb, etc.) and server.</span>
+<span class="c1"># This file is either in /etc/samba/smb.conf or /usr/local/samba/lib/smb.conf.</span>
 <span class="c1">#</span>
 <span class="c1"># Documentation:</span>
-<span class="c1"># - section 6.7.3 of https://www.ssi.gouv.fr/uploads/2015/10/NP_Linux_Configuration.pdf</span>
+<span class="c1"># - https://www.samba.org/samba/docs/Samba-HOWTO-Collection.pdf</span>
+<span class="o">[</span>global<span class="o">]</span>
+    <span class="c1"># Workgroup or NT domain name that the Samba server is part of</span>
+    <span class="nv">workgroup</span> <span class="o">=</span> WORKGROUP
 
-<span class="c1"># Monitor insmod, rmmod and modprobe</span>
--w /usr/bin/insmod -p x -k audit_modules
--w /usr/bin/modprobe -p x -k audit_modules
--w /usr/bin/rmmod -p x -k audit_modules
--w /sbin/insmod -p x -k audit_modules
--w /sbin/modprobe -p x -k audit_modules
--w /sbin/rmmod -p x -k audit_modules
+    <span class="c1"># NetBIOS name (the hostname, by default)</span>
+    netbios <span class="nv">name</span> <span class="o">=</span> MyName
 
-<span class="c1"># Log modifications in /etc/</span>
--w /etc/ -p wa -k audit_conf
+    <span class="c1"># server string is the equivalent of the NT Description field</span>
+    server <span class="nv">string</span> <span class="o">=</span> Samba Server
 
-<span class="c1"># Log mount and unmount operations</span>
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S mount -S umount2 -k audit_mount
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S mount -S umount2 -k audit_mount
+    <span class="c1"># Be compatible with recent Microsoft Servers which disabled SMBv1</span>
+    client max <span class="nv">protocol</span> <span class="o">=</span> SMB3
 
-<span class="c1"># Log suspicious x86 syscalls</span>
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S ioperm -S modify_ldt -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S ioperm -S modify_ldt -k audit_syscall
+    <span class="c1"># Security mode (share, user, server, domain or ads)</span>
+    <span class="nv">security</span> <span class="o">=</span> user
 
-<span class="c1"># Log uncommon syscalls which need some close monitoring</span>
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S get_kernel_syms -S ptrace -S prctl -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S init_module -S finit_module -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S perf_event_open -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S get_kernel_syms -S ptrace -S prctl -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S init_module -S finit_module -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S perf_event_open -k audit_syscall
+    <span class="c1"># Restrict connections to machines on the local network and loopback</span>
+    hosts <span class="nv">allow</span> <span class="o">=</span> <span class="m">10</span>. <span class="m">172</span>.16. <span class="m">192</span>.168. <span class="m">127</span>.
 
-<span class="c1"># Lock auditd configuration</span>
--e <span class="m">2</span>
+<span class="c1"># For a share that allows file upload, uncomment these lines</span>
+<span class="p">;</span><span class="o">[</span>share<span class="o">]</span>
+<span class="p">;</span>   <span class="nv">comment</span> <span class="o">=</span> Share <span class="k">for</span> upload
+<span class="p">;</span>   <span class="nv">path</span> <span class="o">=</span> /srv/samba
+<span class="p">;</span>   <span class="nv">public</span> <span class="o">=</span> yes
+<span class="p">;</span>   <span class="nv">writable</span> <span class="o">=</span> yes
+<span class="p">;</span>   <span class="nv">printable</span> <span class="o">=</span> no
+<span class="p">;</span>   create <span class="nv">mask</span> <span class="o">=</span> <span class="m">0770</span>
 </pre></div>
 </div>
 </div>
@@ -96,15 +87,15 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../index.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a></p>
+  <p class="topless"><a href="../resolv.conf.raw.html"
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/resolv.conf</span></code></a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../hosts.raw.html"
-                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/hosts</span></code></a></p>
+  <p class="topless"><a href="../ssh/sshd_config.default.raw.html"
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config.default</span></code></a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/etc/audit/audit.rules.raw.rst.txt"
+      <li><a href="../../_sources/etc/samba/smb.conf.raw.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -131,10 +122,10 @@
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../hosts.raw.html" title="etc/hosts"
+          <a href="../ssh/sshd_config.default.raw.html" title="etc/ssh/sshd_config.default"
              >next</a> |</li>
         <li class="right" >
-          <a href="../index.html" title="/etc"
+          <a href="../resolv.conf.raw.html" title="etc/resolv.conf"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 

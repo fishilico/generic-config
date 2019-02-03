@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Build a development environment for Debian" href="debian-dev.html" />
@@ -49,7 +50,7 @@ tasks I do when I set up a Debian host.</p>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">dpkg-reconfigure</span> <span class="pre">locales</span></code></dt>
 <dd>Reconfigure locales, for example to <code class="docutils literal notranslate"><span class="pre">en_US</span> <span class="pre">en_US.UTF-8</span> <span class="pre">fr_FR.UTF-8</span> <span class="pre">fr_FR&#64;euro</span></code>.
-Keep in mind SSH preserve locale accross the connection so a single UTF-8
+Keep in mind SSH preserve locale across the connection so a single UTF-8
 locale is not enough.</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">dpkg-reconfigure</span> <span class="pre">keyboard-configuration</span></code></dt>
 <dd>Change which keyboard configuration to use. <code class="docutils literal notranslate"><span class="pre">loadkeys</span></code> can also be used,
@@ -57,7 +58,7 @@ with keymaps in <code class="docutils literal notranslate"><span class="pre">/us
 <dt><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/usr/bin</span> <span class="pre">&amp;&amp;</span> <span class="pre">sudo</span> <span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">python</span> <span class="pre">python2</span></code></dt>
 <dd>For scripts which require python2 command.</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">update-rc.d</span> <span class="pre">$SERVICE</span> <span class="pre">remove</span></code> or <code class="docutils literal notranslate"><span class="pre">sysv-rc-conf</span></code></dt>
-<dd>Remove some uneeded services from boot. Opposite operation is <code class="docutils literal notranslate"><span class="pre">defaults</span></code>.</dd>
+<dd>Remove some unneeded services from boot. Opposite operation is <code class="docutils literal notranslate"><span class="pre">defaults</span></code>.</dd>
 </dl>
 </div>
 <div class="section" id="apt-configuration">
@@ -195,7 +196,7 @@ to be a good choice and is easy to install, configure and manage.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>

@@ -55,7 +55,7 @@ Here are config files for a server named ``examplehost`` in domain ``example.com
     # Fully-qualified domain name of the machine
     myhostname = examplehost.example.com
 
-    # The domain associated wth the mailing system
+    # The domain associated with the mailing system
     # By default is it $myhostname without the first prefix
     #mydomain = example.com
 

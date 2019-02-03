@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Generic Configuration README" href="../README.html" />
@@ -114,7 +115,7 @@ fffff800`29f9d063 51              push    rcx
 <ul>
 <li><p class="first">List modules with names and timestamps: <code class="docutils literal notranslate"><span class="pre">lm</span> <span class="pre">n</span> <span class="pre">t</span></code></p>
 </li>
-<li><p class="first">List some inforation about the kernel: <code class="docutils literal notranslate"><span class="pre">!lmi</span> <span class="pre">nt</span></code></p>
+<li><p class="first">List some information about the kernel: <code class="docutils literal notranslate"><span class="pre">!lmi</span> <span class="pre">nt</span></code></p>
 </li>
 <li><p class="first">Read the PCR (Processor Control Region): <code class="docutils literal notranslate"><span class="pre">!pcr</span></code></p>
 </li>
@@ -324,7 +325,7 @@ lkd&gt; dt nt!_KPCR ffffd001aef40000
 <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">gdtr</span></code> and the detail of each descriptors can be seen with commands such
 as <code class="docutils literal notranslate"><span class="pre">dp</span> <span class="pre">&#64;cs</span></code>.  When using a local debugger, it is nevertheless possible to
 compile a userland program which shows the result of <code class="docutils literal notranslate"><span class="pre">sgdt</span></code> instruction,
-which is not priviledged, and then use the pointer in WinDBG with
+which is not privileged, and then use the pointer in WinDBG with
 <code class="docutils literal notranslate"><span class="pre">nt!_KGDTENTRY</span></code> (or <code class="docutils literal notranslate"><span class="pre">nt!_KGDTENTRY64</span></code>) structure.</p>
 </li>
 </ul>
@@ -408,7 +409,7 @@ Common WinDbg Commands</li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>

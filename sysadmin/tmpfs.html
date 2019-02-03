@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Traffic shaping" href="traffic-shaping.html" />
@@ -58,7 +59,7 @@ writes, which is very important when using SSD drives. Here is how to do so.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$USER.cache $HOME/.cache tmpfs defaults,auto,nodev,noexec,nosuid,size=2048M,gid=100,uid=1000,mode=0700 0 0
 </pre></div>
 </div>
-<p>As <code class="docutils literal notranslate"><span class="pre">.cache/pacaur</span></code> is intended to persist accross reboots, this directory can
+<p>As <code class="docutils literal notranslate"><span class="pre">.cache/pacaur</span></code> is intended to persist across reboots, this directory can
 be set up as a bind-mount:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$HOME/.cache.pacaur $HOME/.cache/pacaur none bind 0 0
 </pre></div>
@@ -152,7 +153,7 @@ $USER.yaourt /tmp/makepkg-$USER tmpfs defaults,user,noauto,nodev,exec,nosuid,gid
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>

@@ -177,7 +177,7 @@ On the host:
     /srv/nfs/ro 10.0.0.0/24(ro,sync)
     /srv/nfs/user-rw 10.0.0.0/24(rw,no_subtree_check,sync,anonuid=1000,anongid=100)
 
-* Reload the currenlty exported entries:
+* Reload the currently exported entries:
 
 .. code-block:: sh
 
@@ -334,7 +334,7 @@ For example, for ARM ELF binaries, this can be done by writing this in
     \xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:
     /usr/bin/qemu-arm-static:C
 
-or by writting this directly into ``/proc/sys/fs/binfmt_misc/register``.  If
+or by writing this directly into ``/proc/sys/fs/binfmt_misc/register``.  If
 this succeeds, ``/proc/sys/fs/binfmt_misc/arm`` file would have been created
 with the following content:
 
@@ -442,7 +442,7 @@ Here are some links to online articles and documentation relevant with QEmu:
 * https://wiki.debian.org/QemuUserEmulation
   How to setup and use QEMU user emulation in a "transparent" fashion
 * https://github.com/ixty/xarch_shellcode/blob/master/README.md
-  Build portable, architecture independant shellcode from C code
+  Build portable, architecture independent shellcode from C code
 
 A quick glance at Docker
 ------------------------

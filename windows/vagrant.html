@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="WinDbg-kd, Windows Kernel Debugging" href="windbg-kd.html" />
@@ -42,12 +43,12 @@
             
   <div class="section" id="windows-virtual-machine-with-vagrant">
 <h1>Windows Virtual Machine with Vagrant<a class="headerlink" href="#windows-virtual-machine-with-vagrant" title="Permalink to this headline">¶</a></h1>
-<p>Microsoft provides free Windows VM (which expire after 90 days) on
-<a class="reference external" href="https://developer.microsoft.com/en-us/microsoft-edge/">https://developer.microsoft.com/en-us/microsoft-edge/</a> .
+<p>Microsoft provides free Windows Vircual Machines (which expire after 90 days) on
+<a class="reference external" href="https://developer.microsoft.com/en-us/microsoft-edge/">https://developer.microsoft.com/en-us/microsoft-edge/</a>.
 Among the available VM are Vagrant machines. Here are instructions to setup
 a Windows VM through Vagrant using Libvirt and QEmu-KVM as backend.</p>
 <div class="section" id="create-a-libvirt-box">
-<h2>Create a libvirt box<a class="headerlink" href="#create-a-libvirt-box" title="Permalink to this headline">¶</a></h2>
+<h2>Create a Libvirt box<a class="headerlink" href="#create-a-libvirt-box" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p class="first">Download a ZIP from <a class="reference external" href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/">https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/</a>, like
 <a class="reference external" href="https://az792536.vo.msecnd.net/vms/VMBuild_20180425/Vagrant/MSEdge/MSEdge.Win10.Vagrant.zip">https://az792536.vo.msecnd.net/vms/VMBuild_20180425/Vagrant/MSEdge/MSEdge.Win10.Vagrant.zip</a></p>
@@ -104,7 +105,8 @@ No bootable device.
 drivers are missing. For the network issue, the next section provides a way to
 fix the issue. For UEFI boot, Libvirt needs to be configured to support this
 boot mode. For Arch Linux, this is documented in
-<a class="reference external" href="https://wiki.archlinux.org/index.php/libvirt#UEFI_Support">https://wiki.archlinux.org/index.php/libvirt#UEFI_Support</a> :</p>
+<a class="reference external" href="https://wiki.archlinux.org/index.php/libvirt#UEFI_Support">https://wiki.archlinux.org/index.php/libvirt#UEFI_Support</a>. Here are some
+instructions:</p>
 <ul>
 <li><p class="first">Install package <code class="docutils literal notranslate"><span class="pre">ovmf</span></code>.</p>
 </li>
@@ -115,16 +117,16 @@ boot mode. For Arch Linux, this is documented in
 </pre></div>
 </div>
 </li>
-<li><p class="first">Restart <code class="docutils literal notranslate"><span class="pre">libvirtd</span></code>.</p>
+<li><p class="first">Restart <code class="docutils literal notranslate"><span class="pre">libvirtd</span></code> (for example with <code class="docutils literal notranslate"><span class="pre">systemctl</span> <span class="pre">restart</span> <span class="pre">libvirtd</span></code>).</p>
 </li>
 <li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">edit</span> <span class="pre">windows_default</span></code> (replacing <code class="docutils literal notranslate"><span class="pre">windows_default</span></code> with the
 name of the domain) and insert a <code class="docutils literal notranslate"><span class="pre">&lt;loader&gt;</span></code> tag into the <code class="docutils literal notranslate"><span class="pre">&lt;os&gt;</span></code> one.
 It should looks like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">os</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="nb">type</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;x86_64&#39;</span> <span class="n">machine</span><span class="o">=</span><span class="s1">&#39;pc-i440fx-3.0&#39;</span><span class="o">&gt;</span><span class="n">hvm</span><span class="o">&lt;/</span><span class="nb">type</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="n">loader</span> <span class="n">readonly</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span> <span class="n">secure</span><span class="o">=</span><span class="s1">&#39;no&#39;</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;rom&#39;</span><span class="o">&gt;/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">ovmf</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">OVMF_CODE</span><span class="o">.</span><span class="n">fd</span><span class="o">&lt;/</span><span class="n">loader</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="n">boot</span> <span class="n">dev</span><span class="o">=</span><span class="s1">&#39;hd&#39;</span><span class="o">/&gt;</span>
-<span class="o">&lt;/</span><span class="n">os</span><span class="o">&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;os&gt;</span>
+  <span class="nt">&lt;type</span> <span class="na">arch=</span><span class="s">&#39;x86_64&#39;</span> <span class="na">machine=</span><span class="s">&#39;pc-i440fx-3.0&#39;</span><span class="nt">&gt;</span>hvm<span class="nt">&lt;/type&gt;</span>
+  <span class="nt">&lt;loader</span> <span class="na">readonly=</span><span class="s">&#39;yes&#39;</span> <span class="na">secure=</span><span class="s">&#39;no&#39;</span> <span class="na">type=</span><span class="s">&#39;rom&#39;</span><span class="nt">&gt;</span>/usr/share/ovmf/x64/OVMF_CODE.fd<span class="nt">&lt;/loader&gt;</span>
+  <span class="nt">&lt;boot</span> <span class="na">dev=</span><span class="s">&#39;hd&#39;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/os&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -139,8 +141,8 @@ in a <code class="docutils literal notranslate"><span class="pre">virtio-win</sp
 <ul>
 <li><p class="first">Download the floppy disk of the drivers, <a class="reference external" href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd">https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd</a></p>
 </li>
-<li><p class="first">Powerthe virtual machine off and add the floppy drive to the Virtual Machine,
-with <code class="docutils literal notranslate"><span class="pre">virt-manager</span></code> (GUI) or <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">edit</span> <span class="pre">windows_default</span></code> (CLI):</p>
+<li><p class="first">Power the virtual machine off and add the floppy drive to the VM   with
+<code class="docutils literal notranslate"><span class="pre">virt-manager</span></code> (GUI) or <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">edit</span> <span class="pre">windows_default</span></code> (CLI):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">disk</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;floppy&#39;</span><span class="o">&gt;</span>
   <span class="o">&lt;</span><span class="n">driver</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;qemu&#39;</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="o">/&gt;</span>
   <span class="o">&lt;</span><span class="n">source</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;/path/to/virtio-win_amd64.vfd&#39;</span><span class="o">/&gt;</span>
@@ -151,9 +153,9 @@ with <code class="docutils literal notranslate"><span class="pre">virt-manager</
 </pre></div>
 </div>
 </li>
-<li><p class="first">Then power the machine on (through Libvirt), open the Explorer (<code class="docutils literal notranslate"><span class="pre">Win``+``E</span></code>),
-go to directory <code class="docutils literal notranslate"><span class="pre">A:\amd64\Win10\</span></code> and install all <code class="docutils literal notranslate"><span class="pre">.inf</span></code> files. There are
-3 drivers:</p>
+<li><p class="first">Then power the machine on (through Libvirt), open the Explorer (<code class="docutils literal notranslate"><span class="pre">Win</span></code> +
+<code class="docutils literal notranslate"><span class="pre">E</span></code>), go to directory <code class="docutils literal notranslate"><span class="pre">A:\amd64\Win10\</span></code> and install all <code class="docutils literal notranslate"><span class="pre">.inf</span></code> files.
+There are 3 drivers:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">netkvm.inf</span></code> for the Virtio Ethernet Adapter,</li>
 <li><code class="docutils literal notranslate"><span class="pre">vioscsi.inf</span></code> for the VirtIO SCSI pass-through controller,</li>
@@ -161,7 +163,7 @@ go to directory <code class="docutils literal notranslate"><span class="pre">A:\
 </ul>
 </li>
 </ul>
-<p>In order to install a French keyboard layout:</p>
+<p>These commands install a French keyboard layout:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PowerShell</span> <span class="n">Set</span><span class="o">-</span><span class="n">WinUserLanguageList</span> <span class="n">fr</span><span class="o">-</span><span class="n">FR</span><span class="p">,</span><span class="n">en</span><span class="o">-</span><span class="n">US</span>
 <span class="n">PowerShell</span> <span class="n">Get</span><span class="o">-</span><span class="n">WinUserLanguageList</span>
 </pre></div>
@@ -181,8 +183,8 @@ firewall opened:</p>
 </pre></div>
 </div>
 <p>Then, one of these command should work (from a shell on the host):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">rdp</span>
-<span class="n">xfreerdp</span> <span class="o">/</span><span class="n">u</span><span class="p">:</span><span class="n">IEUser</span> <span class="s1">&#39;/p:Passw0rd!&#39;</span> <span class="s2">&quot;/v:$(vagrant ssh-config | sed -n &#39;s/ *HostName *//p&#39;):3389&quot;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>vagrant rdp
+xfreerdp /u:IEUser <span class="s1">&#39;/p:Passw0rd!&#39;</span> <span class="s2">&quot;/v:</span><span class="k">$(</span>vagrant ssh-config <span class="p">|</span> sed -n <span class="s1">&#39;s/ *HostName *//p&#39;</span><span class="k">)</span><span class="s2">:3389&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -196,7 +198,7 @@ to the <code class="docutils literal notranslate"><span class="pre">Vagrantfile<
 <span class="n">config</span><span class="o">.</span><span class="n">winrm</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;Passw0rd!&quot;</span>
 </pre></div>
 </div>
-<p>In a command-line prompt (eg. in <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">ssh</span></code>) run:</p>
+<p>In a command-line prompt (eg. in <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">ssh</span></code>), run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">powershell</span> <span class="o">-</span><span class="n">Command</span> <span class="n">Enable</span><span class="o">-</span><span class="n">PSRemoting</span>
 </pre></div>
 </div>
@@ -392,8 +394,8 @@ This public key can be provisioned with:</p>
 </div>
 </div>
 </div>
-<div class="section" id="ensable-the-windows-subsystem-for-linux">
-<h2>Ensable the Windows Subsystem for Linux<a class="headerlink" href="#ensable-the-windows-subsystem-for-linux" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="enable-the-windows-subsystem-for-linux">
+<h2>Enable the Windows Subsystem for Linux<a class="headerlink" href="#enable-the-windows-subsystem-for-linux" title="Permalink to this headline">¶</a></h2>
 <p>To install WSL (Windows Subsystem for Linux), run this command as Administrator:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">PowerShell</span> <span class="n">Enable</span><span class="o">-</span><span class="n">WindowsOptionalFeature</span> <span class="o">-</span><span class="n">Online</span> <span class="o">-</span><span class="n">FeatureName</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="n">Subsystem</span><span class="o">-</span><span class="n">Linux</span>
 
@@ -445,7 +447,7 @@ Release notes</li>
 <h2>Software to install<a class="headerlink" href="#software-to-install" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="automatic-installation">
 <h3>Automatic installation<a class="headerlink" href="#automatic-installation" title="Permalink to this headline">¶</a></h3>
-<p>In order to ease the installation of these software, a package manager such as
+<p>In order to ease the installation of software, a package manager such as
 <a class="reference external" href="https://ninite.com/">Ninite</a> or <a class="reference external" href="https://chocolatey.org/">Chocolatey</a> can be
 used (cf. <a class="reference external" href="https://chocolatey.org/docs/chocolatey-vs-ninite">https://chocolatey.org/docs/chocolatey-vs-ninite</a>).
 Chocolatey’s website gives some installation commands
@@ -456,7 +458,7 @@ Chocolatey’s website gives some installation commands
 <span class="n">Set</span><span class="o">-</span><span class="n">ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-</span><span class="n">Scope</span> <span class="n">Process</span> <span class="o">-</span><span class="n">Force</span><span class="p">;</span> <span class="n">iex</span> <span class="p">((</span><span class="n">New</span><span class="o">-</span><span class="n">Object</span> <span class="n">System</span><span class="o">.</span><span class="n">Net</span><span class="o">.</span><span class="n">WebClient</span><span class="p">)</span><span class="o">.</span><span class="n">DownloadString</span><span class="p">(</span><span class="s1">&#39;https://chocolatey.org/install.ps1&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>Chocolatey adds itselt to <code class="docutils literal notranslate"><span class="pre">%PATH%</span></code> environment variable, and this can be
+<p>Chocolatey adds itself to <code class="docutils literal notranslate"><span class="pre">%PATH%</span></code> environment variable, and this can be
 verified in the registry:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">Get</span><span class="o">-</span><span class="n">ItemProperty</span> <span class="o">-</span><span class="n">Path</span> <span class="s1">&#39;Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment&#39;</span> <span class="o">-</span><span class="n">Name</span> <span class="n">PATH</span>
 <span class="c1"># It should ends with C:\ProgramData\chocolatey\bin;</span>
@@ -501,7 +503,7 @@ verified in the registry:</p>
 </li>
 <li><p class="first">Python: <a class="reference external" href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></p>
 </li>
-<li><p class="first">MSys2 environment: <a class="reference external" href="https://www.msys2.org/">https://www.msys2.org/</a> . Additionnal software like GCC
+<li><p class="first">MSys2 environment: <a class="reference external" href="https://www.msys2.org/">https://www.msys2.org/</a>. Additional software like GCC
 (to compile C programs) can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="p">:</span>\<span class="n">tools</span>\<span class="n">msys64</span>\<span class="n">usr</span>\<span class="nb">bin</span>\<span class="n">bash</span><span class="o">.</span><span class="n">exe</span>
 <span class="n">pacman</span> <span class="o">-</span><span class="n">Sy</span> <span class="n">base</span><span class="o">-</span><span class="n">devel</span> <span class="n">mingw</span><span class="o">-</span><span class="n">w64</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">toolchain</span>
@@ -517,12 +519,14 @@ verified in the registry:</p>
 </div>
 <div class="section" id="debloat-windows">
 <h3>Debloat Windows<a class="headerlink" href="#debloat-windows" title="Permalink to this headline">¶</a></h3>
-<p>Windows 10 comes with many features which are better disabled:</p>
+<p>Windows 10 comes with many features which are better disabled. Here are some
+websites describing them:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/W4RH4WK/Debloat-Windows-10">https://github.com/W4RH4WK/Debloat-Windows-10</a></li>
 <li><a class="reference external" href="https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html">https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html</a></li>
 </ul>
-<p>With Git installed, in a PowerShell administrator console:</p>
+<p>Here are commands that can be issued once Git has been installed, in a
+PowerShell administrator console:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">W4RH4WK</span><span class="o">/</span><span class="n">Debloat</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="mi">10</span>
 <span class="n">cd</span> <span class="n">Debloat</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="mi">10</span>\<span class="n">scripts</span>
 <span class="o">.</span>\<span class="n">block</span><span class="o">-</span><span class="n">telemetry</span><span class="o">.</span><span class="n">ps1</span>
@@ -549,7 +553,7 @@ verified in the registry:</p>
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Windows Virtual Machine with Vagrant</a><ul>
-<li><a class="reference internal" href="#create-a-libvirt-box">Create a libvirt box</a></li>
+<li><a class="reference internal" href="#create-a-libvirt-box">Create a Libvirt box</a></li>
 <li><a class="reference internal" href="#first-configuration">First configuration</a></li>
 <li><a class="reference internal" href="#remote-access">Remote access</a><ul>
 <li><a class="reference internal" href="#rdp-connection">RDP connection</a></li>
@@ -557,7 +561,7 @@ verified in the registry:</p>
 <li><a class="reference internal" href="#install-windows-openssh-server">Install Windows OpenSSH server</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#ensable-the-windows-subsystem-for-linux">Ensable the Windows Subsystem for Linux</a></li>
+<li><a class="reference internal" href="#enable-the-windows-subsystem-for-linux">Enable the Windows Subsystem for Linux</a></li>
 <li><a class="reference internal" href="#software-to-install">Software to install</a><ul>
 <li><a class="reference internal" href="#automatic-installation">Automatic installation</a></li>
 <li><a class="reference internal" href="#debloat-windows">Debloat Windows</a></li>
@@ -614,7 +618,7 @@ verified in the registry:</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>

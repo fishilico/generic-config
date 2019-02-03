@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="etc/iptables/iptables-server.rules" href="iptables-server.rules.raw.html" />
@@ -179,7 +180,7 @@
 -4 -A OUTPUT -d <span class="m">255</span>.255.255.255/32 -j DROP
 -4 -A OUTPUT -m conntrack --ctstate INVALID -j DROP
 
-<span class="c1"># Refuse to send emails direcly through SMTP. Use SMTPS (port 587) to send mail.</span>
+<span class="c1"># Refuse to send emails directly through SMTP. Use SMTPS (port 587) to send mail.</span>
 -A OUTPUT -p tcp -m tcp --dport <span class="m">25</span> -j REJECT
 
 -A OUTPUT -p tcp -m tcp --sport <span class="m">32768</span>:61000 -j ACCEPT
@@ -264,7 +265,7 @@ COMMIT
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>

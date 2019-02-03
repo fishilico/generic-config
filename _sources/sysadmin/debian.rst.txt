@@ -10,7 +10,7 @@ Debian post-installation commands
 
 ``dpkg-reconfigure locales``
     Reconfigure locales, for example to ``en_US en_US.UTF-8 fr_FR.UTF-8 fr_FR@euro``.
-    Keep in mind SSH preserve locale accross the connection so a single UTF-8
+    Keep in mind SSH preserve locale across the connection so a single UTF-8
     locale is not enough.
 
 ``dpkg-reconfigure keyboard-configuration``
@@ -21,7 +21,7 @@ Debian post-installation commands
     For scripts which require python2 command.
 
 ``update-rc.d $SERVICE remove`` or ``sysv-rc-conf``
-    Remove some uneeded services from boot. Opposite operation is ``defaults``.
+    Remove some unneeded services from boot. Opposite operation is ``defaults``.
 
 
 APT configuration

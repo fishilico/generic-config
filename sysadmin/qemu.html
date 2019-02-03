@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Configuration tweaks on a Raspberry Pi" href="raspberrypi.html" />
@@ -193,7 +194,7 @@ chmod-ed <code class="docutils literal notranslate"><span class="pre">o-x</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li>Reload the currenlty exported entries:</li>
+<li>Reload the currently exported entries:</li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>exportfs -arv
 </pre></div>
@@ -330,7 +331,7 @@ binaries for foreign architectures.</p>
 /usr/bin/qemu-arm-static:C
 </pre></div>
 </div>
-<p>or by writting this directly into <code class="docutils literal notranslate"><span class="pre">/proc/sys/fs/binfmt_misc/register</span></code>.  If
+<p>or by writing this directly into <code class="docutils literal notranslate"><span class="pre">/proc/sys/fs/binfmt_misc/register</span></code>.  If
 this succeeds, <code class="docutils literal notranslate"><span class="pre">/proc/sys/fs/binfmt_misc/arm</span></code> file would have been created
 with the following content:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>enabled
@@ -426,7 +427,7 @@ with <code class="docutils literal notranslate"><span class="pre">virsh</span> <
 <li><a class="reference external" href="https://wiki.debian.org/QemuUserEmulation">https://wiki.debian.org/QemuUserEmulation</a>
 How to setup and use QEMU user emulation in a “transparent” fashion</li>
 <li><a class="reference external" href="https://github.com/ixty/xarch_shellcode/blob/master/README.md">https://github.com/ixty/xarch_shellcode/blob/master/README.md</a>
-Build portable, architecture independant shellcode from C code</li>
+Build portable, architecture independent shellcode from C code</li>
 </ul>
 </div>
 <div class="section" id="a-quick-glance-at-docker">
@@ -519,7 +520,7 @@ install:</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
     </div>
   </body>
 </html>

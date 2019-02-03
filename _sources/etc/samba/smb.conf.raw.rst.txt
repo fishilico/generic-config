@@ -1,0 +1,6 @@
+``etc/samba/smb.conf``
+======================
+:download:`Download file<smb.conf>`
+
+.. literalinclude:: smb.conf
+   :language: sh
