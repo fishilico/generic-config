@@ -14,7 +14,7 @@ managed by users and only contain sources, not binary packages.
 To build a package, you need to install ``base-devel`` and use ``makepkg``.
 The main component of a package is the ``PKGBUILD`` description file, which
 describes where to download sources and how to compile binary files. Once you
-have a ``PKGBUILD`` (and additionnal files such as patches) in a directory,
+have a ``PKGBUILD`` (and additional files such as patches) in a directory,
 to build and install the package you just need to issue::
 
     makepkg -si

@@ -33,7 +33,7 @@ However, system administration of a few personal hosts (servers and desktop
 workstations) becomes really hard when you have not got a way to keep
 configuration "in sync with your mind".
 
-Another issue occured several years ago. One of my friends who was new to IPv6
+Another issue occurred several years ago. One of my friends who was new to IPv6
 wanted to know what rules I was using in the ``ip6tables`` firewall of my
 server. I gave him a kind of "anonymized file" with rules which were not
 specific to my server and he found out that there were some problems with IPv6
@@ -46,7 +46,7 @@ people. In order to promote getting feedback from my notes, I made this project
 public, with a Git tree hosted by GitHub. Nowadays the HTML pages are hosted by
 GitHub Pages, and a
 `Circle-Ci job <https://circleci.com/gh/fishilico/generic-config>`_ has been
-configured to rebuild the pages everytime branch ``master`` is updated.
+configured to rebuild the pages every time branch ``master`` is updated.
 
 When you are reading the files I've written, please keep in mind that no host
 in the world would run with only the things I describe, as they most likely

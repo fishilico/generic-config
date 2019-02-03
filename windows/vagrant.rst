@@ -461,7 +461,7 @@ These commands install the following software:
 * Git: https://git-scm.com/
 * Python: https://www.python.org/downloads/windows/
 
-* MSys2 environment: https://www.msys2.org/. Additionnal software like GCC
+* MSys2 environment: https://www.msys2.org/. Additional software like GCC
   (to compile C programs) can be installed with::
 
     c:\tools\msys64\usr\bin\bash.exe

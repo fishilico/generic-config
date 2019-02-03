@@ -71,7 +71,7 @@ System-related commands
 
 * List modules with names and timestamps: ``lm n t``
 
-* List some inforation about the kernel: ``!lmi nt``
+* List some information about the kernel: ``!lmi nt``
 
 * Read the PCR (Processor Control Region): ``!pcr``
 
@@ -274,7 +274,7 @@ x86-specific commands
   ``r gdtr`` and the detail of each descriptors can be seen with commands such
   as ``dp @cs``.  When using a local debugger, it is nevertheless possible to
   compile a userland program which shows the result of ``sgdt`` instruction,
-  which is not priviledged, and then use the pointer in WinDBG with
+  which is not privileged, and then use the pointer in WinDBG with
   ``nt!_KGDTENTRY`` (or ``nt!_KGDTENTRY64``) structure.
 
 

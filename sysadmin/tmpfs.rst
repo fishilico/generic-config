@@ -19,7 +19,7 @@ Example of ``/etc/fstab`` entry for user's ``.cache`` home subdirectory::
 
     $USER.cache $HOME/.cache tmpfs defaults,auto,nodev,noexec,nosuid,size=2048M,gid=100,uid=1000,mode=0700 0 0
 
-As ``.cache/pacaur`` is intended to persist accross reboots, this directory can
+As ``.cache/pacaur`` is intended to persist across reboots, this directory can
 be set up as a bind-mount::
 
     $HOME/.cache.pacaur $HOME/.cache/pacaur none bind 0 0

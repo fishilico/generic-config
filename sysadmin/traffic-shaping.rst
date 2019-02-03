@@ -33,7 +33,7 @@ Egress shaping (limiting outbound traffic)
 
 This command attachs a TBF (Token Bucket Filter) to ``eth0`` which :
 
-* limit the maxium rate to 1 Mbits/s,
+* limit the maximum rate to 1 Mbits/s,
 * define a peakrate at 2 Mbits/s,
 * use a 10 KB buffer,
 * limit the latency caused by the TBF to at most 70ms
