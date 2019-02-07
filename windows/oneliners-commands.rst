@@ -216,7 +216,7 @@ Display a simple CSV file in a simple GUI, from a PowerShell prompt::
 
 In order to produce a CSV from a PowerShell command::
 
-    ... | Sort-Object -Property Timestamp | export4-csv file.csv -notypeinformation
+    ... | Sort-Object -Property Timestamp | Export-Csv file.csv -notypeinformation
 
 For a table in the CLI::
 
