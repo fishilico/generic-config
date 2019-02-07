@@ -133,7 +133,7 @@ Enumerate live objects
 
 Enumerate all processes::
 
-    tasklist
+    tasklist /v
     query process *
     Get-Process
 
