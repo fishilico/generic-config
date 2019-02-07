@@ -131,7 +131,13 @@ $results | Out-File -FilePath .\wifi.txt -Encoding ASCII
 <div class="section" id="user-and-group-management">
 <h2>User and group management<a class="headerlink" href="#user-and-group-management" title="Permalink to this headline">¶</a></h2>
 <p>Some commands to list and manage users and groups</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Local users and groups manager</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get information on the current user</span>
+whoami
+whoami /groups
+whoami /priv
+whoami /all
+
+<span class="c1"># Local users and groups manager</span>
 lusrmgr.msc
 
 <span class="c1"># net command on local accounts</span>
@@ -159,7 +165,7 @@ Get-CimInstance -ClassName Win32_Group
 <div class="section" id="enumerate-live-objects">
 <h2>Enumerate live objects<a class="headerlink" href="#enumerate-live-objects" title="Permalink to this headline">¶</a></h2>
 <p>Enumerate all processes:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tasklist</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tasklist</span> <span class="o">/</span><span class="n">v</span>
 <span class="n">query</span> <span class="n">process</span> <span class="o">*</span>
 <span class="n">Get</span><span class="o">-</span><span class="n">Process</span>
 </pre></div>
@@ -234,7 +240,7 @@ Get-CimInstance -ClassName Win32_Group
 </pre></div>
 </div>
 <p>In order to produce a CSV from a PowerShell command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span> <span class="o">|</span> <span class="n">Sort</span><span class="o">-</span><span class="n">Object</span> <span class="o">-</span><span class="n">Property</span> <span class="n">Timestamp</span> <span class="o">|</span> <span class="n">export4</span><span class="o">-</span><span class="n">csv</span> <span class="n">file</span><span class="o">.</span><span class="n">csv</span> <span class="o">-</span><span class="n">notypeinformation</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span> <span class="o">|</span> <span class="n">Sort</span><span class="o">-</span><span class="n">Object</span> <span class="o">-</span><span class="n">Property</span> <span class="n">Timestamp</span> <span class="o">|</span> <span class="n">Export</span><span class="o">-</span><span class="n">Csv</span> <span class="n">file</span><span class="o">.</span><span class="n">csv</span> <span class="o">-</span><span class="n">notypeinformation</span>
 </pre></div>
 </div>
 <p>For a table in the CLI:</p>

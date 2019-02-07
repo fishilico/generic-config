@@ -98,6 +98,12 @@ Some commands to list and manage users and groups
 
 .. code-block:: sh
 
+    # Get information on the current user
+    whoami
+    whoami /groups
+    whoami /priv
+    whoami /all
+
     # Local users and groups manager
     lusrmgr.msc
 
@@ -127,7 +133,7 @@ Enumerate live objects
 
 Enumerate all processes::
 
-    tasklist
+    tasklist /v
     query process *
     Get-Process
 
@@ -216,7 +222,7 @@ Display a simple CSV file in a simple GUI, from a PowerShell prompt::
 
 In order to produce a CSV from a PowerShell command::
 
-    ... | Sort-Object -Property Timestamp | export4-csv file.csv -notypeinformation
+    ... | Sort-Object -Property Timestamp | Export-Csv file.csv -notypeinformation
 
 For a table in the CLI::
 
