@@ -98,6 +98,12 @@ Some commands to list and manage users and groups
 
 .. code-block:: sh
 
+    # Get information on the current user
+    whoami
+    whoami /groups
+    whoami /priv
+    whoami /all
+
     # Local users and groups manager
     lusrmgr.msc
 
