@@ -256,3 +256,64 @@ In order to show a table as a list::
 
     ... | Format-List
     ... | fl
+
+
+MSSQL client
+------------
+
+In order to connect to a MSSQL server from a PowerShell CLI (cf. https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection?view=netframework-4.7.2):
+
+.. code-block:: sh
+
+    $ConnectionString = "Server=MSSQL-SRV\MY-INSTANCE;Database=mydb;User ID=sa;Password=sa;"
+    $SqlConnection = New-Object System.Data.SqlClient.SqlConnection($ConnectionString)
+    $SqlConnection.Open()
+    $SqlConnection.State
+    # Result: "Open"
+
+To run a trivial SQL query:
+
+.. code-block:: sh
+
+    # The verbose way:
+    $SqlCmd = New-Object System.Data.SqlClient.SqlCommand
+    $SqlCmd.CommandText = "SELECT 42"
+    $SqlCmd.Connection = $SqlConnection
+    $SqlAdapter = New-Object System.Data.SqlClient.SqlDataAdapter
+    $SqlAdapter.SelectCommand = $SqlCmd
+    $DataSet = New-Object System.Data.DataSet
+    $SqlAdapter.Fill($DataSet)
+    $DataSet.Tables[0] | Format-Table
+
+    # The more-compact way:
+    $SqlCmd = New-Object System.Data.SqlClient.SqlCommand("SELECT 42", $SqlConnection)
+    $SqlAdapter = New-Object System.Data.SqlClient.SqlDataAdapter($SqlCmd)
+    $DataSet = New-Object System.Data.DataSet
+    $SqlAdapter.Fill($DataSet)
+    $DataSet.Tables[0] | Format-Table
+
+In order to find out which tables the logged user has access, here are some queries:
+
+* ``SELECT * FROM sys.databases``
+* ``SELECT * FROM sys.tables``
+
+The following commands export the first rows of every table to files, once a ``$SqlConnection`` has been created:
+
+.. code-block:: sh
+
+    $SqlCmd = New-Object System.Data.SqlClient.SqlCommand("SELECT * FROM sys.tables", $SqlConnection)
+    $SqlAdapter = New-Object System.Data.SqlClient.SqlDataAdapter($SqlCmd)
+    $DataSet = New-Object System.Data.DataSet
+    $SqlAdapter.Fill($DataSet)
+    $AllTables = $DataSet.Tables[0] | Sort-Object -property name
+
+    $AllTables | ForEach-Object {
+        $tblName = $_.name
+        $csvName = "dump_top_" + $tblName + ".csv"
+        echo "Exporting data to " $csvName
+        $SqlCmd = New-Object System.Data.SqlClient.SqlCommand(("SELECT TOP 10000 * FROM " + $tblName), $SqlConnection)
+        $SqlAdapter = New-Object System.Data.SqlClient.SqlDataAdapter($SqlCmd)
+        $DataSet = New-Object System.Data.DataSet
+        $SqlAdapter.Fill($DataSet)
+        $DataSet.Tables[0] | Export-Csv $csvName -notypeinformation
+    }
