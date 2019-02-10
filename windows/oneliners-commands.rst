@@ -3,12 +3,35 @@ One-liners commands
 
 Here are some useful short commands for Windows systems that may be useful.
 
-In order to find a specific Powershell command from a keyword, this can be used:
 
-.. code-block:: sh
+Basic PowerShell commands
+-------------------------
 
-    # List commands using "WMI" in their names
-    Get-Command -noun *WMI*
+* ``sls`` (``Select-String``): look for a pattern:
+
+  Example:
+
+  .. code-block:: sh
+
+      # Search my-needle in the input
+      sls my-needle
+
+      # Search my-needle in files ending with .txt
+      sls -Path *.txt -Pattern my-needle
+
+  Documentation:
+
+  - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-string?view=powershell-6
+  - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_regular_expressions?view=powershell-6
+
+* ``gcm`` (``Get-Command``): List cmdlets (PowerShell commands) matching a pattern
+
+  Example:
+
+  .. code-block:: sh
+
+      # List commands using "WMI" in their names
+      gcm -noun *WMI*
 
 
 Download and run
