@@ -141,6 +141,10 @@ Some commands to list and manage users and groups
     # query command
     query user
 
+    # Get information about the current sessions on a server
+    qwinsta
+    query session
+
     # PowerShell, with MS Exchange cmdlet
     # Add-PSSnapin Microsoft.Exchange.Management.PowerShell.E2010
     Get-User | Export-CSV C:\Temp\AllUsers.csv -NoTypeInfo
