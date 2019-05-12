@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Some information of Debian systems &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -47,18 +45,18 @@
 tasks I do when I set up a Debian host.</p>
 <div class="section" id="debian-post-installation-commands">
 <h2>Debian post-installation commands<a class="headerlink" href="#debian-post-installation-commands" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">dpkg-reconfigure</span> <span class="pre">locales</span></code></dt>
-<dd>Reconfigure locales, for example to <code class="docutils literal notranslate"><span class="pre">en_US</span> <span class="pre">en_US.UTF-8</span> <span class="pre">fr_FR.UTF-8</span> <span class="pre">fr_FR&#64;euro</span></code>.
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">dpkg-reconfigure</span> <span class="pre">locales</span></code></dt><dd><p>Reconfigure locales, for example to <code class="docutils literal notranslate"><span class="pre">en_US</span> <span class="pre">en_US.UTF-8</span> <span class="pre">fr_FR.UTF-8</span> <span class="pre">fr_FR&#64;euro</span></code>.
 Keep in mind SSH preserve locale across the connection so a single UTF-8
-locale is not enough.</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">dpkg-reconfigure</span> <span class="pre">keyboard-configuration</span></code></dt>
-<dd>Change which keyboard configuration to use. <code class="docutils literal notranslate"><span class="pre">loadkeys</span></code> can also be used,
-with keymaps in <code class="docutils literal notranslate"><span class="pre">/usr/share/kbd/keymaps</span></code>.</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/usr/bin</span> <span class="pre">&amp;&amp;</span> <span class="pre">sudo</span> <span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">python</span> <span class="pre">python2</span></code></dt>
-<dd>For scripts which require python2 command.</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">update-rc.d</span> <span class="pre">$SERVICE</span> <span class="pre">remove</span></code> or <code class="docutils literal notranslate"><span class="pre">sysv-rc-conf</span></code></dt>
-<dd>Remove some unneeded services from boot. Opposite operation is <code class="docutils literal notranslate"><span class="pre">defaults</span></code>.</dd>
+locale is not enough.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">dpkg-reconfigure</span> <span class="pre">keyboard-configuration</span></code></dt><dd><p>Change which keyboard configuration to use. <code class="docutils literal notranslate"><span class="pre">loadkeys</span></code> can also be used,
+with keymaps in <code class="docutils literal notranslate"><span class="pre">/usr/share/kbd/keymaps</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/usr/bin</span> <span class="pre">&amp;&amp;</span> <span class="pre">sudo</span> <span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">python</span> <span class="pre">python2</span></code></dt><dd><p>For scripts which require python2 command.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">update-rc.d</span> <span class="pre">$SERVICE</span> <span class="pre">remove</span></code> or <code class="docutils literal notranslate"><span class="pre">sysv-rc-conf</span></code></dt><dd><p>Remove some unneeded services from boot. Opposite operation is <code class="docutils literal notranslate"><span class="pre">defaults</span></code>.</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="apt-configuration">
@@ -102,11 +100,11 @@ every day. To change this to a weekly-based period, you need to edit
 </div>
 <div class="section" id="apache-commands">
 <h2>Apache commands<a class="headerlink" href="#apache-commands" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">a2dismod</span> <span class="pre">status</span></code></dt>
-<dd>Disable the status module.</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">a2dissite</span> <span class="pre">default</span></code></dt>
-<dd>Disable the default site, you need to write your own site file and enable it.</dd>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">a2dismod</span> <span class="pre">status</span></code></dt><dd><p>Disable the status module.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">a2dissite</span> <span class="pre">default</span></code></dt><dd><p>Disable the default site, you need to write your own site file and enable it.</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="postfix-configuration">
@@ -168,8 +166,6 @@ to be a good choice and is easy to install, configure and manage.</p>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -196,7 +192,7 @@ to be a good choice and is easy to install, configure and manage.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

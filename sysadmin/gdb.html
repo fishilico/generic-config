@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>GDB, The GNU Project Debugger &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -46,11 +44,11 @@
 <p>When debugging an application or investigating a crash, several tools exist to
 understand what’s going on:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">strace</span></code> to list system calls,</li>
-<li><code class="docutils literal notranslate"><span class="pre">ltrace</span></code> to list calls to functions in shared libraries,</li>
-<li><code class="docutils literal notranslate"><span class="pre">valgrind</span></code> to track memory usage and find out memory leaks and access to
-uninitialized data,</li>
-<li><code class="docutils literal notranslate"><span class="pre">gdb</span></code> to debug the application.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">strace</span></code> to list system calls,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ltrace</span></code> to list calls to functions in shared libraries,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">valgrind</span></code> to track memory usage and find out memory leaks and access to
+uninitialized data,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gdb</span></code> to debug the application.</p></li>
 </ul>
 <p>This document presents how <code class="docutils literal notranslate"><span class="pre">gdb</span></code> can be used to debug a program.  It is not a
 complete introduction to <code class="docutils literal notranslate"><span class="pre">gdb</span></code> and it is not focused on development issues.
@@ -83,26 +81,26 @@ as defining breakpoints, loading shared libraries, customizing the interface…<
 <p>Once <code class="docutils literal notranslate"><span class="pre">gdb</span></code> is started, it prints a few lines and presents a prompt with
 “<code class="docutils literal notranslate"><span class="pre">(gdb)</span></code>”.  The commands which are mandatory to know then are:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">quit</span></code> or <code class="docutils literal notranslate"><span class="pre">q</span></code>: exit <code class="docutils literal notranslate"><span class="pre">gdb</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">help</span></code> or <code class="docutils literal notranslate"><span class="pre">h</span></code>: get help.</li>
-<li><code class="docutils literal notranslate"><span class="pre">run</span> <span class="pre">arg1</span> <span class="pre">arg2</span> <span class="pre">arg3</span></code> or <code class="docutils literal notranslate"><span class="pre">r</span></code>: launch the program with the specified
-command-line arguments.</li>
-<li><code class="docutils literal notranslate"><span class="pre">breakpoint</span> <span class="pre">main</span></code> or <code class="docutils literal notranslate"><span class="pre">b</span></code>: set up a breakpoint on function <code class="docutils literal notranslate"><span class="pre">main()</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">clear</span> <span class="pre">main</span></code> or <code class="docutils literal notranslate"><span class="pre">cl</span></code>: remove the breakpoint on function <code class="docutils literal notranslate"><span class="pre">main()</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">delete</span> <span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">d</span></code>: remove the first breakpoint.</li>
-<li><code class="docutils literal notranslate"><span class="pre">watch</span> <span class="pre">variable</span></code> or <code class="docutils literal notranslate"><span class="pre">wa</span></code>: set up a watchpoint on a variable.</li>
-<li><code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">syscall</span></code>: set up a catchpoint for any syscall</li>
-<li><code class="docutils literal notranslate"><span class="pre">continue</span></code> or <code class="docutils literal notranslate"><span class="pre">c</span></code>: continue execution after it being interrupted.</li>
-<li><code class="docutils literal notranslate"><span class="pre">step</span></code> or <code class="docutils literal notranslate"><span class="pre">s</span></code>: step program until a different line of code.</li>
-<li><code class="docutils literal notranslate"><span class="pre">next</span></code> or <code class="docutils literal notranslate"><span class="pre">n</span></code>: like <code class="docutils literal notranslate"><span class="pre">step</span></code>, but step over subroutines.</li>
-<li><code class="docutils literal notranslate"><span class="pre">stepi</span></code> or <code class="docutils literal notranslate"><span class="pre">si</span></code>: step one instruction.</li>
-<li><code class="docutils literal notranslate"><span class="pre">nexti</span></code> or <code class="docutils literal notranslate"><span class="pre">ni</span></code>: like <code class="docutils literal notranslate"><span class="pre">stepi</span></code> but step over subroutines.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quit</span></code> or <code class="docutils literal notranslate"><span class="pre">q</span></code>: exit <code class="docutils literal notranslate"><span class="pre">gdb</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">help</span></code> or <code class="docutils literal notranslate"><span class="pre">h</span></code>: get help.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">run</span> <span class="pre">arg1</span> <span class="pre">arg2</span> <span class="pre">arg3</span></code> or <code class="docutils literal notranslate"><span class="pre">r</span></code>: launch the program with the specified
+command-line arguments.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">breakpoint</span> <span class="pre">main</span></code> or <code class="docutils literal notranslate"><span class="pre">b</span></code>: set up a breakpoint on function <code class="docutils literal notranslate"><span class="pre">main()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clear</span> <span class="pre">main</span></code> or <code class="docutils literal notranslate"><span class="pre">cl</span></code>: remove the breakpoint on function <code class="docutils literal notranslate"><span class="pre">main()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delete</span> <span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">d</span></code>: remove the first breakpoint.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">watch</span> <span class="pre">variable</span></code> or <code class="docutils literal notranslate"><span class="pre">wa</span></code>: set up a watchpoint on a variable.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">catch</span> <span class="pre">syscall</span></code>: set up a catchpoint for any syscall</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">continue</span></code> or <code class="docutils literal notranslate"><span class="pre">c</span></code>: continue execution after it being interrupted.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">step</span></code> or <code class="docutils literal notranslate"><span class="pre">s</span></code>: step program until a different line of code.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">next</span></code> or <code class="docutils literal notranslate"><span class="pre">n</span></code>: like <code class="docutils literal notranslate"><span class="pre">step</span></code>, but step over subroutines.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stepi</span></code> or <code class="docutils literal notranslate"><span class="pre">si</span></code>: step one instruction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nexti</span></code> or <code class="docutils literal notranslate"><span class="pre">ni</span></code>: like <code class="docutils literal notranslate"><span class="pre">stepi</span></code> but step over subroutines.</p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">step</span></code>, <code class="docutils literal notranslate"><span class="pre">next</span></code>, <code class="docutils literal notranslate"><span class="pre">stepi</span></code> and <code class="docutils literal notranslate"><span class="pre">nexti</span></code> takes an optional integer parameter
 which specifies how many times to repeat the command.</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">layout</span> <span class="pre">split</span></code>: change layout to a 3-windows layout, code, asm and command.
-Other possible layout are <code class="docutils literal notranslate"><span class="pre">src</span></code>, <code class="docutils literal notranslate"><span class="pre">asm</span></code> and <code class="docutils literal notranslate"><span class="pre">regs</span></code>.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">layout</span> <span class="pre">split</span></code>: change layout to a 3-windows layout, code, asm and command.
+Other possible layout are <code class="docutils literal notranslate"><span class="pre">src</span></code>, <code class="docutils literal notranslate"><span class="pre">asm</span></code> and <code class="docutils literal notranslate"><span class="pre">regs</span></code>.</p></li>
 </ul>
 <p>To iterate through layouts, use <code class="docutils literal notranslate"><span class="pre">layout</span> <span class="pre">next</span></code> (or <code class="docutils literal notranslate"><span class="pre">la</span> <span class="pre">n</span></code>) and press enter
 several times.  Pressing enter with an empty prompt repeats the last command.</p>
@@ -116,34 +114,34 @@ fault, an interrupt signal (Ctrl-C) or other trapped signals, it is possible to
 analysis the execution context of a program.</p>
 <p>Call frame:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">backtrace</span></code> or <code class="docutils literal notranslate"><span class="pre">bt</span></code>: show the stack trace (list of function calls).</li>
-<li><code class="docutils literal notranslate"><span class="pre">frame</span> <span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">0</span></code>: select a frame in the stack trace.</li>
-<li><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">frame</span></code> or <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">f</span></code>: show information about current frame.
-(A frame ID can be added).</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">backtrace</span></code> or <code class="docutils literal notranslate"><span class="pre">bt</span></code>: show the stack trace (list of function calls).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">frame</span> <span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">0</span></code>: select a frame in the stack trace.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">frame</span></code> or <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">f</span></code>: show information about current frame.
+(A frame ID can be added).</p></li>
 </ul>
 <p>Display variables and expressions:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">print</span> <span class="pre">$rsp</span></code> or <code class="docutils literal notranslate"><span class="pre">p</span></code>: print an expression, which is here the x86_64 stack
+<li><p><code class="docutils literal notranslate"><span class="pre">print</span> <span class="pre">$rsp</span></code> or <code class="docutils literal notranslate"><span class="pre">p</span></code>: print an expression, which is here the x86_64 stack
 pointer, but can be a symbol (to a global variable) or a complex expression.
-It can even call functions from the currently-being-debugged program!</li>
-<li><code class="docutils literal notranslate"><span class="pre">p/x</span> <span class="pre">$r12</span></code>: print the value of register 12 in hexadecimal format.</li>
-<li><code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">*(char***)&amp;__libc_argv</span></code>: retrieve the value of <code class="docutils literal notranslate"><span class="pre">argv</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">output</span></code> or <code class="docutils literal notranslate"><span class="pre">ou</span></code>: like <code class="docutils literal notranslate"><span class="pre">print</span></code> without value history nor newline.</li>
+It can even call functions from the currently-being-debugged program!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p/x</span> <span class="pre">$r12</span></code>: print the value of register 12 in hexadecimal format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">*(char***)&amp;__libc_argv</span></code>: retrieve the value of <code class="docutils literal notranslate"><span class="pre">argv</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output</span></code> or <code class="docutils literal notranslate"><span class="pre">ou</span></code>: like <code class="docutils literal notranslate"><span class="pre">print</span></code> without value history nor newline.</p></li>
 </ul>
 <p>Memory:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">x/256xb</span> <span class="pre">$rsp</span></code>: dump 256 bytes from the stack in hexadecimal format.</li>
-<li><code class="docutils literal notranslate"><span class="pre">x/60xw</span> <span class="pre">$rsp</span></code>: dump 60 32-bit words from the stack.</li>
-<li><code class="docutils literal notranslate"><span class="pre">x/30xg</span> <span class="pre">$rsp</span></code>: dump 30 64-bit words from the stack.</li>
-<li><code class="docutils literal notranslate"><span class="pre">x/42i</span> <span class="pre">main</span></code>: show the 42 first asm instructions of function <code class="docutils literal notranslate"><span class="pre">main</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">x/10s</span> <span class="pre">**(char***)&amp;environ</span></code>: show 10 environment variables.</li>
-<li><code class="docutils literal notranslate"><span class="pre">x/hs</span> <span class="pre">$rsi</span></code>: show an wide-character string from rsi.</li>
-<li><code class="docutils literal notranslate"><span class="pre">disassemble</span></code> or <code class="docutils literal notranslate"><span class="pre">disas</span></code>: show asm instructions around the current one.
-(an address or a symbol can be given).</li>
-<li><code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">l</span></code>: show code lines around the current one.</li>
-<li><code class="docutils literal notranslate"><span class="pre">list</span> <span class="pre">-</span></code> or <code class="docutils literal notranslate"><span class="pre">l</span> <span class="pre">-</span></code>: show code lines before the current one.</li>
-<li><code class="docutils literal notranslate"><span class="pre">dump</span> <span class="pre">memory</span> <span class="pre">text.bin</span> <span class="pre">0x400000</span> <span class="pre">0x401000</span></code>: write memory content to a file.
-The two hexadecimal arguments define a [start, stop) range.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/256xb</span> <span class="pre">$rsp</span></code>: dump 256 bytes from the stack in hexadecimal format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/60xw</span> <span class="pre">$rsp</span></code>: dump 60 32-bit words from the stack.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/30xg</span> <span class="pre">$rsp</span></code>: dump 30 64-bit words from the stack.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/42i</span> <span class="pre">main</span></code>: show the 42 first asm instructions of function <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/10s</span> <span class="pre">**(char***)&amp;environ</span></code>: show 10 environment variables.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/hs</span> <span class="pre">$rsi</span></code>: show an wide-character string from rsi.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">disassemble</span></code> or <code class="docutils literal notranslate"><span class="pre">disas</span></code>: show asm instructions around the current one.
+(an address or a symbol can be given).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">l</span></code>: show code lines around the current one.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">list</span> <span class="pre">-</span></code> or <code class="docutils literal notranslate"><span class="pre">l</span> <span class="pre">-</span></code>: show code lines before the current one.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dump</span> <span class="pre">memory</span> <span class="pre">text.bin</span> <span class="pre">0x400000</span> <span class="pre">0x401000</span></code>: write memory content to a file.
+The two hexadecimal arguments define a [start, stop) range.</p></li>
 </ul>
 <p>It is possible to run an examine command each time the program is interrupted,
 with <code class="docutils literal notranslate"><span class="pre">display</span></code>.  For example, this command displays the to-be-run
@@ -153,9 +151,9 @@ instruction, which is useful when running step-by-step with <code class="docutil
 </div>
 <p>General information:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">registers</span></code> or <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">reg</span></code>: show the values of current registers.</li>
-<li><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">proc</span> <span class="pre">mappings</span></code> or <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">proc</span> <span class="pre">m</span></code>: show the memory mapping.</li>
-<li><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">locals</span></code> or <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">lo</span></code>: show the values of local variables.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">registers</span></code> or <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">reg</span></code>: show the values of current registers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">proc</span> <span class="pre">mappings</span></code> or <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">proc</span> <span class="pre">m</span></code>: show the memory mapping.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">locals</span></code> or <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">lo</span></code>: show the values of local variables.</p></li>
 </ul>
 </div>
 <div class="section" id="remote-debug">
@@ -186,7 +184,8 @@ Continuing.
 <p>When a program crashes, Linux can dump its execution context to a file.  This
 file is called a “core dump” and it is possible to run gdb to analyze it using:</p>
 <blockquote>
-<div>gdb program corefile</div></blockquote>
+<div><p>gdb program corefile</p>
+</div></blockquote>
 <p>To generate such a core dump, the “core resource limit” needs to be non-zero
 and <code class="docutils literal notranslate"><span class="pre">kernel.core_pattern</span></code> needs to be configured.  By default, these values
 are:</p>
@@ -325,8 +324,6 @@ provide the decompressed unstripped <code class="docutils literal notranslate"><
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -353,7 +350,7 @@ provide the decompressed unstripped <code class="docutils literal notranslate"><
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

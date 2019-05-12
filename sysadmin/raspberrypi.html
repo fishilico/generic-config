@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Configuration tweaks on a Raspberry Pi &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -70,11 +68,11 @@ for an ARM11 (ARMv6) versatile board, which requires a patch to be applied:
 <h2>Post-install configuration<a class="headerlink" href="#post-install-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Like all Debian systems, some files needs updating after the initial setup:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">/etc/mailname</span></code> (with the name to be used in mailing)</li>
-<li><code class="docutils literal notranslate"><span class="pre">/etc/sudoers</span></code> (remove <code class="docutils literal notranslate"><span class="pre">pi</span> <span class="pre">ALL=(ALL)</span> <span class="pre">NOPASSWD:</span> <span class="pre">ALL</span></code>)</li>
-<li><code class="docutils literal notranslate"><span class="pre">/etc/ntp.conf</span></code> (remove <code class="docutils literal notranslate"><span class="pre">restrict</span> <span class="pre">::1</span></code> if IPv6 module is not loaded)</li>
-<li>Reconfigure the keyboard: <code class="docutils literal notranslate"><span class="pre">keyboard-configuration</span></code></li>
-<li>Change timezone: <code class="docutils literal notranslate"><span class="pre">tzselect</span></code> (<code class="docutils literal notranslate"><span class="pre">TZ='Europe/Paris';</span> <span class="pre">export</span> <span class="pre">TZ</span></code>)</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/mailname</span></code> (with the name to be used in mailing)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/sudoers</span></code> (remove <code class="docutils literal notranslate"><span class="pre">pi</span> <span class="pre">ALL=(ALL)</span> <span class="pre">NOPASSWD:</span> <span class="pre">ALL</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/ntp.conf</span></code> (remove <code class="docutils literal notranslate"><span class="pre">restrict</span> <span class="pre">::1</span></code> if IPv6 module is not loaded)</p></li>
+<li><p>Reconfigure the keyboard: <code class="docutils literal notranslate"><span class="pre">keyboard-configuration</span></code></p></li>
+<li><p>Change timezone: <code class="docutils literal notranslate"><span class="pre">tzselect</span></code> (<code class="docutils literal notranslate"><span class="pre">TZ='Europe/Paris';</span> <span class="pre">export</span> <span class="pre">TZ</span></code>)</p></li>
 </ul>
 <p>Moreover, <code class="docutils literal notranslate"><span class="pre">/etc/sysctl.conf</span></code> contains Raspberry Pi-specific configuration:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># rpi tweaks</span>
@@ -123,15 +121,15 @@ sysctl -w net.ipv6.conf.all.use_tempaddr<span class="o">=</span><span class="m">
 <p>Here are the outputs of several commands to retrieve system information on a
 Raspberry Pi, model B.</p>
 <ul class="simple">
-<li>As some people consider a Serial Number and a MAC address as being sensitive
+<li><p>As some people consider a Serial Number and a MAC address as being sensitive
 information, each potential sensitive hexadecimal byte has been replaced here
-by <code class="docutils literal notranslate"><span class="pre">XX</span></code>.</li>
-<li>Information about used kernel is not relevant here. So these outputs don’t
+by <code class="docutils literal notranslate"><span class="pre">XX</span></code>.</p></li>
+<li><p>Information about used kernel is not relevant here. So these outputs don’t
 include kernel version and kernel pointers have been protected
-(<code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.kptr_restrict=2</span></code>).</li>
-<li>Address space is randomized (ALSR, <code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.randomize_va_space=2</span></code>)
+(<code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.kptr_restrict=2</span></code>).</p></li>
+<li><p>Address space is randomized (ALSR, <code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.randomize_va_space=2</span></code>)
 so when dumping <code class="docutils literal notranslate"><span class="pre">/proc/*/maps</span></code>, random parts of addresses have been
-replaced by <code class="docutils literal notranslate"><span class="pre">X</span></code>.</li>
+replaced by <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uname -m
 armv6l
@@ -262,8 +260,6 @@ raspberrypi
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -290,7 +286,7 @@ raspberrypi
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

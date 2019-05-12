@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Some notes about my SELinux installation &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -46,39 +44,39 @@
 <p>This document doesn’t document how to install SELinux. If you want to install
 it, please read one of these websites:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://wiki.debian.org/SELinux">https://wiki.debian.org/SELinux</a></li>
-<li><a class="reference external" href="https://wiki.gentoo.org/wiki/SELinux/Tutorials">https://wiki.gentoo.org/wiki/SELinux/Tutorials</a> (an excellent tutorial for Gentoo)</li>
-<li><a class="reference external" href="https://fedoraproject.org/wiki/SELinux">https://fedoraproject.org/wiki/SELinux</a></li>
-<li><a class="reference external" href="https://wiki.archlinux.org/index.php/SELinux">https://wiki.archlinux.org/index.php/SELinux</a></li>
+<li><p><a class="reference external" href="https://wiki.debian.org/SELinux">https://wiki.debian.org/SELinux</a></p></li>
+<li><p><a class="reference external" href="https://wiki.gentoo.org/wiki/SELinux/Tutorials">https://wiki.gentoo.org/wiki/SELinux/Tutorials</a> (an excellent tutorial for Gentoo)</p></li>
+<li><p><a class="reference external" href="https://fedoraproject.org/wiki/SELinux">https://fedoraproject.org/wiki/SELinux</a></p></li>
+<li><p><a class="reference external" href="https://wiki.archlinux.org/index.php/SELinux">https://wiki.archlinux.org/index.php/SELinux</a></p></li>
 </ul>
 <p>To develop the SELinux policy, here are the relevant git repositories:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/SELinuxProject/refpolicy">https://github.com/SELinuxProject/refpolicy</a> (Reference Policy)</li>
-<li><a class="reference external" href="https://gitweb.gentoo.org/proj/hardened-refpolicy.git/">https://gitweb.gentoo.org/proj/hardened-refpolicy.git/</a> (Gentoo)</li>
-<li><a class="reference external" href="https://github.com/selinux-policy/selinux-policy/tree/rawhide">https://github.com/selinux-policy/selinux-policy/tree/rawhide</a> (Fedora)</li>
-<li><a class="reference external" href="https://salsa.debian.org/selinux-team/refpolicy/tree/debian">https://salsa.debian.org/selinux-team/refpolicy/tree/debian</a> (Debian)</li>
+<li><p><a class="reference external" href="https://github.com/SELinuxProject/refpolicy">https://github.com/SELinuxProject/refpolicy</a> (Reference Policy)</p></li>
+<li><p><a class="reference external" href="https://gitweb.gentoo.org/proj/hardened-refpolicy.git/">https://gitweb.gentoo.org/proj/hardened-refpolicy.git/</a> (Gentoo)</p></li>
+<li><p><a class="reference external" href="https://github.com/selinux-policy/selinux-policy/tree/rawhide">https://github.com/selinux-policy/selinux-policy/tree/rawhide</a> (Fedora)</p></li>
+<li><p><a class="reference external" href="https://salsa.debian.org/selinux-team/refpolicy/tree/debian">https://salsa.debian.org/selinux-team/refpolicy/tree/debian</a> (Debian)</p></li>
 </ul>
 <p>And here is some documentation related with writing the policy:</p>
 <ul class="simple">
-<li><a class="reference external" href="http://oss.tresys.com/docs/refpolicy/api/">http://oss.tresys.com/docs/refpolicy/api/</a> (reference policy API)</li>
-<li><a class="reference external" href="http://www.selinuxproject.org/page/ObjectClassesPerms">http://www.selinuxproject.org/page/ObjectClassesPerms</a>
-(SELinux Object Classes and Permissions Reference)</li>
-<li><a class="reference external" href="https://wiki.gentoo.org/wiki/Project:SELinux/Development">https://wiki.gentoo.org/wiki/Project:SELinux/Development</a> (Gentoo doc)</li>
-<li><a class="reference external" href="http://wiki.gentoo.org/wiki/Project:SELinux/CodingStyle">http://wiki.gentoo.org/wiki/Project:SELinux/CodingStyle</a>
-(Gentoo coding style for SELinux)</li>
+<li><p><a class="reference external" href="http://oss.tresys.com/docs/refpolicy/api/">http://oss.tresys.com/docs/refpolicy/api/</a> (reference policy API)</p></li>
+<li><p><a class="reference external" href="http://www.selinuxproject.org/page/ObjectClassesPerms">http://www.selinuxproject.org/page/ObjectClassesPerms</a>
+(SELinux Object Classes and Permissions Reference)</p></li>
+<li><p><a class="reference external" href="https://wiki.gentoo.org/wiki/Project:SELinux/Development">https://wiki.gentoo.org/wiki/Project:SELinux/Development</a> (Gentoo doc)</p></li>
+<li><p><a class="reference external" href="http://wiki.gentoo.org/wiki/Project:SELinux/CodingStyle">http://wiki.gentoo.org/wiki/Project:SELinux/CodingStyle</a>
+(Gentoo coding style for SELinux)</p></li>
 </ul>
 <p>And while listing websites, here are some more:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://people.redhat.com/sgrubb/audit/visualize/index.html">https://people.redhat.com/sgrubb/audit/visualize/index.html</a>
-(Audit Data Visualization)</li>
-<li><a class="reference external" href="https://github.com/SELinuxProject/selinux">https://github.com/SELinuxProject/selinux</a>
-(SELinux userland libraries and tools repository)</li>
-<li><a class="reference external" href="http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html">http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html</a>
-(The SELinux Notebook - The Foundations)</li>
-<li><a class="reference external" href="https://lore.kernel.org/selinux/">https://lore.kernel.org/selinux/</a>
-SELinux Mailing List Archive on lore.kernel.org</li>
-<li><a class="reference external" href="https://lore.kernel.org/selinux-refpolicy/">https://lore.kernel.org/selinux-refpolicy/</a>
-SELinux-Refpolicy Mailing List Archive on lore.kernel.org</li>
+<li><p><a class="reference external" href="https://people.redhat.com/sgrubb/audit/visualize/index.html">https://people.redhat.com/sgrubb/audit/visualize/index.html</a>
+(Audit Data Visualization)</p></li>
+<li><p><a class="reference external" href="https://github.com/SELinuxProject/selinux">https://github.com/SELinuxProject/selinux</a>
+(SELinux userland libraries and tools repository)</p></li>
+<li><p><a class="reference external" href="http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html">http://www.freetechbooks.com/the-selinux-notebook-the-foundations-t785.html</a>
+(The SELinux Notebook - The Foundations)</p></li>
+<li><p><a class="reference external" href="https://lore.kernel.org/selinux/">https://lore.kernel.org/selinux/</a>
+SELinux Mailing List Archive on lore.kernel.org</p></li>
+<li><p><a class="reference external" href="https://lore.kernel.org/selinux-refpolicy/">https://lore.kernel.org/selinux-refpolicy/</a>
+SELinux-Refpolicy Mailing List Archive on lore.kernel.org</p></li>
 </ul>
 <p>The present document will focus on some pitfalls I’ve encountered since
 installing SELinux on systems running Debian or ArchLinux.</p>
@@ -216,10 +214,12 @@ constraint or (much sumpler) change the user associated to <code class="docutils
 <h2>Export local configuration done with <code class="docutils literal notranslate"><span class="pre">semanage</span></code><a class="headerlink" href="#export-local-configuration-done-with-semanage" title="Permalink to this headline">¶</a></h2>
 <p>To export all local changes done with <code class="docutils literal notranslate"><span class="pre">semanage</span></code>, there is an option:</p>
 <blockquote>
-<div>semanage -o</div></blockquote>
+<div><p>semanage -o</p>
+</div></blockquote>
 <p>To import exported data back to the local configuration:</p>
 <blockquote>
-<div>semanage -i</div></blockquote>
+<div><p>semanage -i</p>
+</div></blockquote>
 </div>
 <div class="section" id="bugs-still-present-in-october-2014">
 <h2>Bugs still present in October 2014<a class="headerlink" href="#bugs-still-present-in-october-2014" title="Permalink to this headline">¶</a></h2>
@@ -231,8 +231,8 @@ by systemd using <code class="docutils literal notranslate"><span class="pre">tm
 </div>
 <p>For further information, please read:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://bugzilla.redhat.com/show_bug.cgi?id=767355">https://bugzilla.redhat.com/show_bug.cgi?id=767355</a></li>
-<li><a class="reference external" href="http://www.spinics.net/lists/selinux/msg11684.html">http://www.spinics.net/lists/selinux/msg11684.html</a></li>
+<li><p><a class="reference external" href="https://bugzilla.redhat.com/show_bug.cgi?id=767355">https://bugzilla.redhat.com/show_bug.cgi?id=767355</a></p></li>
+<li><p><a class="reference external" href="http://www.spinics.net/lists/selinux/msg11684.html">http://www.spinics.net/lists/selinux/msg11684.html</a></p></li>
 </ul>
 </div>
 </div>
@@ -279,8 +279,6 @@ by systemd using <code class="docutils literal notranslate"><span class="pre">tm
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -307,7 +305,7 @@ by systemd using <code class="docutils literal notranslate"><span class="pre">tm
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

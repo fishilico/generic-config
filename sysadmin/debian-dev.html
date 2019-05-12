@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Build a development environment for Debian &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -132,9 +130,9 @@ GPG keychain.</p>
 <h2>Package a Python library for Debian<a class="headerlink" href="#package-a-python-library-for-debian" title="Permalink to this headline">¶</a></h2>
 <p>Relevant Debian wiki articles:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://wiki.debian.org/IntroDebianPackaging">https://wiki.debian.org/IntroDebianPackaging</a></li>
-<li><a class="reference external" href="https://wiki.debian.org/Python/Packaging">https://wiki.debian.org/Python/Packaging</a></li>
-<li><a class="reference external" href="https://wiki.debian.org/Python/LibraryStyleGuide">https://wiki.debian.org/Python/LibraryStyleGuide</a></li>
+<li><p><a class="reference external" href="https://wiki.debian.org/IntroDebianPackaging">https://wiki.debian.org/IntroDebianPackaging</a></p></li>
+<li><p><a class="reference external" href="https://wiki.debian.org/Python/Packaging">https://wiki.debian.org/Python/Packaging</a></p></li>
+<li><p><a class="reference external" href="https://wiki.debian.org/Python/LibraryStyleGuide">https://wiki.debian.org/Python/LibraryStyleGuide</a></p></li>
 </ul>
 <p>In this section, let’s suppose you have a Python library which is packaged with
 <code class="docutils literal notranslate"><span class="pre">distutils</span></code>, <code class="docutils literal notranslate"><span class="pre">setuptools</span></code>, <code class="docutils literal notranslate"><span class="pre">distribute</span></code> or whatever. This library provides
@@ -164,12 +162,12 @@ PyPI is:</p>
 <code class="docutils literal notranslate"><span class="pre">debian</span></code> directory in the current directory. There are two ways to achieve
 this:</p>
 <ul>
-<li><p class="first">Invoke magic from <code class="docutils literal notranslate"><span class="pre">python-stdeb</span></code> package:</p>
+<li><p>Invoke magic from <code class="docutils literal notranslate"><span class="pre">python-stdeb</span></code> package:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">command</span><span class="o">-</span><span class="n">packages</span><span class="o">=</span><span class="n">stdeb</span><span class="o">.</span><span class="n">command</span> <span class="n">debianize</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Read Debian’s packaging documentation and create files by hand.
+<li><p>Read Debian’s packaging documentation and create files by hand.
 To create/update <code class="docutils literal notranslate"><span class="pre">debian/changelog</span></code> file, you may use for example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dch</span> <span class="o">--</span><span class="n">create</span> <span class="o">-</span><span class="n">v</span> <span class="mf">0.0</span><span class="o">.</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span> <span class="o">--</span><span class="n">package</span> <span class="n">mylibrary</span>
 </pre></div>
@@ -200,12 +198,12 @@ and sign it with your GPG key:</p>
 </div>
 <p>The parent directory now contains the following files (here on a 64-bit system):</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1_all.deb</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1_amd64.build</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1_amd64.changes</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1.debian.tar.gz</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1.dsc</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1.orig.tar.gz</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1_all.deb</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1_amd64.build</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1_amd64.changes</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1.debian.tar.gz</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1-1.dsc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mylibrary_0.0.1.orig.tar.gz</span></code></p></li>
 </ul>
 <p>Now you would directly install the package using <code class="docutils literal notranslate"><span class="pre">dpkg</span> <span class="pre">-i</span></code> or upload it to
 a Debian package repository or wherever you like.</p>
@@ -218,21 +216,20 @@ process really looks like a common installation, the best way is to build a
 package out of the current development version. Let’s suppose <code class="docutils literal notranslate"><span class="pre">mysoftware</span></code>
 uses git to manage its code. Here is how to build and install such test package:</p>
 <ul>
-<li><p class="first">First, update <code class="docutils literal notranslate"><span class="pre">debian/</span></code> directory (new entry in <code class="docutils literal notranslate"><span class="pre">debian/Changelog</span></code>, no
+<li><p>First, update <code class="docutils literal notranslate"><span class="pre">debian/</span></code> directory (new entry in <code class="docutils literal notranslate"><span class="pre">debian/Changelog</span></code>, no
 patches…).
-For the sake of the example, let’s say your testing version is <code class="docutils literal notranslate"><span class="pre">0.99-1</span></code>.</p>
-</li>
-<li><p class="first">Create the original files archive:</p>
+For the sake of the example, let’s say your testing version is <code class="docutils literal notranslate"><span class="pre">0.99-1</span></code>.</p></li>
+<li><p>Create the original files archive:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">archive</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=</span><span class="n">mysoftware_0</span><span class="o">.</span><span class="mi">99</span><span class="o">/</span> <span class="o">-</span><span class="n">o</span> <span class="o">../</span><span class="n">mysoftware_0</span><span class="o">.</span><span class="mf">99.</span><span class="n">orig</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="n">master</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Build the package (without signing anything):</p>
+<li><p>Build the package (without signing anything):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">debuild</span> <span class="o">-</span><span class="n">uc</span> <span class="o">-</span><span class="n">us</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Install it:</p>
+<li><p>Install it:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="o">../</span><span class="n">mysoftware_0</span><span class="o">.</span><span class="mi">99</span><span class="o">-</span><span class="mi">1</span><span class="n">_</span><span class="o">*.</span><span class="n">deb</span>
 </pre></div>
 </div>
@@ -277,8 +274,6 @@ For the sake of the example, let’s say your testing version is <code class="do
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -305,7 +300,7 @@ For the sake of the example, let’s say your testing version is <code class="do
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

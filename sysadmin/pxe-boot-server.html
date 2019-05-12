@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Configure a server to handle network boot (PXE) &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -86,10 +84,10 @@ cp /usr/lib/syslinux/pxelinux.0 /srv/tftpboot
 <p>Debian provides files on its FTP mirrors which can be used to set up a PXE
 server to boot Debian netinstall.</p>
 <ul class="simple">
-<li>32-bit version:
-<a class="reference external" href="ftp://ftp.debian.org/debian/dists/stable/main/installer-i386/current/images/netboot/debian-installer/i386/">ftp://ftp.debian.org/debian/dists/stable/main/installer-i386/current/images/netboot/debian-installer/i386/</a></li>
-<li>64-bit version:
-<a class="reference external" href="ftp://ftp.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/">ftp://ftp.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/</a></li>
+<li><p>32-bit version:
+<a class="reference external" href="ftp://ftp.debian.org/debian/dists/stable/main/installer-i386/current/images/netboot/debian-installer/i386/">ftp://ftp.debian.org/debian/dists/stable/main/installer-i386/current/images/netboot/debian-installer/i386/</a></p></li>
+<li><p>64-bit version:
+<a class="reference external" href="ftp://ftp.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/">ftp://ftp.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/</a></p></li>
 </ul>
 <p>On this FTP, only <code class="docutils literal notranslate"><span class="pre">initrd.gz</span></code>, <code class="docutils literal notranslate"><span class="pre">linux</span></code> and <code class="docutils literal notranslate"><span class="pre">pxelinux.0</span></code> are really useful.
 <code class="docutils literal notranslate"><span class="pre">pxelinux.cfg/default</span></code> can be rewritten in a much simpler version:</p>
@@ -137,8 +135,6 @@ server to boot Debian netinstall.</p>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -165,7 +161,7 @@ server to boot Debian netinstall.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>

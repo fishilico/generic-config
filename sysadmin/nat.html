@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Linux NAT router &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -68,7 +66,7 @@ configured to connect to the Internet via a router sitting at <code class="docut
 <p>To configure the router so that the private host gets access to the Internet,
 you need to issue following commands on the Linux router:</p>
 <ul>
-<li><p class="first">Configure the firewall to do NAT:</p>
+<li><p>Configure the firewall to do NAT:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># If the public address (192.0.2.42) is static, use this command</span>
 <span class="n">iptables</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">A</span> <span class="n">POSTROUTING</span> <span class="o">-</span><span class="n">s</span> <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.0</span><span class="o">/</span><span class="mi">24</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">j</span> <span class="n">SNAT</span> <span class="o">--</span><span class="n">to</span><span class="o">-</span><span class="n">source</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span>
 
@@ -77,13 +75,13 @@ you need to issue following commands on the Linux router:</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Configure the firewall to allow packet forwarding:</p>
+<li><p>Configure the firewall to allow packet forwarding:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">FORWARD</span> <span class="o">-</span><span class="n">s</span> <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.0</span><span class="o">/</span><span class="mi">24</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth1</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
 <span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">FORWARD</span> <span class="o">-</span><span class="n">d</span> <span class="mf">10.13</span><span class="o">.</span><span class="mf">37.0</span><span class="o">/</span><span class="mi">24</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">o</span> <span class="n">eth1</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Enable packet forwarding via sysctl (<code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span></code> writes to <code class="docutils literal notranslate"><span class="pre">/proc/sys/...</span></code>):</p>
+<li><p>Enable packet forwarding via sysctl (<code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span></code> writes to <code class="docutils literal notranslate"><span class="pre">/proc/sys/...</span></code>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sysctl</span> <span class="o">-</span><span class="n">w</span> <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">eth0</span><span class="o">.</span><span class="n">forwarding</span><span class="o">=</span><span class="mi">1</span>
 <span class="n">sysctl</span> <span class="o">-</span><span class="n">w</span> <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">eth1</span><span class="o">.</span><span class="n">forwarding</span><span class="o">=</span><span class="mi">1</span>
 
@@ -160,8 +158,6 @@ distribution):</p>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -188,7 +184,7 @@ distribution):</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
     </div>
   </body>
 </html>
