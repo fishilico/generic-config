@@ -192,3 +192,12 @@ Raspberry Pi, model B.
            configuration: autonegotiation=on broadcast=yes driver=smsc95xx
            driverversion=22-Aug-2005 duplex=full firmware=smsc95xx USB 2.0
            Ethernet ip=192.0.2.42 link=yes multicast=yes port=MII speed=100Mbit/s
+
+
+Playing videos
+--------------
+
+In order to play videos at a decent framerate (using the hardware acceleration
+provided by the GPU), a custom version of ``mpv`` and some other software needs
+to be installed. Instructions are available at
+https://www.raspberrypi.org/forums/viewtopic.php?t=199775
