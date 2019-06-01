@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Microsoft SQL Server &#8212; Generic Config</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="One-liners commands" href="oneliners-commands.html" />
+    <link rel="prev" title="Installing Windows" href="install.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="oneliners-commands.html" title="One-liners commands"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installing Windows"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="microsoft-sql-server">
+<h1>Microsoft SQL Server<a class="headerlink" href="#microsoft-sql-server" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mssql-queries">
+<h2>MSSQL queries<a class="headerlink" href="#mssql-queries" title="Permalink to this headline">¶</a></h2>
+<p>List available databases:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">name</span> <span class="n">FROM</span> <span class="n">sys</span><span class="o">.</span><span class="n">Databases</span>
+</pre></div>
+</div>
+<p>List available tables from a database:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">USE</span> <span class="n">msdb</span><span class="p">;</span>
+<span class="n">SELECT</span> <span class="n">name</span> <span class="n">FROM</span> <span class="n">sys</span><span class="o">.</span><span class="n">Tables</span>
+</pre></div>
+</div>
+<p>Enumerate users (type “<code class="docutils literal notranslate"><span class="pre">U</span></code>” is for <code class="docutils literal notranslate"><span class="pre">WINDOWS_LOGIN</span></code>, like <code class="docutils literal notranslate"><span class="pre">NT</span> <span class="pre">AUTHORITY\SYSTEM</span></code> account, and “<code class="docutils literal notranslate"><span class="pre">S</span></code>” is for <code class="docutils literal notranslate"><span class="pre">SQL_LOGIN</span></code>, like <code class="docutils literal notranslate"><span class="pre">sa</span></code> account):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">principal_id</span><span class="p">,</span> <span class="n">sid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">type_desc</span><span class="p">,</span> <span class="n">credential_id</span><span class="p">,</span> <span class="n">owning_principal_id</span>
+  <span class="n">FROM</span> <span class="n">master</span><span class="o">.</span><span class="n">sys</span><span class="o">.</span><span class="n">server_principals</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="docker-container-on-linux">
+<h2>Docker container on Linux<a class="headerlink" href="#docker-container-on-linux" title="Permalink to this headline">¶</a></h2>
+<p>In order to use a MSSQL server on a development workstation, a Docker image can be used.
+Microsoft provides an image for both Linux and Windows environments.
+This is documented on <a class="reference external" href="https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-2017&amp;pivots=cs1-bash">https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-2017&amp;pivots=cs1-bash</a> and the building scripts are published on <a class="reference external" href="https://github.com/Microsoft/mssql-docker">https://github.com/Microsoft/mssql-docker</a>.</p>
+<p>Steps on Linux:</p>
+<ul class="simple">
+<li><p>Enable Docker overlay2 storage driver (cf. <a class="reference external" href="https://docs.docker.com/storage/storagedriver/overlayfs-driver/#configure-docker-with-the-overlay-or-overlay2-storage-driver">https://docs.docker.com/storage/storagedriver/overlayfs-driver/#configure-docker-with-the-overlay-or-overlay2-storage-driver</a>).
+Write this in <code class="docutils literal notranslate"><span class="pre">/etc/docker/daemon.json</span></code>:</p></li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;storage-driver&quot;</span><span class="p">:</span> <span class="s2">&quot;overlay2&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Pull Microsoft Docker image (cf. <a class="reference external" href="https://hub.docker.com/_/microsoft-mssql-server">https://hub.docker.com/_/microsoft-mssql-server</a>):</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker pull mcr.microsoft.com/mssql/server:2017-latest
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Run a server:</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker run -e <span class="s1">&#39;ACCEPT_EULA=Y&#39;</span> -e <span class="s1">&#39;SA_PASSWORD=yourStrong(!)Password&#39;</span> -p <span class="m">127</span>.0.0.1:1433:1433 -d mcr.microsoft.com/mssql/server:2017-latest --name mssql
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Run SQL commands on the server (if <code class="docutils literal notranslate"><span class="pre">-Q</span></code> option is not used, an interactive prompt appears and the user needs to enter <code class="docutils literal notranslate"><span class="pre">GO</span></code> in order to launch queries and <code class="docutils literal notranslate"><span class="pre">QUIT</span></code> to exit):</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker <span class="nb">exec</span> -it mssql /bin/bash
+/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P <span class="s2">&quot;</span><span class="nv">$SA_PASSWORD</span><span class="s2">&quot;</span> -Q <span class="s1">&#39;SELECT @@SERVERNAME&#39;</span>
+</pre></div>
+</div>
+<p>On Windows, the Docker images is available on <a class="reference external" href="https://hub.docker.com/r/microsoft/mssql-server-windows-developer/">https://hub.docker.com/r/microsoft/mssql-server-windows-developer/</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Microsoft SQL Server</a><ul>
+<li><a class="reference internal" href="#mssql-queries">MSSQL queries</a></li>
+<li><a class="reference internal" href="#docker-container-on-linux">Docker container on Linux</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="install.html"
+                        title="previous chapter">Installing Windows</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="oneliners-commands.html"
+                        title="next chapter">One-liners commands</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/windows/mssql-server.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="oneliners-commands.html" title="One-liners commands"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Installing Windows"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2019, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

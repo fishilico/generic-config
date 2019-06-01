@@ -15,7 +15,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Set hardware clock to UTC" href="utc-clock.html" />
-    <link rel="prev" title="Installing Windows" href="install.html" /> 
+    <link rel="prev" title="Microsoft SQL Server" href="mssql-server.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -27,7 +27,7 @@
           <a href="utc-clock.html" title="Set hardware clock to UTC"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="install.html" title="Installing Windows"
+          <a href="mssql-server.html" title="Microsoft SQL Server"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
@@ -244,6 +244,10 @@ Invoke-WebRequest -Uri http://webserver/file.txt -OutFile file.txt -UseBasicPars
 ipmo BitsTransfer;Start-BitsTransfer -Source &quot;http://webserver/file.txt&quot; -Destination C:\Windows\Temp\
 </pre></div>
 </div>
+<p>Run a PowerShell script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%windir%\System32\WindowsPowerShell\v1.0\powershell.exe -Noninteractive -ExecutionPolicy Bypass –Noprofile -file MyScript.ps1
+</pre></div>
+</div>
 </div>
 <div class="section" id="proxy-settings">
 <h2>Proxy settings<a class="headerlink" href="#proxy-settings" title="Permalink to this headline">¶</a></h2>
@@ -327,6 +331,21 @@ Get-User <span class="p">|</span> Export-CSV C:<span class="se">\T</span>emp<spa
 Get-WmiObject Win32_UserAccount
 Get-CimInstance -ClassName Win32_UserAccount
 Get-CimInstance -ClassName Win32_Group
+
+<span class="c1"># Add an adminitrator user</span>
+net user newuser password /add
+net localgroup Administrators newuser /add
+</pre></div>
+</div>
+<p>In order to login as administrator to a remote machine without using the built-in administrator (RID 500), a registry key needs to be set.
+This has been described in many blog posts:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://support.microsoft.com/en-us/help/942817/how-to-change-the-remote-uac-localaccounttokenfilterpolicy-registry-se">https://support.microsoft.com/en-us/help/942817/how-to-change-the-remote-uac-localaccounttokenfilterpolicy-registry-se</a></p></li>
+<li><p><a class="reference external" href="https://blogs.msdn.microsoft.com/wmi/2009/07/24/powershell-remoting-between-two-workgroup-machines/">https://blogs.msdn.microsoft.com/wmi/2009/07/24/powershell-remoting-between-two-workgroup-machines/</a></p></li>
+<li><p><a class="reference external" href="https://www.harmj0y.net/blog/redteaming/pass-the-hash-is-dead-long-live-localaccounttokenfilterpolicy/">https://www.harmj0y.net/blog/redteaming/pass-the-hash-is-dead-long-live-localaccounttokenfilterpolicy/</a></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cmd /c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
+PowerShell Set-ItemProperty –Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System –Name LocalAccountTokenFilterPolicy –Value 1 –Type DWord
 </pre></div>
 </div>
 </div>
@@ -345,12 +364,73 @@ Get-CimInstance -ClassName Win32_Group
 </pre></div>
 </div>
 </div>
-<div class="section" id="local-group-policy">
-<h2>Local Group Policy<a class="headerlink" href="#local-group-policy" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="group-policy">
+<h2>Group Policy<a class="headerlink" href="#group-policy" title="Permalink to this headline">¶</a></h2>
+<p>Edit Local Group Policy:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpedit</span><span class="o">.</span><span class="n">msc</span>
 <span class="n">secpol</span><span class="o">.</span><span class="n">msc</span>
+</pre></div>
+</div>
+<p>Export the Local Group Policy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">secedit</span> <span class="o">/</span><span class="n">export</span> <span class="o">/</span><span class="n">cfg</span> <span class="n">system_config</span><span class="o">.</span><span class="n">cfg</span>
 
-<span class="n">secedit</span> <span class="o">/</span><span class="n">export</span> <span class="o">/</span><span class="n">cfg</span> <span class="n">system_config</span><span class="o">.</span><span class="n">cfg</span>
+<span class="c1"># With at least Windows Vista or Windows Server 2008</span>
+<span class="n">gpresult</span> <span class="o">/</span><span class="n">H</span> <span class="n">GPReport</span><span class="o">.</span><span class="n">html</span>
+
+<span class="c1"># Display RSoP summary data (Resultant Set of Policies)</span>
+<span class="n">gpresult</span> <span class="o">/</span><span class="n">R</span>
+
+<span class="c1"># RSoP GUI</span>
+<span class="n">RSOP</span><span class="o">.</span><span class="n">msc</span>
+</pre></div>
+</div>
+<p>Work on Group Policy Objects (GPO):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Launch the Group Policy Management Console</span>
+gpmc.msc
+
+<span class="c1"># Apply the GPO</span>
+gpupdate /force
+</pre></div>
+</div>
+<p>The Remote Server Administration Tools (RSAT) provides Group Policy PowerShell Cmdlets (<a class="reference external" href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/ee461027%28v=technet.10%29">https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/ee461027%28v=technet.10%29</a>):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-WindowsCapability -Online <span class="p">|</span> ? Name -like <span class="s1">&#39;Rsat.GroupPolicy.Management.Tools*&#39;</span>
+Get-GPOReport -All -ReportType Html -Path GpoReport.html
+</pre></div>
+</div>
+<p>Logon scripts are located in folder <code class="docutils literal notranslate"><span class="pre">%SystemRoot%\SYSVOL\sysvol\{domain</span> <span class="pre">DNS</span> <span class="pre">name}\Policies\{GUID</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">GPO}\User\Scripts\Logon</span></code> (on Domain controllers).
+They can be implemented in VBScript (<code class="docutils literal notranslate"><span class="pre">.vbs</span></code> extension) or PowerShell (<code class="docutils literal notranslate"><span class="pre">.ps1</span></code> extension).
+In GPMC, they are linked to a GPO using either:</p>
+<ul class="simple">
+<li><p>Computer Configuration -&gt; Policies -&gt; Windows Settings -&gt; Scripts (Startup / Shutdown)</p></li>
+<li><p>User Configuration -&gt; Policies -&gt; Windows Settings -&gt; Scripts (Logon/Logoff)</p></li>
+</ul>
+<p>A third way of running scripts on a system consists in using Immediate Scheduled Tasks:</p>
+<ul class="simple">
+<li><p>Computer Configuration -&gt; Preferences -&gt; Control Panel Settings -&gt; Scheduled Tasks</p></li>
+</ul>
+</div>
+<div class="section" id="software-information">
+<h2>Software information<a class="headerlink" href="#software-information" title="Permalink to this headline">¶</a></h2>
+<p>In order to list the upgrades that have been applied, using DISM (Deployment Image Servicing and Management Tool):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dism</span> <span class="o">/</span><span class="n">online</span> <span class="o">/</span><span class="n">get</span><span class="o">-</span><span class="n">packages</span>
+</pre></div>
+</div>
+<p>In order to check for an applied update, with its KB number:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dism /online /get-packages <span class="p">|</span> findstr KB99999
+
+<span class="c1"># systeminfo.exe enumerates the &quot;hotfixes&quot; too</span>
+systeminfo.exe <span class="p">|</span> findstr KB99999
+
+<span class="c1"># WMI also provides such an information in</span>
+<span class="c1"># System.Management.ManagementObject#root\CIMV2\Win32_QuickFixEngineering</span>
+wmic qfe get hotfixid <span class="p">|</span> find <span class="s2">&quot;KB99999&quot;</span>
+wmic qfe <span class="p">|</span> find <span class="s2">&quot;KB99999&quot;</span>
+
+<span class="c1"># From PowerShell</span>
+Get-WmiObject -query <span class="s1">&#39;select * from win32_quickfixengineering&#39;</span> <span class="p">|</span> foreach <span class="o">{</span><span class="nv">$_</span>.hotfixid<span class="o">}</span>
+
+<span class="c1"># https://docs.microsoft.com/en-gb/powershell/module/Microsoft.PowerShell.Management/Get-HotFix?view=powershell-5.1</span>
+Get-HotFix -id KB99999
 </pre></div>
 </div>
 </div>
@@ -362,7 +442,7 @@ Get-CimInstance -ClassName Win32_Group
 </div>
 <div class="section" id="installed-software">
 <h2>Installed software<a class="headerlink" href="#installed-software" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wmic</span> <span class="n">product</span> <span class="n">get</span> <span class="n">name</span><span class="p">,</span><span class="n">version</span> <span class="o">/</span><span class="nb">format</span><span class="p">:</span><span class="n">csv</span> <span class="o">&gt;</span> <span class="n">applications</span><span class="o">.</span><span class="n">csv</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wmic product get <span class="s2">&quot;name,version&quot;</span> /format:csv &gt; applications.csv
 </pre></div>
 </div>
 </div>
@@ -502,7 +582,8 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
 <li><a class="reference internal" href="#wifi-profiles">WiFi profiles</a></li>
 <li><a class="reference internal" href="#user-and-group-management">User and group management</a></li>
 <li><a class="reference internal" href="#enumerate-live-objects">Enumerate live objects</a></li>
-<li><a class="reference internal" href="#local-group-policy">Local Group Policy</a></li>
+<li><a class="reference internal" href="#group-policy">Group Policy</a></li>
+<li><a class="reference internal" href="#software-information">Software information</a></li>
 <li><a class="reference internal" href="#boot-configuration">Boot configuration</a></li>
 <li><a class="reference internal" href="#installed-software">Installed software</a></li>
 <li><a class="reference internal" href="#firewall">Firewall</a></li>
@@ -515,8 +596,8 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="install.html"
-                        title="previous chapter">Installing Windows</a></p>
+  <p class="topless"><a href="mssql-server.html"
+                        title="previous chapter">Microsoft SQL Server</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="utc-clock.html"
                         title="next chapter">Set hardware clock to UTC</a></p>
@@ -551,7 +632,7 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
           <a href="utc-clock.html" title="Set hardware clock to UTC"
              >next</a> |</li>
         <li class="right" >
-          <a href="install.html" title="Installing Windows"
+          <a href="mssql-server.html" title="Microsoft SQL Server"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 

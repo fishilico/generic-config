@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Some VBScript commands &#8212; Generic Config</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="WinDbg-kd, Windows Kernel Debugging" href="windbg-kd.html" />
+    <link rel="prev" title="Windows Virtual Machine with Vagrant" href="vagrant.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="windbg-kd.html" title="WinDbg-kd, Windows Kernel Debugging"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="vagrant.html" title="Windows Virtual Machine with Vagrant"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="some-vbscript-commands">
+<h1>Some VBScript commands<a class="headerlink" href="#some-vbscript-commands" title="Permalink to this headline">¶</a></h1>
+<p>VBScript is a light version of Microsoft’s programming language Visual Basic.
+It can be used in ASP (Active Server Pages) between tags <code class="docutils literal notranslate"><span class="pre">&lt;%</span></code> and <code class="docutils literal notranslate"><span class="pre">%&gt;</span></code>, or run as a standalone script using a file ending with <code class="docutils literal notranslate"><span class="pre">.vbs</span></code> and interpreter <code class="docutils literal notranslate"><span class="pre">wscript.exe</span></code>.</p>
+<div class="section" id="special-variables">
+<h2>Special variables<a class="headerlink" href="#special-variables" title="Permalink to this headline">¶</a></h2>
+<p>When launching a script:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">WScript.ScriptFullName</span></code> contains the path of the script</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WScript.Arguments(0)</span></code> contains the first argument of the invocation</p></li>
+</ul>
+</div>
+<div class="section" id="launch-a-process">
+<h2>Launch a process<a class="headerlink" href="#launch-a-process" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Dim objShell, strCommand
+Set <span class="nv">objShell</span> <span class="o">=</span> CreateObject<span class="o">(</span><span class="s2">&quot;Wscript.Shell&quot;</span><span class="o">)</span>
+
+<span class="s1">&#39; Show string concatenation and use Chr(), even though this is a trivial example</span>
+<span class="s1">strCommand = &quot;cmd /c&quot; &amp; Chr(32) &amp; &quot;echo Hello&quot;</span>
+
+<span class="s1">&#39;</span> Syntax: objShell.Run <span class="o">(</span>strCommand, <span class="o">[</span>intWindowStyle<span class="o">]</span>, <span class="o">[</span>bWaitOnReturn<span class="o">])</span>
+objShell.Run strCommand, <span class="m">0</span>, <span class="nb">true</span>
+
+Set <span class="nv">objShell</span> <span class="o">=</span> Nothing
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Some VBScript commands</a><ul>
+<li><a class="reference internal" href="#special-variables">Special variables</a></li>
+<li><a class="reference internal" href="#launch-a-process">Launch a process</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="vagrant.html"
+                        title="previous chapter">Windows Virtual Machine with Vagrant</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="windbg-kd.html"
+                        title="next chapter">WinDbg-kd, Windows Kernel Debugging</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/windows/vbscript.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="windbg-kd.html" title="WinDbg-kd, Windows Kernel Debugging"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="vagrant.html" title="Windows Virtual Machine with Vagrant"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2019, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

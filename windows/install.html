@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="One-liners commands" href="oneliners-commands.html" />
+    <link rel="next" title="Microsoft SQL Server" href="mssql-server.html" />
     <link rel="prev" title="Some cmd.exe commands" href="cmd.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -24,7 +24,7 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="oneliners-commands.html" title="One-liners commands"
+          <a href="mssql-server.html" title="Microsoft SQL Server"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="cmd.html" title="Some cmd.exe commands"
@@ -138,6 +138,9 @@ verified in the registry:</p>
 <span class="c1"># Install Microsoft Visual C++ Runtime</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">vcredist</span><span class="o">-</span><span class="nb">all</span> <span class="o">-</span><span class="n">y</span>
 
+<span class="c1"># Install Microsoft Baseline Security Analyzer</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">mbsa</span> <span class="o">-</span><span class="n">y</span>
+
 <span class="c1"># Install other Desktop software</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">chromium</span> <span class="n">filezilla</span> <span class="n">firefox</span> <span class="n">kitty</span> <span class="n">vlc</span> <span class="n">winscp</span> <span class="o">-</span><span class="n">y</span>
 </pre></div>
@@ -189,6 +192,7 @@ websites describing them:</p>
 PowerShell administrator console:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/W4RH4WK/Debloat-Windows-10
 <span class="nb">cd</span> Debloat-Windows-10<span class="se">\s</span>cripts
+Set-ExecutionPolicy Bypass -Scope Process -Force
 .<span class="se">\b</span>lock-telemetry.ps1
 .<span class="se">\d</span>isable-services.ps1
 <span class="c1"># .\disable-windows-defender.ps1</span>
@@ -305,8 +309,8 @@ systemctl start py-kms.service
   <p class="topless"><a href="cmd.html"
                         title="previous chapter">Some cmd.exe commands</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="oneliners-commands.html"
-                        title="next chapter">One-liners commands</a></p>
+  <p class="topless"><a href="mssql-server.html"
+                        title="next chapter">Microsoft SQL Server</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -335,7 +339,7 @@ systemctl start py-kms.service
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="oneliners-commands.html" title="One-liners commands"
+          <a href="mssql-server.html" title="Microsoft SQL Server"
              >next</a> |</li>
         <li class="right" >
           <a href="cmd.html" title="Some cmd.exe commands"

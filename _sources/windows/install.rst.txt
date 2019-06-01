@@ -109,6 +109,9 @@ Then, to install software::
     # Install Microsoft Visual C++ Runtime
     choco install vcredist-all -y
 
+    # Install Microsoft Baseline Security Analyzer
+    choco install mbsa -y
+
     # Install other Desktop software
     choco install chromium filezilla firefox kitty vlc winscp -y
 
@@ -162,6 +165,7 @@ PowerShell administrator console:
 
     git clone https://github.com/W4RH4WK/Debloat-Windows-10
     cd Debloat-Windows-10\scripts
+    Set-ExecutionPolicy Bypass -Scope Process -Force
     .\block-telemetry.ps1
     .\disable-services.ps1
     # .\disable-windows-defender.ps1
