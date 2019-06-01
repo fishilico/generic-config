@@ -113,6 +113,10 @@ Downloading files with PowerShell::
     # With BITS (Background Intelligent Transfer Service) (ipmo = Import-Module)
     ipmo BitsTransfer;Start-BitsTransfer -Source "http://webserver/file.txt" -Destination C:\Windows\Temp\
 
+Run a PowerShell script::
+
+    %windir%\System32\WindowsPowerShell\v1.0\powershell.exe -Noninteractive -ExecutionPolicy Bypass –Noprofile -file MyScript.ps1
+
 
 Proxy settings
 --------------
@@ -204,6 +208,22 @@ Some commands to list and manage users and groups
     Get-CimInstance -ClassName Win32_UserAccount
     Get-CimInstance -ClassName Win32_Group
 
+    # Add an adminitrator user
+    net user newuser password /add
+    net localgroup Administrators newuser /add
+
+In order to login as administrator to a remote machine without using the built-in administrator (RID 500), a registry key needs to be set.
+This has been described in many blog posts:
+
+* https://support.microsoft.com/en-us/help/942817/how-to-change-the-remote-uac-localaccounttokenfilterpolicy-registry-se
+* https://blogs.msdn.microsoft.com/wmi/2009/07/24/powershell-remoting-between-two-workgroup-machines/
+* https://www.harmj0y.net/blog/redteaming/pass-the-hash-is-dead-long-live-localaccounttokenfilterpolicy/
+
+::
+
+    cmd /c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
+    PowerShell Set-ItemProperty –Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System –Name LocalAccountTokenFilterPolicy –Value 1 –Type DWord
+
 
 Enumerate live objects
 ----------------------
@@ -221,15 +241,82 @@ Enumerate all services::
     gsv | epcsv C:\Temp\AllServices.csv -NoTypeInfo
 
 
-Local Group Policy
-------------------
+Group Policy
+------------
 
-::
+Edit Local Group Policy::
 
     gpedit.msc
     secpol.msc
 
+Export the Local Group Policy::
+
     secedit /export /cfg system_config.cfg
+
+    # With at least Windows Vista or Windows Server 2008
+    gpresult /H GPReport.html
+
+    # Display RSoP summary data (Resultant Set of Policies)
+    gpresult /R
+
+    # RSoP GUI
+    RSOP.msc
+
+Work on Group Policy Objects (GPO):
+
+.. code-block:: sh
+
+    # Launch the Group Policy Management Console
+    gpmc.msc
+
+    # Apply the GPO
+    gpupdate /force
+
+The Remote Server Administration Tools (RSAT) provides Group Policy PowerShell Cmdlets (https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/ee461027%28v=technet.10%29):
+
+.. code-block:: sh
+
+    Get-WindowsCapability -Online | ? Name -like 'Rsat.GroupPolicy.Management.Tools*'
+    Get-GPOReport -All -ReportType Html -Path GpoReport.html
+
+Logon scripts are located in folder ``%SystemRoot%\SYSVOL\sysvol\{domain DNS name}\Policies\{GUID of the GPO}\User\Scripts\Logon`` (on Domain controllers).
+They can be implemented in VBScript (``.vbs`` extension) or PowerShell (``.ps1`` extension).
+In GPMC, they are linked to a GPO using either:
+
+* Computer Configuration -> Policies -> Windows Settings -> Scripts (Startup / Shutdown)
+* User Configuration -> Policies -> Windows Settings -> Scripts (Logon/Logoff)
+
+A third way of running scripts on a system consists in using Immediate Scheduled Tasks:
+
+* Computer Configuration -> Preferences -> Control Panel Settings -> Scheduled Tasks
+
+
+Software information
+--------------------
+
+In order to list the upgrades that have been applied, using DISM (Deployment Image Servicing and Management Tool)::
+
+    dism /online /get-packages
+
+In order to check for an applied update, with its KB number:
+
+.. code-block:: sh
+
+    dism /online /get-packages | findstr KB99999
+
+    # systeminfo.exe enumerates the "hotfixes" too
+    systeminfo.exe | findstr KB99999
+
+    # WMI also provides such an information in
+    # System.Management.ManagementObject#root\CIMV2\Win32_QuickFixEngineering
+    wmic qfe get hotfixid | find "KB99999"
+    wmic qfe | find "KB99999"
+
+    # From PowerShell
+    Get-WmiObject -query 'select * from win32_quickfixengineering' | foreach {$_.hotfixid}
+
+    # https://docs.microsoft.com/en-gb/powershell/module/Microsoft.PowerShell.Management/Get-HotFix?view=powershell-5.1
+    Get-HotFix -id KB99999
 
 
 Boot configuration
@@ -243,9 +330,9 @@ Boot configuration
 Installed software
 ------------------
 
-::
+.. code-block:: sh
 
-    wmic product get name,version /format:csv > applications.csv
+    wmic product get "name,version" /format:csv > applications.csv
 
 
 Firewall
