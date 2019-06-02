@@ -174,7 +174,7 @@ Additional software
 As the root partition of every AppVM is reset when it boots, additional software
 need to be installed in TemplateVMs.
 
-A Fefora template is used for system Qubes (``sys-net``, ``sys-usb``, etc.).
+A Fedora template is used for system Qubes (``sys-net``, ``sys-usb``, etc.).
 It was ``fedora-26`` for Qubes OS R4.0, ``fedora-29`` for Qubes OS R4.0.1, etc.
 Even though this template should be kept as minimal, some software can
 nevertheless be useful:
