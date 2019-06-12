@@ -46,7 +46,7 @@ Steps on Linux:
 
 .. code-block:: sh
 
-    docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=yourStrong(!)Password' -p 127.0.0.1:1433:1433 -d mcr.microsoft.com/mssql/server:2017-latest --name mssql
+    docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=yourStrong(!)Password' -p 127.0.0.1:1433:1433 --name mssql -d mcr.microsoft.com/mssql/server:2017-latest
 
 * Run SQL commands on the server (if ``-Q`` option is not used, an interactive prompt appears and the user needs to enter ``GO`` in order to launch queries and ``QUIT`` to exit):
 
