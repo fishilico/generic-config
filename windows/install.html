@@ -46,10 +46,11 @@
 <h2>Base installation of Windows 10<a class="headerlink" href="#base-installation-of-windows-10" title="Permalink to this headline">¶</a></h2>
 <p>In order to install Windows 10, a disc image (ISO file) can be downloaded from <a class="reference external" href="https://www.microsoft.com/en-us/software-download/windows10ISO">https://www.microsoft.com/en-us/software-download/windows10ISO</a>.</p>
 <p>This would install Windows 10 Pro by default.
-In order to set up an Entreprise Edition, all that is needed is to provide a matching license key.
-Microsoft published a table describing what switches are available between Windows editions: <a class="reference external" href="https://docs.microsoft.com/en-us/windows/deployment/upgrade/windows-10-edition-upgrades">https://docs.microsoft.com/en-us/windows/deployment/upgrade/windows-10-edition-upgrades</a>.</p>
-<p>To switch to an edition, a KMS key from <a class="reference external" href="https://docs.microsoft.com/en-us/windows-server/get-started/kmsclientkeys">https://docs.microsoft.com/en-us/windows-server/get-started/kmsclientkeys</a> can be used.
-For example, Windows 10 Education’s KMS key is <code class="docutils literal notranslate"><span class="pre">NPPR9-FWDCX-D2C8J-H872K-2YT43</span></code>.</p>
+In order to set up another edition, all that is needed is to provide a matching license key.
+Microsoft published a table describing what switches are available between Windows editions: <a class="reference external" href="https://docs.microsoft.com/en-us/windows/deployment/upgrade/windows-10-edition-upgrades">https://docs.microsoft.com/en-us/windows/deployment/upgrade/windows-10-edition-upgrades</a>.
+For example, it is possible to switch from Windows 10 Pro to Windows 10 Enterprise using a KMS (Key Management Service) key.
+The official Microsoft website documents such keys on <a class="reference external" href="https://docs.microsoft.com/en-us/windows-server/get-started/kmsclientkeys">https://docs.microsoft.com/en-us/windows-server/get-started/kmsclientkeys</a>.
+On this website, Windows 10 Enterprise’s KMS key is <code class="docutils literal notranslate"><span class="pre">NPPR9-FWDCX-D2C8J-H872K-2YT43</span></code>.</p>
 </div>
 <div class="section" id="enable-the-windows-subsystem-for-linux">
 <h2>Enable the Windows Subsystem for Linux<a class="headerlink" href="#enable-the-windows-subsystem-for-linux" title="Permalink to this headline">¶</a></h2>
@@ -63,26 +64,28 @@ For example, Windows 10 Education’s KMS key is <code class="docutils literal n
 </div>
 <p>After this command, the system should be rebooted.</p>
 <p>In order to check whether WSL is installed:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">PowerShell</span> <span class="n">Get</span><span class="o">-</span><span class="n">WindowsOptionalFeature</span> <span class="o">-</span><span class="n">Online</span> <span class="o">-</span><span class="n">FeatureName</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="n">Subsystem</span><span class="o">-</span><span class="n">Linux</span>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\&gt; PowerShell Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 
-<span class="n">FeatureName</span>      <span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="n">Subsystem</span><span class="o">-</span><span class="n">Linux</span>
-<span class="n">DisplayName</span>      <span class="p">:</span> <span class="n">Windows</span> <span class="n">Subsystem</span> <span class="k">for</span> <span class="n">Linux</span>
-<span class="n">Description</span>      <span class="p">:</span> <span class="n">Provides</span> <span class="n">services</span> <span class="ow">and</span> <span class="n">environments</span> <span class="k">for</span> <span class="n">running</span> <span class="n">native</span> <span class="n">user</span><span class="o">-</span><span class="n">mode</span> <span class="n">Linux</span> <span class="n">shells</span> <span class="ow">and</span> <span class="n">tools</span> <span class="n">on</span> <span class="n">Windows</span><span class="o">.</span>
-<span class="n">RestartRequired</span>  <span class="p">:</span> <span class="n">Possible</span>
-<span class="n">State</span>            <span class="p">:</span> <span class="n">Enabled</span>
-<span class="n">CustomProperties</span> <span class="p">:</span>
-                   <span class="n">ServerComponent</span>\<span class="n">Description</span> <span class="p">:</span> <span class="n">Provides</span> <span class="n">services</span> <span class="ow">and</span> <span class="n">environments</span> <span class="k">for</span> <span class="n">running</span> <span class="n">native</span> <span class="n">user</span><span class="o">-</span><span class="n">mode</span> <span class="n">Linux</span>
-                   <span class="n">shells</span> <span class="ow">and</span> <span class="n">tools</span> <span class="n">on</span> <span class="n">Windows</span><span class="o">.</span>
-                   <span class="n">ServerComponent</span>\<span class="n">DisplayName</span> <span class="p">:</span> <span class="n">Windows</span> <span class="n">Subsystem</span> <span class="k">for</span> <span class="n">Linux</span>
-                   <span class="n">ServerComponent</span>\<span class="n">Id</span> <span class="p">:</span> <span class="mi">1033</span>
-                   <span class="n">ServerComponent</span>\<span class="n">Type</span> <span class="p">:</span> <span class="n">Feature</span>
-                   <span class="n">ServerComponent</span>\<span class="n">UniqueName</span> <span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="n">Subsystem</span><span class="o">-</span><span class="n">Linux</span>
-                   <span class="n">ServerComponent</span>\<span class="n">Deploys</span>\<span class="n">Update</span>\<span class="n">Name</span> <span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="n">Subsystem</span><span class="o">-</span><span class="n">Linux</span>
+FeatureName      : Microsoft-Windows-Subsystem-Linux
+DisplayName      : Windows Subsystem for Linux
+Description      : Provides services and environments for running native user-mode Linux shells
+                   and tools on Windows.
+RestartRequired  : Possible
+State            : Enabled
+CustomProperties :
+                   ServerComponent\Description : Provides services and environments for running
+                   native user-mode Linux shells and tools on Windows.
+                   ServerComponent\DisplayName : Windows Subsystem for Linux
+                   ServerComponent\Id : 1033
+                   ServerComponent\Type : Feature
+                   ServerComponent\UniqueName : Microsoft-Windows-Subsystem-Linux
+                   ServerComponent\Deploys\Update\Name : Microsoft-Windows-Subsystem-Linux
 </pre></div>
 </div>
 <p>In order to install Ubuntu, the following PowerShell commands can be used:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">L</span> <span class="o">-</span><span class="n">o</span> <span class="n">ubuntu</span><span class="o">-</span><span class="mf">1804.</span><span class="n">appx</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">aka</span><span class="o">.</span><span class="n">ms</span><span class="o">/</span><span class="n">wsl</span><span class="o">-</span><span class="n">ubuntu</span><span class="o">-</span><span class="mi">1804</span>
-<span class="c1"># Or: Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile Ubuntu-1804.appx -UseBasicParsing</span>
+<span class="c1"># Or, without using PowerShell aliases:</span>
+<span class="c1"># Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile Ubuntu-1804.appx -UseBasicParsing</span>
 <span class="n">Rename</span><span class="o">-</span><span class="n">Item</span> <span class="n">Ubuntu</span><span class="o">-</span><span class="mf">1804.</span><span class="n">appx</span> <span class="n">Ubuntu</span><span class="o">-</span><span class="mf">1804.</span><span class="n">zip</span>
 <span class="n">Expand</span><span class="o">-</span><span class="n">Archive</span> <span class="n">Ubuntu</span><span class="o">-</span><span class="mf">1804.</span><span class="n">zip</span> <span class="n">Ubuntu</span><span class="o">-</span><span class="mi">1804</span>
 <span class="n">cd</span> <span class="n">Ubuntu</span><span class="o">-</span><span class="mi">1804</span>
@@ -110,9 +113,12 @@ used (cf. <a class="reference external" href="https://chocolatey.org/docs/chocol
 Chocolatey’s website gives some installation commands
 (<a class="reference external" href="https://chocolatey.org/docs/installation#install-with-cmdexe">https://chocolatey.org/docs/installation#install-with-cmdexe</a>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># For cmd.exe</span>
-<span class="o">@</span><span class="s2">&quot;%SystemRoot%\System32\WindowsPowerShell</span><span class="se">\v</span><span class="s2">1.0\powershell.exe&quot;</span> <span class="o">-</span><span class="n">NoProfile</span> <span class="o">-</span><span class="n">InputFormat</span> <span class="kc">None</span> <span class="o">-</span><span class="n">ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-</span><span class="n">Command</span> <span class="s2">&quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot;</span> <span class="o">&amp;&amp;</span> <span class="n">SET</span> <span class="s2">&quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey</span><span class="se">\b</span><span class="s2">in&quot;</span>
+<span class="o">@</span><span class="s2">&quot;%SystemRoot%\System32\WindowsPowerShell</span><span class="se">\v</span><span class="s2">1.0\powershell.exe&quot;</span> <span class="o">-</span><span class="n">NoProfile</span> <span class="o">-</span><span class="n">InputFormat</span> <span class="kc">None</span> <span class="o">-</span><span class="n">ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-</span><span class="n">Command</span> <span class="s2">&quot;iex ((New-Object System.Net.WebClient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))&quot;</span>
+<span class="n">SET</span> <span class="s2">&quot;PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey</span><span class="se">\b</span><span class="s2">in&quot;</span>
+
 <span class="c1"># For PowerShell</span>
-<span class="n">Set</span><span class="o">-</span><span class="n">ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-</span><span class="n">Scope</span> <span class="n">Process</span> <span class="o">-</span><span class="n">Force</span><span class="p">;</span> <span class="n">iex</span> <span class="p">((</span><span class="n">New</span><span class="o">-</span><span class="n">Object</span> <span class="n">System</span><span class="o">.</span><span class="n">Net</span><span class="o">.</span><span class="n">WebClient</span><span class="p">)</span><span class="o">.</span><span class="n">DownloadString</span><span class="p">(</span><span class="s1">&#39;https://chocolatey.org/install.ps1&#39;</span><span class="p">))</span>
+<span class="n">Set</span><span class="o">-</span><span class="n">ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-</span><span class="n">Scope</span> <span class="n">Process</span> <span class="o">-</span><span class="n">Force</span><span class="p">;</span>
+<span class="n">iex</span> <span class="p">((</span><span class="n">New</span><span class="o">-</span><span class="n">Object</span> <span class="n">System</span><span class="o">.</span><span class="n">Net</span><span class="o">.</span><span class="n">WebClient</span><span class="p">)</span><span class="o">.</span><span class="n">DownloadString</span><span class="p">(</span><span class="s1">&#39;https://chocolatey.org/install.ps1&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Chocolatey adds itself to <code class="docutils literal notranslate"><span class="pre">%PATH%</span></code> environment variable, and this can be
@@ -127,8 +133,10 @@ verified in the registry:</p>
 <p>Then, to install software:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">choco</span> <span class="n">install</span> <span class="n">notepadplusplus</span> <span class="n">notepadplusplus</span><span class="o">.</span><span class="n">commandline</span> <span class="o">-</span><span class="n">y</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">windbg</span> <span class="o">-</span><span class="n">y</span>
-<span class="c1"># https://chocolatey.org/packages?q=sysinternals</span>
-<span class="n">choco</span> <span class="n">install</span> <span class="n">procexp</span> <span class="n">procmon</span> <span class="n">autoruns</span> <span class="n">psexec</span> <span class="n">procdump</span> <span class="n">adexplorer</span> <span class="n">sigcheck</span> <span class="n">dbgview</span> <span class="n">winobj</span> <span class="n">accesschk</span> <span class="n">accessenum</span> <span class="o">-</span><span class="n">y</span>
+
+<span class="c1"># Install Sysinternals tools, https://chocolatey.org/packages?q=sysinternals</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">procexp</span> <span class="n">procmon</span> <span class="n">autoruns</span> <span class="n">psexec</span> <span class="n">procdump</span> <span class="n">sigcheck</span> <span class="n">dbgview</span> <span class="n">winobj</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">adexplorer</span> <span class="n">accesschk</span> <span class="n">accessenum</span> <span class="o">-</span><span class="n">y</span>
 
 <span class="c1"># MSys2 is installed in C:\tools\msys64</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">git</span> <span class="n">python3</span> <span class="n">msys2</span> <span class="o">-</span><span class="n">y</span>
@@ -242,7 +250,7 @@ The following PowerShell commands configure a Windows system to use it, using SL
 <span class="c1"># /upk for &quot;Uninstall Product Key&quot;</span>
 cscript //Nologo slmgr.vbs /upk
 
-<span class="c1"># /ipk for &quot;Install Product Key&quot;, for example for Windows 10 Entreprise</span>
+<span class="c1"># /ipk for &quot;Install Product Key&quot;, for example for Windows 10 Enterprise</span>
 cscript //Nologo slmgr.vbs /ipk NPPR9-FWDCX-D2C8J-H872K-2YT43
 
 <span class="c1"># /skms to specify the KMS on IP address 192.0.2.42</span>
@@ -311,13 +319,15 @@ systemctl start py-kms.service
   <h4>Next topic</h4>
   <p class="topless"><a href="mssql-server.html"
                         title="next chapter">Microsoft SQL Server</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/windows/install.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/windows/install.rst.txt"
+           rel="nofollow">Show Source</a></li>
+    <li><a href="https://github.com/fishilico/generic-config/blob/master/windows/install.rst"
+           rel="nofollow">Show on GitHub
+           <img src="../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  </ul>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">

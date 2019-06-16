@@ -9,11 +9,11 @@ Base installation of Windows 10
 In order to install Windows 10, a disc image (ISO file) can be downloaded from https://www.microsoft.com/en-us/software-download/windows10ISO.
 
 This would install Windows 10 Pro by default.
-In order to set up an Entreprise Edition, all that is needed is to provide a matching license key.
+In order to set up another edition, all that is needed is to provide a matching license key.
 Microsoft published a table describing what switches are available between Windows editions: https://docs.microsoft.com/en-us/windows/deployment/upgrade/windows-10-edition-upgrades.
-
-To switch to an edition, a KMS key from https://docs.microsoft.com/en-us/windows-server/get-started/kmsclientkeys can be used.
-For example, Windows 10 Education's KMS key is ``NPPR9-FWDCX-D2C8J-H872K-2YT43``.
+For example, it is possible to switch from Windows 10 Pro to Windows 10 Enterprise using a KMS (Key Management Service) key.
+The official Microsoft website documents such keys on https://docs.microsoft.com/en-us/windows-server/get-started/kmsclientkeys.
+On this website, Windows 10 Enterprise's KMS key is ``NPPR9-FWDCX-D2C8J-H872K-2YT43``.
 
 
 Enable the Windows Subsystem for Linux
@@ -29,18 +29,21 @@ To install WSL (Windows Subsystem for Linux), run this command as Administrator:
 
 After this command, the system should be rebooted.
 
-In order to check whether WSL is installed::
+In order to check whether WSL is installed:
+
+.. code-block:: text
 
     C:\> PowerShell Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 
     FeatureName      : Microsoft-Windows-Subsystem-Linux
     DisplayName      : Windows Subsystem for Linux
-    Description      : Provides services and environments for running native user-mode Linux shells and tools on Windows.
+    Description      : Provides services and environments for running native user-mode Linux shells
+                       and tools on Windows.
     RestartRequired  : Possible
     State            : Enabled
     CustomProperties :
-                       ServerComponent\Description : Provides services and environments for running native user-mode Linux
-                       shells and tools on Windows.
+                       ServerComponent\Description : Provides services and environments for running
+                       native user-mode Linux shells and tools on Windows.
                        ServerComponent\DisplayName : Windows Subsystem for Linux
                        ServerComponent\Id : 1033
                        ServerComponent\Type : Feature
@@ -50,7 +53,8 @@ In order to check whether WSL is installed::
 In order to install Ubuntu, the following PowerShell commands can be used::
 
     curl -L -o ubuntu-1804.appx https://aka.ms/wsl-ubuntu-1804
-    # Or: Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile Ubuntu-1804.appx -UseBasicParsing
+    # Or, without using PowerShell aliases:
+    # Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile Ubuntu-1804.appx -UseBasicParsing
     Rename-Item Ubuntu-1804.appx Ubuntu-1804.zip
     Expand-Archive Ubuntu-1804.zip Ubuntu-1804
     cd Ubuntu-1804
@@ -81,9 +85,12 @@ Chocolatey's website gives some installation commands
 (https://chocolatey.org/docs/installation#install-with-cmdexe)::
 
     # For cmd.exe
-    @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+    @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+    SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+
     # For PowerShell
-    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    Set-ExecutionPolicy Bypass -Scope Process -Force;
+    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 Chocolatey adds itself to ``%PATH%`` environment variable, and this can be
 verified in the registry::
@@ -98,8 +105,10 @@ Then, to install software::
 
     choco install notepadplusplus notepadplusplus.commandline -y
     choco install windbg -y
-    # https://chocolatey.org/packages?q=sysinternals
-    choco install procexp procmon autoruns psexec procdump adexplorer sigcheck dbgview winobj accesschk accessenum -y
+
+    # Install Sysinternals tools, https://chocolatey.org/packages?q=sysinternals
+    choco install procexp procmon autoruns psexec procdump sigcheck dbgview winobj -y
+    choco install adexplorer accesschk accessenum -y
 
     # MSys2 is installed in C:\tools\msys64
     choco install git python3 msys2 -y
@@ -223,7 +232,7 @@ The following PowerShell commands configure a Windows system to use it, using SL
     # /upk for "Uninstall Product Key"
     cscript //Nologo slmgr.vbs /upk
 
-    # /ipk for "Install Product Key", for example for Windows 10 Entreprise
+    # /ipk for "Install Product Key", for example for Windows 10 Enterprise
     cscript //Nologo slmgr.vbs /ipk NPPR9-FWDCX-D2C8J-H872K-2YT43
 
     # /skms to specify the KMS on IP address 192.0.2.42
