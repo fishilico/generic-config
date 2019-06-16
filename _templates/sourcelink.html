@@ -1,0 +1,23 @@
+{%- if show_source and has_source and sourcename %}
+  <h3>{{ _('This Page') }}</h3>
+  <ul class="this-page-menu">
+    <li><a href="{{ pathto('_sources/' + sourcename, true)|e }}"
+           rel="nofollow">{{ _('Show Source') }}</a></li>
+  {%- if pagename == 'index' %}
+    <li><a href="https://github.com/fishilico/generic-config"
+            rel="nofollow">{{ _('Show project on GitHub') }}
+           <img src="{{ pathto('_static/GitHub-Mark-32px.png', true)|e }}" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  {%- elif pagename.endswith('/index') %}
+    <li><a href="https://github.com/fishilico/generic-config/tree/master/{{ (pagename[:-6])|e }}"
+           rel="nofollow">{{ _('Show directory on GitHub') }}
+           <img src="{{ pathto('_static/GitHub-Mark-32px.png', true)|e }}" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  {%- else %}
+    <li><a href="https://github.com/fishilico/generic-config/blob/master/{{ (pagename + page_source_suffix)|e }}"
+           rel="nofollow">{{ _('Show on GitHub') }}
+           <img src="{{ pathto('_static/GitHub-Mark-32px.png', true)|e }}" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  {%- endif %}
+  </ul>
+{%- endif %}
