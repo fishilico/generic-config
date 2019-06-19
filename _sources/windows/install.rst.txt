@@ -103,7 +103,7 @@ verified in the registry::
 
 Then, to install software::
 
-    choco install notepadplusplus notepadplusplus.commandline -y
+    choco install notepadplusplus notepadplusplus.commandline vscode -y
     choco install windbg -y
 
     # Install Sysinternals tools, https://chocolatey.org/packages?q=sysinternals
@@ -115,14 +115,17 @@ Then, to install software::
     # Add 'PATH="$PATH:/c/Program Files/Git/cmd"' to C:/tools/msys64/home/IEUser/.bashrc
     # Launch MSys with C:/tools/msys64/usr/bin/bash.exe
 
-    # Install Microsoft Visual C++ Runtime
-    choco install vcredist-all -y
+    # Install Microsoft Visual C++ Runtime and .Net runtime
+    choco install vcredist-all dotnet3.5 dotnet4.7 -y
 
     # Install Microsoft Baseline Security Analyzer
     choco install mbsa -y
 
     # Install other Desktop software
     choco install chromium filezilla firefox kitty vlc winscp -y
+    choco install windows-sdk-10.0 windowsdriverkit10 visualstudio2019buildtools -y
+    choco install ilspy wireshark -y
+    choco install processhacker -y
 
 These commands install the following software:
 

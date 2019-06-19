@@ -131,7 +131,7 @@ verified in the registry:</p>
 </pre></div>
 </div>
 <p>Then, to install software:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">choco</span> <span class="n">install</span> <span class="n">notepadplusplus</span> <span class="n">notepadplusplus</span><span class="o">.</span><span class="n">commandline</span> <span class="o">-</span><span class="n">y</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">choco</span> <span class="n">install</span> <span class="n">notepadplusplus</span> <span class="n">notepadplusplus</span><span class="o">.</span><span class="n">commandline</span> <span class="n">vscode</span> <span class="o">-</span><span class="n">y</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">windbg</span> <span class="o">-</span><span class="n">y</span>
 
 <span class="c1"># Install Sysinternals tools, https://chocolatey.org/packages?q=sysinternals</span>
@@ -143,14 +143,17 @@ verified in the registry:</p>
 <span class="c1"># Add &#39;PATH=&quot;$PATH:/c/Program Files/Git/cmd&quot;&#39; to C:/tools/msys64/home/IEUser/.bashrc</span>
 <span class="c1"># Launch MSys with C:/tools/msys64/usr/bin/bash.exe</span>
 
-<span class="c1"># Install Microsoft Visual C++ Runtime</span>
-<span class="n">choco</span> <span class="n">install</span> <span class="n">vcredist</span><span class="o">-</span><span class="nb">all</span> <span class="o">-</span><span class="n">y</span>
+<span class="c1"># Install Microsoft Visual C++ Runtime and .Net runtime</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">vcredist</span><span class="o">-</span><span class="nb">all</span> <span class="n">dotnet3</span><span class="o">.</span><span class="mi">5</span> <span class="n">dotnet4</span><span class="o">.</span><span class="mi">7</span> <span class="o">-</span><span class="n">y</span>
 
 <span class="c1"># Install Microsoft Baseline Security Analyzer</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">mbsa</span> <span class="o">-</span><span class="n">y</span>
 
 <span class="c1"># Install other Desktop software</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">chromium</span> <span class="n">filezilla</span> <span class="n">firefox</span> <span class="n">kitty</span> <span class="n">vlc</span> <span class="n">winscp</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">windows</span><span class="o">-</span><span class="n">sdk</span><span class="o">-</span><span class="mf">10.0</span> <span class="n">windowsdriverkit10</span> <span class="n">visualstudio2019buildtools</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">ilspy</span> <span class="n">wireshark</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">processhacker</span> <span class="o">-</span><span class="n">y</span>
 </pre></div>
 </div>
 <p>These commands install the following software:</p>
