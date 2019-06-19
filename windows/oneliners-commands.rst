@@ -378,6 +378,8 @@ The Zone identifier is 0 for the local machine, 1 for the local intranet, 2 for 
 
 The ADS ``Zone.Identifier`` may contain other fields such as ``ReferrerUrl=...``.
 
+The empty ADS matches the usual content of a file. This means that the content is both accessible through ``filepath`` and ``filepath::$DATA``.
+
 
 CSV and table viewer
 --------------------
