@@ -170,7 +170,7 @@ Collectd Graph Panel front-end
 ------------------------------
 
 CGP (Collectd Graph Panel) is a better front-end than Collection3. It is
-written in PHP. To install it, you just need to download lastest release from
+written in PHP. To install it, you just need to download latest release from
 https://github.com/pommi/CGP/releases in a folder and to configure your web
 server accordingly.
 
