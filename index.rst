@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    sysadmin/index
+   database/index
    etc/index
    etc-desktop/index
    etc-server/index
