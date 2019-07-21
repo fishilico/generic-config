@@ -212,6 +212,11 @@ Some commands to list and manage users and groups
     net user newuser password /add
     net localgroup Administrators newuser /add
 
+Spawn an elevated prompt when UAC is enabled (User Account Control)::
+
+    Start-Process -Verb RunAs PowerShell
+    saps -verb runas powershell
+
 In order to login as administrator to a remote machine without using the built-in administrator (RID 500), a registry key needs to be set.
 This has been described in many blog posts:
 
@@ -318,6 +323,16 @@ In order to check for an applied update, with its KB number:
     # https://docs.microsoft.com/en-gb/powershell/module/Microsoft.PowerShell.Management/Get-HotFix?view=powershell-5.1
     Get-HotFix -id KB99999
 
+The software may be signed using a certificate in a certificate store.
+
+.. code-block:: sh
+
+    # Manage user certificates
+    certmgr.msc
+
+    # Manage local machine certificates
+    certlm.msc
+
 
 Boot configuration
 ------------------
@@ -325,6 +340,8 @@ Boot configuration
 ::
 
     msconfig
+
+    bcdedit /enum all
 
 
 Installed software
