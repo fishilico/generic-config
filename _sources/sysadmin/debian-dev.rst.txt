@@ -29,7 +29,7 @@ clean temporary directory by issuing the following commands::
     debuild -uc -us
     sudo dpkg -i ../foo_*.deb
 
-Theses commands first install all the necessary build dependency and extract
+These commands first install all the necessary build dependency and extract
 the Debian-patched version of ``foo`` in a ``foo-version`` directory. Running
 ``debuild`` into this directory is enough to build a ``foo_version_arch.deb``
 file in the main folder, the options are here to tweak the compiling process

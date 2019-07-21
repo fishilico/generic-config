@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>/etc for Desktop &#8212; Generic Config</title>
+    <title>Databases &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="etc-desktop/X11/xorg.conf.d/00-french-keyboard.conf" href="X11/xorg.conf.d/00-french-keyboard.conf.raw.html" />
-    <link rel="prev" title="etc/sysctl.conf" href="../etc/sysctl.conf.raw.html" /> 
+    <link rel="next" title="Microsoft SQL Server" href="microsoft-mssql.html" />
+    <link rel="prev" title="User management on Linux" href="../sysadmin/user.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -24,10 +24,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="X11/xorg.conf.d/00-french-keyboard.conf.raw.html" title="etc-desktop/X11/xorg.conf.d/00-french-keyboard.conf"
+          <a href="microsoft-mssql.html" title="Microsoft SQL Server"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../etc/sysctl.conf.raw.html" title="etc/sysctl.conf"
+          <a href="../sysadmin/user.html" title="User management on Linux"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li> 
       </ul>
@@ -38,13 +38,31 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="etc-for-desktop">
-<h1><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Desktop<a class="headerlink" href="#etc-for-desktop" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="databases">
+<h1>Databases<a class="headerlink" href="#databases" title="Permalink to this headline">¶</a></h1>
+<p>This section contains information about some database engines</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="X11/xorg.conf.d/00-french-keyboard.conf.raw.html"><code class="docutils literal notranslate"><span class="pre">etc-desktop/X11/xorg.conf.d/00-french-keyboard.conf</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="X11/xorg.conf.d/50-synaptics.conf.raw.html"><code class="docutils literal notranslate"><span class="pre">etc-desktop/X11/xorg.conf.d/50-synaptics.conf</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="avahi/avahi-daemon.conf.raw.html"><code class="docutils literal notranslate"><span class="pre">etc-desktop/avahi/avahi-daemon.conf</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="microsoft-mssql.html">Microsoft SQL Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="microsoft-mssql.html#mssql-queries">MSSQL queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="microsoft-mssql.html#docker-container-on-linux">Docker container on Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mysql.html">MySQL tips and tricks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mysql.html#basic-commands">Basic commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mysql.html#account-management">Account management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mysql.html#shell-connection">Shell connection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mysql.html#list-of-permissions">List of permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mysql.html#mysql-query-examples">MySQL query examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mysql.html#sql-injection-queries">SQL injection queries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sqlite.html">SQLite</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sqlite.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sqlite.html#basic-commands">Basic commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sqlite.html#sql-statements">SQL statements</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -56,16 +74,16 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../etc/sysctl.conf.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/sysctl.conf</span></code></a></p>
+  <p class="topless"><a href="../sysadmin/user.html"
+                        title="previous chapter">User management on Linux</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="X11/xorg.conf.d/00-french-keyboard.conf.raw.html"
-                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc-desktop/X11/xorg.conf.d/00-french-keyboard.conf</span></code></a></p>
+  <p class="topless"><a href="microsoft-mssql.html"
+                        title="next chapter">Microsoft SQL Server</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/etc-desktop/index.rst.txt"
+    <li><a href="../_sources/database/index.rst.txt"
            rel="nofollow">Show Source</a></li>
-    <li><a href="https://github.com/fishilico/generic-config/tree/master/etc-desktop"
+    <li><a href="https://github.com/fishilico/generic-config/tree/master/database"
            rel="nofollow">Show Directory on GitHub
            <img src="../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
            </a></li>
@@ -91,10 +109,10 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="X11/xorg.conf.d/00-french-keyboard.conf.raw.html" title="etc-desktop/X11/xorg.conf.d/00-french-keyboard.conf"
+          <a href="microsoft-mssql.html" title="Microsoft SQL Server"
              >next</a> |</li>
         <li class="right" >
-          <a href="../etc/sysctl.conf.raw.html" title="etc/sysctl.conf"
+          <a href="../sysadmin/user.html" title="User management on Linux"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li> 
       </ul>

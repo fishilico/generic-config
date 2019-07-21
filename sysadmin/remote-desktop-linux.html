@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Remote Desktop on Linux &#8212; Generic Config</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Some notes about my SELinux installation" href="selinux.html" />
+    <link rel="prev" title="Configuration tweaks on a Raspberry Pi" href="raspberrypi.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="selinux.html" title="Some notes about my SELinux installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="raspberrypi.html" title="Configuration tweaks on a Raspberry Pi"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="remote-desktop-on-linux">
+<h1>Remote Desktop on Linux<a class="headerlink" href="#remote-desktop-on-linux" title="Permalink to this headline">¶</a></h1>
+<p>Most Linux-based systems use X11 or Wayland in order to render the desktop.
+In order to connect to a remote Linux system and operate with a graphical user interface, there exist several approaches: VNC, RDP, X11 forwarding over SSH, etc.</p>
+<div class="section" id="x11-principles">
+<h2>X11 principles<a class="headerlink" href="#x11-principles" title="Permalink to this headline">¶</a></h2>
+<p>X11 is a specification and a protocol for <em>X window system</em> that enables using a graphical user interface.
+It relies on a client/server pattern where:</p>
+<ul class="simple">
+<li><p>The server is a physical device with peripherals such as a display, a mouse, a keyboard, etc.</p></li>
+<li><p>Each application is a client to the server.</p></li>
+</ul>
+<p>Among applications, some special ones render the window borders, the desktop background, etc.
+These are parts of a desktop environment.</p>
+<p>On a local system, the X11 server listens on a Unix socket located at <code class="docutils literal notranslate"><span class="pre">/tmp/.X11-unix/X0</span></code>.
+This is referred by client applications as <code class="docutils literal notranslate"><span class="pre">:0.0</span></code>.
+A client knows to which server it talks using the <code class="docutils literal notranslate"><span class="pre">$DISPLAY</span></code> environment variable:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="nv">$DISPLAY</span>
+:0.0
+</pre></div>
+</div>
+<p>This variable may also contain an IP address, for remote X11.
+For example <code class="docutils literal notranslate"><span class="pre">DISPLAY=192.168.1.2:0</span></code> refers to a server running at 192.168.1.2 on TCP port 6000.
+The general form of variable <code class="docutils literal notranslate"><span class="pre">DISPLAY</span></code> is <code class="docutils literal notranslate"><span class="pre">hostname:D.S</span></code> where <code class="docutils literal notranslate"><span class="pre">hostname</span></code> is the name of the target host (empty for a local server), <code class="docutils literal notranslate"><span class="pre">D</span></code> is the display index and <code class="docutils literal notranslate"><span class="pre">S</span></code> is the screen index.
+On a remote host, the associated TCP port is computed by: <code class="docutils literal notranslate"><span class="pre">6000</span> <span class="pre">+</span> <span class="pre">D</span></code>.
+On the local host, the display index is used to compute the path to the Unix socket: <code class="docutils literal notranslate"><span class="pre">&quot;/tmp/.X11-unix/X&quot;</span> <span class="pre">+</span> <span class="pre">D</span></code></p>
+<p>There exists some kind of authentication to a X11 server, using a magic cookie located in <code class="docutils literal notranslate"><span class="pre">$HOME/.Xauthority</span></code>.
+The content of the binary file can be decoded using <code class="docutils literal notranslate"><span class="pre">xauth</span> <span class="pre">list</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ xauth list
+myhost/unix:0  MIT-MAGIC-COOKIE-1  7a77125b6af11c25a72662e316ab40a0
+</pre></div>
+</div>
+<p>X11 protocol allows many powerful actions for clients, such as:</p>
+<ul class="simple">
+<li><p>changing the screen resolution (<code class="docutils literal notranslate"><span class="pre">xrandr</span></code> command)</p></li>
+<li><p>getting information about any windows (<code class="docutils literal notranslate"><span class="pre">xwininfo</span></code> command, such as <code class="docutils literal notranslate"><span class="pre">xwininfo</span> <span class="pre">-root</span> <span class="pre">-tree</span></code>)</p></li>
+<li><p>getting the PID (process identifier) which owns a window (<code class="docutils literal notranslate"><span class="pre">xprop</span> <span class="pre">_NET_WM_PID</span></code>)</p></li>
+<li><p>reading all keystrokes (<code class="docutils literal notranslate"><span class="pre">xinput</span></code> command, such as <code class="docutils literal notranslate"><span class="pre">xinput</span> <span class="pre">test</span> <span class="pre">$KEYBOARD_NUM</span></code>)</p></li>
+<li><p>reading and writing the clipboard buffers (<code class="docutils literal notranslate"><span class="pre">xsel</span></code> command)</p></li>
+<li><p>taking a screenshot (<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">-display</span> <span class="pre">:0</span> <span class="pre">-window</span> <span class="pre">root</span> <span class="pre">screenshot.png</span></code> from ImageMagick)</p></li>
+<li><p>etc.</p></li>
+</ul>
+</div>
+<div class="section" id="remote-x11">
+<h2>Remote X11<a class="headerlink" href="#remote-x11" title="Permalink to this headline">¶</a></h2>
+<p>On a trusted network, it is possible to expose a X11 server on a TCP port.
+As the communication does not include encryption, this setup is not recommended as-is.
+It is nonetheless possible to encapsulate the X11 protocol in a secure tunnel (that provides confidentiality, integrity and authentication), such as a VPN.</p>
+<p>OpenSSH also provides an easy way to forward a X11 server over a SSH connection, so that remote applications can run on the local X11 server.
+This feature is called <em>X11 forwarding</em> and is enabled using a configuration variable (<code class="docutils literal notranslate"><span class="pre">X11Forwarding</span> <span class="pre">yes</span></code> on the SSH server, <code class="docutils literal notranslate"><span class="pre">ForwardX11</span> <span class="pre">yes</span></code> on the SSH client) or a command-line switch (<code class="docutils literal notranslate"><span class="pre">-X</span></code> or <code class="docutils literal notranslate"><span class="pre">-Y</span></code>).
+As X11 clients are powerful, OpenSSH allows specifying whether the remote server is to be fully trusted (<code class="docutils literal notranslate"><span class="pre">ForwardX11Trusted</span></code> configuration variable, <code class="docutils literal notranslate"><span class="pre">-Y</span></code> option) or not (<code class="docutils literal notranslate"><span class="pre">-X</span></code> option).</p>
+</div>
+<div class="section" id="remote-desktop">
+<h2>Remote Desktop<a class="headerlink" href="#remote-desktop" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, there is a need to connect to a remote host that is running a X11 server with applications.
+Several VNC and RDP servers create a new X11 server for such remote connection, which is fine in order to isolate each user one from each other.</p>
+<p>For example Microsoft documents how to setup xrdp on <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/use-remote-desktop">https://docs.microsoft.com/en-us/azure/virtual-machines/linux/use-remote-desktop</a>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> xfce4-session &gt;~/.xsession
+sudo service xrdp restart
+</pre></div>
+</div>
+<p>It is also possible to expose the X11 server as a VNC server using <code class="docutils literal notranslate"><span class="pre">x11vnc</span></code>, as described in <a class="reference external" href="https://undeadly.org/cgi?action=article;sid=20071108214134">https://undeadly.org/cgi?action=article;sid=20071108214134</a>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Connect using SSH to the remote host, forwarding VNC port</span>
+<span class="c1"># Several websites state that allocating a PTY (-t) for x11vnc makes it faster</span>
+ssh -t -L <span class="m">5900</span>:localhost:5900 remotehost
+
+<span class="c1"># Start x11vnc on the remote host to expose the first display as a VNC server</span>
+<span class="c1"># The user display can also be found using &quot;-find&quot;</span>
+x11vnc -display :0 -auth <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.Xauthority&quot;</span> -localhost
+
+<span class="c1"># Connect from the local host to the VNC server, reachable through localhost:5900</span>
+vncviewer -depth <span class="m">8</span> -encodings hextile localhost:0
+</pre></div>
+</div>
+<p>If the remote host does not have an X11 server, it is possible to start a virtual one such as Xvfb:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># On the remote host</span>
+<span class="nb">export</span> <span class="nv">DISPLAY</span><span class="o">=</span>:1
+Xvfb :1 -screen <span class="m">0</span> 1024x768x16 <span class="p">&amp;</span>
+x11vnc -display :1 -nopw -localhost -xkb
+</pre></div>
+</div>
+<p>This can be used to run software such as QEMU with a graphical output, or a web browser, etc.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Remote Desktop on Linux</a><ul>
+<li><a class="reference internal" href="#x11-principles">X11 principles</a></li>
+<li><a class="reference internal" href="#remote-x11">Remote X11</a></li>
+<li><a class="reference internal" href="#remote-desktop">Remote Desktop</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="raspberrypi.html"
+                        title="previous chapter">Configuration tweaks on a Raspberry Pi</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="selinux.html"
+                        title="next chapter">Some notes about my SELinux installation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/remote-desktop-linux.rst.txt"
+           rel="nofollow">Show Source</a></li>
+    <li><a href="https://github.com/fishilico/generic-config/blob/master/sysadmin/remote-desktop-linux.rst"
+           rel="nofollow">Show Source on GitHub
+           <img src="../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  </ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="selinux.html" title="Some notes about my SELinux installation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="raspberrypi.html" title="Configuration tweaks on a Raspberry Pi"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2019, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

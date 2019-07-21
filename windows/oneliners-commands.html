@@ -15,7 +15,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Set hardware clock to UTC" href="utc-clock.html" />
-    <link rel="prev" title="Microsoft SQL Server" href="mssql-server.html" /> 
+    <link rel="prev" title="Installing Windows" href="install.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -27,7 +27,7 @@
           <a href="utc-clock.html" title="Set hardware clock to UTC"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="mssql-server.html" title="Microsoft SQL Server"
+          <a href="install.html" title="Installing Windows"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
@@ -337,6 +337,11 @@ net user newuser password /add
 net localgroup Administrators newuser /add
 </pre></div>
 </div>
+<p>Spawn an elevated prompt when UAC is enabled (User Account Control):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Start</span><span class="o">-</span><span class="n">Process</span> <span class="o">-</span><span class="n">Verb</span> <span class="n">RunAs</span> <span class="n">PowerShell</span>
+<span class="n">saps</span> <span class="o">-</span><span class="n">verb</span> <span class="n">runas</span> <span class="n">powershell</span>
+</pre></div>
+</div>
 <p>In order to login as administrator to a remote machine without using the built-in administrator (RID 500), a registry key needs to be set.
 This has been described in many blog posts:</p>
 <ul class="simple">
@@ -433,10 +438,20 @@ Get-WmiObject -query <span class="s1">&#39;select * from win32_quickfixengineeri
 Get-HotFix -id KB99999
 </pre></div>
 </div>
+<p>The software may be signed using a certificate in a certificate store.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Manage user certificates</span>
+certmgr.msc
+
+<span class="c1"># Manage local machine certificates</span>
+certlm.msc
+</pre></div>
+</div>
 </div>
 <div class="section" id="boot-configuration">
 <h2>Boot configuration<a class="headerlink" href="#boot-configuration" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">msconfig</span>
+
+<span class="n">bcdedit</span> <span class="o">/</span><span class="n">enum</span> <span class="nb">all</span>
 </pre></div>
 </div>
 </div>
@@ -597,8 +612,8 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="mssql-server.html"
-                        title="previous chapter">Microsoft SQL Server</a></p>
+  <p class="topless"><a href="install.html"
+                        title="previous chapter">Installing Windows</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="utc-clock.html"
                         title="next chapter">Set hardware clock to UTC</a></p>
@@ -635,7 +650,7 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
           <a href="utc-clock.html" title="Set hardware clock to UTC"
              >next</a> |</li>
         <li class="right" >
-          <a href="mssql-server.html" title="Microsoft SQL Server"
+          <a href="install.html" title="Installing Windows"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
@@ -643,7 +658,7 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
     </div>
   </body>
 </html>
