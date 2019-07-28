@@ -463,16 +463,53 @@ certlm.msc
 </div>
 <div class="section" id="firewall">
 <h2>Firewall<a class="headerlink" href="#firewall" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wf</span><span class="o">.</span><span class="n">msc</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wf.msc
 
-<span class="n">Get</span><span class="o">-</span><span class="n">NetFirewallProfile</span>
-<span class="n">Show</span><span class="o">-</span><span class="n">NetFirewallRule</span>
+Get-NetFirewallProfile
+Show-NetFirewallRule
+
+netsh advfirewall <span class="nb">export</span> <span class="s2">&quot;C:\Users\Administrator\Desktop\advfirewallpolicy.wfw&quot;</span>
+netsh advfirewall show allprofiles
+netsh advfirewall show global
+netsh advfirewall firewall dump
+
+<span class="c1"># On old versions of Windows</span>
+netsh advfirewall dump
 </pre></div>
 </div>
 </div>
 <div class="section" id="tcp-port-forwarding-with-netsh">
 <h2>TCP port forwarding with netsh<a class="headerlink" href="#tcp-port-forwarding-with-netsh" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">netsh</span> <span class="n">interface</span> <span class="n">portproxy</span> <span class="n">add</span> <span class="n">v4tov4</span> <span class="n">listenport</span><span class="o">=</span><span class="mi">1234</span> <span class="n">listenaddress</span><span class="o">=</span><span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span> <span class="n">connectport</span><span class="o">=</span><span class="mi">80</span> <span class="n">connectaddress</span><span class="o">=</span><span class="mf">10.13</span><span class="o">.</span><span class="mf">37.1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="network-shares">
+<h2>Network shares<a class="headerlink" href="#network-shares" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># List the network shares currently used</span>
+net use
+
+<span class="c1"># List the shares on a server (use &quot;localhost&quot; for local shares)</span>
+net view my-server /ALL
+
+<span class="c1"># List shares using WMI (on a remote server or localy)</span>
+<span class="nv">$shares</span> <span class="o">=</span> Get-CIMInstance –Classname Win32_Share -computername my-server -filter <span class="s2">&quot;Type=0&quot;</span>
+<span class="nv">$shares</span> <span class="p">|</span> foreach <span class="o">{</span>
+<span class="s2">&quot;     Share Name   : &quot;</span> + <span class="nv">$_</span>.name + <span class="s2">&quot;</span>
+<span class="s2">     Source Folder: &quot;</span> + <span class="nv">$_</span>.path + <span class="s2">&quot;</span>
+<span class="s2">     Description  : &quot;</span> + <span class="nv">$_</span>.Description + <span class="s2">&quot;</span>
+<span class="s2">     Caption      : &quot;</span> + <span class="nv">$_</span>.Caption + <span class="s2">&quot;</span>
+<span class="s2">     Type         : &quot;</span> + <span class="o">(</span><span class="s1">&#39;0x{0:x}&#39;</span> -f <span class="nv">$_</span>.Type<span class="o">)</span> + <span class="s2">&quot;</span>
+<span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="c1"># Mount a share to a drive letter</span>
+net use /user:me Z: <span class="se">\\</span>my-server<span class="se">\m</span>y-share
+New-PSDrive –Name <span class="s2">&quot;Z&quot;</span> -PSProvider FileSystem –Root <span class="s2">&quot;\\my-server\my-share&quot;</span>
+</pre></div>
+</div>
+<p>In order to easily provide files to a Windows host from a Linux system, it is possible to use impacket to start a simple Samba server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">smbserver</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">smb2support</span> <span class="o">-</span><span class="n">username</span> <span class="n">me</span> <span class="o">-</span><span class="n">password</span> <span class="n">mypass</span> <span class="n">my</span><span class="o">-</span><span class="n">share</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">my</span><span class="o">-</span><span class="n">share</span>
 </pre></div>
 </div>
 </div>
@@ -604,6 +641,7 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
 <li><a class="reference internal" href="#installed-software">Installed software</a></li>
 <li><a class="reference internal" href="#firewall">Firewall</a></li>
 <li><a class="reference internal" href="#tcp-port-forwarding-with-netsh">TCP port forwarding with netsh</a></li>
+<li><a class="reference internal" href="#network-shares">Network shares</a></li>
 <li><a class="reference internal" href="#alternate-data-streams">Alternate Data Streams</a></li>
 <li><a class="reference internal" href="#csv-and-table-viewer">CSV and table viewer</a></li>
 <li><a class="reference internal" href="#mssql-client">MSSQL client</a></li>

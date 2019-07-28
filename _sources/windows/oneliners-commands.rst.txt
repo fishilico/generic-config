@@ -355,12 +355,20 @@ Installed software
 Firewall
 --------
 
-::
+.. code-block:: sh
 
     wf.msc
 
     Get-NetFirewallProfile
     Show-NetFirewallRule
+
+    netsh advfirewall export "C:\Users\Administrator\Desktop\advfirewallpolicy.wfw"
+    netsh advfirewall show allprofiles
+    netsh advfirewall show global
+    netsh advfirewall firewall dump
+
+    # On old versions of Windows
+    netsh advfirewall dump
 
 
 TCP port forwarding with netsh
@@ -369,6 +377,37 @@ TCP port forwarding with netsh
 ::
 
     netsh interface portproxy add v4tov4 listenport=1234 listenaddress=192.0.2.42 connectport=80 connectaddress=10.13.37.1
+
+
+Network shares
+--------------
+
+.. code-block:: sh
+
+    # List the network shares currently used
+    net use
+
+    # List the shares on a server (use "localhost" for local shares)
+    net view my-server /ALL
+
+    # List shares using WMI (on a remote server or localy)
+    $shares = Get-CIMInstance –Classname Win32_Share -computername my-server -filter "Type=0"
+    $shares | foreach {
+    "     Share Name   : " + $_.name + "
+         Source Folder: " + $_.path + "
+         Description  : " + $_.Description + "
+         Caption      : " + $_.Caption + "
+         Type         : " + ('0x{0:x}' -f $_.Type) + "
+    "
+    }
+
+    # Mount a share to a drive letter
+    net use /user:me Z: \\my-server\my-share
+    New-PSDrive –Name "Z" -PSProvider FileSystem –Root "\\my-server\my-share"
+
+In order to easily provide files to a Windows host from a Linux system, it is possible to use impacket to start a simple Samba server::
+
+    smbserver.py -smb2support -username me -password mypass my-share /path/to/my-share
 
 
 Alternate Data Streams
