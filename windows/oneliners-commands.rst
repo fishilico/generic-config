@@ -355,12 +355,20 @@ Installed software
 Firewall
 --------
 
-::
+.. code-block:: sh
 
     wf.msc
 
     Get-NetFirewallProfile
     Show-NetFirewallRule
+
+    netsh advfirewall export "C:\Users\Administrator\Desktop\advfirewallpolicy.wfw"
+    netsh advfirewall show allprofiles
+    netsh advfirewall show global
+    netsh advfirewall firewall dump
+
+    # On old versions of Windows
+    netsh advfirewall dump
 
 
 TCP port forwarding with netsh
