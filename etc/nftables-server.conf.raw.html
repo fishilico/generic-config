@@ -128,8 +128,8 @@ table inet filter <span class="o">{</span>
         oifname <span class="s2">&quot;lo&quot;</span> accept comment <span class="s2">&quot;trust local loopback&quot;</span>
         ip protocol icmp counter accept comment <span class="s2">&quot;accept sending ICMPv4&quot;</span>
         ip6 nexthdr ipv6-icmp counter accept comment <span class="s2">&quot;accept sending ICMPv6&quot;</span>
-        tcp flags rst comment <span class="s2">&quot;accept sending TCP RST&quot;</span>
-        tcp flags <span class="p">&amp;</span> <span class="o">(</span>fin<span class="p">|</span>ack<span class="o">)</span> <span class="o">==</span> fin<span class="p">|</span>ack comment <span class="s2">&quot;accept sending TCP FIN+ACK&quot;</span>
+        tcp flags rst counter accept comment <span class="s2">&quot;accept sending TCP RST&quot;</span>
+        tcp flags <span class="p">&amp;</span> <span class="o">(</span>fin<span class="p">|</span>ack<span class="o">)</span> <span class="o">==</span> fin<span class="p">|</span>ack counter accept comment <span class="s2">&quot;accept sending TCP FIN+ACK&quot;</span>
 
         ip daddr <span class="m">255</span>.255.255.255/32 counter drop comment <span class="s2">&quot;do not emit IPv4 broadcast&quot;</span>
         ct state invalid counter drop comment <span class="s2">&quot;drop invalid connections&quot;</span>
