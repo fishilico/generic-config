@@ -427,6 +427,42 @@ In order to easily provide files to a Windows host from a Linux system, it is po
     smbserver.py -smb2support -username me -password mypass my-share /path/to/my-share
 
 
+Filesystem management
+---------------------
+
+Since Windows Vista, it is possible to create symbolic links on Windows:
+
+.. code-block:: sh
+
+    # Create a symbolic link to a file
+    mklink "C:\Path\to\link\file" "C:\Path\to\target\file"
+
+    # Create a symbolic link to a directory
+    mklink /D "C:\Path\to\link\directory" "C:\Path\to\target\directory"
+
+    # With PowerShell 5.0 (Windows 10)
+    New-Item -Path "C:\Path\to\link" -ItemType SymbolicLink -Value "C:\Path\to\target"
+
+The command to mount a volume on a path is `mountvol <https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mountvol>`_:
+
+.. code-block:: sh
+
+    # Example from Microsoft documentation
+    mountvol \sysmount \\?\Volume\{2eca078d-5cbc-43d3-aff8-7e8511f60d0e}\
+
+    # Enumerate the volumes from PowerShell
+    Get-WmiObject Win32_Volume
+
+It is also possible to associate a path with a drive letter using command `subst <https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst>`_:
+
+.. code-block:: sh
+
+    subst Z: "C:\my\path"
+
+    # Remove the association
+    subst Z: /d
+
+
 Alternate Data Streams
 ----------------------
 
