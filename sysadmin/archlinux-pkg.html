@@ -60,7 +60,17 @@ to build and install the package you just need to issue:</p>
 <code class="docutils literal notranslate"><span class="pre">-i</span></code> option means <em>install the package after it is built</em>.</p>
 <p>You should customize your <code class="docutils literal notranslate"><span class="pre">/etc/makepkg.conf</span></code> file before launching the build,
 for example to set up the packager name:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PACKAGER</span><span class="o">=</span><span class="s2">&quot;Myself &lt;root@localhost&gt;&quot;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">PACKAGER</span><span class="o">=</span><span class="s2">&quot;Myself &lt;root@localhost&gt;&quot;</span>
+</pre></div>
+</div>
+<p>It is also possible to enable parallel build and to use a temporary build directory</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cat &gt;&gt; /etc/makepkg.conf <span class="s">&lt;&lt; EOF</span>
+<span class="s">MAKEFLAGS=&quot;-j4&quot;  # According to $(nproc)</span>
+<span class="s">BUILDDIR=/tmp/makepkg</span>
+<span class="s">EOF</span>
+cat &gt;&gt; /etc/fstab <span class="s">&lt;&lt; EOF</span>
+<span class="s">makepkg /tmp/makepkg tmpfs defaults,auto,nodev,nosuid,exec,gid=100,uid=1000,mode=0700 0 0</span>
+<span class="s">EOF</span>
 </pre></div>
 </div>
 <p>For more information read the wiki! Here are some links:</p>
@@ -74,9 +84,9 @@ for example to set up the packager name:</p>
 <li><p><a class="reference external" href="https://wiki.archlinux.org/index.php/Yaourt">https://wiki.archlinux.org/index.php/Yaourt</a></p></li>
 </ul>
 </div>
-<div class="section" id="yaourt-and-pacaur">
-<h2>Yaourt and pacaur<a class="headerlink" href="#yaourt-and-pacaur" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">yaourt</span></code> (Yet AnOther User Repository Tool) and <code class="docutils literal notranslate"><span class="pre">pacaur</span></code> ease the
+<div class="section" id="yaourt-pacaur-and-trizen">
+<h2>Yaourt, pacaur and trizen<a class="headerlink" href="#yaourt-pacaur-and-trizen" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">yaourt</span></code> (Yet AnOther User Repository Tool), <code class="docutils literal notranslate"><span class="pre">pacaur</span></code> and <code class="docutils literal notranslate"><span class="pre">trizen</span></code> ease the
 installation of packages from the AUR. Their interfaces are similar to
 <code class="docutils literal notranslate"><span class="pre">pacman</span></code> but they can download, build and install user packages too, wrapping
 both <code class="docutils literal notranslate"><span class="pre">makepkg</span></code> and <code class="docutils literal notranslate"><span class="pre">pacman</span></code>.</p>
@@ -85,6 +95,7 @@ for a specified package.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pacaur</span></code> main advantage lies in keeping the downloaded PKGBUILD and their git
 history in a directory, <code class="docutils literal notranslate"><span class="pre">$HOME/.cache/pacaur/</span></code>, which allows tracking changes
 when upgrading AUR packages.</p>
+<p><code class="docutils literal notranslate"><span class="pre">trizen</span></code> is a more recent one and can replace <code class="docutils literal notranslate"><span class="pre">pacaur</span></code>.</p>
 </div>
 <div class="section" id="debug-build">
 <h2>Debug build<a class="headerlink" href="#debug-build" title="Permalink to this headline">¶</a></h2>
@@ -110,7 +121,7 @@ in <code class="docutils literal notranslate"><span class="pre">/etc/makepkg.con
   <ul>
 <li><a class="reference internal" href="#">Notes about Arch Linux packages</a><ul>
 <li><a class="reference internal" href="#building-packages">Building packages</a></li>
-<li><a class="reference internal" href="#yaourt-and-pacaur">Yaourt and pacaur</a></li>
+<li><a class="reference internal" href="#yaourt-pacaur-and-trizen">Yaourt, pacaur and trizen</a></li>
 <li><a class="reference internal" href="#debug-build">Debug build</a></li>
 </ul>
 </li>

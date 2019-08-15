@@ -23,9 +23,23 @@ to build and install the package you just need to issue::
 ``-i`` option means *install the package after it is built*.
 
 You should customize your ``/etc/makepkg.conf`` file before launching the build,
-for example to set up the packager name::
+for example to set up the packager name:
+
+.. code-block:: sh
 
     PACKAGER="Myself <root@localhost>"
+
+It is also possible to enable parallel build and to use a temporary build directory
+
+.. code-block:: sh
+
+    cat >> /etc/makepkg.conf << EOF
+    MAKEFLAGS="-j4"  # According to $(nproc)
+    BUILDDIR=/tmp/makepkg
+    EOF
+    cat >> /etc/fstab << EOF
+    makepkg /tmp/makepkg tmpfs defaults,auto,nodev,nosuid,exec,gid=100,uid=1000,mode=0700 0 0
+    EOF
 
 For more information read the wiki! Here are some links:
 
@@ -38,10 +52,10 @@ For more information read the wiki! Here are some links:
 - https://wiki.archlinux.org/index.php/Yaourt
 
 
-Yaourt and pacaur
------------------
+Yaourt, pacaur and trizen
+-------------------------
 
-``yaourt`` (Yet AnOther User Repository Tool) and ``pacaur`` ease the
+``yaourt`` (Yet AnOther User Repository Tool), ``pacaur`` and ``trizen`` ease the
 installation of packages from the AUR. Their interfaces are similar to
 ``pacman`` but they can download, build and install user packages too, wrapping
 both ``makepkg`` and ``pacman``.
@@ -52,6 +66,8 @@ for a specified package.
 ``pacaur`` main advantage lies in keeping the downloaded PKGBUILD and their git
 history in a directory, ``$HOME/.cache/pacaur/``, which allows tracking changes
 when upgrading AUR packages.
+
+``trizen`` is a more recent one and can replace ``pacaur``.
 
 
 Debug build

@@ -50,14 +50,24 @@ tasks I do when I set up a Debian host.</p>
 Keep in mind SSH preserve locale across the connection so a single UTF-8
 locale is not enough.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">dpkg-reconfigure</span> <span class="pre">keyboard-configuration</span></code></dt><dd><p>Change which keyboard configuration to use. <code class="docutils literal notranslate"><span class="pre">loadkeys</span></code> can also be used,
-with keymaps in <code class="docutils literal notranslate"><span class="pre">/usr/share/kbd/keymaps</span></code>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">dpkg-reconfigure</span> <span class="pre">console-data</span> <span class="pre">&amp;&amp;</span> <span class="pre">dpkg-reconfigure</span> <span class="pre">keyboard-configuration</span></code></dt><dd><p>Change which keyboard configuration to use. <code class="docutils literal notranslate"><span class="pre">loadkeys</span></code> can also be used,
+with keymaps in <code class="docutils literal notranslate"><span class="pre">/usr/share/kbd/keymaps</span></code>.
+After this: <code class="docutils literal notranslate"><span class="pre">service</span> <span class="pre">keyboard-setup</span> <span class="pre">restart</span></code>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/usr/bin</span> <span class="pre">&amp;&amp;</span> <span class="pre">sudo</span> <span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">python</span> <span class="pre">python2</span></code></dt><dd><p>For scripts which require python2 command.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">update-rc.d</span> <span class="pre">$SERVICE</span> <span class="pre">remove</span></code> or <code class="docutils literal notranslate"><span class="pre">sysv-rc-conf</span></code></dt><dd><p>Remove some unneeded services from boot. Opposite operation is <code class="docutils literal notranslate"><span class="pre">defaults</span></code>.</p>
 </dd>
 </dl>
+<p>Enable persistent iptables configuration:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>apt-get install iptables-persistent
+systemctl <span class="nb">enable</span> netfilter-persistent.service
+</pre></div>
+</div>
+<p>Or persistent nftables configuration:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> nftables.service
+</pre></div>
+</div>
 </div>
 <div class="section" id="apt-configuration">
 <h2>APT configuration<a class="headerlink" href="#apt-configuration" title="Permalink to this headline">¶</a></h2>
