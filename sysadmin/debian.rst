@@ -13,15 +13,29 @@ Debian post-installation commands
     Keep in mind SSH preserve locale across the connection so a single UTF-8
     locale is not enough.
 
-``dpkg-reconfigure keyboard-configuration``
+``dpkg-reconfigure console-data && dpkg-reconfigure keyboard-configuration``
     Change which keyboard configuration to use. ``loadkeys`` can also be used,
     with keymaps in ``/usr/share/kbd/keymaps``.
+    After this: ``service keyboard-setup restart``.
 
 ``cd /usr/bin && sudo ln -s python python2``
     For scripts which require python2 command.
 
 ``update-rc.d $SERVICE remove`` or ``sysv-rc-conf``
     Remove some unneeded services from boot. Opposite operation is ``defaults``.
+
+Enable persistent iptables configuration:
+
+.. code-block:: sh
+
+    apt-get install iptables-persistent
+    systemctl enable netfilter-persistent.service
+
+Or persistent nftables configuration:
+
+.. code-block:: sh
+
+    systemctl enable nftables.service
 
 
 APT configuration
