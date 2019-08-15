@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>etc-server/dns/unbound.conf &#8212; Generic Config</title>
+    <title>etc-server/dns/unbound-with-stubby.conf &#8212; Generic Config</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="ejabberd configuration" href="../jabber/ejabberd.html" />
-    <link rel="prev" title="etc-server/dns/unbound-with-stubby.conf" href="unbound-with-stubby.conf.raw.html" /> 
+    <link rel="next" title="etc-server/dns/unbound.conf" href="unbound.conf.raw.html" />
+    <link rel="prev" title="etc-server/dhcp/dnsmasq.conf and doc" href="../dhcp/dnsmasq.conf.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -24,10 +24,10 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../jabber/ejabberd.html" title="ejabberd configuration"
+          <a href="unbound.conf.raw.html" title="etc-server/dns/unbound.conf"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="unbound-with-stubby.conf.raw.html" title="etc-server/dns/unbound-with-stubby.conf"
+          <a href="../dhcp/dnsmasq.conf.html" title="etc-server/dhcp/dnsmasq.conf and doc"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
@@ -39,35 +39,40 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="etc-server-dns-unbound-conf">
-<h1><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound.conf</span></code><a class="headerlink" href="#etc-server-dns-unbound-conf" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference download internal" download="" href="../../_downloads/918cef35f0f29bbd7d33b25723467a6e/unbound.conf"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># This file summaries several files for Unbound configuration, in one file for</span>
-<span class="c1"># clarity purposes.</span>
+  <div class="section" id="etc-server-dns-unbound-with-stubby-conf">
+<h1><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound-with-stubby.conf</span></code><a class="headerlink" href="#etc-server-dns-unbound-with-stubby-conf" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" download="" href="../../_downloads/f629d8d6601cfad0cb2f92ea415129c2/unbound-with-stubby.conf"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuration for using stubby DNS-over-TLS implementation with Unbound</span>
+<span class="c1"># Unbound listens on port 53 (DNS) while Stubby listens on port 8053</span>
+<span class="c1"># cf. https://dnsprivacy.org/wiki/display/DP/DNS+Privacy+Clients#DNSPrivacyClients-Unbound/Stubbycombination</span>
 
-<span class="c1"># /etc/unbound/unbound.conf</span>
-<span class="c1"># On Debian this file only contains one non-commented line:</span>
-include: <span class="s2">&quot;/etc/unbound/unbound.conf.d/*.conf&quot;</span>
-
-<span class="c1"># /etc/unbound/unbound.conf.d/root-auto-trust-anchor-file.conf</span>
+<span class="c1"># /etc/unbound/unbound.conf.d/forward-to-stubby.conf</span>
 server:
-    <span class="c1"># The following line will configure unbound to perform cryptographic</span>
-    <span class="c1"># DNSSEC validation using the root trust anchor.</span>
-    auto-trust-anchor-file: <span class="s2">&quot;/var/lib/unbound/root.key&quot;</span>
+  <span class="k">do</span>-not-query-localhost: no
+forward-zone:
+  name: <span class="s2">&quot;.&quot;</span>
+    forward-addr: <span class="m">127</span>.0.0.1@8053
+    forward-addr: ::1@8053
 
-<span class="c1"># /etc/unbound/unbound.conf.d/localhost.conf</span>
-<span class="c1"># Allow access from localhost</span>
-server:
-    interface: <span class="m">127</span>.0.0.1
-    interface: ::1
-    access-control: <span class="m">127</span>.0.0.0/8 allow
-    access-control: ::1/128 allow
-
-<span class="c1"># /etc/unbound/unbound.conf.d/vpn.conf</span>
-<span class="c1"># Allow access from VPN clients in 10.0.0.0/24 network</span>
-server:
-    interface: <span class="m">10</span>.0.0.1
-    access-control: <span class="m">10</span>.0.0.0/24 allow
+<span class="c1"># /etc/stubby/stubby.yml</span>
+resolution_type: GETDNS_RESOLUTION_STUB
+dns_transport_list:
+  - GETDNS_TRANSPORT_TLS
+tls_authentication: GETDNS_AUTHENTICATION_REQUIRED
+tls_query_padding_blocksize: <span class="m">128</span>
+edns_client_subnet_private : <span class="m">1</span>
+round_robin_upstreams: <span class="m">1</span>
+idle_timeout: <span class="m">10000</span>
+listen_addresses:
+  - <span class="m">127</span>.0.0.1@8053
+  - <span class="m">0</span>::1@8053
+upstream_recursive_servers:
+  - address_data: <span class="m">9</span>.9.9.9
+    tls_auth_name: <span class="s2">&quot;dns.quad9.net&quot;</span>
+  - address_data: <span class="m">1</span>.1.1.1
+    tls_auth_name: <span class="s2">&quot;cloudflare-dns.com&quot;</span>
+  - address_data: <span class="m">1</span>.0.0.1
+    tls_auth_name: <span class="s2">&quot;cloudflare-dns.com&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -79,16 +84,16 @@ server:
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="unbound-with-stubby.conf.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound-with-stubby.conf</span></code></a></p>
+  <p class="topless"><a href="../dhcp/dnsmasq.conf.html"
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dhcp/dnsmasq.conf</span></code> and doc</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../jabber/ejabberd.html"
-                        title="next chapter">ejabberd configuration</a></p>
+  <p class="topless"><a href="unbound.conf.raw.html"
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound.conf</span></code></a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../../_sources/etc-server/dns/unbound.conf.raw.rst.txt"
+    <li><a href="../../_sources/etc-server/dns/unbound-with-stubby.conf.raw.rst.txt"
            rel="nofollow">Show Source</a></li>
-    <li><a href="https://github.com/fishilico/generic-config/tree/master/etc-server/dns/unbound.conf"
+    <li><a href="https://github.com/fishilico/generic-config/tree/master/etc-server/dns/unbound-with-stubby.conf"
            rel="nofollow">Show Raw File on GitHub
            <img src="../../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
            </a></li>
@@ -114,10 +119,10 @@ server:
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../jabber/ejabberd.html" title="ejabberd configuration"
+          <a href="unbound.conf.raw.html" title="etc-server/dns/unbound.conf"
              >next</a> |</li>
         <li class="right" >
-          <a href="unbound-with-stubby.conf.raw.html" title="etc-server/dns/unbound-with-stubby.conf"
+          <a href="../dhcp/dnsmasq.conf.html" title="etc-server/dhcp/dnsmasq.conf and doc"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 

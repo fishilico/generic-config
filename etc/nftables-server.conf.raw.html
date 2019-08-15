@@ -125,7 +125,7 @@ table inet filter <span class="o">{</span>
     chain output <span class="o">{</span>
         <span class="nb">type</span> filter hook output priority <span class="m">0</span><span class="p">;</span> policy accept<span class="p">;</span>
         rt <span class="nb">type</span> <span class="m">0</span> counter drop comment <span class="s2">&quot;disable processing of any RH0 packet to prevent ping-pong&quot;</span>
-        iifname <span class="s2">&quot;lo&quot;</span> accept comment <span class="s2">&quot;trust local loopback&quot;</span>
+        oifname <span class="s2">&quot;lo&quot;</span> accept comment <span class="s2">&quot;trust local loopback&quot;</span>
         ip protocol icmp counter accept comment <span class="s2">&quot;accept sending ICMPv4&quot;</span>
         ip6 nexthdr ipv6-icmp counter accept comment <span class="s2">&quot;accept sending ICMPv6&quot;</span>
         tcp flags rst comment <span class="s2">&quot;accept sending TCP RST&quot;</span>

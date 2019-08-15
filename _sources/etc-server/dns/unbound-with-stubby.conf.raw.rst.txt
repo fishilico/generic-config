@@ -1,0 +1,6 @@
+``etc-server/dns/unbound-with-stubby.conf``
+===========================================
+:download:`Download file<unbound-with-stubby.conf>`
+
+.. literalinclude:: unbound-with-stubby.conf
+   :language: sh
