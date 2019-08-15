@@ -123,9 +123,12 @@ Then, to install software::
 
     # Install other Desktop software
     choco install chromium filezilla firefox kitty vlc winscp -y
+    choco install ldapadmin sql-server-management-studio -y
     choco install windows-sdk-10.0 windowsdriverkit10 visualstudio2019buildtools -y
-    choco install ilspy wireshark -y
-    choco install processhacker -y
+    choco install dnspy ilspy wireshark -y
+    choco install processhacker regshot -y
+    # Install the CFF Explorer and Resource Hacker
+    choco install explorersuite reshack -y
 
 These commands install the following software:
 
