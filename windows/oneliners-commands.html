@@ -546,6 +546,28 @@ New-PSDrive –Name <span class="s2">&quot;Z&quot;</span> -PSProvider FileSystem
 </pre></div>
 </div>
 </div>
+<div class="section" id="other-network-commands">
+<h2>Other network commands<a class="headerlink" href="#other-network-commands" title="Permalink to this headline">¶</a></h2>
+<p>Some scripts such as <a class="reference external" href="https://github.com/thom-s/netsec-ps-scripts/blob/master/printer-telnet-ftp-report/printer-telnet-ftp-report.ps1">https://github.com/thom-s/netsec-ps-scripts/blob/master/printer-telnet-ftp-report/printer-telnet-ftp-report.ps1</a> use PowerShell cmdlets in order to perform connectivity tests:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Send a ping to the given IP address</span>
+Test-Connection -ComputerName <span class="m">192</span>.0.2.42 -Quiet -Count <span class="m">1</span> -InformationAction Ignore
+
+<span class="c1"># Test telnet connectivity</span>
+<span class="nv">$result</span> <span class="o">=</span> Test-NetConnection -ComputerName <span class="m">192</span>.0.2.42 -Port <span class="m">23</span>
+<span class="nv">$result</span>.PingSucceeded
+<span class="nv">$result</span>.TcpTestSucceeded
+
+<span class="c1"># Open a netwotk socket to FTP port</span>
+<span class="nv">$client</span> <span class="o">=</span> New-Object System.Net.Sockets.TcpClient<span class="o">(</span><span class="m">192</span>.0.2.42, <span class="m">21</span><span class="o">)</span>
+<span class="nv">$client</span>.Close<span class="o">()</span>
+</pre></div>
+</div>
+<p>Documentation:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/test-connection?view=powershell-6">https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/test-connection?view=powershell-6</a></p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=win10-ps">https://docs.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=win10-ps</a></p></li>
+</ul>
+</div>
 <div class="section" id="filesystem-management">
 <h2>Filesystem management<a class="headerlink" href="#filesystem-management" title="Permalink to this headline">¶</a></h2>
 <p>Since Windows Vista, it is possible to create symbolic links on Windows:</p>
@@ -706,6 +728,7 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
 <li><a class="reference internal" href="#firewall">Firewall</a></li>
 <li><a class="reference internal" href="#tcp-port-forwarding-with-netsh">TCP port forwarding with netsh</a></li>
 <li><a class="reference internal" href="#network-shares">Network shares</a></li>
+<li><a class="reference internal" href="#other-network-commands">Other network commands</a></li>
 <li><a class="reference internal" href="#filesystem-management">Filesystem management</a></li>
 <li><a class="reference internal" href="#alternate-data-streams">Alternate Data Streams</a></li>
 <li><a class="reference internal" href="#csv-and-table-viewer">CSV and table viewer</a></li>
@@ -761,7 +784,7 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
     </div>
   </body>
 </html>
