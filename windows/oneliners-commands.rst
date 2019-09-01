@@ -450,6 +450,31 @@ In order to easily provide files to a Windows host from a Linux system, it is po
     smbserver.py -smb2support -username me -password mypass my-share /path/to/my-share
 
 
+Other network commands
+----------------------
+
+Some scripts such as https://github.com/thom-s/netsec-ps-scripts/blob/master/printer-telnet-ftp-report/printer-telnet-ftp-report.ps1 use PowerShell cmdlets in order to perform connectivity tests:
+
+.. code-block:: sh
+
+    # Send a ping to the given IP address
+    Test-Connection -ComputerName 192.0.2.42 -Quiet -Count 1 -InformationAction Ignore
+
+    # Test telnet connectivity
+    $result = Test-NetConnection -ComputerName 192.0.2.42 -Port 23
+    $result.PingSucceeded
+    $result.TcpTestSucceeded
+
+    # Open a netwotk socket to FTP port
+    $client = New-Object System.Net.Sockets.TcpClient(192.0.2.42, 21)
+    $client.Close()
+
+Documentation:
+
+* https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/test-connection?view=powershell-6
+* https://docs.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=win10-ps
+
+
 Filesystem management
 ---------------------
 
