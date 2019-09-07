@@ -164,6 +164,49 @@ In the end: reboot! (Remember that we are talking about Windows...)
     shutdown -r -t 0
 
 
+Windows 10's PackageManagement
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+PackageManagement (aka. `OneGet <https://github.com/oneget/oneget>`_) is a package manager of package managers: it merges together `NuGet <https://www.nuget.org/>`_, `Chocolatey <https://chocolatey.org/>`_, etc.
+
+It is installed by default on Windows 10 (cf. https://blogs.technet.microsoft.com/packagemanagement/2015/04/28/introducing-packagemanagement-in-windows-10/) and provides several commands:
+
+.. code-block:: text
+
+    PS C:\> Get-Command -module PackageManagement | sort Noun, Verb
+    CommandType     Name                                               Version    Source
+    -----------     ----                                               -------    ------
+    Cmdlet          Find-Package                                       1.0.0.1    PackageManagement
+    Cmdlet          Get-Package                                        1.0.0.1    PackageManagement
+    Cmdlet          Install-Package                                    1.0.0.1    PackageManagement
+    Cmdlet          Save-Package                                       1.0.0.1    PackageManagement
+    Cmdlet          Uninstall-Package                                  1.0.0.1    PackageManagement
+
+    Cmdlet          Find-PackageProvider                               1.0.0.1    PackageManagement
+    Cmdlet          Get-PackageProvider                                1.0.0.1    PackageManagement
+    Cmdlet          Import-PackageProvider                             1.0.0.1    PackageManagement
+    Cmdlet          Install-PackageProvider                            1.0.0.1    PackageManagement
+
+    Cmdlet          Get-PackageSource                                  1.0.0.1    PackageManagement
+    Cmdlet          Register-PackageSource                             1.0.0.1    PackageManagement
+    Cmdlet          Set-PackageSource                                  1.0.0.1    PackageManagement
+    Cmdlet          Unregister-PackageSource                           1.0.0.1    PackageManagement
+
+Package managers can be enumerated using ``Find-PackageProvider`` and installed using ``Get-PackageProvider``.
+Here is an example of its use:
+
+.. code-block:: sh
+
+    # Install Chocolatey through PackageManagement
+    Get-PackageProvider -Name chocolatey
+
+    # Enumerate packages named with "VLC"
+    Find-Package -Provider chocolatey -Name "*vlc*"
+
+    # Install Notepad++
+    Install-Package notepadplusplus
+
+
 Debloat Windows
 ~~~~~~~~~~~~~~~
 
