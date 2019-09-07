@@ -194,6 +194,43 @@ verified in the registry:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="windows-10-s-packagemanagement">
+<h3>Windows 10’s PackageManagement<a class="headerlink" href="#windows-10-s-packagemanagement" title="Permalink to this headline">¶</a></h3>
+<p>PackageManagement (aka. <a class="reference external" href="https://github.com/oneget/oneget">OneGet</a>) is a package manager of package managers: it merges together <a class="reference external" href="https://www.nuget.org/">NuGet</a>, <a class="reference external" href="https://chocolatey.org/">Chocolatey</a>, etc.</p>
+<p>It is installed by default on Windows 10 (cf. <a class="reference external" href="https://blogs.technet.microsoft.com/packagemanagement/2015/04/28/introducing-packagemanagement-in-windows-10/">https://blogs.technet.microsoft.com/packagemanagement/2015/04/28/introducing-packagemanagement-in-windows-10/</a>) and provides several commands:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>PS C:\&gt; Get-Command -module PackageManagement | sort Noun, Verb
+CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Cmdlet          Find-Package                                       1.0.0.1    PackageManagement
+Cmdlet          Get-Package                                        1.0.0.1    PackageManagement
+Cmdlet          Install-Package                                    1.0.0.1    PackageManagement
+Cmdlet          Save-Package                                       1.0.0.1    PackageManagement
+Cmdlet          Uninstall-Package                                  1.0.0.1    PackageManagement
+
+Cmdlet          Find-PackageProvider                               1.0.0.1    PackageManagement
+Cmdlet          Get-PackageProvider                                1.0.0.1    PackageManagement
+Cmdlet          Import-PackageProvider                             1.0.0.1    PackageManagement
+Cmdlet          Install-PackageProvider                            1.0.0.1    PackageManagement
+
+Cmdlet          Get-PackageSource                                  1.0.0.1    PackageManagement
+Cmdlet          Register-PackageSource                             1.0.0.1    PackageManagement
+Cmdlet          Set-PackageSource                                  1.0.0.1    PackageManagement
+Cmdlet          Unregister-PackageSource                           1.0.0.1    PackageManagement
+</pre></div>
+</div>
+<p>Package managers can be enumerated using <code class="docutils literal notranslate"><span class="pre">Find-PackageProvider</span></code> and installed using <code class="docutils literal notranslate"><span class="pre">Get-PackageProvider</span></code>.
+Here is an example of its use:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install Chocolatey through PackageManagement</span>
+Get-PackageProvider -Name chocolatey
+
+<span class="c1"># Enumerate packages named with &quot;VLC&quot;</span>
+Find-Package -Provider chocolatey -Name <span class="s2">&quot;*vlc*&quot;</span>
+
+<span class="c1"># Install Notepad++</span>
+Install-Package notepadplusplus
+</pre></div>
+</div>
+</div>
 <div class="section" id="debloat-windows">
 <h3>Debloat Windows<a class="headerlink" href="#debloat-windows" title="Permalink to this headline">¶</a></h3>
 <p>Windows 10 comes with many features which are better disabled. Here are some
@@ -310,6 +347,7 @@ systemctl start py-kms.service
 <li><a class="reference internal" href="#enable-the-windows-subsystem-for-linux">Enable the Windows Subsystem for Linux</a></li>
 <li><a class="reference internal" href="#software-to-install">Software to install</a><ul>
 <li><a class="reference internal" href="#automatic-installation">Automatic installation</a></li>
+<li><a class="reference internal" href="#windows-10-s-packagemanagement">Windows 10’s PackageManagement</a></li>
 <li><a class="reference internal" href="#debloat-windows">Debloat Windows</a></li>
 </ul>
 </li>
