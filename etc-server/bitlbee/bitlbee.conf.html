@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>etc-server/bitlbee/: BitlBee IRC gateway &#8212; Generic Config</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="etc-server/dhcp/dhcpd.conf" href="../dhcp/dhcpd.conf.raw.html" />
+    <link rel="prev" title="/etc for Server" href="../index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../dhcp/dhcpd.conf.raw.html" title="etc-server/dhcp/dhcpd.conf"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="/etc for Server"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="etc-server-bitlbee-bitlbee-irc-gateway">
+<h1><code class="docutils literal notranslate"><span class="pre">etc-server/bitlbee/</span></code>: BitlBee IRC gateway<a class="headerlink" href="#etc-server-bitlbee-bitlbee-irc-gateway" title="Permalink to this headline">¶</a></h1>
+<p>BitlBee (<a class="reference external" href="https://www.bitlbee.org/">https://www.bitlbee.org/</a>) is an IRC gateway to other chat networks.
+Once installed, it seems good to restrict BitlBee to listen only on the loopback interface.
+Modify <code class="docutils literal notranslate"><span class="pre">/etc/bitlbee/bitlbee.conf</span></code>:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[settings]</span>
+<span class="c1">## RunMode:</span>
+<span class="c1">##</span>
+<span class="c1">##  Inetd -- Run from inetd (default)</span>
+<span class="c1">##  Daemon -- Run as a stand-alone daemon, serving all users from one process.</span>
+<span class="c1">##    This saves memory if there are more users, the downside is that when one</span>
+<span class="c1">##    user hits a crash-bug, all other users will also lose their connection.</span>
+<span class="c1">##  ForkDaemon -- Run as a stand-alone daemon, but keep all clients in separate</span>
+<span class="c1">##    child processes. This should be pretty safe and reliable to use instead</span>
+<span class="c1">##    of inetd mode.</span>
+<span class="c1">##</span>
+<span class="c1"># RunMode = Inetd</span>
+<span class="na">RunMode</span> <span class="o">=</span> <span class="s">ForkDaemon</span>
+
+<span class="c1">## DaemonPort/DaemonInterface:</span>
+<span class="c1">##</span>
+<span class="c1">## For daemon mode, you can specify on what interface and port the daemon</span>
+<span class="c1">## should be listening for connections.</span>
+<span class="c1">##</span>
+<span class="c1">## DEBIAN NOTE: The init script passes the -p flag to use the port number</span>
+<span class="c1">## set using debconf, this overrides the DaemonPort setting here.</span>
+<span class="c1">##</span>
+<span class="c1"># DaemonInterface = 0.0.0.0</span>
+<span class="c1"># DaemonPort = 6667</span>
+<span class="na">DaemonInterface</span> <span class="o">=</span> <span class="s">127.0.0.1</span>
+</pre></div>
+</div>
+<p>Then, start BitlBee daemon and connect to the IRC gateway, for example with WeeChat:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configure the server and connect to it</span>
+<span class="o">/</span><span class="n">server</span> <span class="n">add</span> <span class="n">bitlbee</span> <span class="n">localhost</span><span class="o">/</span><span class="mi">6667</span> <span class="o">-</span><span class="n">autoconnect</span>
+<span class="o">/</span><span class="n">connect</span> <span class="n">bitlbee</span>
+
+<span class="c1"># Register the account in BitlBee control channel</span>
+<span class="n">register</span> <span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span>
+
+<span class="c1"># In WeeChat, save the password</span>
+<span class="o">/</span><span class="n">secure</span> <span class="nb">set</span> <span class="n">bitlbee_password</span> <span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="nb">set</span> <span class="n">irc</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">bitlbee</span><span class="o">.</span><span class="n">command</span> <span class="s2">&quot;/msg &amp;bitlbee identify $</span><span class="si">{sec.data.bitlbee_password}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>Then, in BitlBee control channel (<code class="docutils literal notranslate"><span class="pre">&amp;bitlbee</span></code>), add a Twitter account for example (<a class="reference external" href="https://wiki.bitlbee.org/HowtoTwitter">https://wiki.bitlbee.org/HowtoTwitter</a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="n">add</span> <span class="n">twitter</span> <span class="o">&lt;</span><span class="n">yourusername</span><span class="o">&gt;</span>
+
+<span class="c1"># Force using commands in order to post a new tweet</span>
+<span class="n">account</span> <span class="n">twitter</span> <span class="nb">set</span> <span class="n">commands</span> <span class="n">strict</span>
+
+<span class="c1"># Disable streams (cf. https://wiki.bitlbee.org/HowtoTwitter/StreamDeprecation)</span>
+<span class="n">account</span> <span class="n">twitter</span> <span class="nb">set</span> <span class="n">stream</span> <span class="n">off</span>
+
+<span class="c1"># Connect to Twitter</span>
+<span class="n">account</span> <span class="n">twitter</span> <span class="n">on</span>
+
+<span class="c1"># Follow an other Twitter account</span>
+<span class="n">add</span> <span class="n">twitter</span> <span class="o">&lt;</span><span class="n">twitter_username_to_follow</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../dhcp/dhcpd.conf.raw.html"
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dhcp/dhcpd.conf</span></code></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/etc-server/bitlbee/bitlbee.conf.rst.txt"
+           rel="nofollow">Show Source</a></li>
+    <li><a href="https://github.com/fishilico/generic-config/blob/master/etc-server/bitlbee/bitlbee.conf.rst"
+           rel="nofollow">Show Source on GitHub
+           <img src="../../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  </ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../dhcp/dhcpd.conf.raw.html" title="etc-server/dhcp/dhcpd.conf"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="/etc for Server"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2019, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+    </div>
+  </body>
+</html>

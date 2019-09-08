@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>etc/wireguard/: WireGuard VPN &#8212; Generic Config</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="/etc for Desktop" href="../etc-desktop/index.html" />
+    <link rel="prev" title="etc/sysctl.conf" href="sysctl.conf.raw.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../etc-desktop/index.html" title="/etc for Desktop"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sysctl.conf.raw.html" title="etc/sysctl.conf"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="etc-wireguard-wireguard-vpn">
+<h1><code class="docutils literal notranslate"><span class="pre">etc/wireguard/</span></code>: WireGuard VPN<a class="headerlink" href="#etc-wireguard-wireguard-vpn" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Installing WireGuard is quite simple.
+It is documented on several places:</p>
+<ul>
+<li><p>For Arch Linux: <a class="reference external" href="https://wiki.archlinux.org/index.php/WireGuard">https://wiki.archlinux.org/index.php/WireGuard</a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pacman -S wireguard-dkms wireguard-tools
+</pre></div>
+</div>
+</li>
+<li><p>For Debian: <a class="reference external" href="https://www.linode.com/docs/networking/vpn/set-up-wireguard-vpn-on-debian/">https://www.linode.com/docs/networking/vpn/set-up-wireguard-vpn-on-debian/</a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add unstable repository with a low priority (the default one is 500)</span>
+<span class="nb">echo</span> <span class="s2">&quot;deb http://deb.debian.org/debian/ unstable main&quot;</span> &gt; /etc/apt/sources.list.d/unstable-wireguard.list
+<span class="nb">printf</span> <span class="s1">&#39;Package: *\nPin: release a=unstable\nPin-Priority: 150\n&#39;</span> &gt; /etc/apt/preferences.d/limit-unstable
+apt-get update <span class="o">&amp;&amp;</span> apt-get install wireguard-dkms wireguard-tools
+</pre></div>
+</div>
+</li>
+<li><p>For Fedora: <a class="reference external" href="https://www.wireguard.com/install/">https://www.wireguard.com/install/</a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dnf copr <span class="nb">enable</span> jdoss/wireguard
+dnf install wireguard-dkms wireguard-tools
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>In order to generate the private key of a host, as <code class="docutils literal notranslate"><span class="pre">root</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /etc/wireguard
+<span class="o">(</span><span class="nb">umask</span> <span class="m">277</span> <span class="o">&amp;&amp;</span> wg genkey <span class="p">|</span> tee privatekey <span class="p">|</span> wg pubkey &gt; publickey<span class="o">)</span>
+</pre></div>
+</div>
+<p>An optional pre-shared key can also be generated:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="nb">umask</span> <span class="m">277</span> <span class="o">&amp;&amp;</span> wg genpsk &gt; /etc/wireguard/psk<span class="o">)</span>
+</pre></div>
+</div>
+<p>In order to configure an interface for the server:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>ip link add dev wg0 <span class="nb">type</span> wireguard
+ip addr add <span class="m">10</span>.0.0.1/32 dev wg0
+ip addr add fd12:3456:789a::1/128 dev wg0
+wg <span class="nb">set</span> wg0 listen-port <span class="m">51820</span> private-key /etc/wireguard/privatekey
+wg <span class="nb">set</span> wg0 peer <span class="si">${</span><span class="nv">CLIENT_PUBKEY</span><span class="si">}</span> persistent-keepalive <span class="m">25</span> <span class="se">\</span>
+    preshared-key /etc/wireguard/psk <span class="se">\</span>
+    allowed-ips <span class="m">10</span>.0.0.2/32,fd12:3456:789a::2/128
+ip link <span class="nb">set</span> wg0 up
+
+<span class="c1"># Save the configuration</span>
+<span class="o">(</span><span class="nb">umask</span> <span class="m">077</span> <span class="o">&amp;&amp;</span> wg showconf wg0 &gt; /etc/wireguard/wg0.conf<span class="o">)</span>
+
+<span class="c1"># In order to restore the configuration:</span>
+wg setconf wg0 /etc/wireguard/wg0.conf
+</pre></div>
+</div>
+<p>The configuration file for interface <code class="docutils literal notranslate"><span class="pre">wg0</span></code>, <code class="docutils literal notranslate"><span class="pre">/etc/wireguard/wg0.conf</span></code>, can also be directly written like this:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[Interface]</span>
+<span class="na">Address</span> <span class="o">=</span> <span class="s">10.0.0.1/32, fd12:3456:789a::1/128</span>
+<span class="na">ListenPort</span> <span class="o">=</span> <span class="s">51820</span>
+<span class="na">PrivateKey</span> <span class="o">=</span> <span class="s">&lt;Private Key&gt;</span>
+<span class="na">SaveConfig</span> <span class="o">=</span> <span class="s">true</span>
+
+<span class="k">[Peer]</span>
+<span class="na">PublicKey</span> <span class="o">=</span> <span class="s">&lt;Client public key&gt;</span>
+<span class="na">PresharedKey</span> <span class="o">=</span> <span class="s">&lt;Pre-Shared Key&gt;</span>
+<span class="na">AllowedIPs</span> <span class="o">=</span> <span class="s">10.0.0.2/32,fd12:3456:789a::2/128</span>
+<span class="na">PersistentKeepalive</span> <span class="o">=</span> <span class="s">25</span>
+</pre></div>
+</div>
+<p>On the client, the configuration is similar, and the server is configured with an additional <code class="docutils literal notranslate"><span class="pre">endpoint</span></code> parameter:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wg <span class="nb">set</span> wg0 peer <span class="si">${</span><span class="nv">SERVER_PUBKEY</span><span class="si">}</span> persistent-keepalive <span class="m">25</span> <span class="se">\</span>
+    allowed-ips <span class="m">10</span>.0.0.1/32 endpoint <span class="si">${</span><span class="nv">SERVER_ADDR</span><span class="si">}</span>:51820
+<span class="c1"># In the configuration file: Endpoint = ${SERVER_ADDR}:51820</span>
+</pre></div>
+</div>
+<p>If the VPN endpoint is allowed to route packets to the external network interface <code class="docutils literal notranslate"><span class="pre">eth0</span></code>, this firewall configuration needs to be applied on the server:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>iptables -A FORWARD -i wg0 -o eth0 -j ACCEPT
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+ip6tables -A FORWARD -i wg0 -o eth0 -j ACCEPT
+ip6tables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+</pre></div>
+</div>
+<p>Then, in order to start WireGuard, run as <code class="docutils literal notranslate"><span class="pre">root</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wg-quick up wg0
+systemctl <span class="nb">enable</span> wg-quick@wg0
+
+<span class="c1"># To shut down an interface:</span>
+wg-quick down wg0
+</pre></div>
+</div>
+<p>To display WireGuard status:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wg
+wg show
+</pre></div>
+</div>
+</div>
+<div class="section" id="disabling-networkmanager">
+<h2>Disabling NetworkManager<a class="headerlink" href="#disabling-networkmanager" title="Permalink to this headline">¶</a></h2>
+<p>In order to disable NetworkManager for the interface, write into <code class="docutils literal notranslate"><span class="pre">/etc/NetworkManager/conf.d/unmanaged.conf</span></code>:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[keyfile]</span>
+<span class="na">unmanaged-devices</span><span class="o">=</span><span class="s">interface-name:wg0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listening-on-a-dns-port-used-by-a-dns-server">
+<h2>Listening on a DNS port used by a DNS server<a class="headerlink" href="#listening-on-a-dns-port-used-by-a-dns-server" title="Permalink to this headline">¶</a></h2>
+<p>WireGuard listens on all available IP addresses (and it is designed like this according to <a class="reference external" href="https://lists.zx2c4.com/pipermail/wireguard/2019-March/003938.html">https://lists.zx2c4.com/pipermail/wireguard/2019-March/003938.html</a>).
+If another service is bound to the loopback on the port configured by WireGuard, starting interface <code class="docutils literal notranslate"><span class="pre">wg0</span></code> fails, with the following kernel logs:</p>
+<blockquote>
+<div><p>wireguard: wg0: Could not create IPv4 socket
+A link change request failed with some changes committed already.
+Interface wg0 may have been left with an inconsistent configuration, please check.</p>
+</div></blockquote>
+<p>This occurs for example when trying to listen to 192.0.2.42:53 (UDP) while a DNS resolver is running on 127.0.0.1:53.
+A possible workaround can use a firewall to solve this issue:</p>
+<ul>
+<li><p>Configure WireGuard to listen on another port (eg. UDP 5353, which is used for multicast DNS)</p></li>
+<li><p>Redirect port 53 to 5353 for incoming traffic:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Allow incoming connections</span>
+nft add rule inet filter input <span class="s1">&#39;udp dport {53, 5353} counter accept comment &quot;accept WireGuard on DNS ports&quot;&#39;</span>
+nft add rule inet filter output <span class="s1">&#39;udp sport {53, 5353} counter accept comment &quot;accept WireGuard on DNS ports&quot;&#39;</span>
+
+<span class="c1"># Load NAT module</span>
+nft add table nat
+nft add chain nat prerouting <span class="s1">&#39;{ type nat hook prerouting priority 0 ; }&#39;</span>
+nft add chain nat postrouting <span class="s1">&#39;{ type nat hook postrouting priority 100 ; }&#39;</span>
+
+<span class="c1"># Redirect module has been available since Linux Kernel 3.19.</span>
+nft add rule nat prerouting ip daddr <span class="m">192</span>.0.2.42 udp dport <span class="m">53</span> counter redirect to <span class="m">5353</span>
+</pre></div>
+</div>
+</li>
+<li><p>Here is an example configuration file for nftables firewall:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">inet</span> <span class="nb">filter</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="nb">input</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="nb">input</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
+        <span class="c1"># ...</span>
+        <span class="n">udp</span> <span class="n">dport</span> <span class="mi">53</span> <span class="n">counter</span> <span class="n">accept</span> <span class="n">comment</span> <span class="s2">&quot;accept WireGuard on DNS port&quot;</span>
+        <span class="n">udp</span> <span class="n">dport</span> <span class="mi">5353</span> <span class="n">counter</span> <span class="n">accept</span> <span class="n">comment</span> <span class="s2">&quot;accept WireGuard on mDNS port&quot;</span>
+        <span class="c1"># ...</span>
+    <span class="p">}</span>
+    <span class="n">chain</span> <span class="n">output</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="n">output</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
+        <span class="c1"># ...</span>
+        <span class="n">udp</span> <span class="n">sport</span> <span class="mi">53</span> <span class="n">counter</span> <span class="n">accept</span> <span class="n">comment</span> <span class="s2">&quot;accept WireGuard on DNS port&quot;</span>
+        <span class="n">udp</span> <span class="n">sport</span> <span class="mi">5353</span> <span class="n">counter</span> <span class="n">accept</span> <span class="n">comment</span> <span class="s2">&quot;accept WireGuard on mDNS port&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">table</span> <span class="n">nat</span> <span class="p">{</span>
+    <span class="n">chain</span> <span class="n">prerouting</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="n">nat</span> <span class="n">hook</span> <span class="n">prerouting</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
+        <span class="n">ip</span> <span class="n">daddr</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span> <span class="n">udp</span> <span class="n">dport</span> <span class="mi">53</span> <span class="n">counter</span> <span class="n">redirect</span> <span class="n">to</span> <span class="mi">5353</span> <span class="n">comment</span> <span class="s2">&quot;WireGuard redirect&quot;</span>
+    <span class="p">}</span>
+    <span class="n">chain</span> <span class="n">postrouting</span> <span class="p">{</span>
+        <span class="nb">type</span> <span class="n">nat</span> <span class="n">hook</span> <span class="n">postrouting</span> <span class="n">priority</span> <span class="mi">100</span><span class="p">;</span> <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">etc/wireguard/</span></code>: WireGuard VPN</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#disabling-networkmanager">Disabling NetworkManager</a></li>
+<li><a class="reference internal" href="#listening-on-a-dns-port-used-by-a-dns-server">Listening on a DNS port used by a DNS server</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sysctl.conf.raw.html"
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/sysctl.conf</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../etc-desktop/index.html"
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Desktop</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/etc/wireguard.rst.txt"
+           rel="nofollow">Show Source</a></li>
+    <li><a href="https://github.com/fishilico/generic-config/blob/master/etc/wireguard.rst"
+           rel="nofollow">Show Source on GitHub
+           <img src="../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  </ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../etc-desktop/index.html" title="/etc for Desktop"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sysctl.conf.raw.html" title="etc/sysctl.conf"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2019, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+    </div>
+  </body>
+</html>
