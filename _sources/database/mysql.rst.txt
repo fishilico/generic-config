@@ -164,14 +164,16 @@ order to gather information about the database.
 
     .. code-block:: mysql
 
-        SELECT CONCAT(TABLE_CATALOG,':',TABLE_SCHEMA,'.',TABLE_NAME)
+        SELECT CONCAT(IF(TABLE_CATALOG,TABLE_CATALOG,''),':',
+                      TABLE_SCHEMA,'.',TABLE_NAME)
                FROM information_schema.TABLES;
 
 * What are the columns in the tables?
 
     .. code-block:: mysql
 
-        SELECT CONCAT(TABLE_CATALOG,':',TABLE_SCHEMA,'.',TABLE_NAME,'.',
+        SELECT CONCAT(IF(TABLE_CATALOG,TABLE_CATALOG,''),':',
+                      TABLE_SCHEMA,'.',TABLE_NAME,'.',
                       COLUMN_NAME,'(',DATA_TYPE,', ',COLUMN_TYPE,')')
                FROM information_schema.COLUMNS;
 
@@ -179,18 +181,18 @@ order to gather information about the database.
 
     .. code-block:: mysql
 
-        SELECT CONCAT(GRANTEE,'=',TABLE_CATALOG,',',
+        SELECT CONCAT(GRANTEE,'=',IF(TABLE_CATALOG,TABLE_CATALOG,''),',',
                       PRIVILEGE_TYPE,IF(IS_GRANTABLE,'_grantable',''))
                FROM information_schema.USER_PRIVILEGES;
-        SELECT CONCAT(GRANTEE,'=',TABLE_CATALOG,':',
+        SELECT CONCAT(GRANTEE,'=',IF(TABLE_CATALOG,TABLE_CATALOG,''),':',
                       TABLE_SCHEMA,',',
                       PRIVILEGE_TYPE,IF(IS_GRANTABLE,'_grantable',''))
                FROM information_schema.SCHEMA_PRIVILEGES;
-        SELECT CONCAT(GRANTEE,'=',TABLE_CATALOG,':',
+        SELECT CONCAT(GRANTEE,'=',IF(TABLE_CATALOG,TABLE_CATALOG,''),':',
                       TABLE_SCHEMA,'.',TABLE_NAME,',',
                       PRIVILEGE_TYPE,IF(IS_GRANTABLE,'_grantable',''))
                FROM information_schema.TABLE_PRIVILEGES;
-        SELECT CONCAT(GRANTEE,'=',TABLE_CATALOG,':',
+        SELECT CONCAT(GRANTEE,'=',IF(TABLE_CATALOG,TABLE_CATALOG,''),':',
                       TABLE_SCHEMA,'.',TABLE_NAME,'.',COLUMN_NAME,',',
                       PRIVILEGE_TYPE,IF(IS_GRANTABLE,'_grantable',''))
                FROM information_schema.COLUMN_PRIVILEGES;
