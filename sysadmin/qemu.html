@@ -171,6 +171,11 @@ to launch the system in a container, with:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemd-nspawn -D /mnt
 </pre></div>
 </div>
+<p>In order to mount a journalised filesystem read-only, the option <code class="docutils literal notranslate"><span class="pre">norecovery</span></code>
+can be required (for example on ext4fs):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mount -o ro,norecovery /dev/nbd0p1 /mnt
+</pre></div>
+</div>
 </div>
 <div class="section" id="nfs-configuration">
 <h2>NFS configuration<a class="headerlink" href="#nfs-configuration" title="Permalink to this headline">¶</a></h2>

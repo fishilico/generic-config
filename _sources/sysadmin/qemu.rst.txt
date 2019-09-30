@@ -155,6 +155,13 @@ to launch the system in a container, with:
 
     systemd-nspawn -D /mnt
 
+In order to mount a journalised filesystem read-only, the option ``norecovery``
+can be required (for example on ext4fs):
+
+.. code-block:: sh
+
+    mount -o ro,norecovery /dev/nbd0p1 /mnt
+
 NFS configuration
 -----------------
 
