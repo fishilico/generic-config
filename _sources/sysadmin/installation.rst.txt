@@ -101,11 +101,18 @@ Here are useful commands for this step:
     cryptsetup open /dev/sda2 system
     mkfs.ext4 /dev/mapper/system
 
+    # Backup the LUKS header
+    cryptsetup luksDump /dev/sda2
+    # Optionally backup the encryption master key
+    dmsetup ls --target crypt
+    dmsetup table --showkeys system
+
     # Rescan LVM partitions after a change has been made
     # (Physical Volumes, Volume Groups and Logical Volumes)
-    vgchange --available y
+    vgchange --available y  # or: vgchange -ay
     pvscan
     vgscan
+    vgscan --mknodes
     lvscan
 
     # Mount the partitions on /mnt
@@ -222,6 +229,15 @@ And run ``mkinitcpio -p linux``.
 The kernel boot command line also needs to be adjusted to include information about the encrypted partition::
 
     root=UUID=xxxxxxxx-...-xxxxxxxxxxxx cryptdevice=/dev/disk/by-uuid/xxxxxxxx-...-xxxxxxxxxxxx:system
+
+If the system is supposed to be unlocked remotely (for example by entering the encryption passphrase in a Dropbear SSH server embedded in the initramfs), some actions need to be performed (https://wiki.archlinux.org/index.php/Dm-crypt/Specialties#Remote_unlocking_of_the_root_%28or_other%29_partition):
+
+* Configure a SSH public key in ``/etc/dropbear/root_key`` or ``/etc/tinyssh/root_key``
+* Add ``netconf dropbear encryptssh`` hooks in ``/etc/mkinitcpio.conf`` before ``filesystem``
+* Configure ``cryptdevice`` and ``ip`` parameters in the kernel boot command. For example::
+
+      cryptdevice=/dev/disk/by-uuid/xxxxxxxx-...-xxxxxxxxxxxx:system
+      ip=192.168.0.2::192.168.0.1:255.255.255.0:myhostname:eth0:none
 
 While at it, here are some other useful options::
 

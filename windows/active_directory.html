@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Active Directory by Microsoft &#8212; Generic Config</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Some cmd.exe commands" href="cmd.html" />
+    <link rel="prev" title="Windows system information" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="cmd.html" title="Some cmd.exe commands"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Windows system information"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="active-directory-by-microsoft">
+<h1>Active Directory by Microsoft<a class="headerlink" href="#active-directory-by-microsoft" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="network-discovery">
+<h2>Network discovery<a class="headerlink" href="#network-discovery" title="Permalink to this headline">¶</a></h2>
+<p>An Active Directory (“AD”) is a technology from Microsoft which aims to ease the management of organizations through a centralized authentication (“SSO” for Single Sign-On), an inventory of users and machines, a way to apply configurations, etc.
+This uses several protocols:</p>
+<ul class="simple">
+<li><p>Kerberos (<a class="reference external" href="https://tools.ietf.org/html/rfc4120">RFC 4120</a>, TCP port 88) for authentication ;</p></li>
+<li><p>LDAP (Lightweight Directory Access Protocol, <a class="reference external" href="https://tools.ietf.org/html/rfc4511">RFC 4511</a>, TCP ports 389 for LDAP and 636 for LDAPS) to access properties of the directory (user names, group memberships, etc.) ;</p></li>
+<li><p>DNS (Domain Name System, UDP and TCP port 53) to allow clients to discover the servers which host the AD, the <em>Domain Controllers</em> (DC) ;</p></li>
+<li><p>MS-RPC and SMB (Server Message Block Protocol, TCP port 445) to share configuration files and programs (such as Group Policy Objects, GPO) with clients ;</p></li>
+<li><p>etc.</p></li>
+</ul>
+<p>On a network which uses an AD, the machines are usually configured such that their DNS resolver is a domain controller and the DNS search suffix is the name of the AD domain.
+Such a configuration can be easily discovered, for example through DHCP.</p>
+<p>A way to discover the Domain Controllers of a specific domain, such as <code class="docutils literal notranslate"><span class="pre">contoso.com</span></code> (the example company of Microsoft, cf. <a class="reference external" href="https://en.wikipedia.org/wiki/Contoso">https://en.wikipedia.org/wiki/Contoso</a>) consists in issuing DNS requests with type <code class="docutils literal notranslate"><span class="pre">SRV</span></code> to:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_kerberos._tcp.contoso.com</span></code> (enumerate the servers which provide the Kerberos protocol, TCP and UDP 88)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_kerberos._udp.contoso.com</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_kpasswd._tcp.contoso.com</span></code> (for Kerberos password change servers, TCP and UDP 464)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_kpasswd._udp.contoso.com</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_ldap._tcp.contoso.com</span></code>  (for LDAP, TCP 389)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_ldaps._tcp.contoso.com</span></code> (for LDAPS, TCP 636)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_gc._tcp.contoso.com</span></code> (for Global Catalog, LDAP for the entire forest, TCP 3268 for LDAP and 3269 for LDAPS)</p></li>
+</ul>
+<p>A DNS response to a <code class="docutils literal notranslate"><span class="pre">SRV</span></code> request contains a priority number (0), a weight number (100), a TCP (or UDP) port number and a host name that can be resolved to an IPv4 or an IPv6 (type <code class="docutils literal notranslate"><span class="pre">A</span></code> or <code class="docutils literal notranslate"><span class="pre">AAAA</span></code> records).</p>
+<p>There also exists a specific DNS zone for “Microsoft Domain Controller Server”, <code class="docutils literal notranslate"><span class="pre">_msdcs.contoso.com</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_ldap._tcp.dc._msdcs.contoso.com</span></code> (“DC” means “Domain Controller”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_ldap._tcp.gc._msdcs.contoso.com</span></code> (“GC” means “Global Catalog”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_ldap._tcp.pdc._msdcs.contoso.com</span></code> (“PDC” means “Primary Domain Controller”, which is usually unique per domain)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_kerberos._tcp.dc._msdcs.contoso.com</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">AAAA</span></code> requests to <code class="docutils literal notranslate"><span class="pre">gc._msdcs.contoso.com</span></code> also resolves to IP addresses of DC.</p></li>
+</ul>
+</div>
+<div class="section" id="kerberos-configuration">
+<h2>Kerberos configuration<a class="headerlink" href="#kerberos-configuration" title="Permalink to this headline">¶</a></h2>
+<p>In order to authenticate to an AD using an account through Kerberos protocol, <code class="docutils literal notranslate"><span class="pre">kinit</span></code> can be used (from package <code class="docutils literal notranslate"><span class="pre">krb5</span></code>).
+Its configuration lies in <code class="docutils literal notranslate"><span class="pre">/etc/krb5.conf</span></code> and looks like:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[libdefaults]</span>
+    <span class="na">default_realm</span> <span class="o">=</span> <span class="s">CONTOSO.COM</span>
+<span class="s">    dns_lookup_realm = false</span>
+<span class="s">    dns_lookup_kdc = true</span>
+<span class="s">    forwardable = true</span>
+
+<span class="k">[realms]</span>
+<span class="c1"># use &quot;kdc = ...&quot; if realm admins haven&#39;t put SRV records into DNS</span>
+    <span class="na">ATHENA.MIT.EDU</span> <span class="o">=</span> <span class="s">{</span>
+<span class="s">        admin_server = kerberos.mit.edu</span>
+<span class="s">    }</span>
+<span class="s">    CONTOSO.COM = {</span>
+<span class="s">        kdc = 192.168.0.1:88</span>
+<span class="s">        kdc_tcp_ports = 88</span>
+<span class="s">        admin_server = 192.168.0.1</span>
+<span class="s">        default_domain = CONTOSO.COM</span>
+
+        <span class="c1"># For smartcard authentication</span>
+        <span class="na">pkinit_anchors</span> <span class="o">=</span> <span class="s">FILE:/etc/ssl/contoso.com/ca.crt</span>
+<span class="s">        pkinit_kdc_hostname = dc1.contoso.com</span>
+<span class="s">        pkinit_kdc_hostname = dc2.contoso.com</span>
+<span class="s">        pkinit_cert_match = &lt;SUBJECT&gt;CN=mylogin.*</span>
+<span class="s">        pkinit_identities = PKCS11:/usr/lib/pkcs11/opensc-pkcs11.so</span>
+<span class="s">    }</span>
+
+<span class="k">[domain_realm]</span>
+    <span class="na">.contoso.com</span> <span class="o">=</span> <span class="s">CONTOSO.COM</span>
+<span class="s">    contoso.com = CONTOSO.COM</span>
+
+<span class="k">[logging]</span>
+<span class="c1">#    kdc = CONSOLE</span>
+<span class="c1">#    default = FILE:/tmp/krb5log.log</span>
+<span class="c1">#    kdc = FILE:/tmp/krb5log.log</span>
+<span class="c1">#    admin_server = FILE:/tmp/krb5admin.log</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">kinit</span></code> stores Kerberos tickets in <code class="docutils literal notranslate"><span class="pre">/tmp/krb5cc_${UID}</span></code> where <code class="docutils literal notranslate"><span class="pre">UID</span></code> is the user identifier.
+This can be overridden using variable <code class="docutils literal notranslate"><span class="pre">$KRB5CCNAME</span></code>.
+The tickets can then be used for example with:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># From samba</span>
+smbclient -k //machine.contoso.com/IPC$
+rpclient -k machine.contoso.com
+<span class="c1"># ... and issue &quot;getusername&quot;</span>
+
+<span class="c1"># From impacket</span>
+wmiexec.py -k -no-pass contoso.com/mylogin@machine.contoso.com
+</pre></div>
+</div>
+</div>
+<div class="section" id="ldap-queries">
+<h2>LDAP queries<a class="headerlink" href="#ldap-queries" title="Permalink to this headline">¶</a></h2>
+<p>In order to query an AD using <code class="docutils literal notranslate"><span class="pre">ldapsearch</span></code>, several parameters need to be found:</p>
+<ul class="simple">
+<li><p>The connection string (protocol, host name, TCP port) to the LDAP or LDAPS server, like <code class="docutils literal notranslate"><span class="pre">ldaps://dc1.contoso.com</span></code>.</p></li>
+<li><p>A user account, with a login and the associated password, like <code class="docutils literal notranslate"><span class="pre">mylogin</span></code> and <code class="docutils literal notranslate"><span class="pre">P&#64;ssw0rd!</span></code>.</p></li>
+<li><p>The base DN (Distinguished Name) of the directory, which can be derived from the domain name of the AD using <code class="docutils literal notranslate"><span class="pre">DC=</span></code> components, like <code class="docutils literal notranslate"><span class="pre">DC=contoso,DC=com</span></code>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">DC</span></code> means Domain Component (for the domain name)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OU</span></code> means Organizational Unit (like folders)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CN</span></code> means Common Name (designation of objects)</p></li>
+</ul>
+</li>
+</ul>
+<p>With all these parameters, a LDAP search command looks like:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># -N to not use reverse DNS to canonicalize the SASL host name</span>
+<span class="c1"># -H connection string (LDAP URI)</span>
+<span class="c1"># -D login (&quot;bind DN&quot;) and -w password, or −W to prompt for the password</span>
+<span class="c1">#    or -y to specify a password file</span>
+<span class="c1">#    or -Y GSSAPI to use Kerberos (with SASL, requires package cyrus-sasl-gssapi)</span>
+<span class="c1"># -x to use simple authentication instead of SASL</span>
+<span class="c1"># -LLL to disable printing LDIF version and comments</span>
+<span class="c1"># -b search base</span>
+<span class="c1"># -v -o ldif-wrap=no to prevent wrapping the output</span>
+ldapsearch <span class="se">\</span>
+    -N <span class="se">\</span>
+    -H ldaps://dc1.contoso.com <span class="se">\</span>
+    -D mylogin@contoso.com <span class="se">\</span>
+    -w <span class="s1">&#39;P@ssw0rd!&#39;</span> <span class="se">\</span>
+    -xLLL <span class="se">\</span>
+    -b <span class="nv">DC</span><span class="o">=</span>contoso,DC<span class="o">=</span>com <span class="se">\</span>
+    -v -o ldif-wrap<span class="o">=</span>no <span class="se">\</span>
+    <span class="nv">$FILTER</span> <span class="nv">$ATTRIBUTES</span>
+</pre></div>
+</div>
+<p>The LDAP filter is a LDAP query on attributes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*</span></code> and <code class="docutils literal notranslate"><span class="pre">(objectClass=*)</span></code> request every available objects and their attributes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(cn=mylogin)</span></code> requests the attributes of the object which Common Name matches “mylogin”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(cn=*_admin)</span></code> requests the attributes of the object which Common Name ends with “_admin”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(objectCategory=Person)</span></code> requests the attributes of all objects in category “Person”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(displayName=*needle*)</span></code> requests the attributes of the object which display name contains “needle”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(memberOf=CN=Administration,OU=User</span> <span class="pre">Groups,OU=Company</span> <span class="pre">Groups,DC=contoso,DC=com)</span></code> requests the member of a group</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(&amp;(cn=*a*)(cn=*b*))</span></code> matches objects with a Common Name containing both “a” and “b”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(|(cn=*a*)(cn=*b*))</span></code> matches objects with a Common Name containing either “a” or “b”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(&amp;(objectClass=user)(memberOf:1.2.840.113556.1.4.1941:=CN=Domain</span> <span class="pre">Admins,OU=Users,DC=contoso,DC=com)</span></code> requests the nested member of a group (with <code class="docutils literal notranslate"><span class="pre">LDAP_MATCHING_RULE_IN_CHAIN</span></code> Microsoft extension)</p></li>
+<li><p>For paging: <code class="docutils literal notranslate"><span class="pre">-E</span> <span class="pre">pr=1000/noprompt</span></code></p></li>
+</ul>
+<p>To ignore certificate issues, this environment variable can be used: <code class="docutils literal notranslate"><span class="pre">LDAPTLS_REQCERT=never</span></code>.</p>
+<p>In order to find out the search base, the scope of the search can be modified using option <code class="docutils literal notranslate"><span class="pre">-s</span> <span class="pre">base</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Look in the result for &quot;namingContexts&quot;, &quot;defaultNamingContext&quot;, etc.</span>
+ldapsearch -H ldaps://dc1.contoso.com -xLLL -b <span class="s1">&#39;&#39;</span> -s base
+
+<span class="c1"># ... or specify the attribute that is printed</span>
+ldapsearch -H ldaps://dc1.contoso.com -xLLL -b <span class="s1">&#39;&#39;</span> -s base namingContexts
+</pre></div>
+</div>
+<p>User accounts have several interesting attributes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">objectClass</span></code>: <code class="docutils literal notranslate"><span class="pre">person</span></code>, <code class="docutils literal notranslate"><span class="pre">organizationalPerson</span></code>, <code class="docutils literal notranslate"><span class="pre">user</span></code> (and <code class="docutils literal notranslate"><span class="pre">top</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distinguishedName</span></code>: full DN for the object</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sAMAccountName</span></code>: user name in SAM (Security Account Manager)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">userPrincipalName</span></code>: like an email address</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memberOf</span></code>: group memberships</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">badPwdCount</span></code>: failed login attempts count</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pwdLastSet</span></code>: timestamp and the last password change (convertible to a date through <code class="docutils literal notranslate"><span class="pre">LANG=C</span> <span class="pre">date</span> <span class="pre">--date=&quot;&#64;$((</span> <span class="pre">(TS/10000000)-11676009600))&quot;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logonCount</span></code>: connection count</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lastLogon</span></code> and <code class="docutils literal notranslate"><span class="pre">lastLogoff</span></code>: connection timestamps</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">adminCount</span></code>: 1 when a given object has had its ACLs changed to a more secure value by the system because it was a member of one of the administrative groups</p></li>
+</ul>
+<p>Groups have:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">objectClass</span></code>: <code class="docutils literal notranslate"><span class="pre">group</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">member</span></code>: group members</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memberOf</span></code>: group memberships</p></li>
+</ul>
+<p>Computers have:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">objectClass</span></code>: <code class="docutils literal notranslate"><span class="pre">computer</span></code> (and <code class="docutils literal notranslate"><span class="pre">top</span></code>, <code class="docutils literal notranslate"><span class="pre">person</span></code>, <code class="docutils literal notranslate"><span class="pre">organizationalPerson</span></code>, <code class="docutils literal notranslate"><span class="pre">user</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: NetBIOS name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dNSHostName</span></code>: DNS FQDN</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">operatingSystem</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">operatingSystemVersion</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lastLogonTimestamp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">servicePrincipalName</span></code>: SPN, ie. services such as TERMSRV, HTTP, MSSQL, etc.
+The Kerberos ticket for the service (TGS) is encrypted using the NTLM password hash of the account (Impacket provides <a class="reference external" href="https://github.com/SecureAuthCorp/impacket/blob/impacket_0_9_20/examples/GetUserSPNs.py">GetUserSPNs.py</a> for Kerberoasting attack, when an SPN is attached to a user instead of a computer).</p></li>
+</ul>
+<p>GPO have:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">objectClass</span></code>: <code class="docutils literal notranslate"><span class="pre">groupPolicyContainer</span></code>, <code class="docutils literal notranslate"><span class="pre">container</span></code> (and <code class="docutils literal notranslate"><span class="pre">top</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">displayName</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gPCFileSysPath</span></code>: path to <code class="docutils literal notranslate"><span class="pre">\\contoso.com\sysvol\contoso.com\Policies\...</span></code></p></li>
+</ul>
+<p>DNS zones are in several trees, the variable in <code class="docutils literal notranslate"><span class="pre">${...}</span></code> coming from a base query (<code class="docutils literal notranslate"><span class="pre">ldapsearch</span> <span class="pre">-b</span> <span class="pre">''</span> <span class="pre">-s</span> <span class="pre">base</span></code>):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CN=MicrosoftDNS,CN=System,${defaultNamingContext}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CN=MicrosoftDNS,DC=DomainDnsZones,${defaultNamingContext}</span></code> (eg. <code class="docutils literal notranslate"><span class="pre">ldapsearch</span> <span class="pre">-N</span> <span class="pre">-H</span> <span class="pre">ldaps://dc1.contoso.com</span> <span class="pre">-xLLL</span> <span class="pre">-b</span> <span class="pre">'CN=MicrosoftDNS,DC=DomainDnsZones,DC=contoso,DC=com'</span> <span class="pre">-v</span> <span class="pre">-o</span> <span class="pre">ldif-wrap=no</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CN=MicrosoftDNS,DC=ForestDnsZones,${rootDomainNamingContext}</span></code></p></li>
+</ul>
+<p>DNS zones and DNS nodes objects have:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">objectClass</span></code>: <code class="docutils literal notranslate"><span class="pre">dnsZone</span></code> or <code class="docutils literal notranslate"><span class="pre">dnsNode</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dc</span></code>: “Domain Component”, the Fully-Qualified Domain Name (FQDN) for the object (optional)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distinguishedName</span></code> for DNS zones: full DN for the object (eg. <code class="docutils literal notranslate"><span class="pre">DC=example.org,CN=MicrosoftDNS,DC=DomainDnsZones,DC=contoso,DC=com</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dn</span></code> for DNS nodes: full DN for the object</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">objectCategory</span></code>: <code class="docutils literal notranslate"><span class="pre">CN=Dns-Zone,CN=Schema,CN=Configuration,DC=contoso,DC=com</span></code> or <code class="docutils literal notranslate"><span class="pre">CN=Dns-Node,...</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dnsRecord</span></code>: encoded DNS records for a DNS node</p></li>
+</ul>
+</div>
+<div class="section" id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p><a class="reference external" href="https://syscall.eu/blog/2018/09/03/ldapsearch_ad_tls/">https://syscall.eu/blog/2018/09/03/ldapsearch_ad_tls/</a>
+Active Directory searches from Linux</p></li>
+<li><p><a class="reference external" href="https://speakerdeck.com/ropnop/fun-with-ldap-kerberos-and-msrpc-in-ad-environments">https://speakerdeck.com/ropnop/fun-with-ldap-kerberos-and-msrpc-in-ad-environments</a>
+Fun with LDAP, Kerberos (and MSRPC) in AD Environments</p></li>
+<li><p><a class="reference external" href="https://github.com/dirkjanm/adidnsdump/blob/master/adidnsdump/dnsdump.py">https://github.com/dirkjanm/adidnsdump/blob/master/adidnsdump/dnsdump.py</a>
+Tool to interact with ADIDNS over LDAP (query the DNS zones and nodes through LDAP)</p></li>
+<li><p><a class="reference external" href="https://www.synacktiv.com/ressources/delegation_kerberos_biere_secu_toulouse.pdf">https://www.synacktiv.com/ressources/delegation_kerberos_biere_secu_toulouse.pdf</a>
+Non-constrained Kerberos Delegation.
+Search of machine accounts with flag <code class="docutils literal notranslate"><span class="pre">TRUSTED_FOR_DELEGATION</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ldapsearch -H ldap://DC.VICTIM.LAN -b <span class="nv">DC</span><span class="o">=</span>VICTIM,DC<span class="o">=</span>LAN <span class="se">\</span>
+  -D VICTIM<span class="se">\\</span>user -w P@ssw0rd <span class="s1">&#39;(&amp;(objectClass=computer) \</span>
+<span class="s1">  (userAccountControl:1.2.840.113556.1.4.803:=524288))&#39;</span> <span class="se">\</span>
+  sAMAccountName
+
+dn: <span class="nv">CN</span><span class="o">=</span>CLIENT1SHARE,OU<span class="o">=</span>Share,DC<span class="o">=</span>VICTIM.LAN
+sAMAccountName: CLIENT1SHARE$
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Active Directory by Microsoft</a><ul>
+<li><a class="reference internal" href="#network-discovery">Network discovery</a></li>
+<li><a class="reference internal" href="#kerberos-configuration">Kerberos configuration</a></li>
+<li><a class="reference internal" href="#ldap-queries">LDAP queries</a></li>
+<li><a class="reference internal" href="#resources">Resources</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Windows system information</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="cmd.html"
+                        title="next chapter">Some cmd.exe commands</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/windows/active_directory.rst.txt"
+           rel="nofollow">Show Source</a></li>
+    <li><a href="https://github.com/fishilico/generic-config/blob/master/windows/active_directory.rst"
+           rel="nofollow">Show Source on GitHub
+           <img src="../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  </ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="cmd.html" title="Some cmd.exe commands"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Windows system information"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2019, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+    </div>
+  </body>
+</html>

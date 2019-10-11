@@ -128,11 +128,18 @@ cryptsetup -v --cipher aes-xts-plain64 --key-size <span class="m">512</span> luk
 cryptsetup open /dev/sda2 system
 mkfs.ext4 /dev/mapper/system
 
+<span class="c1"># Backup the LUKS header</span>
+cryptsetup luksDump /dev/sda2
+<span class="c1"># Optionally backup the encryption master key</span>
+dmsetup ls --target crypt
+dmsetup table --showkeys system
+
 <span class="c1"># Rescan LVM partitions after a change has been made</span>
 <span class="c1"># (Physical Volumes, Volume Groups and Logical Volumes)</span>
-vgchange --available y
+vgchange --available y  <span class="c1"># or: vgchange -ay</span>
 pvscan
 vgscan
+vgscan --mknodes
 lvscan
 
 <span class="c1"># Mount the partitions on /mnt</span>
@@ -240,6 +247,17 @@ The kernel boot command line also needs to be adjusted to include information ab
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="o">=</span><span class="n">UUID</span><span class="o">=</span><span class="n">xxxxxxxx</span><span class="o">-...-</span><span class="n">xxxxxxxxxxxx</span> <span class="n">cryptdevice</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk</span><span class="o">/</span><span class="n">by</span><span class="o">-</span><span class="n">uuid</span><span class="o">/</span><span class="n">xxxxxxxx</span><span class="o">-...-</span><span class="n">xxxxxxxxxxxx</span><span class="p">:</span><span class="n">system</span>
 </pre></div>
 </div>
+<p>If the system is supposed to be unlocked remotely (for example by entering the encryption passphrase in a Dropbear SSH server embedded in the initramfs), some actions need to be performed (<a class="reference external" href="https://wiki.archlinux.org/index.php/Dm-crypt/Specialties#Remote_unlocking_of_the_root_%28or_other%29_partition">https://wiki.archlinux.org/index.php/Dm-crypt/Specialties#Remote_unlocking_of_the_root_%28or_other%29_partition</a>):</p>
+<ul>
+<li><p>Configure a SSH public key in <code class="docutils literal notranslate"><span class="pre">/etc/dropbear/root_key</span></code> or <code class="docutils literal notranslate"><span class="pre">/etc/tinyssh/root_key</span></code></p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">netconf</span> <span class="pre">dropbear</span> <span class="pre">encryptssh</span></code> hooks in <code class="docutils literal notranslate"><span class="pre">/etc/mkinitcpio.conf</span></code> before <code class="docutils literal notranslate"><span class="pre">filesystem</span></code></p></li>
+<li><p>Configure <code class="docutils literal notranslate"><span class="pre">cryptdevice</span></code> and <code class="docutils literal notranslate"><span class="pre">ip</span></code> parameters in the kernel boot command. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cryptdevice</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk</span><span class="o">/</span><span class="n">by</span><span class="o">-</span><span class="n">uuid</span><span class="o">/</span><span class="n">xxxxxxxx</span><span class="o">-...-</span><span class="n">xxxxxxxxxxxx</span><span class="p">:</span><span class="n">system</span>
+<span class="n">ip</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.2</span><span class="p">::</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span><span class="p">:</span><span class="n">myhostname</span><span class="p">:</span><span class="n">eth0</span><span class="p">:</span><span class="n">none</span>
+</pre></div>
+</div>
+</li>
+</ul>
 <p>While at it, here are some other useful options:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">verbose</span> <span class="n">loglevel</span><span class="o">=</span><span class="mi">6</span> <span class="n">kaslr</span> <span class="n">intel_iommu</span><span class="o">=</span><span class="n">on</span> <span class="n">audit</span><span class="o">=</span><span class="mi">1</span> <span class="n">security</span><span class="o">=</span><span class="n">selinux</span> <span class="n">selinux</span><span class="o">=</span><span class="mi">1</span>
 </pre></div>
