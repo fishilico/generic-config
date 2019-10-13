@@ -143,7 +143,7 @@ needed to modify <code class="docutils literal notranslate"><span class="pre">/e
 </div>
 <div class="section" id="configure-selinux-booleans">
 <h2>Configure SELinux booleans<a class="headerlink" href="#configure-selinux-booleans" title="Permalink to this headline">¶</a></h2>
-<p>Here are some booleans I use is almost all my SELinux systems:</p>
+<p>Here are some booleans I use is almost all my SELinux systems (enabled with <code class="docutils literal notranslate"><span class="pre">setsebool</span> <span class="pre">-P</span> <span class="pre">$BOOL</span> <span class="pre">on</span></code> or <code class="docutils literal notranslate"><span class="pre">semanage</span> <span class="pre">boolean</span> <span class="pre">-m</span> <span class="pre">--on</span> <span class="pre">$BOOL</span></code>):</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Allow users to send ping</span>
 setsebool -P user_ping on
 
@@ -160,8 +160,11 @@ setsebool -P gpg_agent_env_file on
 <span class="c1"># Disable NX memory protection for some applications (eg. Firefox)</span>
 setsebool -P allow_execmem on
 
-<span class="c1"># Print logs on some tty (like tty12)</span>
-setsebool -P logging_syslogd_use_tty on
+<span class="c1"># Allow privileged users (sysadm_u, unconfined_u, etc.) to log in through SSH</span>
+setsebool -P ssh_sysadm_login on
+
+<span class="c1"># Allow privileged users (sysadm_u, unconfined_u, etc.) to log in through X</span>
+setsebool -P xdm_sysadm_login on
 </pre></div>
 </div>
 </div>

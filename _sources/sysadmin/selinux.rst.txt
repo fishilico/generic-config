@@ -113,7 +113,7 @@ needed to modify ``/etc/fstab`` accordingly.
 Configure SELinux booleans
 --------------------------
 
-Here are some booleans I use is almost all my SELinux systems:
+Here are some booleans I use is almost all my SELinux systems (enabled with ``setsebool -P $BOOL on`` or ``semanage boolean -m --on $BOOL``):
 
 .. code-block:: sh
 
@@ -133,8 +133,12 @@ Here are some booleans I use is almost all my SELinux systems:
     # Disable NX memory protection for some applications (eg. Firefox)
     setsebool -P allow_execmem on
 
-    # Print logs on some tty (like tty12)
-    setsebool -P logging_syslogd_use_tty on
+    # Allow privileged users (sysadm_u, unconfined_u, etc.) to log in through SSH
+    setsebool -P ssh_sysadm_login on
+
+    # Allow privileged users (sysadm_u, unconfined_u, etc.) to log in through X
+    setsebool -P xdm_sysadm_login on
+
 
 Fix labels for files in ``/home``
 ---------------------------------
