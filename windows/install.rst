@@ -115,8 +115,11 @@ Then, to install software::
     # Add 'PATH="$PATH:/c/Program Files/Git/cmd"' to C:/tools/msys64/home/IEUser/.bashrc
     # Launch MSys with C:/tools/msys64/usr/bin/bash.exe
 
-    # Install Microsoft Visual C++ Runtime and .Net runtime
+    # Install Microsoft Visual C++ Runtime and .NET runtime
     choco install vcredist-all dotnet3.5 dotnet4.7 -y
+
+    # Install .NET framework and .NET Core SDK
+    choco install dotnetfx dotnetcore-sdk -y
 
     # Install Microsoft Baseline Security Analyzer
     choco install mbsa -y
@@ -124,6 +127,7 @@ Then, to install software::
     # Install other Desktop software
     choco install chromium filezilla firefox kitty vlc winscp -y
     choco install ldapadmin sql-server-management-studio -y
+    choco install agentransack -y
     choco install windows-sdk-10.0 windowsdriverkit10 visualstudio2019buildtools -y
     choco install dnspy ilspy wireshark -y
     choco install processhacker regshot -y
