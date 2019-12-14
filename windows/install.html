@@ -143,8 +143,11 @@ verified in the registry:</p>
 <span class="c1"># Add &#39;PATH=&quot;$PATH:/c/Program Files/Git/cmd&quot;&#39; to C:/tools/msys64/home/IEUser/.bashrc</span>
 <span class="c1"># Launch MSys with C:/tools/msys64/usr/bin/bash.exe</span>
 
-<span class="c1"># Install Microsoft Visual C++ Runtime and .Net runtime</span>
+<span class="c1"># Install Microsoft Visual C++ Runtime and .NET runtime</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">vcredist</span><span class="o">-</span><span class="nb">all</span> <span class="n">dotnet3</span><span class="o">.</span><span class="mi">5</span> <span class="n">dotnet4</span><span class="o">.</span><span class="mi">7</span> <span class="o">-</span><span class="n">y</span>
+
+<span class="c1"># Install .NET framework and .NET Core SDK</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">dotnetfx</span> <span class="n">dotnetcore</span><span class="o">-</span><span class="n">sdk</span> <span class="o">-</span><span class="n">y</span>
 
 <span class="c1"># Install Microsoft Baseline Security Analyzer</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">mbsa</span> <span class="o">-</span><span class="n">y</span>
@@ -152,6 +155,7 @@ verified in the registry:</p>
 <span class="c1"># Install other Desktop software</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">chromium</span> <span class="n">filezilla</span> <span class="n">firefox</span> <span class="n">kitty</span> <span class="n">vlc</span> <span class="n">winscp</span> <span class="o">-</span><span class="n">y</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">ldapadmin</span> <span class="n">sql</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">management</span><span class="o">-</span><span class="n">studio</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">agentransack</span> <span class="o">-</span><span class="n">y</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">windows</span><span class="o">-</span><span class="n">sdk</span><span class="o">-</span><span class="mf">10.0</span> <span class="n">windowsdriverkit10</span> <span class="n">visualstudio2019buildtools</span> <span class="o">-</span><span class="n">y</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">dnspy</span> <span class="n">ilspy</span> <span class="n">wireshark</span> <span class="o">-</span><span class="n">y</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">processhacker</span> <span class="n">regshot</span> <span class="o">-</span><span class="n">y</span>
@@ -404,7 +408,7 @@ systemctl start py-kms.service
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.2.
     </div>
   </body>
 </html>

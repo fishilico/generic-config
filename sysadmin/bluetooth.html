@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Bluetooth on Linux &#8212; Generic Config</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Some information of Debian systems" href="debian.html" />
+    <link rel="prev" title="Notes about Arch Linux packages" href="archlinux-pkg.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="debian.html" title="Some information of Debian systems"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="archlinux-pkg.html" title="Notes about Arch Linux packages"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="bluetooth-on-linux">
+<h1>Bluetooth on Linux<a class="headerlink" href="#bluetooth-on-linux" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Bluetooth is a protocol that can be used to communicate between two devices that are paired together.
+It can be used to connect wireless devices (keyboard, mouse, sound speaker, etc.), to transmit files (with OBEX, for Object Exchange) and even to share Internet connectivity (using BNEP, the Bluetooth Network Encapsulation Protocol, which uses a L2CAP channel to transmit IP packets).
+The protocol has been developed since at least 1989 and Bluetooth has been standardised as IEEE 802.15.1.
+It operates in UHF radio waves, between 2.400 and 2.485 GHz.
+More information can be found on its Wikipedia page: <a class="reference external" href="https://en.wikipedia.org/wiki/Bluetooth">https://en.wikipedia.org/wiki/Bluetooth</a></p>
+<p>On Linux, several steps need to be performed in order to use Bluetooth:</p>
+<ul>
+<li><p>Install the packages that provide Bluetooth service and programs: <code class="docutils literal notranslate"><span class="pre">bluez</span></code> and <code class="docutils literal notranslate"><span class="pre">bluez-utils</span></code></p></li>
+<li><p>Unblock the radio interface, if it has been blocked:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>rfkill unblock bluetooth
+</pre></div>
+</div>
+</li>
+<li><p>Start the service:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl start bluetooth.service
+</pre></div>
+</div>
+</li>
+<li><p>Start a <code class="docutils literal notranslate"><span class="pre">bluetoothctl</span></code> CLI and power the device on by issuing <code class="docutils literal notranslate"><span class="pre">power</span> <span class="pre">on</span></code>.</p></li>
+</ul>
+<p>It is possible to record the Bluetooth communications using the monitor, <code class="docutils literal notranslate"><span class="pre">btmon</span> <span class="pre">-w</span> <span class="pre">file.bt</span></code>.
+This command produces BTSnoop files that can be opened for example in Wireshark.</p>
+</div>
+<div class="section" id="connecting-an-android-phone-to-a-laptop-using-bluetooth">
+<h2>Connecting an Android phone to a laptop using Bluetooth<a class="headerlink" href="#connecting-an-android-phone-to-a-laptop-using-bluetooth" title="Permalink to this headline">¶</a></h2>
+<p>Here is a trace on a laptop that get paired with an Android phone via Bluetooth (<code class="docutils literal notranslate"><span class="pre">[bluetooth]#</span></code> is the user prompt):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ bluetoothctl
+<span class="o">[</span>CHG<span class="o">]</span> Controller <span class="m">01</span>:23:45:67:89:AB Pairable: yes
+
+<span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># power on</span>
+<span class="o">[</span>CHG<span class="o">]</span> Controller <span class="m">01</span>:23:45:67:89:AB Class: 0x0000010c
+Changing power on succeeded
+<span class="o">[</span>CHG<span class="o">]</span> Controller <span class="m">01</span>:23:45:67:89:AB Powered: yes
+
+<span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># scan on</span>
+<span class="o">[</span>NEW<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 AndroidPhone
+
+<span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># devices</span>
+Device <span class="m">55</span>:44:33:22:11:00 AndroidPhone
+
+<span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># pair 55:44:33:22:11:00</span>
+Attempting to pair with <span class="m">55</span>:44:33:22:11:00
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 Connected: yes
+Request confirmation
+<span class="o">[</span>agent<span class="o">]</span> Confirm passkey <span class="m">123123</span> <span class="o">(</span>yes/no<span class="o">)</span>: yes
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 Modalias: bluetooth:v0075p0100d0201
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001105</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000110a-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000110c-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000110e-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001112</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001115</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001116</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000111f-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000112d-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000112f-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001132</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001200</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001800</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001801</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: a23d00bc-217c-123b-9c00-fc44577136ee
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 ServicesResolved: yes
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 Paired: yes
+Pairing successful
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 ServicesResolved: no
+<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 Connected: no
+
+<span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># info 55:44:33:22:11:00</span>
+Device <span class="m">55</span>:44:33:22:11:00 <span class="o">(</span>public<span class="o">)</span>
+    Name: AndroidPhone
+    Alias: AndroidPhone
+    Class: 0x005a020c
+    Icon: phone
+    Paired: yes
+    Trusted: no
+    Blocked: no
+    Connected: no
+    LegacyPairing: no
+    UUID: OBEX Object Push          <span class="o">(</span><span class="m">00001105</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: Audio Source              <span class="o">(</span>0000110a-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: A/V Remote Control Target <span class="o">(</span>0000110c-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: A/V Remote Control        <span class="o">(</span>0000110e-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: Headset AG                <span class="o">(</span><span class="m">00001112</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: PANU                      <span class="o">(</span><span class="m">00001115</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: NAP                       <span class="o">(</span><span class="m">00001116</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: Handsfree Audio Gateway   <span class="o">(</span>0000111f-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: SIM Access                <span class="o">(</span>0000112d-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: Phonebook Access Server   <span class="o">(</span>0000112f-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: Message Access Server     <span class="o">(</span><span class="m">00001132</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: PnP Information           <span class="o">(</span><span class="m">00001200</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: Generic Access Profile    <span class="o">(</span><span class="m">00001800</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: Generic Attribute Profile <span class="o">(</span><span class="m">00001801</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+    UUID: Vendor specific           <span class="o">(</span>a23d00bc-217c-123b-9c00-fc44577136ee<span class="o">)</span>
+    Modalias: bluetooth:v0075p0100d0201
+</pre></div>
+</div>
+<p>The information about the peering (for example encryption and signature keys for messages) can be extracted from <code class="docutils literal notranslate"><span class="pre">/var/lib/bluetooth/01:23:45:67:89:AB/55:44:33:22:11:00/info</span></code>.</p>
+<p>When using NetworkManager, a Bluetooth interface can be configured in order to use the phone Internet connection wirelessly.
+This produces a BNEP interface (Bluetooth Network Encapsulation Protocol) named for example <code class="docutils literal notranslate"><span class="pre">bnep0</span></code>, where a DHCP client can be used in order to get the IPv4 network configuration.
+This can cause the following message to appear in <code class="docutils literal notranslate"><span class="pre">bluetoothctl</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Authorize</span> <span class="n">service</span>
+<span class="p">[</span><span class="n">agent</span><span class="p">]</span> <span class="n">Authorize</span> <span class="n">service</span> <span class="mi">0000000</span><span class="n">f</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">1000</span><span class="o">-</span><span class="mi">8000</span><span class="o">-</span><span class="mi">00805</span><span class="n">f9b34fb</span> <span class="p">(</span><span class="n">yes</span><span class="o">/</span><span class="n">no</span><span class="p">):</span> <span class="n">yes</span>
+<span class="p">[</span><span class="n">AndroidPhone</span><span class="p">]</span><span class="c1">#</span>
+</pre></div>
+</div>
+<p>This UUID matches the BNEP service and is needed in order to exchange data.
+Such an UUID can be searched in bluez header files such as <a class="reference external" href="https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/lib/uuid.h?h=5.51">https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/lib/uuid.h?h=5.51</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Bluetooth on Linux</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#connecting-an-android-phone-to-a-laptop-using-bluetooth">Connecting an Android phone to a laptop using Bluetooth</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="archlinux-pkg.html"
+                        title="previous chapter">Notes about Arch Linux packages</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="debian.html"
+                        title="next chapter">Some information of Debian systems</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/bluetooth.rst.txt"
+           rel="nofollow">Show Source</a></li>
+    <li><a href="https://github.com/fishilico/generic-config/blob/master/sysadmin/bluetooth.rst"
+           rel="nofollow">Show Source on GitHub
+           <img src="../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  </ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="debian.html" title="Some information of Debian systems"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="archlinux-pkg.html" title="Notes about Arch Linux packages"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2019, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.2.
+    </div>
+  </body>
+</html>
