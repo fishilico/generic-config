@@ -351,8 +351,18 @@ Edit Local Group Policy:
 
 .. code-block:: sh
 
+    # Local Group Policy Editor (with local GPO to Local Security Policy, Administrative Templates...)
     gpedit.msc
+    # Local Security Policy (with SRP=Software Restriction Policies, AppLocker, Password Policies...)
     secpol.msc
+
+For example to configure the servicing channel on Windows 10 (https://docs.microsoft.com/en-gb/windows/deployment/update/waas-servicing-channels-windows-10-updates):
+
+* Open ``gpedit.msc`` (Local Group Policy Editor).
+* Go to "Local Computer Policy/Computer Configuration/Administrative Templates/Windows Components/Windows Update/Windows Update For Business".
+* Click on "Select when Preview Builds and Feature Updates are received". A dialog box opens.
+* Select "Enabled" and choose a readiness level among "Preview Build - Fast", "Preview Build - Slow", "Release Preview", "Semi-Annual Channel (Targeted)" or "Semi-Annual Channel".
+* Click on "OK".
 
 Export the Local Group Policy:
 
@@ -362,6 +372,7 @@ Export the Local Group Policy:
 
     # With at least Windows Vista or Windows Server 2008
     gpresult /H GPReport.html
+    gpresult /SCOPE COMPUTER /H GPReport-Computer.html
 
     # Display RSoP summary data (Resultant Set of Policies)
     gpresult /R

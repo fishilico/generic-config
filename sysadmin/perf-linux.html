@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Using perf on Linux &#8212; Generic Config</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Configure a server to handle network boot (PXE)" href="pxe-boot-server.html" />
+    <link rel="prev" title="Kernel Network Console (netconsole module)" href="netconsole.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pxe-boot-server.html" title="Configure a server to handle network boot (PXE)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="netconsole.html" title="Kernel Network Console (netconsole module)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="using-perf-on-linux">
+<h1>Using perf on Linux<a class="headerlink" href="#using-perf-on-linux" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">perf</span></code> is a tool to analyze the performance of applications and of the kernel, on  Linux-based systems.
+It relies on syscall <code class="docutils literal notranslate"><span class="pre">perf_event_open</span></code> (<a class="reference external" href="http://man7.org/linux/man-pages/man2/perf_event_open.2.html">http://man7.org/linux/man-pages/man2/perf_event_open.2.html</a>) to access performance monitoring facilities provided by the kernel.
+These facilities consist in:</p>
+<ul class="simple">
+<li><p>tracepoints (probes) in the kernel, the C library (glibc), some interpreters, etc.</p></li>
+<li><p>processor counters from the PMU (Performance Instrumentation Unit), like Intel PMC (Performance Monitoring Counter), replaced by Intel PCM (Processor Counter Monitor), or PIC (Performance Instrumentation Counter)</p></li>
+<li><p>hardware-assisted tracing, like Intel PT (Processor Tracing)</p></li>
+</ul>
+<p>The access of the performance events system by unprivileged users is configured through sysctl <code class="docutils literal notranslate"><span class="pre">kernel.perf_event_paranoid</span></code> (file <code class="docutils literal notranslate"><span class="pre">/proc/sys/kernel/perf_event_paranoid</span></code>).
+The value of this setting is documented on <a class="reference external" href="https://www.kernel.org/doc/Documentation/sysctl/kernel.txt">https://www.kernel.org/doc/Documentation/sysctl/kernel.txt</a>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-1</span></code>: Allow use of (almost) all events by all users.
+Ignore <code class="docutils literal notranslate"><span class="pre">mlock</span></code> limit after <code class="docutils literal notranslate"><span class="pre">perf_event_mlock_kb</span></code> without <code class="docutils literal notranslate"><span class="pre">CAP_IPC_LOCK</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">0</span></code>: Disallow <code class="docutils literal notranslate"><span class="pre">ftrace</span></code> function tracepoint by users without <code class="docutils literal notranslate"><span class="pre">CAP_SYS_ADMIN</span></code>.
+Disallow raw tracepoint access by users without <code class="docutils literal notranslate"><span class="pre">CAP_SYS_ADMIN</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">1</span></code>: Disallow CPU event access by users without <code class="docutils literal notranslate"><span class="pre">CAP_SYS_ADMIN</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">2</span></code>: Disallow kernel profiling by users without <code class="docutils literal notranslate"><span class="pre">CAP_SYS_ADMIN</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>The tool named <code class="docutils literal notranslate"><span class="pre">perf</span></code> works with subcommands (<code class="docutils literal notranslate"><span class="pre">stat</span></code>, <code class="docutils literal notranslate"><span class="pre">record</span></code>, <code class="docutils literal notranslate"><span class="pre">report</span></code>…).</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enumerate all symbolic event types</span>
+perf list
+
+<span class="c1"># Look for events related to KVM hypervisor</span>
+perf list <span class="s1">&#39;kvm:*&#39;</span>
+</pre></div>
+</div>
+<p>In order to collect several statistics about a command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>perf stat <span class="nv">$COMMAND</span>
+</pre></div>
+</div>
+<p>Example with <code class="docutils literal notranslate"><span class="pre">uname</span></code>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># perf stat uname
+Linux
+
+ Performance counter stats for &#39;uname&#39;:
+
+              0.50 msec task-clock                #    0.551 CPUs utilized
+                 0      context-switches          #    0.000 K/sec
+                 0      cpu-migrations            #    0.000 K/sec
+                67      page-faults               #    0.133 M/sec
+         1,837,945      cycles                    #    3.656 GHz
+         1,266,497      instructions              #    0.69  insn per cycle
+           284,608      branches                  #  566.071 M/sec
+             8,956      branch-misses             #    3.15% of all branches
+
+       0.000911814 seconds time elapsed
+
+       0.001001000 seconds user
+       0.000000000 seconds sys
+</pre></div>
+</div>
+<p>In order to record a trace of a command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>perf record <span class="nv">$COMMAND</span>
+
+<span class="c1"># --branch-any: enable taken branch stack sampling</span>
+<span class="c1"># --call-graph=dwarf: enable call-graph (stack chain/backtrace) recording with DWARF information</span>
+perf record --branch-any --call-graph<span class="o">=</span>dwarf <span class="nv">$COMMAND</span>
+
+<span class="c1"># Record a running process during 30 seconds</span>
+<span class="c1"># -a = --all-cpus: system-wide collection from all CPUs</span>
+<span class="c1"># -g (like --call-graph=fp): enable call-graph (stack chain/backtrace) recording</span>
+<span class="c1"># -p = --pid: record events on existing process ID (comma separated list)</span>
+timeout 30s perf record -a -g -p <span class="k">$(</span>pidof <span class="nv">$MYPROCESS</span><span class="k">)</span>
+</pre></div>
+</div>
+<p>This creates a file named <code class="docutils literal notranslate"><span class="pre">perf.data</span></code>, that can be analyzed with other subcommands.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show perf.data in an ncurses browser (TUI) if possible</span>
+perf report
+
+<span class="c1"># Dump the raw trace in ASCII</span>
+perf report -D
+perf report --dump-raw-trace
+
+<span class="c1"># Display the trace output</span>
+perf script
+
+<span class="c1"># Show perf.data as:</span>
+<span class="c1"># * a text report</span>
+<span class="c1"># * with a column for sample count</span>
+<span class="c1"># * with call stacks</span>
+<span class="c1"># * with data coalesced and percentages</span>
+perf report --stdio -n -g folded
+
+<span class="c1"># List fields of header if the record was done with option -a</span>
+perf script --header -F comm,pid,tid,cpu,time,event,ip,sym,dso
+</pre></div>
+</div>
+<p>The trace can also be analyzed with a GUI such as <a class="reference external" href="https://github.com/KDAB/hotspot">https://github.com/KDAB/hotspot</a>.</p>
+<p>When Intel PT (Processor Tracing) is available on the CPU, the following commands can be used to trace a program (from <a class="reference external" href="https://lkml.org/lkml/2019/11/27/160">https://lkml.org/lkml/2019/11/27/160</a>):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>perf record -e <span class="s1">&#39;{intel_pt//,cpu/mem_inst_retired.all_loads,aux-sample-size=8192/pp}:u&#39;</span> <span class="nv">$COMMAND</span>
+perf script -F +brstackinsn --xed --itrace<span class="o">=</span>i1usl100
+</pre></div>
+</div>
+<p>More recent versions of <code class="docutils literal notranslate"><span class="pre">perf</span></code> introduced an equivalent of <code class="docutils literal notranslate"><span class="pre">strace</span></code> without using the <code class="docutils literal notranslate"><span class="pre">ptrace</span></code> syscall:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>perf trace --call-graph<span class="o">=</span>dwarf <span class="nv">$COMMAND</span>
+
+<span class="c1"># Or, with perf record:</span>
+perf record -e <span class="s1">&#39;raw_syscalls:*&#39;</span> <span class="nv">$COMMAND</span>
+
+<span class="c1"># Trace with &quot;augmented syscalls&quot; (in order to see string parameters, for example)</span>
+perf trace -e /usr/lib/perf/examples/bpf/augmented_raw_syscalls.c <span class="nv">$COMMAND</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="flame-graphs">
+<h2>Flame Graphs<a class="headerlink" href="#flame-graphs" title="Permalink to this headline">¶</a></h2>
+<p>Using <a class="reference external" href="https://github.com/brendangregg/FlameGraph">https://github.com/brendangregg/FlameGraph</a>, it is very simple to produce a flamegraph out of a trace.
+This can be useful for example to find in a program what functions take much time and need to be better optimized.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Record stack samples at 99 Hertz during 60 seconds</span>
+<span class="c1"># (both userspace and kernel-space stacks, all processes)</span>
+perf record -F <span class="m">99</span> -a -g -- sleep <span class="m">60</span>
+
+<span class="c1"># Fold the stacks into a text file</span>
+perf script <span class="p">|</span> ./stackcollapse-perf.pl --all &gt; out.folded
+
+<span class="c1"># Filter on names of processes, functions... and create a flamegraph</span>
+grep my_application &lt; out.folded <span class="p">|</span> ./flamegraph.pl --color<span class="o">=</span>java &gt; graph.svg
+</pre></div>
+</div>
+<p>Another project enables producing flamegraphs for Rust projects: <a class="reference external" href="https://github.com/ferrous-systems/flamegraph">https://github.com/ferrous-systems/flamegraph</a></p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://perf.wiki.kernel.org/index.php/Tutorial">https://perf.wiki.kernel.org/index.php/Tutorial</a>
+perf Wiki - Tutorial</p></li>
+<li><p><a class="reference external" href="http://www.brendangregg.com/perf.html">http://www.brendangregg.com/perf.html</a>
+Linux perf Examples, documentation, links, and more!</p></li>
+<li><p><a class="reference external" href="http://www.brendangregg.com/flamegraphs.html">http://www.brendangregg.com/flamegraphs.html</a>
+Flame Graphs</p></li>
+<li><p><a class="reference external" href="https://github.com/brendangregg/perf-tools">https://github.com/brendangregg/perf-tools</a>
+perf-tools GitHub project</p></li>
+<li><p><a class="reference external" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/perf/Documentation/perf-record.txt">https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/perf/Documentation/perf-record.txt</a>
+perf-record man page</p></li>
+<li><p><a class="reference external" href="https://alexandrnikitin.github.io/blog/transparent-hugepages-measuring-the-performance-impact/">https://alexandrnikitin.github.io/blog/transparent-hugepages-measuring-the-performance-impact/</a>
+Transparent Hugepages: measuring the performance impact</p></li>
+<li><p><a class="reference external" href="https://twitter.com/b0rk/status/945900285460926464">https://twitter.com/b0rk/status/945900285460926464</a>
+perf cheat sheet by ulia Evans</p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Using perf on Linux</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#flame-graphs">Flame Graphs</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="netconsole.html"
+                        title="previous chapter">Kernel Network Console (netconsole module)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pxe-boot-server.html"
+                        title="next chapter">Configure a server to handle network boot (PXE)</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/perf-linux.rst.txt"
+           rel="nofollow">Show Source</a></li>
+    <li><a href="https://github.com/fishilico/generic-config/blob/master/sysadmin/perf-linux.rst"
+           rel="nofollow">Show Source on GitHub
+           <img src="../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  </ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pxe-boot-server.html" title="Configure a server to handle network boot (PXE)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="netconsole.html" title="Kernel Network Console (netconsole module)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2019, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+    </div>
+  </body>
+</html>

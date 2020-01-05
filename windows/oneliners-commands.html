@@ -435,15 +435,26 @@ gsv <span class="p">|</span> epcsv C:<span class="se">\T</span>emp<span class="s
 <div class="section" id="group-policy">
 <h2>Group Policy<a class="headerlink" href="#group-policy" title="Permalink to this headline">¶</a></h2>
 <p>Edit Local Group Policy:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>gpedit.msc
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Local Group Policy Editor (with local GPO to Local Security Policy, Administrative Templates...)</span>
+gpedit.msc
+<span class="c1"># Local Security Policy (with SRP=Software Restriction Policies, AppLocker, Password Policies...)</span>
 secpol.msc
 </pre></div>
 </div>
+<p>For example to configure the servicing channel on Windows 10 (<a class="reference external" href="https://docs.microsoft.com/en-gb/windows/deployment/update/waas-servicing-channels-windows-10-updates">https://docs.microsoft.com/en-gb/windows/deployment/update/waas-servicing-channels-windows-10-updates</a>):</p>
+<ul class="simple">
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">gpedit.msc</span></code> (Local Group Policy Editor).</p></li>
+<li><p>Go to “Local Computer Policy/Computer Configuration/Administrative Templates/Windows Components/Windows Update/Windows Update For Business”.</p></li>
+<li><p>Click on “Select when Preview Builds and Feature Updates are received”. A dialog box opens.</p></li>
+<li><p>Select “Enabled” and choose a readiness level among “Preview Build - Fast”, “Preview Build - Slow”, “Release Preview”, “Semi-Annual Channel (Targeted)” or “Semi-Annual Channel”.</p></li>
+<li><p>Click on “OK”.</p></li>
+</ul>
 <p>Export the Local Group Policy:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>secedit /export /cfg system_config.cfg
 
 <span class="c1"># With at least Windows Vista or Windows Server 2008</span>
 gpresult /H GPReport.html
+gpresult /SCOPE COMPUTER /H GPReport-Computer.html
 
 <span class="c1"># Display RSoP summary data (Resultant Set of Policies)</span>
 gpresult /R
@@ -871,7 +882,7 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
   </body>
 </html>
