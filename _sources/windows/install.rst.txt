@@ -208,7 +208,7 @@ Here is an example of its use:
     Find-Package -Provider chocolatey -Name "*vlc*"
 
     # Install Notepad++
-    Install-Package notepadplusplus
+    Install-Package -Provider chocolatey notepadplusplus
 
 
 Debloat Windows

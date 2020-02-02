@@ -240,6 +240,9 @@ cat <span class="k">function</span>:help
 <span class="o">(</span>ls env:path<span class="o">)</span>.value
 cat env:path
 <span class="nb">echo</span> <span class="nv">$env</span>:path
+
+<span class="c1"># In order to set an environment variable globally, such as the one for Mirosoft symbols:</span>
+setx _NT_SYMBOL_PATH srv*C:<span class="se">\D</span>ebugSymbols*http://msdl.microsoft.com/download/symbols
 </pre></div>
 </div>
 <p>In order to use a provider, add two colons to it:</p>
@@ -426,6 +429,11 @@ Get-Process
 <span class="c1"># &quot;gps&quot; and &quot;ps&quot; are aliases of Get-Process</span>
 </pre></div>
 </div>
+<p>Find processes from its name:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>tasklist /v <span class="p">|</span> find /I <span class="s2">&quot;explorer.exe&quot;</span>  <span class="c1"># Only in cmd.exe, as &quot;find&quot; requires the quotes</span>
+Get-Process <span class="p">|</span> Select <span class="nv">Name</span><span class="o">=</span>explorer.exe
+</pre></div>
+</div>
 <p>Enumerate all services:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-Service <span class="p">|</span> Export-CSV C:<span class="se">\T</span>emp<span class="se">\A</span>llServices.csv -NoTypeInfo
 gsv <span class="p">|</span> epcsv C:<span class="se">\T</span>emp<span class="se">\A</span>llServices.csv -NoTypeInfo
@@ -552,6 +560,38 @@ bcdedit /enum all
 </pre></div>
 </div>
 </div>
+<div class="section" id="networking">
+<h2>Networking<a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h2>
+<p>Get the current status of the network stack:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the configuration of all network adapters</span>
+ipconfig /all
+
+<span class="c1"># Display the content of the DNS client resolver cache</span>
+ipconfig /displaydns
+
+<span class="c1"># Get network routes</span>
+route print
+
+<span class="c1"># Show the active TCP connections and listening TCP and UDP ports, with PIDs</span>
+netstat -ano
+</pre></div>
+</div>
+<p>TCP port forwarding with netsh:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>netsh interface portproxy add v4tov4 <span class="nv">listenport</span><span class="o">=</span><span class="m">1234</span> <span class="nv">listenaddress</span><span class="o">=</span><span class="m">192</span>.0.2.42
+    <span class="nv">connectport</span><span class="o">=</span><span class="m">80</span> <span class="nv">connectaddress</span><span class="o">=</span><span class="m">10</span>.13.37.1
+</pre></div>
+</div>
+<p>On a WindowsDNS server:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get server information</span>
+dnscmd /info
+
+<span class="c1"># Enumerate zones and records</span>
+dnscmd /enumzones
+dnscmd /zoneprint <span class="si">${</span><span class="nv">ZONE_NAME</span><span class="si">}</span>
+dnscmd /enumrecords <span class="si">${</span><span class="nv">ZONE_NAME</span><span class="si">}</span> <span class="si">${</span><span class="nv">NODE_NAME</span><span class="si">}</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="firewall">
 <h2>Firewall<a class="headerlink" href="#firewall" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wf.msc
@@ -566,13 +606,6 @@ netsh advfirewall firewall dump
 
 <span class="c1"># On old versions of Windows</span>
 netsh advfirewall dump
-</pre></div>
-</div>
-</div>
-<div class="section" id="tcp-port-forwarding-with-netsh">
-<h2>TCP port forwarding with netsh<a class="headerlink" href="#tcp-port-forwarding-with-netsh" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>netsh interface portproxy add v4tov4 <span class="nv">listenport</span><span class="o">=</span><span class="m">1234</span> <span class="nv">listenaddress</span><span class="o">=</span><span class="m">192</span>.0.2.42
-    <span class="nv">connectport</span><span class="o">=</span><span class="m">80</span> <span class="nv">connectaddress</span><span class="o">=</span><span class="m">10</span>.13.37.1
 </pre></div>
 </div>
 </div>
@@ -822,8 +855,8 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
 <li><a class="reference internal" href="#software-information">Software information</a></li>
 <li><a class="reference internal" href="#boot-configuration">Boot configuration</a></li>
 <li><a class="reference internal" href="#installed-software">Installed software</a></li>
+<li><a class="reference internal" href="#networking">Networking</a></li>
 <li><a class="reference internal" href="#firewall">Firewall</a></li>
-<li><a class="reference internal" href="#tcp-port-forwarding-with-netsh">TCP port forwarding with netsh</a></li>
 <li><a class="reference internal" href="#network-shares">Network shares</a></li>
 <li><a class="reference internal" href="#other-network-commands">Other network commands</a></li>
 <li><a class="reference internal" href="#filesystem-management">Filesystem management</a></li>

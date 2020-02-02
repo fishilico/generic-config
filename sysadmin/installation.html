@@ -123,6 +123,16 @@ mkfs.ext4 /dev/sda2
 <span class="c1"># Format a partition as Swap</span>
 mkswap /dev/sda2 <span class="o">&amp;&amp;</span> swapon /dev/sda2
 
+<span class="c1"># Create a RAID 1 (mirror) between two disks</span>
+mdadm --zero-superblock /dev/sda3
+mdadm --zero-superblock /dev/sdb3
+mdadm --create --verbose --level<span class="o">=</span><span class="m">1</span> --metadata<span class="o">=</span><span class="m">1</span>.2 <span class="se">\</span>
+    --raid-devices<span class="o">=</span><span class="m">2</span> /dev/md0 /dev/sda3 /dev/sdb3
+cat /proc/mdstat
+mdadm --detail --scan &gt;&gt; /etc/mdadm.conf
+mdadm --assemble --scan
+<span class="c1"># ... and add to kernel boot command line: root=/dev/md0 md=0,/dev/sda3,/dev/sdb3</span>
+
 <span class="c1"># Create an encrypted LUKS partition</span>
 cryptsetup -v --cipher aes-xts-plain64 --key-size <span class="m">512</span> luksFormat /dev/sda2
 cryptsetup open /dev/sda2 system
