@@ -96,6 +96,16 @@ Here are useful commands for this step:
     # Format a partition as Swap
     mkswap /dev/sda2 && swapon /dev/sda2
 
+    # Create a RAID 1 (mirror) between two disks
+    mdadm --zero-superblock /dev/sda3
+    mdadm --zero-superblock /dev/sdb3
+    mdadm --create --verbose --level=1 --metadata=1.2 \
+        --raid-devices=2 /dev/md0 /dev/sda3 /dev/sdb3
+    cat /proc/mdstat
+    mdadm --detail --scan >> /etc/mdadm.conf
+    mdadm --assemble --scan
+    # ... and add to kernel boot command line: root=/dev/md0 md=0,/dev/sda3,/dev/sdb3
+
     # Create an encrypted LUKS partition
     cryptsetup -v --cipher aes-xts-plain64 --key-size 512 luksFormat /dev/sda2
     cryptsetup open /dev/sda2 system
