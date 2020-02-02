@@ -159,7 +159,7 @@ A possible workaround can use a firewall to solve this issue:
 
 * Here is an example configuration file for nftables firewall:
 
-  .. code-block::
+  .. code-block:: text
 
       table inet filter {
           chain input {
