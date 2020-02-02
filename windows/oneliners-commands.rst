@@ -336,6 +336,13 @@ Enumerate all processes:
     Get-Process
     # "gps" and "ps" are aliases of Get-Process
 
+Find processes from its name:
+
+.. code-block:: sh
+
+    tasklist /v | find /I "explorer.exe"  # Only in cmd.exe, as "find" requires the quotes
+    Get-Process | Select Name=explorer.exe
+
 Enumerate all services:
 
 .. code-block:: sh
@@ -487,6 +494,45 @@ Installed software
     wmic product get "name,version" /format:csv > applications.csv
 
 
+Networking
+----------
+
+Get the current status of the network stack:
+
+.. code-block:: sh
+
+    # Get the configuration of all network adapters
+    ipconfig /all
+
+    # Display the content of the DNS client resolver cache
+    ipconfig /displaydns
+
+    # Get network routes
+    route print
+
+    # Show the active TCP connections and listening TCP and UDP ports, with PIDs
+    netstat -ano
+
+TCP port forwarding with netsh:
+
+.. code-block:: sh
+
+    netsh interface portproxy add v4tov4 listenport=1234 listenaddress=192.0.2.42
+        connectport=80 connectaddress=10.13.37.1
+
+On a WindowsDNS server:
+
+.. code-block:: sh
+
+    # Get server information
+    dnscmd /info
+
+    # Enumerate zones and records
+    dnscmd /enumzones
+    dnscmd /zoneprint ${ZONE_NAME}
+    dnscmd /enumrecords ${ZONE_NAME} ${NODE_NAME}
+
+
 Firewall
 --------
 
@@ -504,15 +550,6 @@ Firewall
 
     # On old versions of Windows
     netsh advfirewall dump
-
-
-TCP port forwarding with netsh
-------------------------------
-
-.. code-block:: sh
-
-    netsh interface portproxy add v4tov4 listenport=1234 listenaddress=192.0.2.42
-        connectport=80 connectaddress=10.13.37.1
 
 
 Network shares
