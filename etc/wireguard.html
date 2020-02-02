@@ -173,30 +173,30 @@ nft add rule nat prerouting ip daddr <span class="m">192</span>.0.2.42 udp dport
 </div>
 </li>
 <li><p>Here is an example configuration file for nftables firewall:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">inet</span> <span class="nb">filter</span> <span class="p">{</span>
-    <span class="n">chain</span> <span class="nb">input</span> <span class="p">{</span>
-        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="nb">input</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
-        <span class="c1"># ...</span>
-        <span class="n">udp</span> <span class="n">dport</span> <span class="mi">53</span> <span class="n">counter</span> <span class="n">accept</span> <span class="n">comment</span> <span class="s2">&quot;accept WireGuard on DNS port&quot;</span>
-        <span class="n">udp</span> <span class="n">dport</span> <span class="mi">5353</span> <span class="n">counter</span> <span class="n">accept</span> <span class="n">comment</span> <span class="s2">&quot;accept WireGuard on mDNS port&quot;</span>
-        <span class="c1"># ...</span>
-    <span class="p">}</span>
-    <span class="n">chain</span> <span class="n">output</span> <span class="p">{</span>
-        <span class="nb">type</span> <span class="nb">filter</span> <span class="n">hook</span> <span class="n">output</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
-        <span class="c1"># ...</span>
-        <span class="n">udp</span> <span class="n">sport</span> <span class="mi">53</span> <span class="n">counter</span> <span class="n">accept</span> <span class="n">comment</span> <span class="s2">&quot;accept WireGuard on DNS port&quot;</span>
-        <span class="n">udp</span> <span class="n">sport</span> <span class="mi">5353</span> <span class="n">counter</span> <span class="n">accept</span> <span class="n">comment</span> <span class="s2">&quot;accept WireGuard on mDNS port&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="n">table</span> <span class="n">nat</span> <span class="p">{</span>
-    <span class="n">chain</span> <span class="n">prerouting</span> <span class="p">{</span>
-        <span class="nb">type</span> <span class="n">nat</span> <span class="n">hook</span> <span class="n">prerouting</span> <span class="n">priority</span> <span class="mi">0</span><span class="p">;</span> <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
-        <span class="n">ip</span> <span class="n">daddr</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span> <span class="n">udp</span> <span class="n">dport</span> <span class="mi">53</span> <span class="n">counter</span> <span class="n">redirect</span> <span class="n">to</span> <span class="mi">5353</span> <span class="n">comment</span> <span class="s2">&quot;WireGuard redirect&quot;</span>
-    <span class="p">}</span>
-    <span class="n">chain</span> <span class="n">postrouting</span> <span class="p">{</span>
-        <span class="nb">type</span> <span class="n">nat</span> <span class="n">hook</span> <span class="n">postrouting</span> <span class="n">priority</span> <span class="mi">100</span><span class="p">;</span> <span class="n">policy</span> <span class="n">accept</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>table inet filter {
+    chain input {
+        type filter hook input priority 0; policy accept;
+        # ...
+        udp dport 53 counter accept comment &quot;accept WireGuard on DNS port&quot;
+        udp dport 5353 counter accept comment &quot;accept WireGuard on mDNS port&quot;
+        # ...
+    }
+    chain output {
+        type filter hook output priority 0; policy accept;
+        # ...
+        udp sport 53 counter accept comment &quot;accept WireGuard on DNS port&quot;
+        udp sport 5353 counter accept comment &quot;accept WireGuard on mDNS port&quot;
+    }
+}
+table nat {
+    chain prerouting {
+        type nat hook prerouting priority 0; policy accept;
+        ip daddr 192.0.2.42 udp dport 53 counter redirect to 5353 comment &quot;WireGuard redirect&quot;
+    }
+    chain postrouting {
+        type nat hook postrouting priority 100; policy accept;
+    }
+}
 </pre></div>
 </div>
 </li>
