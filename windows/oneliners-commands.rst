@@ -117,6 +117,9 @@ In order to use a drive, add a colon symbol to it:
     cat env:path
     echo $env:path
 
+    # In order to set an environment variable globally, such as the one for Mirosoft symbols:
+    setx _NT_SYMBOL_PATH srv*C:\DebugSymbols*http://msdl.microsoft.com/download/symbols
+
 In order to use a provider, add two colons to it::
 
     ls registry::HKEY_USERS

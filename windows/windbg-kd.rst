@@ -10,10 +10,27 @@ To debug a Windows kernel, here is what is needed:
   WinDbg still supports local kernel debugging)::
 
     bcdedit /debug on
+
+    # Since Windows 8, otherwise debugging is enabled on serial port COM2
     bcdedit /dbgsettings local
+
+(``bcdedit`` configures the Boot Configuration Database)
 
 It is then possible to run ``windbg -kl`` as administrator to start a Local
 Kernel debugging session.
+
+To verify whether local kernel debugging is enabled::
+
+    cd C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\
+    kdbgctrl -c
+
+In order to configure kernel debugging on a virtual machine, it is possible to
+use network debugging, with a key which consists in 3 words separated with dots::
+
+    bcdedit /dbgsettings NET HOSTIP:172.16.0.1 PORT:50000 KEY:a.b.c.d
+
+    # On the debugger host (breaking happens in nt!DbgBreakPointWithStatus)
+    WinDbg -k net:port=52000,key:a.b.c.d,target:DESKTOP-AB01CDE
 
 To load kernel symbols, it is possible to download a Windows Symbol Package
 from MSDN, but it is simpler to make WinDbg download them automatically.
@@ -21,6 +38,9 @@ This can be done either with an environment variable
 (cf. https://support.microsoft.com/en-us/kb/311503)::
 
     _NT_SYMBOL_PATH=SRV*C:\DebugSymbols*http://msdl.microsoft.com/download/symbols
+
+    # To make it persistent:
+    setx _NT_SYMBOL_PATH srv*C:\DebugSymbols*http://msdl.microsoft.com/download/symbols
 
 or with WinDbg commands::
 
@@ -167,7 +187,7 @@ System-related commands
     ffff9702a7ded0a0 ( 9)         620       623         4 Private      READWRITE
     ffff9702a7dee2f0 ( 8)         630       633         4 Private      READWRITE
     ffff9702a7978850 ( 9)         640       641         0 Mapped       READONLY           Pagefile-backed section
-    ffff9702a7750880 ( 4)         650       74f       255 Private      READWRITE 
+    ffff9702a7750880 ( 4)         650       74f       255 Private      READWRITE
     ...
 
   (Append ``000`` to ``start`` and ``end`` to get real addresses, usable with ``dd``)
@@ -278,6 +298,160 @@ x86-specific commands
   ``nt!_KGDTENTRY`` (or ``nt!_KGDTENTRY64``) structure.
 
 
+NatVis and JavaScript (since Windows 10)
+----------------------------------------
+
+Since Windows 10, WinDbg supports NatVis (Native Visualization, which was added
+to Visual Studio 2013).
+
+This allows such a syntax to dump a structure such as an ``EPROCESS``::
+
+    lkd> dx *(nt!_EPROCESS**)&nt!PsInitialSystemProcess
+    *(nt!_EPROCESS**)&nt!PsInitialSystemProcess                 : 0xffff9c8708c83040 [Type: _EPROCESS *]
+        [+0x000] Pcb              [Type: _KPROCESS]
+        [+0x2e0] ProcessLock      [Type: _EX_PUSH_LOCK]
+        [+0x2e8] UniqueProcessId  : 0x4 [Type: void *]
+        [+0x2f0] ActiveProcessLinks [Type: _LIST_ENTRY]
+        [+0x300] RundownProtect   [Type: _EX_RUNDOWN_REF]
+    ...
+
+NatVis files are in ``C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers``
+(for example there is ``stl.natvis`` in order to represent types such as
+``std::string``, ``std::list``, ``std::map``, etc.)
+
+NatVis commands:
+
+.. code-block:: sh
+
+    # Define variables
+    dx @$myVar = "My sttring"
+    dx @$myVar
+    dx @$myVar.Length
+
+    # Show methods
+    dx -v @$myVar
+
+    # Show a variable with 2 levels of recursion
+    dx -r2 @$myVar
+
+    # Create an array from memory
+    dx @$testArray = (int(*)[10])0x7ffe0010
+    dx @$testPointersArray = (int*(**)[10])0x7ffe0010
+
+    # Copy a variable into some memory
+    dx *(TYPE*)0x10000 = *@$myNewContent
+
+    # Show the processor blocks
+    dx (nt!_KPRCB**)&nt!KiProcessorBlock, [*(int*)&nt!KeNumberProcessors]
+
+    # Enumerate all variables
+    dx @$vars
+
+    # Remove a variable
+    @$vars.Remove("myVar")
+
+    # Create an anonymous structure
+    dx @$myobject = new { Type = 5, Name = "Process Object" }
+
+    # Create a new function (with anonymous function syntax)
+    dx @$mul = (num1, num2) => num * num2
+
+    # Load a NatVis file
+    .nvload C:\path\to\myfile.natvis
+
+In WinDbg, there are 3 default NatVis variables: ``@$curprocess``,
+``@$curthread`` and ``@$cursession``:
+
+.. code-block:: sh
+
+    lkd> dx @$cursession
+    @$cursession                 : Local KD
+        Processes
+        Devices
+
+    lkd> dx @$cursession.Processes
+    @$cursession.Processes
+        [0x0]            : <Unknown Image>
+        [0x4]            : <Unknown Image>
+        [0x38]           : <Unknown Image>
+        [0x68]           : <Unknown Image>
+        [0x1bc]          : smss.exe
+
+With LINQ (Language INtegrated Query) it is possible to process results using
+SQL-like functions:
+
+.. code-block:: sh
+
+    # Find processes named smss.exe
+    dx @$cursession.Processes.Where(p=>p.Name == "smss.exe")
+
+    # Get the name of the process
+    dx @$cursession.Processes.Where(p=>p.Name == "csrss.exe").First()
+        .KernelObject.SeAuditProcessCreationInfo.ImageFileName->Name
+
+    # List processes with their protection levels
+    dx -g @$cursession.Processes.Where(p=>p.KernelObject.Protection.Level != 0)
+        .Select(p => new{name=p.Name, Level=p.KernelObject.Protection.Level})
+
+    # Get the names of handles opened by csrss
+    dx -r2 @$cursession.Processes.Where(p=>p.Name=="csrss.exe").Select(
+        p => p.Io.Handles.Select(h => h.ObjectName))
+
+In order to build complex structures from data, there are some helpers:
+
+.. code-block:: sh
+
+    dx -r0 @$processList = *(nt!_LIST_ENTRY*)&nt!PsActiveProcessHead
+    dx -r0 @$processes = Debugger.Utility.Collections.FromListEntry(
+        @$processList, "nt!_EPROCESS", "ActiveProcessLinks")
+
+    dx Debugger.Utility.Control.ExecuteCommand("!filetime 0").First()
+
+Using JavaScript provider:
+
+.. code-block:: sh
+
+    .load jsprovider.dll
+
+    # call initializeScript()
+    .scriptload C:\path\to\MyScriptName.js
+
+    # like .scriptload and call invokeScript()
+    .scriptrun C:\path\to\MyScriptName.js
+
+    dx Debugger.State.Scripts.MyScriptName.Contents.my_function(args)
+    dx @$scripts.MyScriptName.Contents.my_function(args)
+    dx @$scriptContents.my_function(args)
+
+    # call uninitializeScript() and unload
+    .scriptunload MyScriptName.js
+
+In JavaScript:
+
+* ``host`` is a COM object for the Degugger
+* ``host.memory`` represents the target memory (method
+  ``readMemoryValues(ptr, size)`` returns an ``ArrayBuffer`` with memory)
+* ``host.diagnostics.debugLog("...")`` prints logs
+* ``host.typeSystem.marshalAs(variable, "nt", "SOME_TYPE")`` to cast
+* ``new host.metadata.valueWithMetadata(myInteger, {PreferredRadix:10})`` to
+  print an integer as decimal
+* ``host.evaluateExpression(expr)`` or ``host.namespace.Debugger.Utility.Control.ExecuteCommand``
+  to run a debugger command (like ``.printf %y`` to convert a pointer to a
+  symbol using MASM syntax)
+
+To add new aliases in Javascript:
+
+.. code-block:: c
+
+    function initializeScript()
+    {
+        return [new host.functionAlias(my_function, "myfct") /*, ... */];
+    }
+    // In WinDBG:
+    //   !myfct arg1, arg2
+    //   dx @$myfct(arg1, arg2)
+
+
 Links
 -----
 
@@ -289,3 +463,5 @@ Links
   Debugger Commands - Kernel-Mode Extensions
 * http://windbg.info/doc/1-common-cmds.html
   Common WinDbg Commands
+* https://github.com/microsoft/WinDbg-Samples
+  Sample extensions, scripts, and API uses for WinDbg
