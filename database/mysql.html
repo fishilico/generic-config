@@ -7,11 +7,11 @@
     <title>MySQL tips and tricks &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="SQLite" href="sqlite.html" />
@@ -190,6 +190,14 @@ mysqldump --single-transaction --add-drop-table database_with_innoDB
 <span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 </pre></div>
 </div>
+<p>When the user is allowed to interact with the filesystem:</p>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Read a file from the filesystem</span>
+<span class="k">SELECT</span> <span class="nf">LOAD_FILE</span><span class="p">(</span><span class="s1">&#39;/etc/hosts&#39;</span><span class="p">);</span>
+
+<span class="c1">-- Write a file that does not exist</span>
+<span class="k">SELECT</span> <span class="s1">&#39;Hello, world!&#39;</span> <span class="k">INTO</span> <span class="k">OUTFILE</span> <span class="s1">&#39;/tmp/my_hello.txt&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="sql-injection-queries">
 <h2>SQL injection queries<a class="headerlink" href="#sql-injection-queries" title="Permalink to this headline">¶</a></h2>
@@ -200,6 +208,7 @@ order to gather information about the database.</p>
 <li><p>Which version is the server running?</p>
 <blockquote>
 <div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="nf">version</span><span class="p">();</span>
+<span class="k">SELECT</span> <span class="o">@@</span><span class="n">version</span><span class="p">;</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -309,7 +318,7 @@ order to gather information about the database.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -332,7 +341,7 @@ order to gather information about the database.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   </body>
 </html>

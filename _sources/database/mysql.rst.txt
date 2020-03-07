@@ -147,6 +147,17 @@ These queries create an empty account table with some fields:
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+When the user is allowed to interact with the filesystem:
+
+.. code-block:: mysql
+
+    -- Read a file from the filesystem
+    SELECT LOAD_FILE('/etc/hosts');
+
+    -- Write a file that does not exist
+    SELECT 'Hello, world!' INTO OUTFILE '/tmp/my_hello.txt';
+
+
 SQL injection queries
 ---------------------
 
@@ -159,6 +170,7 @@ order to gather information about the database.
     .. code-block:: mysql
 
         SELECT version();
+        SELECT @@version;
 
 * What are the available tables?
 
