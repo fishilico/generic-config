@@ -52,6 +52,32 @@ For example, it is possible to switch from Windows 10 Pro to Windows 10 Enterpri
 The official Microsoft website documents such keys on <a class="reference external" href="https://docs.microsoft.com/en-us/windows-server/get-started/kmsclientkeys">https://docs.microsoft.com/en-us/windows-server/get-started/kmsclientkeys</a>.
 On this website, Windows 10 Enterprise’s KMS key is <code class="docutils literal notranslate"><span class="pre">NPPR9-FWDCX-D2C8J-H872K-2YT43</span></code>.</p>
 </div>
+<div class="section" id="common-settings">
+<h2>Common settings<a class="headerlink" href="#common-settings" title="Permalink to this headline">¶</a></h2>
+<p>Some tools can be configured as soon as Windows is installed, in order to improve the experience of Windows.</p>
+<p>When the system crashes, it is useful to have a meaningful memory dump file that can be analyzed with WinDbg.
+In order to generate it, there are some settings:</p>
+<ul class="simple">
+<li><p>In “Advanced System Settings”, go to “Startup and Recovery” settings and choose option “Active Memory Dump” (available since Windows 10).
+This enables generating a memory dump file (<code class="docutils literal notranslate"><span class="pre">C:\Windows\MEMORY.DMP</span></code>) with the Kernel memory and the Working Set of all processes (with their PEB, TEB and command line).
+In the dialog box:</p>
+<ul>
+<li><p>Tick “Overwrite any existing file”, so that the file gets generated every time the system crashes.</p></li>
+<li><p>Untick the automatic restart.</p></li>
+</ul>
+</li>
+<li><p>In “Performance”, configure the size of the Page File to the size of the RAM, in order for the memory dump to fit in it.
+Also ensure that at least 25 GB is free on the hard drive containing the Page File.</p></li>
+</ul>
+<p>To enhance the security of the system, several kernelmode hardening features can be enabled using Microsoft’s Driver Verifier, <code class="docutils literal notranslate"><span class="pre">verifier.exe</span></code>:</p>
+<ul class="simple">
+<li><p>“Special Pool”, in order to detect kernel heap overflows</p></li>
+<li><p>“Force IRQL checking”, in order to detect IRQL issues in some drivers (this may detect real bugs!)</p></li>
+<li><p>“Security checks”, in order to strengthen the security of the system</p></li>
+</ul>
+<p>When an application crash occurs, a minidump file is also generated in <code class="docutils literal notranslate"><span class="pre">C:\Windows\minidump\</span></code>.
+This directory contains the 50 last generated minidump files (by default).</p>
+</div>
 <div class="section" id="enable-the-windows-subsystem-for-linux">
 <h2>Enable the Windows Subsystem for Linux<a class="headerlink" href="#enable-the-windows-subsystem-for-linux" title="Permalink to this headline">¶</a></h2>
 <p>To install WSL (Windows Subsystem for Linux), run this command as Administrator:</p>
@@ -348,6 +374,7 @@ systemctl start py-kms.service
   <ul>
 <li><a class="reference internal" href="#">Installing Windows</a><ul>
 <li><a class="reference internal" href="#base-installation-of-windows-10">Base installation of Windows 10</a></li>
+<li><a class="reference internal" href="#common-settings">Common settings</a></li>
 <li><a class="reference internal" href="#enable-the-windows-subsystem-for-linux">Enable the Windows Subsystem for Linux</a></li>
 <li><a class="reference internal" href="#software-to-install">Software to install</a><ul>
 <li><a class="reference internal" href="#automatic-installation">Automatic installation</a></li>

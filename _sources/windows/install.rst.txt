@@ -16,6 +16,34 @@ The official Microsoft website documents such keys on https://docs.microsoft.com
 On this website, Windows 10 Enterprise's KMS key is ``NPPR9-FWDCX-D2C8J-H872K-2YT43``.
 
 
+Common settings
+---------------
+
+Some tools can be configured as soon as Windows is installed, in order to improve the experience of Windows.
+
+When the system crashes, it is useful to have a meaningful memory dump file that can be analyzed with WinDbg.
+In order to generate it, there are some settings:
+
+* In "Advanced System Settings", go to "Startup and Recovery" settings and choose option "Active Memory Dump" (available since Windows 10).
+  This enables generating a memory dump file (``C:\Windows\MEMORY.DMP``) with the Kernel memory and the Working Set of all processes (with their PEB, TEB and command line).
+  In the dialog box:
+
+  - Tick "Overwrite any existing file", so that the file gets generated every time the system crashes.
+  - Untick the automatic restart.
+
+* In "Performance", configure the size of the Page File to the size of the RAM, in order for the memory dump to fit in it.
+  Also ensure that at least 25 GB is free on the hard drive containing the Page File.
+
+To enhance the security of the system, several kernelmode hardening features can be enabled using Microsoft's Driver Verifier, ``verifier.exe``:
+
+* "Special Pool", in order to detect kernel heap overflows
+* "Force IRQL checking", in order to detect IRQL issues in some drivers (this may detect real bugs!)
+* "Security checks", in order to strengthen the security of the system
+
+When an application crash occurs, a minidump file is also generated in ``C:\Windows\minidump\``.
+This directory contains the 50 last generated minidump files (by default).
+
+
 Enable the Windows Subsystem for Linux
 --------------------------------------
 
