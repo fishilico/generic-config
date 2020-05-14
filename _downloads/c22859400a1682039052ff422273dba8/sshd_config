@@ -1,4 +1,5 @@
 # Here is a general configuration file for SSH server
+# Verify the applied configuration with: sshd -T
 
 # Authentication mechanisms: allow public key, disable password access
 PubkeyAuthentication yes

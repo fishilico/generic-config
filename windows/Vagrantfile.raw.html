@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>windows/Vagrantfile &#8212; Generic Config</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Active Directory by Microsoft" href="active_directory.html" />
+    <link rel="prev" title="Windows system information" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="active_directory.html" title="Active Directory by Microsoft"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Windows system information"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="windows-vagrantfile">
+<h1><code class="docutils literal notranslate"><span class="pre">windows/Vagrantfile</span></code><a class="headerlink" href="#windows-vagrantfile" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" download="" href="../_downloads/680295a40315c1b0e1a5b2966e75ed56/Vagrantfile"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- mode: ruby -*-</span>
+<span class="c1"># vi: set ft=ruby :</span>
+
+Vagrant.configure<span class="o">(</span><span class="s2">&quot;2&quot;</span><span class="o">)</span> <span class="k">do</span> <span class="p">|</span>config<span class="p">|</span>
+  <span class="c1"># cf. vagrant.rst for instructions on downloading and importing windows/win10-edge box</span>
+  config.vm.box <span class="o">=</span> <span class="s2">&quot;windows/win10-edge&quot;</span>
+
+  <span class="c1"># Configure remote access</span>
+  config.ssh.username <span class="o">=</span> <span class="s2">&quot;IEUser&quot;</span>
+  config.ssh.password <span class="o">=</span> <span class="s2">&quot;Passw0rd!&quot;</span>
+
+  <span class="c1"># Use Windows Remote Management protocol (WinRM)</span>
+  config.vm.communicator <span class="o">=</span> <span class="s2">&quot;winrm&quot;</span>
+  config.winrm.username <span class="o">=</span> <span class="s2">&quot;IEUser&quot;</span>
+  config.winrm.password <span class="o">=</span> <span class="s2">&quot;Passw0rd!&quot;</span>
+
+  <span class="c1"># Use 2 CPU and 4GB of RAM</span>
+  config.vm.provider :libvirt <span class="k">do</span> <span class="p">|</span>v<span class="p">|</span>
+    v.cpus <span class="o">=</span> <span class="m">2</span>
+    v.memory <span class="o">=</span> <span class="m">4096</span>
+  end
+end
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Windows system information</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="active_directory.html"
+                        title="next chapter">Active Directory by Microsoft</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/windows/Vagrantfile.raw.rst.txt"
+           rel="nofollow">Show Source</a></li>
+    <li><a href="https://github.com/fishilico/generic-config/tree/master/windows/Vagrantfile"
+           rel="nofollow">Show Raw File on GitHub
+           <img src="../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  </ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="active_directory.html" title="Active Directory by Microsoft"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Windows system information"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2019, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+``windows/hardening_script.bat``
+================================
+:download:`Download file<hardening_script.bat>`
+
+.. literalinclude:: hardening_script.bat
+   :language: sh

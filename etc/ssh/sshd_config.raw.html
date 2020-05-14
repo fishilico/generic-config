@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>etc/ssh/sshd_config &#8212; Generic Config</title>
@@ -43,6 +43,7 @@
 <h1><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config</span></code><a class="headerlink" href="#etc-ssh-sshd-config" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference download internal" download="" href="../../_downloads/c22859400a1682039052ff422273dba8/sshd_config"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here is a general configuration file for SSH server</span>
+<span class="c1"># Verify the applied configuration with: sshd -T</span>
 
 <span class="c1"># Authentication mechanisms: allow public key, disable password access</span>
 PubkeyAuthentication yes
@@ -128,7 +129,7 @@ Match Group sftpusers
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.0.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.3.
     </div>
   </body>
 </html>

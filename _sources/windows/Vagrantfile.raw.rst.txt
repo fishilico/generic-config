@@ -1,0 +1,6 @@
+``windows/Vagrantfile``
+=======================
+:download:`Download file<Vagrantfile>`
+
+.. literalinclude:: Vagrantfile
+   :language: sh

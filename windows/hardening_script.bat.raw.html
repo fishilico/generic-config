@@ -1,0 +1,645 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>windows/hardening_script.bat &#8212; Generic Config</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installing Windows" href="install.html" />
+    <link rel="prev" title="Some cmd.exe commands" href="cmd.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="install.html" title="Installing Windows"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cmd.html" title="Some cmd.exe commands"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="windows-hardening-script-bat">
+<h1><code class="docutils literal notranslate"><span class="pre">windows/hardening_script.bat</span></code><a class="headerlink" href="#windows-hardening-script-bat" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference download internal" download="" href="../_downloads/08c5e34a61201d05acc0fb9a6c5a3e17/hardening_script.bat"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>:: From https://gist.github.com/mackwage/08604751462126599d7e52f233490efe
+
+:: Windows <span class="m">10</span> Hardening Script
+:: This is based mostly on my own personal research and testing. My objective is
+:: to secure/harden Windows <span class="m">10</span> as much as possible <span class="k">while</span> not impacting usability
+:: at all. <span class="o">(</span>Think being able to run on this computer<span class="s1">&#39;s of family members so</span>
+<span class="s1">:: secure them but not increase the chances of them having to call you to</span>
+<span class="s1">:: troubleshoot something related to it later on). References for virtually all</span>
+<span class="s1">:: settings can be found at the bottom. Just before the references section, you</span>
+<span class="s1">:: will always find several security settings commented out as they could lead</span>
+<span class="s1">:: to compatibility issues in common consumer setups but they&#39;</span>re worth
+:: considering. 
+:: Obligatory <span class="s1">&#39;views are my own&#39;</span>. :<span class="o">)</span>
+:: Thank you @jaredhaight <span class="k">for</span> the Win Firewall config recommendations!
+:: Thank you @ricardojba <span class="k">for</span> the DLL Safe Order Search reg key! 
+:: Thank you @jessicaknotts <span class="k">for</span> the <span class="nb">help</span> on testing Exploit Guard configs and checking privacy settings!
+:: Best script I<span class="s1">&#39;ve found for Debloating Windows 10: https://github.com/Sycnex/Windows10Debloater</span>
+<span class="s1">::</span>
+<span class="s1">::#######################################################################</span>
+<span class="s1">::</span>
+<span class="s1">:: Change file associations to protect against common ransomware attacks</span>
+<span class="s1">:: Note that if you legitimately use these extensions, like .bat, you will now</span>
+<span class="s1">:: need to execute them manually from cmd or powershel</span>
+<span class="s1">:: Alternatively, you can right-click on them and hit &#39;</span>Run as Administrator<span class="s1">&#39; but</span>
+<span class="s1">:: ensure it&#39;</span>s a script you want to run :<span class="o">)</span> 
+:: https://support.microsoft.com/en-us/help/883260/information-about-the-attachment-manager-in-microsoft-windows
+:: ---------------------
+ftype <span class="nv">htafile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
+ftype <span class="nv">wshfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
+ftype <span class="nv">wsffile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
+ftype <span class="nv">batfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
+ftype <span class="nv">jsfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
+ftype <span class="nv">jsefile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
+ftype <span class="nv">vbefile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
+ftype <span class="nv">vbsfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
+::
+::#######################################################################
+:: Enable and configure Windows Defender and advanced settings
+::#######################################################################
+::
+:: Reset Defender to defaults. Commented out but available <span class="k">for</span> reference
+::<span class="s2">&quot;%programfiles%&quot;</span><span class="se">\&quot;</span>Windows Defender<span class="s2">&quot;\MpCmdRun.exe -RestoreDefaults</span>
+<span class="s2">:: https://docs.microsoft.com/en-us/windows/client-management/mdm/policy-csp-defender#defender-submitsamplesconsent</span>
+<span class="s2">:: https://docs.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=win10-ps</span>
+<span class="s2">::</span>
+<span class="s2">:: Start Defender Service</span>
+<span class="s2">sc start WinDefend</span>
+<span class="s2">::Enable Windows Defender sandboxing</span>
+<span class="s2">setx /M MP_FORCE_USE_SANDBOX 1</span>
+<span class="s2">:: Update signatures</span>
+<span class="s2">&quot;</span>%ProgramFiles%<span class="s2">&quot;\&quot;Windows Defender&quot;</span><span class="se">\M</span>pCmdRun.exe -SignatureUpdate
+:: Enable Defender signatures <span class="k">for</span> Potentially Unwanted Applications <span class="o">(</span>PUA<span class="o">)</span>
+powershell.exe Set-MpPreference -PUAProtection <span class="nb">enable</span>
+:: Enable Defender periodic scanning
+reg add <span class="s2">&quot;HKCU\SOFTWARE\Microsoft\Windows Defender&quot;</span> /v PassiveMode /t REG_DWORD /d <span class="m">2</span> /f
+:: Enable Cloud functionality of Windows Defender
+:: powershell.exe Set-MpPreference -MAPSReporting Advanced
+:: powershell.exe Set-MpPreference -SubmitSamplesConsent <span class="m">0</span>
+::
+:: Enable early launch antimalware driver <span class="k">for</span> scan of boot-start drivers
+:: <span class="m">3</span> is the default which allows good, unknown and <span class="s1">&#39;bad but critical&#39;</span>. Recommend trying <span class="m">1</span> <span class="k">for</span> <span class="s1">&#39;good and unknown&#39;</span> or <span class="m">8</span> which is <span class="s1">&#39;good only&#39;</span>
+reg add <span class="s2">&quot;HKCU\SYSTEM\CurrentControlSet\Policies\EarlyLaunch&quot;</span> /v DriverLoadPolicy /t REG_DWORD /d <span class="m">3</span> /f
+::
+:: Enable ASR rules in Win10 <span class="m">1903</span> ExploitGuard to mitigate Office malspam
+:: Blocks Office childprocs, Office proc injection, Office win32 api calls <span class="p">&amp;</span> executable content creation
+:: Note these only work when Defender is your primary AV
+::
+:: Block Office Child Process Creation 
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids D4F940AB-401B-4EFC-AADC-AD5F3C50688A -AttackSurfaceReductionRules_Actions Enabled
+:: Block Process Injection
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 75668C1F-73B5-4CF0-BB93-3ECF5CB7CC84 -AttackSurfaceReductionRules_Actions Enabled
+:: Block Win32 API calls in macros
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 92E97FA1-2EDF-4476-BDD6-9DD0B4DDDC7B -AttackSurfaceReductionRules_Actions Enabled
+:: Block Office from creating executables
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 3B576869-A4EC-4529-8536-B80A7769E899 -AttackSurfaceReductionRules_Actions Enabled
+:: Block execution of potentially obfuscated scripts
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 5BEB7EFE-FD9A-4556-801D-275E5FFC04CC -AttackSurfaceReductionRules_Actions Enabled
+:: Block executable content from email client and webmail
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids BE9BA2D9-53EA-4CDC-84E5-9B1EEEE46550 -AttackSurfaceReductionRules_Actions Enabled
+:: Block JavaScript or VBScript from launching downloaded executable content
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids D3E037E1-3EB8-44C8-A917-57927947596D -AttackSurfaceReductionRules_Actions Enabled
+:: Block lsass cred theft
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2 -AttackSurfaceReductionRules_Actions Enabled
+:: Block untrusted and unsigned processes that run from USB
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids b2b3f03d-6a65-4f7b-a9c7-1c7ef74a9ba4 -AttackSurfaceReductionRules_Actions Enabled
+:: Block Adobe Reader from creating child processes
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 7674ba52-37eb-4a4f-a9a1-f0f9a1619a2c -AttackSurfaceReductionRules_Actions Enabled
+:: Block persistence through WMI event subscription
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids e6db77e5-3df2-4cf1-b95a-636979351e5b -AttackSurfaceReductionRules_Actions Enabled
+:: Block process creations originating from PSExec and WMI commands
+powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids d1e49aac-8f56-4280-b9ba-993a6d77406c -AttackSurfaceReductionRules_Actions Enabled
+::
+:: Enable Defender exploit system-wide protection
+:: The commented line includes CFG which can cause issues with apps like Discord <span class="p">&amp;</span> Mouse Without Borders
+:: powershell.exe Set-Processmitigation -System -Enable DEP,EmulateAtlThunks,BottomUp,HighEntropy,SEHOP,SEHOPTelemetry,TerminateOnError,CFG
+powershell.exe Set-Processmitigation -System -Enable DEP,EmulateAtlThunks,BottomUp,HighEntropy,SEHOP,SEHOPTelemetry,TerminateOnError
+::
+::#######################################################################
+:: Enable and Configure Internet Browser Settings
+::#######################################################################
+::
+:: Enable SmartScreen <span class="k">for</span> Edge
+reg add <span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter&quot;</span> /v EnabledV9 /t REG_DWORD /d <span class="m">1</span> /f
+:: Enable Notifications in IE when a site attempts to install software
+reg add <span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer&quot;</span> /v SafeForScripting /t REG_DWORD /d <span class="m">0</span> /f
+:: Disable Edge password manager to encourage use of proper password manager
+reg add <span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Main&quot;</span> /v <span class="s2">&quot;FormSuggest Passwords&quot;</span> /t REG_SZ /d no /f
+::
+::#######################################################################
+:: Enable and Configure Google Chrome Internet Browser Settings
+::#######################################################################
+::
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AdvancedProtectionAllowed&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AllowCrossOriginAuthPrompt&quot;</span> /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AlwaysOpenPdfExternally&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AmbientAuthenticationInPrivateModesEnabled&quot;</span> /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AudioCaptureAllowed&quot;</span> /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AudioSandboxEnabled&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;BlockExternalExtensions&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;DnsOverHttpsMode&quot;</span> /t REG_SZ /d on /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;SSLVersionMin&quot;</span> /t REG_SZ /d tls1 /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;ScreenCaptureAllowed&quot;</span> /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;SitePerProcess&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;TLS13HardeningForLocalAnchorsEnabled&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;VideoCaptureAllowed&quot;</span> /t REG_DWORD /d <span class="m">0</span> /f
+::
+::#######################################################################
+:: Enable and Configure Microsoft Office Security Settings
+::#######################################################################
+::
+:: Harden all version of MS Office itself against common malspam attacks
+:: Disables Macros, enables ProtectedView
+:: ---------------------
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\12.0\Publisher\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\12.0\Word\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\14.0\Publisher\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\14.0\Word\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Outlook\Security&quot;</span> /v markinternalasunsafe /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Word\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Excel\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\PowerPoint\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Word\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Publisher\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Outlook\Security&quot;</span> /v markinternalasunsafe /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Word\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Excel\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\PowerPoint\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Word\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Publisher\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
+::
+:: Harden all version of MS Office itself against DDE malspam attacks
+:: Disables Macros, enables ProtectedView
+:: ---------------------
+::
+reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\14.0\Word\Options&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\14.0\Word\Options\WordMail&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\15.0\Word\Options&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\15.0\Word\Options\WordMail&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\16.0\Word\Options&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
+reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\16.0\Word\Options\WordMail&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
+::
+::#######################################################################
+:: Enable and Configure General Windows Security Settings
+::#######################################################################
+:: Disables DNS multicast, smart mutli-homed resolution, netbios, powershellv2, printer driver download and printing over http, icmp redirect
+:: Enables UAC and sets to always notify, Safe DLL loading <span class="o">(</span>DLL Hijacking prevention<span class="o">)</span>, saving zone information, explorer DEP, explorer shell protocol protected mode
+:: ---------------------
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient&quot;</span> /v EnableMulticast /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient&quot;</span> /v DisableSmartNameResolution /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters&quot;</span> /v DisableParallelAandAAAA /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters&quot;</span> /v SMB1 /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters&quot;</span> /v IGMPLevel /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters&quot;</span> /v DisableIPSourceRouting /t REG_DWORD /d <span class="m">2</span> /f
+reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters&quot;</span> /v EnableICMPRedirect /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters&quot;</span> /v DisableIPSourceRouting /t REG_DWORD /d <span class="m">2</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot;</span> /v EnableLUA /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot;</span> /v EnableVirtualization /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot;</span> /v ConsentPromptBehaviorAdmin /t REG_DWORD /d <span class="m">2</span> /f
+reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Control\Session Manager&quot;</span> /v SafeDLLSearchMode /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Control\Session Manager&quot;</span> /v ProtectionMode /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments&quot;</span> /v SaveZoneInformation /t REG_DWORD /d <span class="m">2</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer&quot;</span> /v NoDataExecutionPrevention /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer&quot;</span> /v NoHeapTerminationOnCorruption /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer&quot;</span> /v PreXPSP2ShellProtocolBehavior /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Printers&quot;</span> /v DisableWebPnPDownload /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Printers&quot;</span> /v DisableHTTPPrinting /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config&quot;</span> /v AutoConnectAllowedOEM /t REG_DWORD /d <span class="m">0</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\WcmSvc\GroupPolicy&quot;</span> /v fMinimizeConnections /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Netbt\Parameters&quot;</span> /v NoNameReleaseOnDemand /t REG_DWORD /d <span class="m">1</span> /f
+wmic /interactive:off nicconfig where <span class="o">(</span><span class="nv">TcpipNetbiosOptions</span><span class="o">=</span><span class="m">0</span> OR <span class="nv">TcpipNetbiosOptions</span><span class="o">=</span><span class="m">1</span><span class="o">)</span> call SetTcpipNetbios <span class="m">2</span>
+powershell.exe Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2 -norestart
+powershell.exe Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -norestart
+::
+:: Prioritize ECC Curves with longer keys
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Cryptography\Configuration\SSL\00010002&quot;</span> /v EccCurves /t REG_MULTI_SZ /d NistP384,NistP256 /f
+:: Prevent Kerberos from using DES or RC4
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters&quot;</span> /v SupportedEncryptionTypes /t REG_DWORD /d <span class="m">2147483640</span> /f
+:: Encrypt and sign outgoing secure channel traffic when possible
+reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters&quot;</span> /v SealSecureChannel /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters&quot;</span> /v SignSecureChannel /t REG_DWORD /d <span class="m">1</span> /f
+::
+:: Enable SmartScreen
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\System&quot;</span> /v EnableSmartScreen /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\System&quot;</span> /v ShellSmartScreenLevel /t REG_SZ /d Block /f
+::
+:: Enforce device driver signing
+BCDEDIT /set nointegritychecks OFF
+::
+:: Windows Update Settings
+:: Prevent Delivery Optimization from downloading Updates from other computers across the internet
+:: <span class="m">1</span> will restrict to LAN only. <span class="m">0</span> will disable the feature entirely
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization&quot;</span> /v DODownloadMode /t REG_DWORD /d <span class="m">1</span> /f
+reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\&quot; /v DODownloadMode /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Set screen saver inactivity timeout to 15 minutes</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\P</span>olicies<span class="se">\S</span>ystem<span class="s2">&quot; /v InactivityTimeoutSecs /t REG_DWORD /d 900 /f</span>
+<span class="s2">:: Enable password prompt on sleep resume while plugged in and on battery</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\P</span>ower<span class="se">\P</span>owerSettings<span class="se">\0</span>e796bdb-100d-47d6-a2d5-f7d2daa51f51<span class="s2">&quot; /v ACSettingIndex /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\P</span>ower<span class="se">\P</span>owerSettings<span class="se">\0</span>e796bdb-100d-47d6-a2d5-f7d2daa51f51<span class="s2">&quot; /v DCSettingIndex /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Windows Remote Access Settings</span>
+<span class="s2">:: Disable solicited remote assistance</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\T</span>erminal Services<span class="s2">&quot; /v fAllowToGetHelp /t REG_DWORD /d 0 /f</span>
+<span class="s2">:: Require encrypted RPC connections to Remote Desktop</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\T</span>erminal Services<span class="s2">&quot; /v fEncryptRPCTraffic /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: Prevent sharing of local drives via Remote Desktop Session Hosts</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\T</span>erminal Services<span class="s2">&quot; /v fDisableCdm /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: </span>
+<span class="s2">:: Removal Media Settings</span>
+<span class="s2">:: Disable autorun/autoplay on all drives</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\E</span>xplorer<span class="s2">&quot; /v NoAutoplayfornonVolume /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\p</span>olicies<span class="se">\E</span>xplorer<span class="s2">&quot; /v NoDriveTypeAutoRun /t REG_DWORD /d 255 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\P</span>olicies<span class="se">\E</span>xplorer<span class="s2">&quot; /v NoAutorun /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Windows Sharing/SMB Settings</span>
+<span class="s2">:: Disable smb1, anonymous access to named pipes/shared, anonymous enumeration of SAM accounts, non-admin remote access to SAM</span>
+<span class="s2">:: Enable optional SMB client signing</span>
+<span class="s2">powershell.exe Disable-WindowsOptionalFeature -Online -FeatureName smb1protocol -norestart</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\S</span>ervices<span class="se">\m</span>rxsmb10<span class="s2">&quot; /v Start /t REG_DWORD /d 4 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\S</span>ervices<span class="se">\L</span>anmanServer<span class="se">\P</span>arameters<span class="s2">&quot; /v SMB1 /t REG_DWORD /d 0 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\S</span>ervices<span class="se">\L</span>anManServer<span class="se">\P</span>arameters<span class="s2">&quot; /v RestrictNullSessAccess /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\L</span>sa<span class="s2">&quot; /v RestrictAnonymousSAM /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\L</span>sa<span class="s2">&quot; /v RestrictAnonymous /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\L</span>sa<span class="s2">&quot; /v EveryoneIncludesAnonymous /t REG_DWORD /d 0 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\L</span>sa<span class="s2">&quot; /v RestrictRemoteSAM /t REG_SZ /d &quot;</span>O:BAG:BAD:<span class="o">(</span>A<span class="p">;;</span>RC<span class="p">;;;</span>BA<span class="o">)</span><span class="s2">&quot; /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\L</span>sa<span class="s2">&quot; /v UseMachineId /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\L</span>sa<span class="s2">&quot; /v LimitBlankPasswordUse /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\L</span>SA<span class="se">\M</span>SV1_0<span class="s2">&quot; /v allownullsessionfallback /t REG_DWORD /d 0 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\S</span>ervices<span class="se">\L</span>anmanWorkstation<span class="se">\P</span>arameters<span class="s2">&quot; /v EnableSecuritySignature /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: Force SMB server signing</span>
+<span class="s2">:: This could cause impact if the Windows computer this is run on is hosting a file share and the other computers connecting to it do not have SMB client signing enabled.</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\S</span>ervices<span class="se">\L</span>anManServer<span class="se">\P</span>arameters<span class="s2">&quot; /v RequireSecuritySignature /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Harden lsass to help protect against credential dumping (mimikatz) and audit lsass access requests</span>
+<span class="s2">:: Configures lsass.exe as a protected process and disables wdigest</span>
+<span class="s2">:: Enables delegation of non-exported credentials which enables support for Restricted Admin Mode or Remote Credential Guard</span>
+<span class="s2">:: ---------------------</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\C</span>urrentVersion<span class="se">\I</span>mage File Execution Options<span class="se">\L</span>SASS.exe<span class="s2">&quot; /v AuditLevel /t REG_DWORD /d 00000008 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\L</span>sa<span class="s2">&quot; /v RunAsPPL /t REG_DWORD /d 00000001 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\S</span>ecurityProviders<span class="se">\W</span>Digest<span class="s2">&quot; /v UseLogonCredential /t REG_DWORD /d 0 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>redentialsDelegation<span class="s2">&quot; /v AllowProtectedCreds /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Windows RPC and WinRM settings</span>
+<span class="s2">:: Stop WinRM</span>
+<span class="s2">net stop WinRM</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\W</span>inRM<span class="se">\S</span>ervice<span class="s2">&quot; /v AllowUnencryptedTraffic /t REG_DWORD /d 0 /f</span>
+<span class="s2">:: Prevent unauthenticated RPC connections</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\R</span>pc<span class="s2">&quot; /v RestrictRemoteClients /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: Disable WinRM Client Digiest authentication</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\W</span>inRM<span class="se">\C</span>lient<span class="s2">&quot; /v AllowDigest /t REG_DWORD /d 0 /f</span>
+<span class="s2">:: Disabling RPC usage from a remote asset interacting with scheduled tasks</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\C</span>urrentVersion<span class="se">\S</span>chedule<span class="s2">&quot; /v DisableRpcOverTcp /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: Disabling RPC usage from a remote asset interacting with services</span>
+<span class="s2">reg add &quot;</span>HKEY_LOCAL_MACHINE<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="s2">&quot; /v DisableRemoteScmEndpoints /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Biometrics</span>
+<span class="s2">:: Enable anti-spoofing for facial recognition</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\B</span>iometrics<span class="se">\F</span>acialFeatures<span class="s2">&quot; /v EnhancedAntiSpoofing /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: Disable other camera use while screen is locked</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\P</span>ersonalization<span class="s2">&quot; /v NoLockScreenCamera /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: Prevent Windows app voice activation while locked</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\A</span>ppPrivacy<span class="s2">&quot; /v LetAppsActivateWithVoiceAboveLock /t REG_DWORD /d 2 /f</span>
+<span class="s2">:: Prevent Windows app voice activation entirely (be mindful of those with accesibility needs)</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\A</span>ppPrivacy<span class="s2">&quot; /v LetAppsActivateWithVoice /t REG_DWORD /d 2 /f</span>
+<span class="s2">::</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">:: Enable and configure Windows Firewall</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">::</span>
+<span class="s2">NetSh Advfirewall set allprofiles state on</span>
+<span class="s2">::</span>
+<span class="s2">:: Enable Firewall Logging</span>
+<span class="s2">netsh advfirewall set currentprofile logging filename %systemroot%\system32\LogFiles\Firewall\pfirewall.log</span>
+<span class="s2">netsh advfirewall set currentprofile logging maxfilesize 4096</span>
+<span class="s2">netsh advfirewall set currentprofile logging droppedconnections enable</span>
+<span class="s2">::</span>
+<span class="s2">:: Block all inbound connections on Public profile</span>
+<span class="s2">netsh advfirewall set publicprofile firewallpolicy blockinboundalways,allowoutbound</span>
+<span class="s2">:: Enable Windows Defender Network Protection</span>
+<span class="s2">powershell.exe Set-MpPreference -EnableNetworkProtection Enabled</span>
+<span class="s2">::</span>
+<span class="s2">:: Block Win32 binaries from making netconns when they shouldn&#39;t - specifically targeting native processes known to be abused by bad actors</span>
+<span class="s2">:: ---------------------</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block Notepad.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\n</span>otepad.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block regsvr32.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\r</span>egsvr32.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block calc.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\c</span>alc.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block mshta.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\m</span>shta.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block wscript.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\w</span>script.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block cscript.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\c</span>script.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block runscripthelper.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\r</span>unscripthelper.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block hh.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\h</span>h.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">::</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">:: Windows 10 Privacy Settings</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">::</span>
+<span class="s2">:: Set Windows Analytics to limited enhanced if enhanced is enabled</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\D</span>ataCollection<span class="s2">&quot; /v LimitEnhancedDiagnosticDataWindowsAnalytics /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: Set Windows Telemetry to security only</span>
+<span class="s2">:: If you intend to use Enhanced for Windows Analytics then set this to &quot;</span><span class="m">2</span><span class="s2">&quot; instead</span>
+<span class="s2">:: Note my understanding is W10 Home edition will do a minimum of &quot;</span>Basic<span class="s2">&quot;</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\D</span>ataCollection<span class="s2">&quot; /v AllowTelemetry /t REG_DWORD /d 0 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\D</span>ataCollection<span class="s2">&quot; /v MaxTelemetryAllowed /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\D</span>iagnostics<span class="se">\D</span>iagTrack<span class="s2">&quot; /v ShowedToastAtLevel /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: Disable location data</span>
+<span class="s2">reg add &quot;</span>HKCU<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\C</span>apabilityAccessManager<span class="se">\C</span>onsentStore<span class="s2">&quot; /v Location /t REG_SZ /d Deny /f</span>
+<span class="s2">:: Prevent the Start Menu Search from providing internet results and using your location</span>
+<span class="s2">reg add &quot;</span>HKCU<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\S</span>earch<span class="s2">&quot; /v BingSearchEnabled /t REG_DWORD /d 0 /f</span>
+<span class="s2">reg add &quot;</span>HKCU<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\S</span>earch<span class="s2">&quot; /v AllowSearchToUseLocation /t REG_DWORD /d 0 /f</span>
+<span class="s2">reg add &quot;</span>HKCU<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\S</span>earch<span class="s2">&quot; /v CortanaConsent /t REG_DWORD /d 0 /f</span>
+<span class="s2">:: Disable publishing of Win10 user activity </span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\S</span>ystem<span class="s2">&quot; /v PublishUserActivities /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: Disable Win10 settings sync to cloud</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\S</span>ettingSync<span class="s2">&quot; /v DisableSettingSync /t REG_DWORD /d 2 /f</span>
+<span class="s2">:: Disable the advertising ID</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\A</span>dvertisingInfo<span class="s2">&quot; /v DisabledByGroupPolicy /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Disable Windows GameDVR (Broadcasting and Recording)</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\G</span>ameDVR<span class="s2">&quot; /v AllowGameDVR /t REG_DWORD /d 0 /f</span>
+<span class="s2">:: Disable Microsoft consumer experience which prevent notifications of suggested applications to install</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>loudContent<span class="s2">&quot; /v DisableWindowsConsumerFeatures /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKCU<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\C</span>ontentDeliveryManager<span class="s2">&quot; /v SystemPaneSuggestionsEnabled /t REG_DWORD /d 0 /f</span>
+<span class="s2">reg add &quot;</span>HKCU<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\C</span>ontentDeliveryManager<span class="s2">&quot; /v SilentInstalledAppsEnabled /t REG_DWORD /d 0 /f</span>
+<span class="s2">reg add &quot;</span>HKCU<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\C</span>ontentDeliveryManager<span class="s2">&quot; /v PreInstalledAppsEnabled /t REG_DWORD /d 0 /f</span>
+<span class="s2">reg add &quot;</span>HKCU<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\C</span>ontentDeliveryManager<span class="s2">&quot; /v OemPreInstalledAppsEnabled /t REG_DWORD /d 0 /f</span>
+<span class="s2">:: Disable websites accessing local language list</span>
+<span class="s2">reg add &quot;</span>HKCU<span class="se">\C</span>ontrol Panel<span class="se">\I</span>nternational<span class="se">\U</span>ser Profile<span class="s2">&quot; /v HttpAcceptLanguageOptOut /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: Prevent toast notifications from appearing on lock screen</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\P</span>ushNotifications<span class="s2">&quot; /v NoToastApplicationNotificationOnLockScreen /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">:: Enable Advanced Windows Logging</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">::</span>
+<span class="s2">:: Enlarge Windows Event Security Log Size</span>
+<span class="s2">wevtutil sl Security /ms:1024000 /f</span>
+<span class="s2">wevtutil sl Application /ms:1024000 /f</span>
+<span class="s2">wevtutil sl System /ms:1024000 /f</span>
+<span class="s2">wevtutil sl &quot;</span>Windows Powershell<span class="s2">&quot; /ms:1024000 /f</span>
+<span class="s2">wevtutil sl &quot;</span>Microsoft-Windows-PowerShell/Operational<span class="s2">&quot; /ms:1024000 /f</span>
+<span class="s2">:: Record command line data in process creation events eventid 4688</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\P</span>olicies<span class="se">\S</span>ystem<span class="se">\A</span>udit<span class="s2">&quot; /v ProcessCreationIncludeCmdLine_Enabled /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Enabled Advanced Settings</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\L</span>sa<span class="s2">&quot; /v SCENoApplyLegacyAuditPolicy /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: Enable PowerShell Logging</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\P</span>owerShell<span class="se">\M</span>oduleLogging<span class="s2">&quot; /v EnableModuleLogging /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\P</span>owerShell<span class="se">\S</span>criptBlockLogging<span class="s2">&quot; /v EnableScriptBlockLogging /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Enable Windows Event Detailed Logging</span>
+<span class="s2">:: This is intentionally meant to be a subset of expected enterprise logging as this script may be used on consumer devices.</span>
+<span class="s2">:: For more extensive Windows logging, I recommend https://www.malwarearchaeology.com/cheat-sheets</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Security Group Management<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Process Creation<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Logoff<span class="s2">&quot; /success:enable /failure:disable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Logon<span class="s2">&quot; /success:enable /failure:enable </span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Filtering Platform Connection<span class="s2">&quot; /success:enable /failure:disable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Removable Storage<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>SAM<span class="s2">&quot; /success:disable /failure:disable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Filtering Platform Policy Change<span class="s2">&quot; /success:disable /failure:disable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>IPsec Driver<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Security State Change<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Security System Extension<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>System Integrity<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">::</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">:: Extra settings commented out but worth considering</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">::</span>
+<span class="s2">:: Uninstall common extra apps found on a lot of Win10 installs</span>
+<span class="s2">:: Obviously do a quick review to ensure it isn&#39;t removing any apps you or your user need to use.</span>
+<span class="s2">:: https://docs.microsoft.com/en-us/windows/application-management/apps-in-windows-10</span>
+<span class="s2">:: PowerShell command to reinstall all pre-installed apps below</span>
+<span class="s2">:: Get-AppxPackage -AllUsers| Foreach {Add-AppxPackage -DisableDevelopmentMode -Register &quot;</span><span class="k">$(</span><span class="nv">$_</span>.InstallLocation<span class="k">)</span><span class="se">\A</span>ppXManifest.xml<span class="s2">&quot;}</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.BingWeather* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.DesktopAppInstaller* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.GetHelp* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Getstarted* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Messaging* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Microsoft3DViewer* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.MicrosoftOfficeHub* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.MicrosoftSolitaireCollection* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.MicrosoftStickyNotes* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.MixedReality.Portal* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Office.OneNote* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.OneConnect* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Print3D* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.SkypeApp* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Wallet* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WebMediaExtensions* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WebpImageExtension* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsAlarms* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsCamera* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *microsoft.windowscommunicationsapps* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsFeedbackHub* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsMaps* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsSoundRecorder* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Xbox.TCUI* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.XboxApp* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.XboxGameOverlay* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.XboxGamingOverlay* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.XboxIdentityProvider* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.XboxSpeechToTextOverlay* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.YourPhone* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.ZuneMusic* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.ZuneVideo* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsFeedback* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Windows.ContactSupport* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *PandoraMedia* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *AdobeSystemIncorporated. AdobePhotoshop* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Duolingo* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.BingNews* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Office.Sway* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Advertising.Xaml* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Services.Store.Engagement* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *ActiproSoftware* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *EclipseManager* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *SpotifyAB.SpotifyMusic* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *king.com.* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.NET.Native.Framework.1.* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">::</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">:: Extra settings commented out but worth considering</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">::</span>
+<span class="s2">:: Enforce NTLMv2 and LM authentication</span>
+<span class="s2">:: This is commented out by default as it could impact access to consumer-grade file shares but it&#39;s a recommended setting</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\L</span>sa<span class="s2">&quot; /v LmCompatibilityLevel /t REG_DWORD /d 5 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Prevent unencrypted passwords being sent to third-party SMB servers</span>
+<span class="s2">:: This is commented out by default as it could impact access to consumer-grade file shares but it&#39;s a recommended setting</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\S</span>ervices<span class="se">\L</span>anmanWorkstation<span class="se">\P</span>arameters<span class="s2">&quot; /v EnablePlainTextPassword /t REG_DWORD /d 0 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Prevent guest logons to SMB servers</span>
+<span class="s2">:: This is commented out by default as it could impact access to consumer-grade file shares but it&#39;s a recommended setting</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\L</span>anmanWorkstation<span class="s2">&quot; /v AllowInsecureGuestAuth /t REG_DWORD /d 0 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Force SMB server signing</span>
+<span class="s2">:: This is commented out by default as it could impact access to consumer-grade file shares but it&#39;s a recommended setting</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\S</span>ervices<span class="se">\L</span>anManServer<span class="se">\P</span>arameters<span class="s2">&quot; /v RequireSecuritySignature /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Enable Windows Defender Application Guard</span>
+<span class="s2">:: This setting is commented out as it enables subset of DC/CG which renders other virtualization products unsuable. Can be enabled if you don&#39;t use those</span>
+<span class="s2">:: powershell.exe Enable-WindowsOptionalFeature -online -FeatureName Windows-Defender-ApplicationGuard -norestart</span>
+<span class="s2">::</span>
+<span class="s2">:: Enable Windows Defender Credential Guard</span>
+<span class="s2">:: This setting is commented out as it enables subset of DC/CG which renders other virtualization products unsuable. Can be enabled if you don&#39;t use those</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\D</span>eviceGuard<span class="s2">&quot; /v EnableVirtualizationBasedSecurity /t REG_DWORD /d 1 /f</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\D</span>eviceGuard<span class="s2">&quot; /v RequirePlatformSecurityFeatures /t REG_DWORD /d 3 /f</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\D</span>eviceGuard<span class="s2">&quot; /v LsaCfgFlags /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: The following variant also enables forced ASLR and CFG but causes issues with several third party apps</span>
+<span class="s2">:: powershell.exe Set-Processmitigation -System -Enable DEP,CFG,ForceRelocateImages,BottomUp,SEHOP</span>
+<span class="s2">::</span>
+<span class="s2">:: Block executable files from running unless they meet a prevalence, age, or trusted list criterion</span>
+<span class="s2">:: This one is commented out for now as I need to research and test more to determine potential impact</span>
+<span class="s2">:: powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 01443614-cd74-433a-b99e-2ecdc07bfc25 -AttackSurfaceReductionRules_Actions Enabled</span>
+<span class="s2">::</span>
+<span class="s2">:: Enable Windows Defender real time monitoring</span>
+<span class="s2">:: Commented out given consumers often run third party anti-virus. You can run either. </span>
+<span class="s2">:: powershell.exe -command &quot;</span>Set-MpPreference -DisableRealtimeMonitoring <span class="nv">$false</span><span class="s2">&quot;</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows Defender<span class="se">\R</span>eal-Time Protection<span class="s2">&quot; /v DisableRealtimeMonitoring /t REG_DWORD /d 0 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Disable internet connection sharing</span>
+<span class="s2">:: Commented out as it&#39;s not enabled by default and if it is enabled, may be for a reason</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\N</span>etwork Connections<span class="s2">&quot; /v NC_ShowSharedAccessUI /t REG_DWORD /d 0 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Always re-process Group Policy even if no changes</span>
+<span class="s2">:: Commented out as consumers don&#39;t typically use GPO</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\G</span>roup Policy<span class="se">\{</span>35378EAC-683F-11D2-A89A-00C04FBBCFA2<span class="o">}</span><span class="s2">&quot; /v NoGPOListChanges /t REG_DWORD /d 0 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Force logoff if smart card removed</span>
+<span class="s2">:: Set to &quot;</span><span class="m">2</span><span class="s2">&quot; for logoff, set to &quot;</span><span class="m">1</span><span class="s2">&quot; for lock</span>
+<span class="s2">:: Commented out as consumers don&#39;t typically use smart cards</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\C</span>urrentVersion<span class="se">\W</span>inlogon<span class="s2">&quot; /v SCRemoveOption /t REG_DWORD /d 2 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Restrict privileged local admin tokens being used from network </span>
+<span class="s2">:: Commented out as it only works on domain-joined assets</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\P</span>olicies<span class="se">\S</span>ystem<span class="s2">&quot; /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 0 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Ensure outgoing secure channel traffic is encrytped</span>
+<span class="s2">:: Commented out as it only works on domain-joined assets</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\S</span>ervices<span class="se">\N</span>etlogon<span class="se">\P</span>arameters<span class="s2">&quot; /v RequireSignOrSeal /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">:: Enforce LDAP client signing</span>
+<span class="s2">:: Commented out as most consumers don&#39;t use LDAP auth</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\S</span>ervices<span class="se">\L</span>DAP<span class="s2">&quot; /v LDAPClientIntegrity /t REG_DWORD /d 1 /f</span>
+<span class="s2">::</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">:: References</span>
+<span class="s2">::#######################################################################</span>
+<span class="s2">::</span>
+<span class="s2">:: LLMNR</span>
+<span class="s2">:: https://www.blackhillsinfosec.com/how-to-disable-llmnr-why-you-want-to/</span>
+<span class="s2">:: </span>
+<span class="s2">:: Windows Defender References</span>
+<span class="s2">:: ASR Rules https://www.darkoperator.com/blog/2017/11/11/windows-defender-exploit-guard-asr-rules-for-office</span>
+<span class="s2">:: ASR and Exploit Guard https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/attack-surface-reduction-exploit-guard</span>
+<span class="s2">:: ASR Rules https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/attack-surface-reduction</span>
+<span class="s2">:: Easy methods to test rules https://demo.wd.microsoft.com/?ocid=cx-wddocs-testground</span>
+<span class="s2">:: Resource on the rules and associated event IDs https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/event-views</span>
+<span class="s2">:: Defender sandboxing https://cloudblogs.microsoft.com/microsoftsecure/2018/10/26/windows-defender-antivirus-can-now-run-in-a-sandbox/</span>
+<span class="s2">:: Defender exploit protection https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/customize-exploit-protection</span>
+<span class="s2">:: Application Guard https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-guard/install-wd-app-guard </span>
+<span class="s2">:: Defender cmdline https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-antivirus/command-line-arguments-windows-defender-antivirus</span>
+<span class="s2">::</span>
+<span class="s2">:: General hardening references</span>
+<span class="s2">:: LSA Protection https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/dn408187(v=ws.11)?redirectedfrom=MSDN</span>
+<span class="s2">::</span>
+<span class="s2">:: Microsoft Office References: </span>
+<span class="s2">:: Disable DDE https://gist.github.com/wdormann/732bb88d9b5dd5a66c9f1e1498f31a1b</span>
+<span class="s2">:: Disable macros https://decentsecurity.com/block-office-macros/</span>
+<span class="s2">::</span>
+<span class="s2">:: Debloating</span>
+<span class="s2">:: https://blog.danic.net/how-windows-10-pro-installs-unwanted-apps-candy-crush-and-how-you-stop-it/</span>
+
+<span class="s2">:: Frameworks and benchmarks</span>
+<span class="s2">:: STIG https://www.stigviewer.com/stig/windows_10/</span>
+<span class="s2">::</span>
+<span class="s2">pause</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cmd.html"
+                        title="previous chapter">Some cmd.exe commands</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="install.html"
+                        title="next chapter">Installing Windows</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/windows/hardening_script.bat.raw.rst.txt"
+           rel="nofollow">Show Source</a></li>
+    <li><a href="https://github.com/fishilico/generic-config/tree/master/windows/hardening_script.bat"
+           rel="nofollow">Show Raw File on GitHub
+           <img src="../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  </ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="install.html" title="Installing Windows"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cmd.html" title="Some cmd.exe commands"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2019, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.3.
+    </div>
+  </body>
+</html>
