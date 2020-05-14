@@ -49,7 +49,9 @@ def build_rawrst_file(dirpath, filename):
 
 def build_rawrst_dir(dirpath):
     """Build all needed raw RST files under dirpath"""
-    for root, _, files in os.walk(dirpath):
+    for root, dirs, files in os.walk(dirpath):
+        # Filter-out hidden directories such as .vagrant
+        dirs[:] = [d for d in dirs if not d.startswith('.')]
         for filename in files:
             if filename.lower().endswith(('~', '.bak', '.rst')):
                 continue

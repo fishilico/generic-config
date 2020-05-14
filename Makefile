@@ -9,7 +9,7 @@ BUILDDIR      = _build
 PYTHON        = python
 
 # Directories which contain raw files
-RAW_DIRS = etc etc-desktop etc-server www
+RAW_DIRS = etc etc-desktop etc-server windows www
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
