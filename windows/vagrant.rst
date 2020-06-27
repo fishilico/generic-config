@@ -109,7 +109,7 @@ https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machine
   ``E``), go to directory ``A:\amd64\Win10\`` and install all ``.inf`` files.
   There are 3 drivers:
 
-  - ``netkvm.inf`` for the Virtio Ethernet Adapter,
+  - ``netkvm.inf`` for the VirtIO Ethernet Adapter,
   - ``vioscsi.inf`` for the VirtIO SCSI pass-through controller,
   - ``viostor.inf`` for the VirtIO SCSI controller.
 
@@ -138,7 +138,8 @@ Then, one of these command should work (from a shell on the host):
 .. code-block:: sh
 
     vagrant rdp
-    xfreerdp /u:IEUser '/p:Passw0rd!' "/v:$(vagrant ssh-config | sed -n 's/ *HostName *//p'):3389"
+    xfreerdp /u:IEUser '/p:Passw0rd!' "/v:$(vagrant ssh-config | sed -n 's/ *HostName *//p'):3389" \
+        /w:1600 /h:900 /cert:ignore
 
 
 Using WinRM
