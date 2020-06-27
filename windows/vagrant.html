@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows Virtual Machine with Vagrant &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -30,7 +31,8 @@
           <a href="utc-clock.html" title="Set hardware clock to UTC"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Windows Virtual Machine with Vagrant</a></li> 
       </ul>
     </div>  
 
@@ -152,7 +154,7 @@ in a <code class="docutils literal notranslate"><span class="pre">virtio-win</sp
 <code class="docutils literal notranslate"><span class="pre">E</span></code>), go to directory <code class="docutils literal notranslate"><span class="pre">A:\amd64\Win10\</span></code> and install all <code class="docutils literal notranslate"><span class="pre">.inf</span></code> files.
 There are 3 drivers:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">netkvm.inf</span></code> for the Virtio Ethernet Adapter,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">netkvm.inf</span></code> for the VirtIO Ethernet Adapter,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vioscsi.inf</span></code> for the VirtIO SCSI pass-through controller,</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">viostor.inf</span></code> for the VirtIO SCSI controller.</p></li>
 </ul>
@@ -179,7 +181,8 @@ firewall opened:</p>
 </div>
 <p>Then, one of these command should work (from a shell on the host):</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>vagrant rdp
-xfreerdp /u:IEUser <span class="s1">&#39;/p:Passw0rd!&#39;</span> <span class="s2">&quot;/v:</span><span class="k">$(</span>vagrant ssh-config <span class="p">|</span> sed -n <span class="s1">&#39;s/ *HostName *//p&#39;</span><span class="k">)</span><span class="s2">:3389&quot;</span>
+xfreerdp /u:IEUser <span class="s1">&#39;/p:Passw0rd!&#39;</span> <span class="s2">&quot;/v:</span><span class="k">$(</span>vagrant ssh-config <span class="p">|</span> sed -n <span class="s1">&#39;s/ *HostName *//p&#39;</span><span class="k">)</span><span class="s2">:3389&quot;</span> <span class="se">\</span>
+    /w:1600 /h:900 /cert:ignore
 </pre></div>
 </div>
 </div>
@@ -392,6 +395,7 @@ This public key can be provisioned with:</p>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -454,12 +458,13 @@ This public key can be provisioned with:</p>
           <a href="utc-clock.html" title="Set hardware clock to UTC"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Windows Virtual Machine with Vagrant</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>
