@@ -31,7 +31,7 @@ At any time, to restore this default configuration (and remove all rules), run::
 Egress shaping (limiting outbound traffic)
 ------------------------------------------
 
-This command attachs a TBF (Token Bucket Filter) to ``eth0`` which :
+This command attaches a TBF (Token Bucket Filter) to ``eth0`` which :
 
 * limit the maximum rate to 1 Mbits/s,
 * define a peakrate at 2 Mbits/s,

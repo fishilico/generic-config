@@ -326,7 +326,7 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\P</span>ersonalization<span class="s2">&quot; /v NoLockScreenCamera /t REG_DWORD /d 1 /f</span>
 <span class="s2">:: Prevent Windows app voice activation while locked</span>
 <span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\A</span>ppPrivacy<span class="s2">&quot; /v LetAppsActivateWithVoiceAboveLock /t REG_DWORD /d 2 /f</span>
-<span class="s2">:: Prevent Windows app voice activation entirely (be mindful of those with accesibility needs)</span>
+<span class="s2">:: Prevent Windows app voice activation entirely (be mindful of those with accessibility needs)</span>
 <span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\A</span>ppPrivacy<span class="s2">&quot; /v LetAppsActivateWithVoice /t REG_DWORD /d 2 /f</span>
 <span class="s2">::</span>
 <span class="s2">::#######################################################################</span>
@@ -506,11 +506,11 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\S</span>ervices<span class="se">\L</span>anManServer<span class="se">\P</span>arameters<span class="s2">&quot; /v RequireSecuritySignature /t REG_DWORD /d 1 /f</span>
 <span class="s2">::</span>
 <span class="s2">:: Enable Windows Defender Application Guard</span>
-<span class="s2">:: This setting is commented out as it enables subset of DC/CG which renders other virtualization products unsuable. Can be enabled if you don&#39;t use those</span>
+<span class="s2">:: This setting is commented out as it enables subset of DC/CG which renders other virtualization products unusable. Can be enabled if you don&#39;t use those</span>
 <span class="s2">:: powershell.exe Enable-WindowsOptionalFeature -online -FeatureName Windows-Defender-ApplicationGuard -norestart</span>
 <span class="s2">::</span>
 <span class="s2">:: Enable Windows Defender Credential Guard</span>
-<span class="s2">:: This setting is commented out as it enables subset of DC/CG which renders other virtualization products unsuable. Can be enabled if you don&#39;t use those</span>
+<span class="s2">:: This setting is commented out as it enables subset of DC/CG which renders other virtualization products unusable. Can be enabled if you don&#39;t use those</span>
 <span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\D</span>eviceGuard<span class="s2">&quot; /v EnableVirtualizationBasedSecurity /t REG_DWORD /d 1 /f</span>
 <span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\D</span>eviceGuard<span class="s2">&quot; /v RequirePlatformSecurityFeatures /t REG_DWORD /d 3 /f</span>
 <span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\D</span>eviceGuard<span class="s2">&quot; /v LsaCfgFlags /t REG_DWORD /d 1 /f</span>
@@ -544,7 +544,7 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">:: Commented out as it only works on domain-joined assets</span>
 <span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\P</span>olicies<span class="se">\S</span>ystem<span class="s2">&quot; /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 0 /f</span>
 <span class="s2">::</span>
-<span class="s2">:: Ensure outgoing secure channel traffic is encrytped</span>
+<span class="s2">:: Ensure outgoing secure channel traffic is encrypted</span>
 <span class="s2">:: Commented out as it only works on domain-joined assets</span>
 <span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\S</span>ervices<span class="se">\N</span>etlogon<span class="se">\P</span>arameters<span class="s2">&quot; /v RequireSignOrSeal /t REG_DWORD /d 1 /f</span>
 <span class="s2">::</span>

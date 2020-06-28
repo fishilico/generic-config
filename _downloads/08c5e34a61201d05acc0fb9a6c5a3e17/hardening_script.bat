@@ -280,7 +280,7 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Biometrics\FacialFeatures" /v Enhanced
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v NoLockScreenCamera /t REG_DWORD /d 1 /f
 :: Prevent Windows app voice activation while locked
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" /v LetAppsActivateWithVoiceAboveLock /t REG_DWORD /d 2 /f
-:: Prevent Windows app voice activation entirely (be mindful of those with accesibility needs)
+:: Prevent Windows app voice activation entirely (be mindful of those with accessibility needs)
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" /v LetAppsActivateWithVoice /t REG_DWORD /d 2 /f
 ::
 ::#######################################################################
@@ -460,11 +460,11 @@ powershell.exe -command "Get-AppxPackage *Microsoft.NET.Native.Framework.1.* -Al
 :: reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" /v RequireSecuritySignature /t REG_DWORD /d 1 /f
 ::
 :: Enable Windows Defender Application Guard
-:: This setting is commented out as it enables subset of DC/CG which renders other virtualization products unsuable. Can be enabled if you don't use those
+:: This setting is commented out as it enables subset of DC/CG which renders other virtualization products unusable. Can be enabled if you don't use those
 :: powershell.exe Enable-WindowsOptionalFeature -online -FeatureName Windows-Defender-ApplicationGuard -norestart
 ::
 :: Enable Windows Defender Credential Guard
-:: This setting is commented out as it enables subset of DC/CG which renders other virtualization products unsuable. Can be enabled if you don't use those
+:: This setting is commented out as it enables subset of DC/CG which renders other virtualization products unusable. Can be enabled if you don't use those
 :: reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" /v EnableVirtualizationBasedSecurity /t REG_DWORD /d 1 /f
 :: reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" /v RequirePlatformSecurityFeatures /t REG_DWORD /d 3 /f
 :: reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" /v LsaCfgFlags /t REG_DWORD /d 1 /f
@@ -498,7 +498,7 @@ powershell.exe -command "Get-AppxPackage *Microsoft.NET.Native.Framework.1.* -Al
 :: Commented out as it only works on domain-joined assets
 :: reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 0 /f
 ::
-:: Ensure outgoing secure channel traffic is encrytped
+:: Ensure outgoing secure channel traffic is encrypted
 :: Commented out as it only works on domain-joined assets
 :: reg add "HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" /v RequireSignOrSeal /t REG_DWORD /d 1 /f
 ::
