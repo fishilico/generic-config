@@ -34,7 +34,7 @@ example when creating a new website, three commands are needed:
     GRANT SELECT, INSERT, DELETE, UPDATE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES ON newsite.* TO 'newsite'@'localhost';
     FLUSH PRIVILEGES;
 
-The following command changes the password assiociated to the user:
+The following command changes the password associated to the user:
 
 .. code-block:: mysql
 

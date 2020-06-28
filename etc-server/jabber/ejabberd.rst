@@ -74,7 +74,7 @@ Here is how a DNS zone may be configured::
     jabber IN A 10.22.33.44
 
 
-Bitlbee configutation
+Bitlbee configuration
 ---------------------
 Bitlbee can be used to interact with jabber through an IRC server.
 Here are some useful commands from http://wiki.bitlbee.org/quickstart::
