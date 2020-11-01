@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Microsoft SQL Server &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -46,42 +46,42 @@
 <div class="section" id="mssql-queries">
 <h2>MSSQL queries<a class="headerlink" href="#mssql-queries" title="Permalink to this headline">¶</a></h2>
 <p>Show the version of the database:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">@@</span><span class="n">version</span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="nv">@@version</span>
 <span class="n">GO</span>
 </pre></div>
 </div>
 <p>List available databases:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="k">Databases</span><span class="p">;</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">master</span><span class="p">..</span><span class="n">sysdatabases</span><span class="p">;</span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="k">name</span> <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="k">Databases</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">master</span><span class="p">..</span><span class="n">sysdatabases</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>List available tables from a database:</p>
 <div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">USE</span> <span class="n">msdb</span><span class="p">;</span>
-<span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="kp">Tables</span>
+<span class="k">SELECT</span> <span class="k">name</span> <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="k">Tables</span>
 
-<span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">sysobjects</span> <span class="k">WHERE</span> <span class="n">xtype</span><span class="o">=</span><span class="s1">&#39;U&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">name</span> <span class="k">FROM</span> <span class="n">sysobjects</span> <span class="k">WHERE</span> <span class="n">xtype</span><span class="o">=</span><span class="s1">&#39;U&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>List columns of a table:</p>
 <div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">syscolumns</span><span class="p">.</span><span class="o">*</span> <span class="k">FROM</span> <span class="n">syscolumns</span>
   <span class="k">JOIN</span> <span class="n">sysobjects</span> <span class="k">ON</span> <span class="n">syscolumn</span><span class="p">.</span><span class="n">id</span><span class="o">=</span><span class="n">sysobjects</span><span class="p">.</span><span class="n">id</span>
-  <span class="k">WHERE</span> <span class="n">sysobjects</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;my_table&#39;</span>
+  <span class="k">WHERE</span> <span class="n">sysobjects</span><span class="p">.</span><span class="k">name</span><span class="o">=</span><span class="s1">&#39;my_table&#39;</span>
 </pre></div>
 </div>
 <p>Enumerate users (type “<code class="docutils literal notranslate"><span class="pre">U</span></code>” is for <code class="docutils literal notranslate"><span class="pre">WINDOWS_LOGIN</span></code>, like <code class="docutils literal notranslate"><span class="pre">NT</span> <span class="pre">AUTHORITY\SYSTEM</span></code> account, and “<code class="docutils literal notranslate"><span class="pre">S</span></code>” is for <code class="docutils literal notranslate"><span class="pre">SQL_LOGIN</span></code>, like <code class="docutils literal notranslate"><span class="pre">sa</span></code> account):</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">principal_id</span><span class="p">,</span> <span class="n">sid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="n">type_desc</span><span class="p">,</span> <span class="n">credential_id</span><span class="p">,</span> <span class="n">owning_principal_id</span>
-  <span class="k">FROM</span> <span class="n">master</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">server_principals</span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">principal_id</span><span class="p">,</span> <span class="n">sid</span><span class="p">,</span> <span class="k">name</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span> <span class="n">type_desc</span><span class="p">,</span> <span class="n">credential_id</span><span class="p">,</span> <span class="n">owning_principal_id</span>
+  <span class="k">FROM</span> <span class="k">master</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">server_principals</span>
 
 <span class="c1">-- With passwords (John The Ripper format &quot;mssql&quot;)</span>
-<span class="k">SELECT</span> <span class="n">name</span><span class="p">,</span> <span class="n">password</span> <span class="k">FROM</span> <span class="n">sysxlogins</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">name</span><span class="p">,</span> <span class="k">password</span> <span class="k">FROM</span> <span class="n">sysxlogins</span><span class="p">;</span>
 <span class="c1">-- since MSSQL 2005 (JtR format &quot;mssql05&quot;, after adding &quot;0x&quot; prefix to hashes):</span>
-<span class="k">SELECT</span> <span class="n">name</span><span class="p">,</span> <span class="n">password_hash</span> <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">sql_logins</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">name</span><span class="p">,</span> <span class="n">password_hash</span> <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">sql_logins</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Run system commands:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="n">EXEC</span> <span class="n">master</span><span class="p">.</span><span class="n">dbo</span><span class="p">.</span><span class="n">sp_configure</span> <span class="s1">&#39;show advanced options&#39;</span><span class="p">,</span> <span class="mi">1</span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="n">EXEC</span> <span class="k">master</span><span class="p">.</span><span class="n">dbo</span><span class="p">.</span><span class="n">sp_configure</span> <span class="s1">&#39;show advanced options&#39;</span><span class="p">,</span> <span class="mi">1</span>
 <span class="n">RECONFIGURE</span>
-<span class="n">EXEC</span> <span class="n">master</span><span class="p">.</span><span class="n">dbo</span><span class="p">.</span><span class="n">sp_configure</span> <span class="s1">&#39;xp_cmdshell&#39;</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">EXEC</span> <span class="k">master</span><span class="p">.</span><span class="n">dbo</span><span class="p">.</span><span class="n">sp_configure</span> <span class="s1">&#39;xp_cmdshell&#39;</span><span class="p">,</span> <span class="mi">1</span>
 <span class="n">RECONFIGURE</span>
 <span class="n">GO</span>
 
@@ -192,7 +192,7 @@ Write this in <code class="docutils literal notranslate"><span class="pre">/etc/
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>

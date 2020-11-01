@@ -45,6 +45,8 @@ Here is a basic configuration::
         FSType "cgroup"
         FSType "devtmpfs"
         FSType "tmpfs"
+        FSType "overlay"
+        FSType "squashfs"
         IgnoreSelected true
         ReportByDevice false
         ReportReserved true
@@ -188,3 +190,20 @@ is done by creating ``conf/config.local.php`` with::
     $CONFIG['rrd_fetch_method'] = 'async';
     $CONFIG['overview'] = array('load', 'memory', 'swap', 'sensors', 'df', 'interface');
     $CONFIG['time_range']['default'] = 7200; // 2 hours
+
+A Docker container can be used to "run a PHP webserver in a quick & dirty mode"::
+
+    # Dockerfile
+    # Usage:
+    #   docker build -t collectd_cgp .
+    #   docker run --rm -p 80:80 -v /var/lib/collectd/rrd:/var/lib/collectd/rrd:ro -ti collectd_cgp
+    FROM php:7.4-buster
+
+    RUN \
+        export DEBIAN_FRONTEND=noninteractive && \
+        apt-get -qq update && \
+        apt-get install --no-install-recommends --no-install-suggests -qqy rrdtool && \
+        apt-get clean
+    COPY CGP /cgp
+    WORKDIR /cgp
+    CMD ["/usr/local/bin/php", "-S", "0.0.0.0:80"]

@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Collectd &#8212; Generic Config</title>
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -83,6 +83,8 @@ straightforward and the wiki helps understanding the few tricky fields
     <span class="n">FSType</span> <span class="s2">&quot;cgroup&quot;</span>
     <span class="n">FSType</span> <span class="s2">&quot;devtmpfs&quot;</span>
     <span class="n">FSType</span> <span class="s2">&quot;tmpfs&quot;</span>
+    <span class="n">FSType</span> <span class="s2">&quot;overlay&quot;</span>
+    <span class="n">FSType</span> <span class="s2">&quot;squashfs&quot;</span>
     <span class="n">IgnoreSelected</span> <span class="n">true</span>
     <span class="n">ReportByDevice</span> <span class="n">false</span>
     <span class="n">ReportReserved</span> <span class="n">true</span>
@@ -223,6 +225,23 @@ $CONFIG[&#39;overview&#39;] = array(&#39;load&#39;, &#39;memory&#39;, &#39;swap&
 $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
 </pre></div>
 </div>
+<p>A Docker container can be used to “run a PHP webserver in a quick &amp; dirty mode”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dockerfile</span>
+<span class="c1"># Usage:</span>
+<span class="c1">#   docker build -t collectd_cgp .</span>
+<span class="c1">#   docker run --rm -p 80:80 -v /var/lib/collectd/rrd:/var/lib/collectd/rrd:ro -ti collectd_cgp</span>
+<span class="n">FROM</span> <span class="n">php</span><span class="p">:</span><span class="mf">7.4</span><span class="o">-</span><span class="n">buster</span>
+
+<span class="n">RUN</span> \
+    <span class="n">export</span> <span class="n">DEBIAN_FRONTEND</span><span class="o">=</span><span class="n">noninteractive</span> <span class="o">&amp;&amp;</span> \
+    <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">qq</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> \
+    <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">recommends</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">suggests</span> <span class="o">-</span><span class="n">qqy</span> <span class="n">rrdtool</span> <span class="o">&amp;&amp;</span> \
+    <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">clean</span>
+<span class="n">COPY</span> <span class="n">CGP</span> <span class="o">/</span><span class="n">cgp</span>
+<span class="n">WORKDIR</span> <span class="o">/</span><span class="n">cgp</span>
+<span class="n">CMD</span> <span class="p">[</span><span class="s2">&quot;/usr/local/bin/php&quot;</span><span class="p">,</span> <span class="s2">&quot;-S&quot;</span><span class="p">,</span> <span class="s2">&quot;0.0.0.0:80&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -297,7 +316,7 @@ $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>
