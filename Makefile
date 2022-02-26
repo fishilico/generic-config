@@ -6,7 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = _build
-PYTHON        = python
+PYTHON        = python3
 
 # Directories which contain raw files
 RAW_DIRS = etc etc-desktop etc-server windows www

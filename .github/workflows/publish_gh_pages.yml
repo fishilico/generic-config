@@ -1,0 +1,73 @@
+name: Build and publish GitHub pages
+
+on: [push, pull_request]
+
+jobs:
+  build_pages:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y make python3-sphinx
+
+    - run: make all
+
+    - name: Upload HTML artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: html
+        path: _build/html
+        if-no-files-found: error
+
+    # Update GitHub pages
+    - run: make clean
+
+    - name: Configure git user and email
+      run: |
+        git config --global user.email "GitHub Actions Deployer"
+        git config --global user.name "deployer@github.local"
+
+    - name: Check out gh-pages in _build/html
+      run: |
+        mkdir -p _build/html
+        git -C _build/html init
+        git -C _build/html remote add --fetch origin "$(git config remote.origin.url)"
+        if git -C _build/html rev-parse --verify origin/gh-pages ; then
+          git -C _build/html checkout gh-pages &&
+          git -C _build/html rm -rf . ;
+        else
+          git -C _build/html checkout --orphan gh-pages ;
+        fi
+        # Disable Jekyll engine
+        touch _build/html/.nojekyll
+
+    - name: Build Github pages with Sphinx
+      run: make html
+
+    - name: Show the diff
+      run: |
+          git -C _build/html add -A
+          git -C _build/html diff --cached
+
+    - name: Commit the new pages
+      run: |
+        if git -C _build/html status --short | grep '^' ; then
+          git -C _build/html add -A
+          git -C _build/html commit --allow-empty -m "Sphinx build of ${{ github.sha }}"
+          git -C _build/html format-patch -n1 --stdout > _build/gh-pages.patch
+        fi
+
+    - name: Upload changes in artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: gh-pages.patch
+        path: _build/gh-pages.patch
+
+    - name: Deploy GitHub Pages
+      if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: |
+        git -C _build/html remote add pushable-origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}"
+        git -C _build/html push --quiet pushable-origin gh-pages
