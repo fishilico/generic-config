@@ -1,8 +1,8 @@
 Generic Configuration README
 ============================
 
-.. image:: https://circleci.com/gh/fishilico/generic-config.png?style=shield
-  :target: https://circleci.com/gh/fishilico/generic-config
+.. image:: https://github.com/fishilico/generic-config/actions/workflows/publish_gh_pages.yml/badge.svg
+  :target: https://github.com/fishilico/generic-config/actions/workflows/publish_gh_pages.yml
 
 https://fishilico.github.io/generic-config/
 
