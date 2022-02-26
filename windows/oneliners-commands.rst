@@ -297,7 +297,7 @@ Some commands to list and manage users and groups
     Get-CimInstance -ClassName Win32_UserAccount
     Get-CimInstance -ClassName Win32_Group
 
-    # Add an adminitrator user
+    # Add an administrator user
     net user newuser password /add
     net localgroup Administrators newuser /add
 
