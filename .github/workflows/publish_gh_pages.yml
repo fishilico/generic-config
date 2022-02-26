@@ -27,8 +27,8 @@ jobs:
 
     - name: Configure git user and email
       run: |
-        git config --global user.email "GitHub Actions Deployer"
-        git config --global user.name "deployer@github.local"
+        git config --global user.email "deployer@github.local"
+        git config --global user.name "GitHub Actions Deployer"
 
     - name: Check out gh-pages in _build/html
       run: |
