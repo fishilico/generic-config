@@ -49,8 +49,8 @@ Here are config files for a server named ``examplehost`` in domain ``example.com
     smtp_tls_protocols=!SSLv2,!SSLv3
     smtpd_tls_exclude_ciphers = aNULL, eNULL, EXPORT, DES, RC4, MD5, PSK, aECDH, EDH-DSS-DES-CBC3-SHA, EDH-RSA-DES-CDC3-SHA, KRB5-DE5, CBC3-SHA
     # The Diffie-Hellman parameters file can be generated with:
-    # openssl dhparam -out /etc/postfix/ssl/dh_1024.pem 1024
-    smtpd_tls_dh1024_param_file = ${config_directory}/ssl/dh_1024.pem
+    # openssl dhparam -out /etc/postfix/ssl/dh_2048.pem 2048
+    smtpd_tls_dh1024_param_file = ${config_directory}/ssl/dh_2048.pem
 
     # Fully-qualified domain name of the machine
     myhostname = examplehost.example.com
@@ -80,6 +80,9 @@ Here are config files for a server named ``examplehost`` in domain ``example.com
 
     # "smarthost" to send messages to
     relayhost =
+
+    # For relaying messages, when submission is enabled
+    smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 
     # Character which is used to define a local address extension
     recipient_delimiter = +
@@ -209,6 +212,8 @@ To enable SMTPS as STARTTLS over SMTP (TCP port 587), add the following lines to
       -o smtpd_tls_security_level=encrypt
       -o smtpd_sasl_auth_enable=yes
       -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+      -o smtpd_recipient_restrictions=
+      -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
       -o milter_macro_daemon_name=ORIGINATING
 
 In this configuration ``smtpd_client_restrictions`` disables
@@ -253,6 +258,10 @@ To fully control the configuration, it is possible to comment
     ssl_cert = </etc/ssl/dovecot/dovecot.crt
     # Do not forget to make /etc/ssl/dovecot/dovecot.key only readable by root
     ssl_key = </etc/ssl/dovecot/dovecot.key
+
+    # DH parameters generated with:
+    # openssl dhparam -out /usr/share/dovecot/dh.pem 4096
+    ssl_dh = </usr/share/dovecot/dh.pem
 
     # Disable plaintext authentication
     disable_plaintext_auth = yes
