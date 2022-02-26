@@ -1,18 +1,19 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Traffic shaping &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="User management on Linux" href="user.html" />
@@ -31,8 +32,7 @@
           <a href="tmpfs.html" title="Use tmpfs for some directories"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Traffic shaping</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -47,11 +47,11 @@
 of not-so-intuitive commands related to traffic shaping.</p>
 <p>Documentation:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://linux-ip.net/articles/Traffic-Control-HOWTO/">http://linux-ip.net/articles/Traffic-Control-HOWTO/</a></p></li>
-<li><p><a class="reference external" href="http://lartc.org/wondershaper/">http://lartc.org/wondershaper/</a> (scripts to do QoS on ADSL)</p></li>
-<li><p><a class="reference external" href="https://www.kernel.org/doc/Documentation/cgroups/net_cls.txt">https://www.kernel.org/doc/Documentation/cgroups/net_cls.txt</a> (filter with cgroup)</p></li>
-<li><p><a class="reference external" href="http://lartc.org/manpages/tc.html">http://lartc.org/manpages/tc.html</a> (official manpage)</p></li>
-<li><p><a class="reference external" href="http://lartc.org/howto/lartc.qdisc.filters.html">http://lartc.org/howto/lartc.qdisc.filters.html</a> (tc filters)</p></li>
+<li><a class="reference external" href="http://linux-ip.net/articles/Traffic-Control-HOWTO/">http://linux-ip.net/articles/Traffic-Control-HOWTO/</a></li>
+<li><a class="reference external" href="http://lartc.org/wondershaper/">http://lartc.org/wondershaper/</a> (scripts to do QoS on ADSL)</li>
+<li><a class="reference external" href="https://www.kernel.org/doc/Documentation/cgroups/net_cls.txt">https://www.kernel.org/doc/Documentation/cgroups/net_cls.txt</a> (filter with cgroup)</li>
+<li><a class="reference external" href="http://lartc.org/manpages/tc.html">http://lartc.org/manpages/tc.html</a> (official manpage)</li>
+<li><a class="reference external" href="http://lartc.org/howto/lartc.qdisc.filters.html">http://lartc.org/howto/lartc.qdisc.filters.html</a> (tc filters)</li>
 </ul>
 <p>First, to dump current traffic shaping rules on interface <code class="docutils literal notranslate"><span class="pre">eth0</span></code>, use the
 following command (<code class="docutils literal notranslate"><span class="pre">tc</span></code> means “Traffic Controller”):</p>
@@ -72,10 +72,10 @@ following command (<code class="docutils literal notranslate"><span class="pre">
 <h2>Egress shaping (limiting outbound traffic)<a class="headerlink" href="#egress-shaping-limiting-outbound-traffic" title="Permalink to this headline">¶</a></h2>
 <p>This command attaches a TBF (Token Bucket Filter) to <code class="docutils literal notranslate"><span class="pre">eth0</span></code> which :</p>
 <ul class="simple">
-<li><p>limit the maximum rate to 1 Mbits/s,</p></li>
-<li><p>define a peakrate at 2 Mbits/s,</p></li>
-<li><p>use a 10 KB buffer,</p></li>
-<li><p>limit the latency caused by the TBF to at most 70ms</p></li>
+<li>limit the maximum rate to 1 Mbits/s,</li>
+<li>define a peakrate at 2 Mbits/s,</li>
+<li>use a 10 KB buffer,</li>
+<li>limit the latency caused by the TBF to at most 70ms</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">root</span> <span class="n">tbf</span> <span class="n">rate</span> <span class="mi">1</span><span class="n">mbit</span> <span class="n">peakrate</span> <span class="mi">2</span><span class="n">mbit</span> <span class="n">burst</span> <span class="mi">10</span><span class="n">kb</span> <span class="n">latency</span> <span class="mi">70</span><span class="n">ms</span> <span class="n">minburst</span> <span class="mi">1540</span>
 </pre></div>
@@ -167,7 +167,6 @@ can attach a filter in ingress mode which drops too fast packets:</p>
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -200,15 +199,17 @@ can attach a filter in ingress mode which drops too fast packets:</p>
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -226,13 +227,12 @@ can attach a filter in ingress mode which drops too fast packets:</p>
           <a href="tmpfs.html" title="Use tmpfs for some directories"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Traffic shaping</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

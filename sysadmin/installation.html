@@ -1,18 +1,19 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Installing a Linux system &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Linux NAT router" href="nat.html" />
@@ -31,8 +32,7 @@
           <a href="gdb.html" title="GDB, The GNU Project Debugger"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Installing a Linux system</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -46,16 +46,16 @@
 <p>This document aims at providing the main steps in installing a Linux system.
 When installing a specific Linux distribution, the documentation available on the distribution’s wiki often provides very detailed steps:</p>
 <ul class="simple">
-<li><p>Arch Linux’s installation guide: <a class="reference external" href="https://wiki.archlinux.org/index.php/installation_guide">https://wiki.archlinux.org/index.php/installation_guide</a></p></li>
-<li><p>Gentoo’s Handbook: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64#Installing_Gentoo">https://wiki.gentoo.org/wiki/Handbook:AMD64#Installing_Gentoo</a></p></li>
+<li>Arch Linux’s installation guide: <a class="reference external" href="https://wiki.archlinux.org/index.php/installation_guide">https://wiki.archlinux.org/index.php/installation_guide</a></li>
+<li>Gentoo’s Handbook: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64#Installing_Gentoo">https://wiki.gentoo.org/wiki/Handbook:AMD64#Installing_Gentoo</a></li>
 </ul>
 <div class="section" id="booting-a-live-media-to-a-live-system">
 <h2>Booting a live media to a live system<a class="headerlink" href="#booting-a-live-media-to-a-live-system" title="Permalink to this headline">¶</a></h2>
 <p>The first steps of installing a Linux system consist in booting on a Linux system provided as a CD-ROM image (<code class="docutils literal notranslate"><span class="pre">.iso</span></code> file) or as a live USB key image.
 Such live media can also be created with tools such as:</p>
 <ul class="simple">
-<li><p>Fedora’s Livemedia-creator (with Anaconda): <a class="reference external" href="https://fedoraproject.org/wiki/Livemedia-creator-_How_to_create_and_use_a_Live_CD">https://fedoraproject.org/wiki/Livemedia-creator-_How_to_create_and_use_a_Live_CD</a></p></li>
-<li><p>UNetbootin: <a class="reference external" href="https://unetbootin.github.io/">https://unetbootin.github.io/</a></p></li>
+<li>Fedora’s Livemedia-creator (with Anaconda): <a class="reference external" href="https://fedoraproject.org/wiki/Livemedia-creator-_How_to_create_and_use_a_Live_CD">https://fedoraproject.org/wiki/Livemedia-creator-_How_to_create_and_use_a_Live_CD</a></li>
+<li>UNetbootin: <a class="reference external" href="https://unetbootin.github.io/">https://unetbootin.github.io/</a></li>
 </ul>
 <p>Once booted using the live media, the keyboard layout needs to be configured:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enumerate the available console keymaps, provided by:</span>
@@ -98,11 +98,11 @@ timedatectl set-ntp <span class="nb">true</span>
 There does not exist a generic configuration that works for every possible computer: some could use software RAID with much swap, others do not need swap at all, etc.</p>
 <p>One major differences between systems is the way a system boot:</p>
 <ul class="simple">
-<li><p>Legacy systems use BIOS with a MBR partition table.
-<code class="docutils literal notranslate"><span class="pre">/boot</span></code> can be split in its own partition but this is not mandatory.</p></li>
-<li><p>Newer systems use UEFI with a GPT partition table.
+<li>Legacy systems use BIOS with a MBR partition table.
+<code class="docutils literal notranslate"><span class="pre">/boot</span></code> can be split in its own partition but this is not mandatory.</li>
+<li>Newer systems use UEFI with a GPT partition table.
 This requires a <code class="docutils literal notranslate"><span class="pre">EFI</span> <span class="pre">system</span> <span class="pre">partition</span></code> which is nowadays the <code class="docutils literal notranslate"><span class="pre">/boot</span></code> partition.
-Allocating 400 MB for such a partition should be more than enough.</p></li>
+Allocating 400 MB for such a partition should be more than enough.</li>
 </ul>
 <p>When installing GRUB boot manager on a UEFI system, an other dedicated partition needs to be created.
 Allocating 200 MB to it should be enough.</p>
@@ -161,19 +161,19 @@ mount /dev/sda1 /mnt/boot
 </div>
 <p>Some documentation:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://help.ubuntu.com/community/ResizeEncryptedPartitions">https://help.ubuntu.com/community/ResizeEncryptedPartitions</a></p></li>
+<li><a class="reference external" href="https://help.ubuntu.com/community/ResizeEncryptedPartitions">https://help.ubuntu.com/community/ResizeEncryptedPartitions</a></li>
 </ul>
 </div>
 <div class="section" id="installing-a-base-system">
 <h2>Installing a base system<a class="headerlink" href="#installing-a-base-system" title="Permalink to this headline">¶</a></h2>
 <p>Once the disks are ready, bootstrapping a system is often achieved using one command specific to the distribution.</p>
 <ul>
-<li><p>Arch Linux use <code class="docutils literal notranslate"><span class="pre">pacstrap</span></code>:</p>
+<li><p class="first">Arch Linux use <code class="docutils literal notranslate"><span class="pre">pacstrap</span></code>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pacstrap /mnt base
 </pre></div>
 </div>
 </li>
-<li><p>Debian-based system use <code class="docutils literal notranslate"><span class="pre">debootstrap</span></code>:</p>
+<li><p class="first">Debian-based system use <code class="docutils literal notranslate"><span class="pre">debootstrap</span></code>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>debootstrap --arch amd64 stable /mnt
 </pre></div>
 </div>
@@ -261,9 +261,11 @@ The kernel boot command line also needs to be adjusted to include information ab
 </div>
 <p>If the system is supposed to be unlocked remotely (for example by entering the encryption passphrase in a Dropbear SSH server embedded in the initramfs), some actions need to be performed (<a class="reference external" href="https://wiki.archlinux.org/index.php/Dm-crypt/Specialties#Remote_unlocking_of_the_root_%28or_other%29_partition">https://wiki.archlinux.org/index.php/Dm-crypt/Specialties#Remote_unlocking_of_the_root_%28or_other%29_partition</a>):</p>
 <ul>
-<li><p>Configure a SSH public key in <code class="docutils literal notranslate"><span class="pre">/etc/dropbear/root_key</span></code> or <code class="docutils literal notranslate"><span class="pre">/etc/tinyssh/root_key</span></code></p></li>
-<li><p>Add <code class="docutils literal notranslate"><span class="pre">netconf</span> <span class="pre">dropbear</span> <span class="pre">encryptssh</span></code> hooks in <code class="docutils literal notranslate"><span class="pre">/etc/mkinitcpio.conf</span></code> before <code class="docutils literal notranslate"><span class="pre">filesystem</span></code></p></li>
-<li><p>Configure <code class="docutils literal notranslate"><span class="pre">cryptdevice</span></code> and <code class="docutils literal notranslate"><span class="pre">ip</span></code> parameters in the kernel boot command. For example:</p>
+<li><p class="first">Configure a SSH public key in <code class="docutils literal notranslate"><span class="pre">/etc/dropbear/root_key</span></code> or <code class="docutils literal notranslate"><span class="pre">/etc/tinyssh/root_key</span></code></p>
+</li>
+<li><p class="first">Add <code class="docutils literal notranslate"><span class="pre">netconf</span> <span class="pre">dropbear</span> <span class="pre">encryptssh</span></code> hooks in <code class="docutils literal notranslate"><span class="pre">/etc/mkinitcpio.conf</span></code> before <code class="docutils literal notranslate"><span class="pre">filesystem</span></code></p>
+</li>
+<li><p class="first">Configure <code class="docutils literal notranslate"><span class="pre">cryptdevice</span></code> and <code class="docutils literal notranslate"><span class="pre">ip</span></code> parameters in the kernel boot command. For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cryptdevice</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk</span><span class="o">/</span><span class="n">by</span><span class="o">-</span><span class="n">uuid</span><span class="o">/</span><span class="n">xxxxxxxx</span><span class="o">-...-</span><span class="n">xxxxxxxxxxxx</span><span class="p">:</span><span class="n">system</span>
 <span class="n">ip</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.2</span><span class="p">::</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span><span class="p">:</span><span class="n">myhostname</span><span class="p">:</span><span class="n">eth0</span><span class="p">:</span><span class="n">none</span>
 </pre></div>
@@ -304,7 +306,6 @@ Also, please add <code class="docutils literal notranslate"><span class="pre">IL
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -338,15 +339,17 @@ Also, please add <code class="docutils literal notranslate"><span class="pre">IL
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -364,13 +367,12 @@ Also, please add <code class="docutils literal notranslate"><span class="pre">IL
           <a href="gdb.html" title="GDB, The GNU Project Debugger"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Installing a Linux system</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

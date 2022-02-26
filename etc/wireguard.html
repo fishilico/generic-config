@@ -1,18 +1,19 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>etc/wireguard/: WireGuard VPN &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="/etc for Desktop" href="../etc-desktop/index.html" />
@@ -31,8 +32,7 @@
           <a href="sysctl.conf.raw.html" title="etc/sysctl.conf"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">etc/wireguard/</span></code>: WireGuard VPN</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>  
 
@@ -48,12 +48,12 @@
 <p>Installing WireGuard is quite simple.
 It is documented on several places:</p>
 <ul>
-<li><p>For Arch Linux: <a class="reference external" href="https://wiki.archlinux.org/index.php/WireGuard">https://wiki.archlinux.org/index.php/WireGuard</a></p>
+<li><p class="first">For Arch Linux: <a class="reference external" href="https://wiki.archlinux.org/index.php/WireGuard">https://wiki.archlinux.org/index.php/WireGuard</a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pacman -S wireguard-dkms wireguard-tools
 </pre></div>
 </div>
 </li>
-<li><p>For Debian: <a class="reference external" href="https://www.linode.com/docs/networking/vpn/set-up-wireguard-vpn-on-debian/">https://www.linode.com/docs/networking/vpn/set-up-wireguard-vpn-on-debian/</a></p>
+<li><p class="first">For Debian: <a class="reference external" href="https://www.linode.com/docs/networking/vpn/set-up-wireguard-vpn-on-debian/">https://www.linode.com/docs/networking/vpn/set-up-wireguard-vpn-on-debian/</a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add unstable repository with a low priority (the default one is 500)</span>
 <span class="nb">echo</span> <span class="s2">&quot;deb http://deb.debian.org/debian/ unstable main&quot;</span> &gt; /etc/apt/sources.list.d/unstable-wireguard.list
 <span class="nb">printf</span> <span class="s1">&#39;Package: *\nPin: release a=unstable\nPin-Priority: 150\n&#39;</span> &gt; /etc/apt/preferences.d/limit-unstable
@@ -61,7 +61,7 @@ apt-get update <span class="o">&amp;&amp;</span> apt-get install wireguard-dkms 
 </pre></div>
 </div>
 </li>
-<li><p>For Fedora: <a class="reference external" href="https://www.wireguard.com/install/">https://www.wireguard.com/install/</a></p>
+<li><p class="first">For Fedora: <a class="reference external" href="https://www.wireguard.com/install/">https://www.wireguard.com/install/</a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dnf copr <span class="nb">enable</span> jdoss/wireguard
 dnf install wireguard-dkms wireguard-tools
 </pre></div>
@@ -151,15 +151,15 @@ wg show
 <p>WireGuard listens on all available IP addresses (and it is designed like this according to <a class="reference external" href="https://lists.zx2c4.com/pipermail/wireguard/2019-March/003938.html">https://lists.zx2c4.com/pipermail/wireguard/2019-March/003938.html</a>).
 If another service is bound to the loopback on the port configured by WireGuard, starting interface <code class="docutils literal notranslate"><span class="pre">wg0</span></code> fails, with the following kernel logs:</p>
 <blockquote>
-<div><p>wireguard: wg0: Could not create IPv4 socket
+<div>wireguard: wg0: Could not create IPv4 socket
 A link change request failed with some changes committed already.
-Interface wg0 may have been left with an inconsistent configuration, please check.</p>
-</div></blockquote>
+Interface wg0 may have been left with an inconsistent configuration, please check.</div></blockquote>
 <p>This occurs for example when trying to listen to 192.0.2.42:53 (UDP) while a DNS resolver is running on 127.0.0.1:53.
 A possible workaround can use a firewall to solve this issue:</p>
 <ul>
-<li><p>Configure WireGuard to listen on another port (eg. UDP 5353, which is used for multicast DNS)</p></li>
-<li><p>Redirect port 53 to 5353 for incoming traffic:</p>
+<li><p class="first">Configure WireGuard to listen on another port (eg. UDP 5353, which is used for multicast DNS)</p>
+</li>
+<li><p class="first">Redirect port 53 to 5353 for incoming traffic:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Allow incoming connections</span>
 nft add rule inet filter input <span class="s1">&#39;udp dport {53, 5353} counter accept comment &quot;accept WireGuard on DNS ports&quot;&#39;</span>
 nft add rule inet filter output <span class="s1">&#39;udp sport {53, 5353} counter accept comment &quot;accept WireGuard on DNS ports&quot;&#39;</span>
@@ -174,7 +174,7 @@ nft add rule nat prerouting ip daddr <span class="m">192</span>.0.2.42 udp dport
 </pre></div>
 </div>
 </li>
-<li><p>Here is an example configuration file for nftables firewall:</p>
+<li><p class="first">Here is an example configuration file for nftables firewall:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>table inet filter {
     chain input {
         type filter hook input priority 0; policy accept;
@@ -207,7 +207,6 @@ table nat {
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -240,15 +239,17 @@ table nat {
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -266,13 +267,12 @@ table nat {
           <a href="sysctl.conf.raw.html" title="etc/sysctl.conf"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">etc/wireguard/</span></code>: WireGuard VPN</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

@@ -1,18 +1,19 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Bluetooth on Linux &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Some information of Debian systems" href="debian.html" />
@@ -31,8 +32,7 @@
           <a href="archlinux-pkg.html" title="Notes about Arch Linux packages"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Bluetooth on Linux</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -52,18 +52,20 @@ It operates in UHF radio waves, between 2.400 and 2.485 GHz.
 More information can be found on its Wikipedia page: <a class="reference external" href="https://en.wikipedia.org/wiki/Bluetooth">https://en.wikipedia.org/wiki/Bluetooth</a></p>
 <p>On Linux, several steps need to be performed in order to use Bluetooth:</p>
 <ul>
-<li><p>Install the packages that provide Bluetooth service and programs: <code class="docutils literal notranslate"><span class="pre">bluez</span></code> and <code class="docutils literal notranslate"><span class="pre">bluez-utils</span></code></p></li>
-<li><p>Unblock the radio interface, if it has been blocked:</p>
+<li><p class="first">Install the packages that provide Bluetooth service and programs: <code class="docutils literal notranslate"><span class="pre">bluez</span></code> and <code class="docutils literal notranslate"><span class="pre">bluez-utils</span></code></p>
+</li>
+<li><p class="first">Unblock the radio interface, if it has been blocked:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>rfkill unblock bluetooth
 </pre></div>
 </div>
 </li>
-<li><p>Start the service:</p>
+<li><p class="first">Start the service:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl start bluetooth.service
 </pre></div>
 </div>
 </li>
-<li><p>Start a <code class="docutils literal notranslate"><span class="pre">bluetoothctl</span></code> CLI and power the device on by issuing <code class="docutils literal notranslate"><span class="pre">power</span> <span class="pre">on</span></code>.</p></li>
+<li><p class="first">Start a <code class="docutils literal notranslate"><span class="pre">bluetoothctl</span></code> CLI and power the device on by issuing <code class="docutils literal notranslate"><span class="pre">power</span> <span class="pre">on</span></code>.</p>
+</li>
 </ul>
 <p>It is possible to record the Bluetooth communications using the monitor, <code class="docutils literal notranslate"><span class="pre">btmon</span> <span class="pre">-w</span> <span class="pre">file.bt</span></code>.
 This command produces BTSnoop files that can be opened for example in Wireshark.</p>
@@ -156,7 +158,6 @@ Such an UUID can be searched in bluez header files such as <a class="reference e
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -187,15 +188,17 @@ Such an UUID can be searched in bluez header files such as <a class="reference e
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -213,13 +216,12 @@ Such an UUID can be searched in bluez header files such as <a class="reference e
           <a href="archlinux-pkg.html" title="Notes about Arch Linux packages"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Bluetooth on Linux</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

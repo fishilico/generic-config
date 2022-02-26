@@ -1,0 +1,145 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Wireshark: analyzing HTTPS traffic &#8212; Generic Config</title>
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Databases" href="../database/index.html" />
+    <link rel="prev" title="User management on Linux" href="user.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../database/index.html" title="Databases"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="user.html" title="User management on Linux"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="wireshark-analyzing-https-traffic">
+<h1>Wireshark: analyzing HTTPS traffic<a class="headerlink" href="#wireshark-analyzing-https-traffic" title="Permalink to this headline">¶</a></h1>
+<p>HTTPS packets can be decrypted using the server private key when non-Perfect Forward Secrecy cipher suites are used.
+In most cases nowadays, this will not work.
+Instead, the master secret needs to be recorded, for example using <code class="docutils literal notranslate"><span class="pre">SSLKEYLOGFILE</span></code>:</p>
+<ul class="simple">
+<li>In Curl: <a class="reference external" href="https://everything.curl.dev/usingcurl/tls/sslkeylogfile">https://everything.curl.dev/usingcurl/tls/sslkeylogfile</a></li>
+<li>In Firefox: <a class="reference external" href="https://firefox-source-docs.mozilla.org/security/nss/legacy/key_log_format/index.html">https://firefox-source-docs.mozilla.org/security/nss/legacy/key_log_format/index.html</a></li>
+<li>In Chrome: option <code class="docutils literal notranslate"><span class="pre">--ssl-key-log-file</span></code></li>
+<li>In Python: <a class="reference external" href="https://sslkeylog.readthedocs.io/en/latest/">https://sslkeylog.readthedocs.io/en/latest/</a></li>
+<li>Wireshark documentation: <a class="reference external" href="https://wiki.wireshark.org/TLS#using-the-pre-master-secret">https://wiki.wireshark.org/TLS#using-the-pre-master-secret</a></li>
+</ul>
+<p>For example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Capture network traffic</span>
+tshark -ni any -w capture.pcapng
+
+<span class="c1"># Perform a request to a HTTPS website, for example with curl</span>
+<span class="nv">SSLKEYLOGFILE</span><span class="o">=</span>keylogfile.txt curl https://wiki.wireshark.org/
+
+<span class="c1"># Merge the secrets in the Decryption Secrets Block part of the capture file</span>
+editcap --inject-secrets tls,keylogfile.txt capture.pcapng capture-with-secrets.pcapng
+</pre></div>
+</div>
+<p>The keylogfile then looks like (for TLS 1.3):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>SERVER_HANDSHAKE_TRAFFIC_SECRET f3cac18f4b5042390a8929a1bef9e5d543a214d3a163a8649843457e91a95265
+    5d06ef1d3074b3ce830fddece3000e81028467c30bcd35eeee0ef867f8d22c4a1ab08db4172ac1235faab04b10e6c1e5
+EXPORTER_SECRET f3cac18f4b5042390a8929a1bef9e5d543a214d3a163a8649843457e91a95265
+    dc27c85675113c4c1b2b0187cb1e2d6615b9039f66fa69e16822ccea989fb45049303113e184f266e672b1e867c03201
+SERVER_TRAFFIC_SECRET_0 f3cac18f4b5042390a8929a1bef9e5d543a214d3a163a8649843457e91a95265
+    2930b243f1dab9c62dd96439355ebd22a689d3eca9e8acce9fcaad00b3ca7206ccba5258501696f774527398e8dabc49
+CLIENT_HANDSHAKE_TRAFFIC_SECRET f3cac18f4b5042390a8929a1bef9e5d543a214d3a163a8649843457e91a95265
+    7ed9a53c1b24b70bcd0474ccd85323f14eeb27871d7e68c51c33ab884e3c7bd29bdb749290d564da2dc0aad212c88a65
+CLIENT_TRAFFIC_SECRET_0 f3cac18f4b5042390a8929a1bef9e5d543a214d3a163a8649843457e91a95265
+    42e9ee4316095ea838daefef1cfdc2587d0fe4369d77dfed0182c2c476cfe54bd86541b3b4b488e908a7f8cf1fe2c436
+</pre></div>
+</div>
+<p>For TLS 1.2 (for example using <code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">--tlsv1.2</span> <span class="pre">--tls-max</span> <span class="pre">1.2</span></code>):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>CLIENT_RANDOM 0e42bf17cf0d1b3140b29b44cddedf29db7abcb5ab01f91259987678e5ce9d57
+    a9e4f9da3afa588934f984c457bb6fe99a9f77e3e9dd6796c7596d683790f46ba532a1a2e308c52a81ebc03e652f1bae
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="user.html"
+                        title="previous chapter">User management on Linux</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../database/index.html"
+                        title="next chapter">Databases</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/sysadmin/wireshark-https.rst.txt"
+           rel="nofollow">Show Source</a></li>
+    <li><a href="https://github.com/fishilico/generic-config/blob/master/sysadmin/wireshark-https.rst"
+           rel="nofollow">Show Source on GitHub
+           <img src="../_static/GitHub-Mark-32px.png" style="width: 1.5em; border: none;" alt="" />
+           </a></li>
+  </ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../database/index.html" title="Databases"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="user.html" title="User management on Linux"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013-2019, Nicolas Iooss.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

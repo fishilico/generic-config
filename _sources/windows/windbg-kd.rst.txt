@@ -324,7 +324,7 @@ NatVis commands:
 .. code-block:: sh
 
     # Define variables
-    dx @$myVar = "My sttring"
+    dx @$myVar = "My string"
     dx @$myVar
     dx @$myVar.Length
 

@@ -1,18 +1,19 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Qubes OS setup &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Configuration tweaks on a Raspberry Pi" href="raspberrypi.html" />
@@ -31,8 +32,7 @@
           <a href="qemu.html" title="QEmu-KVM notes"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Qubes OS setup</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -52,14 +52,14 @@ are not covered.</p>
 <h2>Useful commands<a class="headerlink" href="#useful-commands" title="Permalink to this headline">¶</a></h2>
 <p>When using Qubes OS, some specific commands are quite useful:</p>
 <ul>
-<li><p>Copy a file from a Qube to <code class="docutils literal notranslate"><span class="pre">dom0</span></code>:</p>
+<li><p class="first">Copy a file from a Qube to <code class="docutils literal notranslate"><span class="pre">dom0</span></code>:</p>
 <blockquote>
 <div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>qvm-run --pass-io <span class="nv">$QUBE_NAME</span> <span class="s1">&#39;cat /home/user/path/to/file&#39;</span> &gt; filename
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p>Copy a file from <code class="docutils literal notranslate"><span class="pre">dom0</span></code> to a Qube (it pops into <code class="docutils literal notranslate"><span class="pre">/home/user/QubesIncoming/dom0</span></code>),
+<li><p class="first">Copy a file from <code class="docutils literal notranslate"><span class="pre">dom0</span></code> to a Qube (it pops into <code class="docutils literal notranslate"><span class="pre">/home/user/QubesIncoming/dom0</span></code>),
 or from a Qube to another one:</p>
 <blockquote>
 <div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>qvm-copy-to-vm <span class="nv">$QUBE_NAME</span> filepath
@@ -67,7 +67,7 @@ or from a Qube to another one:</p>
 </div>
 </div></blockquote>
 </li>
-<li><p>Xen-specific commands executed from <code class="docutils literal notranslate"><span class="pre">dom0</span></code>:</p>
+<li><p class="first">Xen-specific commands executed from <code class="docutils literal notranslate"><span class="pre">dom0</span></code>:</p>
 <blockquote>
 <div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># List Xen domains (i.e. virtual machines)</span>
 xl list
@@ -90,7 +90,7 @@ xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx <span class="m">1</span> sys-net
 </div>
 </div></blockquote>
 </li>
-<li><p>Qubes OS-specific commands executed from <code class="docutils literal notranslate"><span class="pre">dom0</span></code>:</p>
+<li><p class="first">Qubes OS-specific commands executed from <code class="docutils literal notranslate"><span class="pre">dom0</span></code>:</p>
 <blockquote>
 <div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># List Qubes and various information about them</span>
 qvm-ls
@@ -111,12 +111,12 @@ qvm-prefs sys-net
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Here are some notes on what I did when installing Qubes OS.</p>
 <ul>
-<li><p>Update Qubes OS:</p>
+<li><p class="first">Update Qubes OS:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo qubes-dom0-update
 </pre></div>
 </div>
 </li>
-<li><p>By default, <code class="docutils literal notranslate"><span class="pre">Ctrl-Shift-P</span></code> pauses all the Qubes. This is the same shortcut
+<li><p class="first">By default, <code class="docutils literal notranslate"><span class="pre">Ctrl-Shift-P</span></code> pauses all the Qubes. This is the same shortcut
 as the one used by Firefox to open private browsing. To change this shortcut,
 in <code class="docutils literal notranslate"><span class="pre">dom0</span></code>, go to Menu -&gt; System Tools -&gt; Keyboard -&gt; Application Shortcuts
 and change the shortcut associated with <code class="docutils literal notranslate"><span class="pre">qvm-run</span> <span class="pre">--pause</span> <span class="pre">--all</span></code> from
@@ -137,7 +137,7 @@ shortcut <span class="s1">&#39;&lt;Control&gt;&lt;Alt&gt;Escape&#39;</span>   <s
 </pre></div>
 </div>
 </li>
-<li><p>By default, the Inter-VM Copy/Paste shortcuts are <code class="docutils literal notranslate"><span class="pre">Ctrl-Shift-C</span></code> and
+<li><p class="first">By default, the Inter-VM Copy/Paste shortcuts are <code class="docutils literal notranslate"><span class="pre">Ctrl-Shift-C</span></code> and
 <code class="docutils literal notranslate"><span class="pre">Ctrl-Shift-V</span></code>. They conflict with the terminal clipboard sequences and
 Chrome’s Console shortcut. In order to move them to <code class="docutils literal notranslate"><span class="pre">Ctrl-Alt-C</span></code> and
 <code class="docutils literal notranslate"><span class="pre">Ctrl-Alt-V</span></code>, the configuration file <code class="docutils literal notranslate"><span class="pre">/etc/qubes/guid.conf</span></code> (for Qubes GUI
@@ -152,27 +152,27 @@ daemon) needs to be modified to:</p>
 </pre></div>
 </div>
 </li>
-<li><p>The default format of XFCE Clock plugin does not contain the date. The
+<li><p class="first">The default format of XFCE Clock plugin does not contain the date. The
 following <code class="docutils literal notranslate"><span class="pre">strftime</span></code> format displays dates like <code class="docutils literal notranslate"><span class="pre">Thu</span>&#160; <span class="pre">1</span> <span class="pre">Jan</span> <span class="pre">1970</span> <span class="pre">00:42</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">a</span> <span class="o">%</span><span class="n">e</span> <span class="o">%</span><span class="n">b</span> <span class="o">%</span><span class="n">Y</span> <span class="o">%</span><span class="n">R</span>
 </pre></div>
 </div>
 </li>
-<li><p>In order to use a USB keyboard, the following command has to be run in
+<li><p class="first">In order to use a USB keyboard, the following command has to be run in
 <code class="docutils literal notranslate"><span class="pre">dom0</span></code> (cf. <a class="reference external" href="https://www.qubes-os.org/doc/usb/#how-to-use-a-usb-keyboard">https://www.qubes-os.org/doc/usb/#how-to-use-a-usb-keyboard</a>).
 This will create a <code class="docutils literal notranslate"><span class="pre">sys-usb</span></code> Qube if it does not already exist.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo qubesctl state.sls qvm.usb-keyboard
 </pre></div>
 </div>
 </li>
-<li><p>Create an Arch Linux TemplateVM by following the instructions from the
+<li><p class="first">Create an Arch Linux TemplateVM by following the instructions from the
 official documentation:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://www.qubes-os.org/doc/templates/archlinux/">https://www.qubes-os.org/doc/templates/archlinux/</a></p></li>
-<li><p><a class="reference external" href="https://www.qubes-os.org/doc/building-archlinux-template/">https://www.qubes-os.org/doc/building-archlinux-template/</a></p></li>
+<li><a class="reference external" href="https://www.qubes-os.org/doc/templates/archlinux/">https://www.qubes-os.org/doc/templates/archlinux/</a></li>
+<li><a class="reference external" href="https://www.qubes-os.org/doc/building-archlinux-template/">https://www.qubes-os.org/doc/building-archlinux-template/</a></li>
 </ul>
 </li>
-<li><p>Create application shortcuts for Firefox private mode and Chromium incognito
+<li><p class="first">Create application shortcuts for Firefox private mode and Chromium incognito
 mode by adding some <code class="docutils literal notranslate"><span class="pre">.desktop</span></code> files in TemplateVMs
 (documentation: <a class="reference external" href="https://www.qubes-os.org/doc/managing-appvm-shortcuts/">https://www.qubes-os.org/doc/managing-appvm-shortcuts/</a>):</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># /usr/share/applications/firefox-private.desktop</span>
@@ -219,18 +219,18 @@ It was <code class="docutils literal notranslate"><span class="pre">fedora-26</s
 Even though this template should be kept as minimal, some software can
 nevertheless be useful:</p>
 <ul class="simple">
-<li><p>Generic packages: <code class="docutils literal notranslate"><span class="pre">zsh</span> <span class="pre">screen</span> <span class="pre">tmux</span> <span class="pre">htop</span></code> (and maybe change the default shell
-in <code class="docutils literal notranslate"><span class="pre">/etc/passwd</span></code> for user <code class="docutils literal notranslate"><span class="pre">user</span></code> to <code class="docutils literal notranslate"><span class="pre">/usr/bin/zsh</span></code>)</p></li>
-<li><p>Administrative tools for <code class="docutils literal notranslate"><span class="pre">sys-net</span></code>: <code class="docutils literal notranslate"><span class="pre">bind-utils</span> <span class="pre">rfkill</span> <span class="pre">traceroute</span></code></p></li>
-<li><p>Debugging programs: <code class="docutils literal notranslate"><span class="pre">strace</span> <span class="pre">tcpdump</span> <span class="pre">wireshark</span> <span class="pre">wireshark-cli</span></code></p></li>
+<li>Generic packages: <code class="docutils literal notranslate"><span class="pre">zsh</span> <span class="pre">screen</span> <span class="pre">tmux</span> <span class="pre">htop</span></code> (and maybe change the default shell
+in <code class="docutils literal notranslate"><span class="pre">/etc/passwd</span></code> for user <code class="docutils literal notranslate"><span class="pre">user</span></code> to <code class="docutils literal notranslate"><span class="pre">/usr/bin/zsh</span></code>)</li>
+<li>Administrative tools for <code class="docutils literal notranslate"><span class="pre">sys-net</span></code>: <code class="docutils literal notranslate"><span class="pre">bind-utils</span> <span class="pre">rfkill</span> <span class="pre">traceroute</span></code></li>
+<li>Debugging programs: <code class="docutils literal notranslate"><span class="pre">strace</span> <span class="pre">tcpdump</span> <span class="pre">wireshark</span> <span class="pre">wireshark-cli</span></code></li>
 </ul>
 <p>For AppVMs, a new template (for example <code class="docutils literal notranslate"><span class="pre">fedora-26-with-tools</span></code>) may be
 created, with additional software:</p>
 <ul class="simple">
-<li><p>Web browsing: <code class="docutils literal notranslate"><span class="pre">chromium</span></code> (Firefox is already installed. After installing an
-application, it is possible to add it to the menu through the Qubes Manager)</p></li>
-<li><p>File cleaning: <code class="docutils literal notranslate"><span class="pre">bleachbit</span></code></p></li>
-<li><p>LaTeX compiling: <code class="docutils literal notranslate"><span class="pre">latexmk</span> <span class="pre">texlive-collection-latex</span> <span class="pre">texlive-collection-latexrecommended</span> <span class="pre">texlive-xetex</span> <span class="pre">texlive-collection-xetex</span> <span class="pre">pandoc</span></code></p></li>
+<li>Web browsing: <code class="docutils literal notranslate"><span class="pre">chromium</span></code> (Firefox is already installed. After installing an
+application, it is possible to add it to the menu through the Qubes Manager)</li>
+<li>File cleaning: <code class="docutils literal notranslate"><span class="pre">bleachbit</span></code></li>
+<li>LaTeX compiling: <code class="docutils literal notranslate"><span class="pre">latexmk</span> <span class="pre">texlive-collection-latex</span> <span class="pre">texlive-collection-latexrecommended</span> <span class="pre">texlive-xetex</span> <span class="pre">texlive-collection-xetex</span> <span class="pre">pandoc</span></code></li>
 </ul>
 <p>For configuring home-files (<code class="docutils literal notranslate"><span class="pre">$HOME/bin</span></code> programs and hidden files in
 <code class="docutils literal notranslate"><span class="pre">$HOME</span></code>), it is possible to clone a repository like
@@ -244,9 +244,9 @@ In order to do this, the update proxy needs to be used from the TemplateVM:</p>
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://www.qubes-os.org/doc/">https://www.qubes-os.org/doc/</a> Qubes OS user documentation</p></li>
-<li><p><a class="reference external" href="https://github.com/QubesOS">https://github.com/QubesOS</a> Qubes OS project Github</p></li>
-<li><p><a class="reference external" href="https://github.com/QubesOS/qubes-issues/issues">https://github.com/QubesOS/qubes-issues/issues</a> Qubes OS issues</p></li>
+<li><a class="reference external" href="https://www.qubes-os.org/doc/">https://www.qubes-os.org/doc/</a> Qubes OS user documentation</li>
+<li><a class="reference external" href="https://github.com/QubesOS">https://github.com/QubesOS</a> Qubes OS project Github</li>
+<li><a class="reference external" href="https://github.com/QubesOS/qubes-issues/issues">https://github.com/QubesOS/qubes-issues/issues</a> Qubes OS issues</li>
 </ul>
 </div>
 <div class="section" id="rpc-architecture">
@@ -257,13 +257,12 @@ In order to do this, the update proxy needs to be used from the TemplateVM:</p>
 Qubes: <code class="docutils literal notranslate"><span class="pre">qubesd</span></code>.
 Its architecture is described in <a class="reference external" href="https://www.qubes-os.org/doc/admin-api/">https://www.qubes-os.org/doc/admin-api/</a>:</p>
 <blockquote>
-<div><p>A central entity in the Qubes Admin API system is a <code class="docutils literal notranslate"><span class="pre">qubesd</span></code> daemon, which
+<div>A central entity in the Qubes Admin API system is a <code class="docutils literal notranslate"><span class="pre">qubesd</span></code> daemon, which
 holds information about all domains in the system and mediates all actions
 (like starting and stopping a qube) with <code class="docutils literal notranslate"><span class="pre">libvirtd</span></code>. The <code class="docutils literal notranslate"><span class="pre">qubesd</span></code> daemon
 also manages the <code class="docutils literal notranslate"><span class="pre">qubes.xml</span></code> file, which stores all persistent state
 information and dispatches events to extensions. Last but not least,
-<code class="docutils literal notranslate"><span class="pre">qubesd</span></code> is responsible for querying the RPC policy for <code class="docutils literal notranslate"><span class="pre">qrexec</span></code> daemon.</p>
-</div></blockquote>
+<code class="docutils literal notranslate"><span class="pre">qubesd</span></code> is responsible for querying the RPC policy for <code class="docutils literal notranslate"><span class="pre">qrexec</span></code> daemon.</div></blockquote>
 </div>
 <div class="section" id="package-update-notification">
 <h3>Package update notification<a class="headerlink" href="#package-update-notification" title="Permalink to this headline">¶</a></h3>
@@ -362,19 +361,19 @@ opened file descriptors:</p>
 machines) is not well supported by Xen. Here are some links relevant to this
 subject:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/QubesOS/qubes-issues/issues/2887">https://github.com/QubesOS/qubes-issues/issues/2887</a>
-Qubes OS issue: There is no information about nested VMs on Qubes on FAQ or DOCs</p></li>
-<li><p><a class="reference external" href="https://github.com/QubesOS/qubes-issues/issues/4104">https://github.com/QubesOS/qubes-issues/issues/4104</a>
-Qubes OS issue: No virtualization is available in a HVM qube (patches for Xen and Libvirt, 2015-08)</p></li>
-<li><p><a class="reference external" href="https://wiki.xenproject.org/wiki/Nested_Virtualization_in_Xen">https://wiki.xenproject.org/wiki/Nested_Virtualization_in_Xen</a>
-Xen Wiki: Nested Virtualization in Xen</p></li>
+<li><a class="reference external" href="https://github.com/QubesOS/qubes-issues/issues/2887">https://github.com/QubesOS/qubes-issues/issues/2887</a>
+Qubes OS issue: There is no information about nested VMs on Qubes on FAQ or DOCs</li>
+<li><a class="reference external" href="https://github.com/QubesOS/qubes-issues/issues/4104">https://github.com/QubesOS/qubes-issues/issues/4104</a>
+Qubes OS issue: No virtualization is available in a HVM qube (patches for Xen and Libvirt, 2015-08)</li>
+<li><a class="reference external" href="https://wiki.xenproject.org/wiki/Nested_Virtualization_in_Xen">https://wiki.xenproject.org/wiki/Nested_Virtualization_in_Xen</a>
+Xen Wiki: Nested Virtualization in Xen</li>
 </ul>
 <p>Qubes OS 4.0.1 uses Xen 4.8.4 released on 2018-07-12
 (<a class="reference external" href="https://github.com/xen-project/xen/releases/tag/RELEASE-4.8.4">https://github.com/xen-project/xen/releases/tag/RELEASE-4.8.4</a>).</p>
 <p>In order to enable bits related to the virtualization in the CPUID of a Qube
 named <code class="docutils literal notranslate"><span class="pre">virtualizer</span></code>:</p>
 <ul>
-<li><p>Create <code class="docutils literal notranslate"><span class="pre">/etc/qubes/templates/libvirt/xen/by-name/virtualizer.xml</span></code> in
+<li><p class="first">Create <code class="docutils literal notranslate"><span class="pre">/etc/qubes/templates/libvirt/xen/by-name/virtualizer.xml</span></code> in
 <code class="docutils literal notranslate"><span class="pre">dom0</span></code> with the following content (to extend
 <a class="reference external" href="https://github.com/QubesOS/qubes-core-admin/blob/master/templates/libvirt/xen.xml">https://github.com/QubesOS/qubes-core-admin/blob/master/templates/libvirt/xen.xml</a>):</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>{% extends &#39;libvirt/xen.xml&#39; %}
@@ -397,7 +396,7 @@ named <code class="docutils literal notranslate"><span class="pre">virtualizer</
 </pre></div>
 </div>
 </li>
-<li><p>Start the Qube and read the generated configuration:</p>
+<li><p class="first">Start the Qube and read the generated configuration:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo virsh dumpxml virtualizer
 <span class="c1"># or, if you do not like becoming root for this action:</span>
 virsh --connect<span class="o">=</span>xen:/// dumpxml virtualizer
@@ -411,7 +410,7 @@ virsh --connect<span class="o">=</span>xen:/// dumpxml virtualizer
 virtual machines in a Qube, from
 <a class="reference external" href="https://gist.github.com/xahare/0f2078fc8c52e7ddece1e5ba70c6d5fc">https://gist.github.com/xahare/0f2078fc8c52e7ddece1e5ba70c6d5fc</a>.</p>
 <ul>
-<li><p>Add libvirt to the persistent storage of the Qube
+<li><p class="first">Add libvirt to the persistent storage of the Qube
 (cf. <a class="reference external" href="https://www.qubes-os.org/doc/bind-dirs/">https://www.qubes-os.org/doc/bind-dirs/</a>):</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir -p /rw/config/qubes-bind-dirs.d
 cat <span class="s">&lt;&lt; EOF &gt;&gt; /rw/config/qubes-bind-dirs.d/50_user.conf</span>
@@ -421,12 +420,12 @@ cat <span class="s">&lt;&lt; EOF &gt;&gt; /rw/config/qubes-bind-dirs.d/50_user.c
 </pre></div>
 </div>
 </li>
-<li><p>As <code class="docutils literal notranslate"><span class="pre">user</span></code>, install <code class="docutils literal notranslate"><span class="pre">vagrant-libvirt</span></code> plugin:</p>
+<li><p class="first">As <code class="docutils literal notranslate"><span class="pre">user</span></code>, install <code class="docutils literal notranslate"><span class="pre">vagrant-libvirt</span></code> plugin:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>vagrant plugin install vagrant-libvirt
 </pre></div>
 </div>
 </li>
-<li><p>As <code class="docutils literal notranslate"><span class="pre">user</span></code>, configure Vagrant to use libvirt with an emulated CPU:</p>
+<li><p class="first">As <code class="docutils literal notranslate"><span class="pre">user</span></code>, configure Vagrant to use libvirt with an emulated CPU:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cat <span class="s">&lt;&lt; EOF &gt; ~/.vagrant.d/Vagrantfile</span>
 <span class="s">Vagrant.configure(&quot;2&quot;) do |config|</span>
 <span class="s">  config.vm.provider &quot;libvirt&quot; do |libvirt|</span>
@@ -450,7 +449,6 @@ cat <span class="s">&lt;&lt; EOF &gt;&gt; ~/.bashrc</span>
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -493,15 +491,17 @@ cat <span class="s">&lt;&lt; EOF &gt;&gt; ~/.bashrc</span>
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -519,13 +519,12 @@ cat <span class="s">&lt;&lt; EOF &gt;&gt; ~/.bashrc</span>
           <a href="qemu.html" title="QEmu-KVM notes"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Qubes OS setup</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

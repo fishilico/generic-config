@@ -1,18 +1,19 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>WinDbg-kd, Windows Kernel Debugging &#8212; Generic Config</title>
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Generic Configuration README" href="../README.html" />
@@ -31,8 +32,7 @@
           <a href="vbscript.html" title="Some VBScript commands"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">WinDbg-kd, Windows Kernel Debugging</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -45,8 +45,9 @@
 <h1>WinDbg-kd, Windows Kernel Debugging<a class="headerlink" href="#windbg-kd-windows-kernel-debugging" title="Permalink to this headline">¶</a></h1>
 <p>To debug a Windows kernel, here is what is needed:</p>
 <ul>
-<li><p>WinDbg (for example with VisualStudio Express Edition)</p></li>
-<li><p>A kernel booted in debug mode.  For local debugging, the boot can be
+<li><p class="first">WinDbg (for example with VisualStudio Express Edition)</p>
+</li>
+<li><p class="first">A kernel booted in debug mode.  For local debugging, the boot can be
 configured with these commands (on Windows&lt;=7, the second one fails but
 WinDbg still supports local kernel debugging):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bcdedit</span> <span class="o">/</span><span class="n">debug</span> <span class="n">on</span>
@@ -91,24 +92,26 @@ This can be done either with an environment variable
 <div class="section" id="usual-commands">
 <h2>Usual commands<a class="headerlink" href="#usual-commands" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><p>Get help about a command: <code class="docutils literal notranslate"><span class="pre">.hh</span> <span class="pre">x</span></code> (examine), <code class="docutils literal notranslate"><span class="pre">.hh</span> <span class="pre">uu</span></code> (unassemble)</p></li>
-<li><p>Examine symbols starting with <code class="docutils literal notranslate"><span class="pre">NtCreate</span></code> in the kernel: <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">nt!NtCreate*</span></code>.</p></li>
-<li><p>Display values at an address, with optional argument <code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">size</span></code>:</p>
+<li><p class="first">Get help about a command: <code class="docutils literal notranslate"><span class="pre">.hh</span> <span class="pre">x</span></code> (examine), <code class="docutils literal notranslate"><span class="pre">.hh</span> <span class="pre">uu</span></code> (unassemble)</p>
+</li>
+<li><p class="first">Examine symbols starting with <code class="docutils literal notranslate"><span class="pre">NtCreate</span></code> in the kernel: <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">nt!NtCreate*</span></code>.</p>
+</li>
+<li><p class="first">Display values at an address, with optional argument <code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">size</span></code>:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">db</span></code>: display hexadecimal bytes (128 by default)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dc</span></code>: display DWORD values and their ASCII equivalents (32 by default)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dd</span></code>: display DWORD values (32 by default)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dp</span></code>: display ULONG_PTR values (128 bytes by default)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dps</span></code>: display pointers and symbols (<code class="docutils literal notranslate"><span class="pre">dp</span></code> with symbols)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dpp</span></code>: like <code class="docutils literal notranslate"><span class="pre">dps</span></code>, with an extra pointer dereference</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dq</span></code>: display ULONG64_PTR values (128 bytes by default)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">du</span></code>: display UNICODE characters values (16 2-byte characters by default)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dw</span></code>: display WORD values (64 by default)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ds</span> <span class="pre">/c</span> <span class="pre">width</span> <span class="pre">addr</span></code>: display width characters at addr</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dS</span> <span class="pre">/c</span> <span class="pre">width</span> <span class="pre">addr</span></code>: display width unicode characters at addr</p></li>
+<li><code class="docutils literal notranslate"><span class="pre">db</span></code>: display hexadecimal bytes (128 by default)</li>
+<li><code class="docutils literal notranslate"><span class="pre">dc</span></code>: display DWORD values and their ASCII equivalents (32 by default)</li>
+<li><code class="docutils literal notranslate"><span class="pre">dd</span></code>: display DWORD values (32 by default)</li>
+<li><code class="docutils literal notranslate"><span class="pre">dp</span></code>: display ULONG_PTR values (128 bytes by default)</li>
+<li><code class="docutils literal notranslate"><span class="pre">dps</span></code>: display pointers and symbols (<code class="docutils literal notranslate"><span class="pre">dp</span></code> with symbols)</li>
+<li><code class="docutils literal notranslate"><span class="pre">dpp</span></code>: like <code class="docutils literal notranslate"><span class="pre">dps</span></code>, with an extra pointer dereference</li>
+<li><code class="docutils literal notranslate"><span class="pre">dq</span></code>: display ULONG64_PTR values (128 bytes by default)</li>
+<li><code class="docutils literal notranslate"><span class="pre">du</span></code>: display UNICODE characters values (16 2-byte characters by default)</li>
+<li><code class="docutils literal notranslate"><span class="pre">dw</span></code>: display WORD values (64 by default)</li>
+<li><code class="docutils literal notranslate"><span class="pre">ds</span> <span class="pre">/c</span> <span class="pre">width</span> <span class="pre">addr</span></code>: display width characters at addr</li>
+<li><code class="docutils literal notranslate"><span class="pre">dS</span> <span class="pre">/c</span> <span class="pre">width</span> <span class="pre">addr</span></code>: display width unicode characters at addr</li>
 </ul>
 </li>
-<li><p>Disassemble the beginning of a function (use <code class="docutils literal notranslate"><span class="pre">L2a</span></code> to show 42 instructions):</p>
+<li><p class="first">Disassemble the beginning of a function (use <code class="docutils literal notranslate"><span class="pre">L2a</span></code> to show 42 instructions):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>lkd&gt; u nt!KiSystemCall64
 nt!KiSystemCall64:
 fffff800`29f9d040 0f01f8          swapgs
@@ -122,18 +125,24 @@ fffff800`29f9d063 51              push    rcx
 </pre></div>
 </div>
 </li>
-<li><p>Display the types of fields of a structure: <code class="docutils literal notranslate"><span class="pre">dt</span> <span class="pre">nt!_KUSER_SHARED_DATA</span></code></p></li>
+<li><p class="first">Display the types of fields of a structure: <code class="docutils literal notranslate"><span class="pre">dt</span> <span class="pre">nt!_KUSER_SHARED_DATA</span></code></p>
+</li>
 </ul>
 </div>
 <div class="section" id="system-related-commands">
 <h2>System-related commands<a class="headerlink" href="#system-related-commands" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><p>List modules with names and timestamps: <code class="docutils literal notranslate"><span class="pre">lm</span> <span class="pre">n</span> <span class="pre">t</span></code></p></li>
-<li><p>List some information about the kernel: <code class="docutils literal notranslate"><span class="pre">!lmi</span> <span class="pre">nt</span></code></p></li>
-<li><p>Read the PCR (Processor Control Region): <code class="docutils literal notranslate"><span class="pre">!pcr</span></code></p></li>
-<li><p>Read the PRCB (Processor Control Block): <code class="docutils literal notranslate"><span class="pre">!prbc</span></code></p></li>
-<li><p>Get information about the current machine: <code class="docutils literal notranslate"><span class="pre">!sysinfo</span> <span class="pre">machineid</span></code></p></li>
-<li><p>Display information about a process and set it to be the current one:</p>
+<li><p class="first">List modules with names and timestamps: <code class="docutils literal notranslate"><span class="pre">lm</span> <span class="pre">n</span> <span class="pre">t</span></code></p>
+</li>
+<li><p class="first">List some information about the kernel: <code class="docutils literal notranslate"><span class="pre">!lmi</span> <span class="pre">nt</span></code></p>
+</li>
+<li><p class="first">Read the PCR (Processor Control Region): <code class="docutils literal notranslate"><span class="pre">!pcr</span></code></p>
+</li>
+<li><p class="first">Read the PRCB (Processor Control Block): <code class="docutils literal notranslate"><span class="pre">!prbc</span></code></p>
+</li>
+<li><p class="first">Get information about the current machine: <code class="docutils literal notranslate"><span class="pre">!sysinfo</span> <span class="pre">machineid</span></code></p>
+</li>
+<li><p class="first">Display information about a process and set it to be the current one:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>lkd&gt; !process 0 0 explorer.exe
 PROCESS ffff9702a7995080
     SessionId: 1  Cid: 0bbc    Peb: 0020f000  ParentCid: 0b7c
@@ -145,7 +154,7 @@ Implicit process is now ffff9702`a7995080
 </pre></div>
 </div>
 </li>
-<li><p>Read the PEB (Process Environment Block) of the current process:</p>
+<li><p class="first">Read the PEB (Process Environment Block) of the current process:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>lkd&gt; !peb
 PEB at 000000000020f000
     InheritedAddressSpace:    No
@@ -201,7 +210,7 @@ PEB at 000000000020f000
 </pre></div>
 </div>
 </li>
-<li><p>Dump the virtual memory allocations of the current process:</p>
+<li><p class="first">Dump the virtual memory allocations of the current process:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>lkd&gt; !vad
 VAD             level      start      end    commit
 ffff9702a7812b10 ( 8)         200       3ff       145 Private      READWRITE
@@ -228,8 +237,9 @@ ffff9702a7750880 ( 4)         650       74f       255 Private      READWRITE
 </div>
 <p>(Append <code class="docutils literal notranslate"><span class="pre">000</span></code> to <code class="docutils literal notranslate"><span class="pre">start</span></code> and <code class="docutils literal notranslate"><span class="pre">end</span></code> to get real addresses, usable with <code class="docutils literal notranslate"><span class="pre">dd</span></code>)</p>
 </li>
-<li><p>Dump the System Service Table (SSDT): <code class="docutils literal notranslate"><span class="pre">dps</span> <span class="pre">nt!KiServiceTable</span> <span class="pre">L11c</span></code></p></li>
-<li><p>Dump system protected processes (cf. <a class="reference external" href="http://www.alex-ionescu.com/?p=116">http://www.alex-ionescu.com/?p=116</a>):</p>
+<li><p class="first">Dump the System Service Table (SSDT): <code class="docutils literal notranslate"><span class="pre">dps</span> <span class="pre">nt!KiServiceTable</span> <span class="pre">L11c</span></code></p>
+</li>
+<li><p class="first">Dump system protected processes (cf. <a class="reference external" href="http://www.alex-ionescu.com/?p=116">http://www.alex-ionescu.com/?p=116</a>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>lkd&gt; !for_each_process &quot;
 r? @$t0 = (nt!_EPROCESS*) @#Process;
 .if @@(@$t0-&gt;Protection.Level) {
@@ -253,7 +263,7 @@ r? @$t0 = (nt!_EPROCESS*) @#Process;
 <div class="section" id="x86-specific-commands">
 <h2>x86-specific commands<a class="headerlink" href="#x86-specific-commands" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><p>Dump the Interrupt Descriptor Table, which contains Interrupt Service Routines:</p>
+<li><p class="first">Dump the Interrupt Descriptor Table, which contains Interrupt Service Routines:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>lkd&gt; !idt
 
 Dumping IDT: fffff8002b8e4080
@@ -313,7 +323,7 @@ fe: fffff80029e53690 hal!HalpPerfInterrupt (KINTERRUPT fffff80029e53600)
 </pre></div>
 </div>
 </li>
-<li><p>Read a MSR register, like STAR (syscall target):</p>
+<li><p class="first">Read a MSR register, like STAR (syscall target):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>lkd&gt; rdmsr c0000082
 msr[c0000082] = fffff800`29f9d040
 kd&gt; u fffff800`29f9d040 L1
@@ -322,7 +332,7 @@ fffff800`29f9d040 0f01f8          swapgs
 </pre></div>
 </div>
 </li>
-<li><p>To get the Kernel Processor Control Region (KPCR), use <code class="docutils literal notranslate"><span class="pre">fs_base</span></code> MSR
+<li><p class="first">To get the Kernel Processor Control Region (KPCR), use <code class="docutils literal notranslate"><span class="pre">fs_base</span></code> MSR
 (0xc0000100) on x86-32 and <code class="docutils literal notranslate"><span class="pre">gs_base</span></code> (0xc0000101) on x86-64:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>lkd&gt; rdmsr c0000101
 msr[c0000101] = ffffd001`aef40000
@@ -330,12 +340,13 @@ lkd&gt; dt nt!_KPCR ffffd001aef40000
 </pre></div>
 </div>
 </li>
-<li><p>The GDT (Global Descriptor Table) can be read by a remote debugger with
+<li><p class="first">The GDT (Global Descriptor Table) can be read by a remote debugger with
 <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">gdtr</span></code> and the detail of each descriptors can be seen with commands such
 as <code class="docutils literal notranslate"><span class="pre">dp</span> <span class="pre">&#64;cs</span></code>.  When using a local debugger, it is nevertheless possible to
 compile a userland program which shows the result of <code class="docutils literal notranslate"><span class="pre">sgdt</span></code> instruction,
 which is not privileged, and then use the pointer in WinDBG with
-<code class="docutils literal notranslate"><span class="pre">nt!_KGDTENTRY</span></code> (or <code class="docutils literal notranslate"><span class="pre">nt!_KGDTENTRY64</span></code>) structure.</p></li>
+<code class="docutils literal notranslate"><span class="pre">nt!_KGDTENTRY</span></code> (or <code class="docutils literal notranslate"><span class="pre">nt!_KGDTENTRY64</span></code>) structure.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="natvis-and-javascript-since-windows-10">
@@ -358,7 +369,7 @@ to Visual Studio 2013).</p>
 <code class="docutils literal notranslate"><span class="pre">std::string</span></code>, <code class="docutils literal notranslate"><span class="pre">std::list</span></code>, <code class="docutils literal notranslate"><span class="pre">std::map</span></code>, etc.)</p>
 <p>NatVis commands:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define variables</span>
-dx @<span class="nv">$myVar</span> <span class="o">=</span> <span class="s2">&quot;My sttring&quot;</span>
+dx @<span class="nv">$myVar</span> <span class="o">=</span> <span class="s2">&quot;My string&quot;</span>
 dx @<span class="nv">$myVar</span>
 dx @<span class="nv">$myVar</span>.Length
 
@@ -455,16 +466,16 @@ dx @<span class="nv">$scriptContents</span>.my_function<span class="o">(</span>a
 </div>
 <p>In JavaScript:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">host</span></code> is a COM object for the Degugger</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">host.memory</span></code> represents the target memory (method
-<code class="docutils literal notranslate"><span class="pre">readMemoryValues(ptr,</span> <span class="pre">size)</span></code> returns an <code class="docutils literal notranslate"><span class="pre">ArrayBuffer</span></code> with memory)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">host.diagnostics.debugLog(&quot;...&quot;)</span></code> prints logs</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">host.typeSystem.marshalAs(variable,</span> <span class="pre">&quot;nt&quot;,</span> <span class="pre">&quot;SOME_TYPE&quot;)</span></code> to cast</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">host.metadata.valueWithMetadata(myInteger,</span> <span class="pre">{PreferredRadix:10})</span></code> to
-print an integer as decimal</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">host.evaluateExpression(expr)</span></code> or <code class="docutils literal notranslate"><span class="pre">host.namespace.Debugger.Utility.Control.ExecuteCommand</span></code>
+<li><code class="docutils literal notranslate"><span class="pre">host</span></code> is a COM object for the Degugger</li>
+<li><code class="docutils literal notranslate"><span class="pre">host.memory</span></code> represents the target memory (method
+<code class="docutils literal notranslate"><span class="pre">readMemoryValues(ptr,</span> <span class="pre">size)</span></code> returns an <code class="docutils literal notranslate"><span class="pre">ArrayBuffer</span></code> with memory)</li>
+<li><code class="docutils literal notranslate"><span class="pre">host.diagnostics.debugLog(&quot;...&quot;)</span></code> prints logs</li>
+<li><code class="docutils literal notranslate"><span class="pre">host.typeSystem.marshalAs(variable,</span> <span class="pre">&quot;nt&quot;,</span> <span class="pre">&quot;SOME_TYPE&quot;)</span></code> to cast</li>
+<li><code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">host.metadata.valueWithMetadata(myInteger,</span> <span class="pre">{PreferredRadix:10})</span></code> to
+print an integer as decimal</li>
+<li><code class="docutils literal notranslate"><span class="pre">host.evaluateExpression(expr)</span></code> or <code class="docutils literal notranslate"><span class="pre">host.namespace.Debugger.Utility.Control.ExecuteCommand</span></code>
 to run a debugger command (like <code class="docutils literal notranslate"><span class="pre">.printf</span> <span class="pre">%y</span></code> to convert a pointer to a
-symbol using MASM syntax)</p></li>
+symbol using MASM syntax)</li>
 </ul>
 <p>To add new aliases in Javascript:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="nf">initializeScript</span><span class="p">()</span>
@@ -480,22 +491,21 @@ symbol using MASM syntax)</p></li>
 <div class="section" id="links">
 <h2>Links<a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff551063(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/hardware/ff551063(v=vs.85).aspx</a>
-Debugging Tools for Windows (WinDbg, KD, CDB, NTSD)</p></li>
-<li><p><a class="reference external" href="https://msdn.microsoft.com/en-us/windows/hardware/gg463028">https://msdn.microsoft.com/en-us/windows/hardware/gg463028</a>
-Download Windows Symbol Packages</p></li>
-<li><p><a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff551891(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/hardware/ff551891(v=vs.85).aspx</a>
-Debugger Commands - Kernel-Mode Extensions</p></li>
-<li><p><a class="reference external" href="http://windbg.info/doc/1-common-cmds.html">http://windbg.info/doc/1-common-cmds.html</a>
-Common WinDbg Commands</p></li>
-<li><p><a class="reference external" href="https://github.com/microsoft/WinDbg-Samples">https://github.com/microsoft/WinDbg-Samples</a>
-Sample extensions, scripts, and API uses for WinDbg</p></li>
+<li><a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff551063(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/hardware/ff551063(v=vs.85).aspx</a>
+Debugging Tools for Windows (WinDbg, KD, CDB, NTSD)</li>
+<li><a class="reference external" href="https://msdn.microsoft.com/en-us/windows/hardware/gg463028">https://msdn.microsoft.com/en-us/windows/hardware/gg463028</a>
+Download Windows Symbol Packages</li>
+<li><a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff551891(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/hardware/ff551891(v=vs.85).aspx</a>
+Debugger Commands - Kernel-Mode Extensions</li>
+<li><a class="reference external" href="http://windbg.info/doc/1-common-cmds.html">http://windbg.info/doc/1-common-cmds.html</a>
+Common WinDbg Commands</li>
+<li><a class="reference external" href="https://github.com/microsoft/WinDbg-Samples">https://github.com/microsoft/WinDbg-Samples</a>
+Sample extensions, scripts, and API uses for WinDbg</li>
 </ul>
 </div>
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -529,15 +539,17 @@ Sample extensions, scripts, and API uses for WinDbg</p></li>
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -555,13 +567,12 @@ Sample extensions, scripts, and API uses for WinDbg</p></li>
           <a href="vbscript.html" title="Some VBScript commands"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">WinDbg-kd, Windows Kernel Debugging</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2019, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>
