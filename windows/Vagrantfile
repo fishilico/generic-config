@@ -18,5 +18,9 @@ Vagrant.configure("2") do |config|
   config.vm.provider :libvirt do |v|
     v.cpus = 2
     v.memory = 4096
+
+    # Use a virtual TPM 2.0 with swtpm
+    v.tpm_model = 'tpm-crb'
+    v.tpm_type = 'emulator'
   end
 end
