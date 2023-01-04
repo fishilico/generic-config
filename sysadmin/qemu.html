@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>QEmu-KVM notes &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Qubes OS setup" href="qubes-os.html" />
@@ -32,7 +31,8 @@
           <a href="pxe-boot-server.html" title="Configure a server to handle network boot (PXE)"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">QEmu-KVM notes</a></li> 
       </ul>
     </div>  
 
@@ -41,11 +41,11 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="qemu-kvm-notes">
+  <section id="qemu-kvm-notes">
 <h1>QEmu-KVM notes<a class="headerlink" href="#qemu-kvm-notes" title="Permalink to this headline">¶</a></h1>
 <p>This document contains some useful command lines to use QEmu to work with
 virtual images.</p>
-<div class="section" id="simple-qemu-invocation-commands">
+<section id="simple-qemu-invocation-commands">
 <h2>Simple QEmu invocation commands<a class="headerlink" href="#simple-qemu-invocation-commands" title="Permalink to this headline">¶</a></h2>
 <p>The most simple QEmu usage consists in running a disk image or a liveCD/liveUSB
 in a virtual machine, with a NAT network.  Here are some commands:</p>
@@ -97,8 +97,8 @@ qemu-system-mipsel -M malta -kernel vmlinux-malta -hda root.qcow2 <span class="s
     -nographic -append <span class="s2">&quot;root=/dev/sda1 console=tty0&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="networking">
+</section>
+<section id="networking">
 <h2>Networking<a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h2>
 <p>It is possible to run a virtual machine which only exposes some TCP ports
 through local TCP redirections using the “user network” with options:</p>
@@ -145,8 +145,8 @@ arguments can be used:</p>
 -netdev <span class="nv">type</span><span class="o">=</span>tap,ifname<span class="o">=</span>tap_vm,script<span class="o">=</span>no,downscript<span class="o">=</span>no,id<span class="o">=</span>tap
 </pre></div>
 </div>
-</div>
-<div class="section" id="qcow2-format-and-virtual-disk-usage">
+</section>
+<section id="qcow2-format-and-virtual-disk-usage">
 <h2>QCow2 format and virtual disk usage<a class="headerlink" href="#qcow2-format-and-virtual-disk-usage" title="Permalink to this headline">¶</a></h2>
 <p>QEmu can use the QCow2 format for disks to efficiently store the data of virtual
 disks (documentation: <a class="reference external" href="https://en.wikibooks.org/wiki/QEMU/Images">https://en.wikibooks.org/wiki/QEMU/Images</a>).</p>
@@ -178,8 +178,8 @@ can be required (for example on ext4fs):</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mount -o ro,norecovery /dev/nbd0p1 /mnt
 </pre></div>
 </div>
-</div>
-<div class="section" id="nfs-configuration">
+</section>
+<section id="nfs-configuration">
 <h2>NFS configuration<a class="headerlink" href="#nfs-configuration" title="Permalink to this headline">¶</a></h2>
 <p>To share files between a virtual machine and the host, it is possible to set
 up and Network Filesystem (NFS) share.  Here is a sample configuration to share
@@ -189,29 +189,29 @@ supposed to get an IP address in the 10.0.0.0/24 range, with the host having the
 address 10.0.0.1.</p>
 <p>On the host:</p>
 <ul class="simple">
-<li>Install <code class="docutils literal notranslate"><span class="pre">nfs-utils</span></code> package or something similar.</li>
-<li>Make sure <code class="docutils literal notranslate"><span class="pre">/srv/nfs</span></code> is accessible to everyone (if this directory is
-chmod-ed <code class="docutils literal notranslate"><span class="pre">o-x</span></code>, NFS denies the access to the clients).</li>
-<li>Add in <code class="docutils literal notranslate"><span class="pre">/etc/exports</span></code>:</li>
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">nfs-utils</span></code> package or something similar.</p></li>
+<li><p>Make sure <code class="docutils literal notranslate"><span class="pre">/srv/nfs</span></code> is accessible to everyone (if this directory is
+chmod-ed <code class="docutils literal notranslate"><span class="pre">o-x</span></code>, NFS denies the access to the clients).</p></li>
+<li><p>Add in <code class="docutils literal notranslate"><span class="pre">/etc/exports</span></code>:</p></li>
 </ul>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/srv/nfs/ro 10.0.0.0/24(ro,sync)
 /srv/nfs/user-rw 10.0.0.0/24(rw,no_subtree_check,sync,anonuid=1000,anongid=100)
 </pre></div>
 </div>
 <ul class="simple">
-<li>Reload the currently exported entries:</li>
+<li><p>Reload the currently exported entries:</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>exportfs -arv
 </pre></div>
 </div>
 <ul class="simple">
-<li>Start the NFS services:</li>
+<li><p>Start the NFS services:</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl start rpcbind.service nfs-server.service
 </pre></div>
 </div>
 <ul class="simple">
-<li>Open the ports in the firewall configuration:</li>
+<li><p>Open the ports in the firewall configuration:</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>iptables -A INPUT -i br0 -p tcp -m multiport --dports <span class="m">111</span>,2049,20048,49367 -j ACCEPT
 iptables -A INPUT -i br0 -p udp -m multiport --dports <span class="m">111</span>,745,2049,20048,57797 -j ACCEPT
@@ -219,28 +219,28 @@ iptables -A INPUT -i br0 -p udp -m multiport --dports <span class="m">111</span>
 </div>
 <p>On the virtual machine:</p>
 <ul class="simple">
-<li>Install <code class="docutils literal notranslate"><span class="pre">nfs-utils</span></code> package or something similar.</li>
-<li>Check that the exported directory are accessible:</li>
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">nfs-utils</span></code> package or something similar.</p></li>
+<li><p>Check that the exported directory are accessible:</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>showmount -e <span class="m">10</span>.0.0.1
 </pre></div>
 </div>
 <ul class="simple">
-<li>Mount the directories by hand:</li>
+<li><p>Mount the directories by hand:</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mount -t nfs <span class="m">10</span>.0.0.1:/srv/nfs/ro /mnt/ro -o ro
 mount -t nfs <span class="m">10</span>.0.0.1:/srv/nfs/user-rw /mnt/rw
 </pre></div>
 </div>
 <ul class="simple">
-<li>Here is the <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code> configuration to automatically mount:</li>
+<li><p>Here is the <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code> configuration to automatically mount:</p></li>
 </ul>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>10.0.0.1:/srv/nfs/ro /mnt/ro nfs auto,ro,_netdev 0 0
 10.0.0.1:/srv/nfs/user-rw /mnt/rw nfs auto,rw,_netdev 0 0
 </pre></div>
 </div>
-</div>
-<div class="section" id="p-shared-directory">
+</section>
+<section id="p-shared-directory">
 <h2>9p shared directory<a class="headerlink" href="#p-shared-directory" title="Permalink to this headline">¶</a></h2>
 <p>Another way of sharing files between a guest and the host which is simpler than
 NFS in its configuration is 9p.</p>
@@ -259,8 +259,8 @@ directory on <code class="docutils literal notranslate"><span class="pre">/mnt/v
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>vmsh /mnt/vmsh 9p auto,trans=virtio,version=9p2000.L,_netdev 0 0
 </pre></div>
 </div>
-</div>
-<div class="section" id="interaction-based-on-unix-sockets">
+</section>
+<section id="interaction-based-on-unix-sockets">
 <h2>Interaction based on Unix sockets<a class="headerlink" href="#interaction-based-on-unix-sockets" title="Permalink to this headline">¶</a></h2>
 <p>QEmu virtual machines are usually used either in graphical mode, with a QEmu
 windown, or in console mode (<code class="docutils literal notranslate"><span class="pre">-nographic</span></code> option), with a serial console
@@ -284,7 +284,7 @@ login shell on the serial port with the following command:</p>
 </div>
 <p>Then it is possible to:</p>
 <ul class="simple">
-<li>connect to QEmu monitor console for example with:</li>
+<li><p>connect to QEmu monitor console for example with:</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use cfmakeraw to make TAB work and isig=1 to allow using Ctrl+C</span>
 socat STDIO,cfmakeraw,isig<span class="o">=</span><span class="m">1</span> UNIX:monitor.sock
@@ -294,7 +294,7 @@ socat STDIO,raw,echo<span class="o">=</span><span class="m">0</span>,isig<span c
 </pre></div>
 </div>
 <ul class="simple">
-<li>connect to QEmu guest console for example with:</li>
+<li><p>connect to QEmu guest console for example with:</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>socat STDIO,cfmakeraw UNIX:console.sock
 
@@ -302,26 +302,26 @@ socat STDIO,raw,echo<span class="o">=</span><span class="m">0</span>,isig<span c
 socat STDIO,raw,echo<span class="o">=</span><span class="m">0</span> UNIX:console.sock
 </pre></div>
 </div>
-</div>
-<div class="section" id="other-qemu-options">
+</section>
+<section id="other-qemu-options">
 <h2>Other QEmu options<a class="headerlink" href="#other-qemu-options" title="Permalink to this headline">¶</a></h2>
 <p>Here are some options which may be useful when invoking QEmu:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">-cpu</span> <span class="pre">kvm64</span></code>: use KVM virtual CPU, not the one of the host.</li>
-<li><code class="docutils literal notranslate"><span class="pre">-machine</span> <span class="pre">accel=kvm</span></code>: use KVM for acceleration.</li>
-<li><code class="docutils literal notranslate"><span class="pre">-rtc</span> <span class="pre">base=localtime</span></code>: use localtime for the emulated hardware clock.</li>
-<li><code class="docutils literal notranslate"><span class="pre">-nographic</span> <span class="pre">-serial</span> <span class="pre">stdio</span> <span class="pre">-display</span> <span class="pre">none</span> <span class="pre">-monitor</span> <span class="pre">null</span></code>: output the console
+<li><p><code class="docutils literal notranslate"><span class="pre">-cpu</span> <span class="pre">kvm64</span></code>: use KVM virtual CPU, not the one of the host.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-machine</span> <span class="pre">accel=kvm</span></code>: use KVM for acceleration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-rtc</span> <span class="pre">base=localtime</span></code>: use localtime for the emulated hardware clock.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-nographic</span> <span class="pre">-serial</span> <span class="pre">stdio</span> <span class="pre">-display</span> <span class="pre">none</span> <span class="pre">-monitor</span> <span class="pre">null</span></code>: output the console
 of the guest on the standard output of the terminal which is used to launch
-QEmu.</li>
-<li><code class="docutils literal notranslate"><span class="pre">-chardev</span> <span class="pre">stdio,id=stdio,mux=on</span> <span class="pre">-device</span> <span class="pre">virtio-serial</span> <span class="pre">-device</span> <span class="pre">virtserialport,chardev=stdio,name=qemu.stdio</span></code>:
+QEmu.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-chardev</span> <span class="pre">stdio,id=stdio,mux=on</span> <span class="pre">-device</span> <span class="pre">virtio-serial</span> <span class="pre">-device</span> <span class="pre">virtserialport,chardev=stdio,name=qemu.stdio</span></code>:
 Create a virtual device in the guest, <code class="docutils literal notranslate"><span class="pre">/dev/virtio-ports/qemu.stdio</span></code>, which
 can be used to read and write messages to the input and output stream of the
-QEmu process.</li>
-<li><code class="docutils literal notranslate"><span class="pre">-chardev</span> <span class="pre">stdio,id=stdio,mux=on,signal=off</span> <span class="pre">-device</span> <span class="pre">virtio-serial-pci</span> <span class="pre">-device</span> <span class="pre">virtconsole,chardev=stdio</span> <span class="pre">-mon</span> <span class="pre">chardev=stdio</span></code>:
-Multiplex the console and the monitor on stdio (<code class="docutils literal notranslate"><span class="pre">Ctrl-A</span> <span class="pre">h</span></code> for help)</li>
+QEmu process.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-chardev</span> <span class="pre">stdio,id=stdio,mux=on,signal=off</span> <span class="pre">-device</span> <span class="pre">virtio-serial-pci</span> <span class="pre">-device</span> <span class="pre">virtconsole,chardev=stdio</span> <span class="pre">-mon</span> <span class="pre">chardev=stdio</span></code>:
+Multiplex the console and the monitor on stdio (<code class="docutils literal notranslate"><span class="pre">Ctrl-A</span> <span class="pre">h</span></code> for help)</p></li>
 </ul>
-</div>
-<div class="section" id="qemu-static-chroot">
+</section>
+<section id="qemu-static-chroot">
 <h2>QEmu-static chroot<a class="headerlink" href="#qemu-static-chroot" title="Permalink to this headline">¶</a></h2>
 <p>To run programs from a foreign CPU architecture without building a virtual
 machine, it is possible to setup a chroot environment with QEmu emulation.</p>
@@ -349,10 +349,10 @@ mask ffffffffffffff00fffffffffffffffffeffffff
 </div>
 <p>Once this is configured, an ARM QEmu-static chroot can be built by:</p>
 <ul class="simple">
-<li>creating a base chroot (with <code class="docutils literal notranslate"><span class="pre">debootstrap</span></code> for Debian, <code class="docutils literal notranslate"><span class="pre">pacstrap</span></code> for
-Arch Linux), and</li>
-<li>copying <code class="docutils literal notranslate"><span class="pre">/usr/bin/qemu-arm-static</span></code> in the <code class="docutils literal notranslate"><span class="pre">/usr/bin</span></code> directory of the
-chroot.</li>
+<li><p>creating a base chroot (with <code class="docutils literal notranslate"><span class="pre">debootstrap</span></code> for Debian, <code class="docutils literal notranslate"><span class="pre">pacstrap</span></code> for
+Arch Linux), and</p></li>
+<li><p>copying <code class="docutils literal notranslate"><span class="pre">/usr/bin/qemu-arm-static</span></code> in the <code class="docutils literal notranslate"><span class="pre">/usr/bin</span></code> directory of the
+chroot.</p></li>
 </ul>
 <p>On debian, there also exists command <code class="docutils literal notranslate"><span class="pre">qemu-debootstrap</span></code>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>apt-get install qemu qemu-user-static qemu-utils binfmt-support debootstrap
@@ -376,8 +376,8 @@ a <code class="docutils literal notranslate"><span class="pre">strace</span></co
 <span class="nb">exec</span> qemu-arm-static -strace <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="libvirt-integration">
+</section>
+<section id="libvirt-integration">
 <h2>Libvirt integration<a class="headerlink" href="#libvirt-integration" title="Permalink to this headline">¶</a></h2>
 <p>Libvirt can be used to managed virtual machines. Some commands:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all known virtual machines (domains)</span>
@@ -405,7 +405,7 @@ with <code class="docutils literal notranslate"><span class="pre">virsh</span> <
   <span class="nt">&lt;ip</span> <span class="na">address=</span><span class="s">&#39;192.168.122.1&#39;</span> <span class="na">netmask=</span><span class="s">&#39;255.255.255.0&#39;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;dhcp&gt;</span>
       <span class="nt">&lt;range</span> <span class="na">start=</span><span class="s">&#39;192.168.122.2&#39;</span> <span class="na">end=</span><span class="s">&#39;192.168.122.254&#39;</span><span class="nt">/&gt;</span>
-      <span class="c">&lt;!-- Static IP addresses --&gt;</span>
+      <span class="cm">&lt;!-- Static IP addresses --&gt;</span>
       <span class="nt">&lt;host</span> <span class="na">mac=</span><span class="s">&#39;52:54:00:11:22:33&#39;</span> <span class="na">name=</span><span class="s">&#39;vm1&#39;</span> <span class="na">ip=</span><span class="s">&#39;192.168.122.11&#39;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;/dhcp&gt;</span>
   <span class="nt">&lt;/ip&gt;</span>
@@ -413,29 +413,29 @@ with <code class="docutils literal notranslate"><span class="pre">virsh</span> <
 </pre></div>
 </div>
 <p>The generated dnsmasq configuration is in <code class="docutils literal notranslate"><span class="pre">/var/lib/libvirt/dnsmasq/default.conf</span></code>.</p>
-</div>
-<div class="section" id="web-links">
+</section>
+<section id="web-links">
 <h2>Web links<a class="headerlink" href="#web-links" title="Permalink to this headline">¶</a></h2>
 <p>Here are some links to online articles and documentation relevant with QEmu:</p>
 <ul class="simple">
-<li><a class="reference external" href="http://wiki.qemu.org/Testing">http://wiki.qemu.org/Testing</a> QEmu testing images</li>
-<li><a class="reference external" href="https://wiki.archlinux.org/index.php/QEMU">https://wiki.archlinux.org/index.php/QEMU</a> ArchLinux wiki entry</li>
-<li><dl class="first docutils">
-<dt><a class="reference external" href="http://debian-handbook.info/browse/stable/sect.virtualization.html">http://debian-handbook.info/browse/stable/sect.virtualization.html</a></dt>
-<dd>Virtualization – The Debian Administrator’s Handbook</dd>
+<li><p><a class="reference external" href="http://wiki.qemu.org/Testing">http://wiki.qemu.org/Testing</a> QEmu testing images</p></li>
+<li><p><a class="reference external" href="https://wiki.archlinux.org/index.php/QEMU">https://wiki.archlinux.org/index.php/QEMU</a> ArchLinux wiki entry</p></li>
+<li><dl class="simple">
+<dt><a class="reference external" href="http://debian-handbook.info/browse/stable/sect.virtualization.html">http://debian-handbook.info/browse/stable/sect.virtualization.html</a></dt><dd><p>Virtualization – The Debian Administrator’s Handbook</p>
+</dd>
 </dl>
 </li>
-<li><a class="reference external" href="https://blog.nelhage.com/2013/12/lightweight-linux-kernel-development-with-kvm/">https://blog.nelhage.com/2013/12/lightweight-linux-kernel-development-with-kvm/</a></li>
-<li><a class="reference external" href="http://blog.oddbit.com/2014/07/21/tracking-down-a-kernel-bug-wit/">http://blog.oddbit.com/2014/07/21/tracking-down-a-kernel-bug-wit/</a></li>
-<li><a class="reference external" href="https://www.berrange.com/posts/2011/06/07/what-benefits-does-libvirt-offer-to-developers-targetting-qemukvm/">https://www.berrange.com/posts/2011/06/07/what-benefits-does-libvirt-offer-to-developers-targetting-qemukvm/</a>
-(This article explains what libvirt does)</li>
-<li><a class="reference external" href="https://wiki.debian.org/QemuUserEmulation">https://wiki.debian.org/QemuUserEmulation</a>
-How to setup and use QEMU user emulation in a “transparent” fashion</li>
-<li><a class="reference external" href="https://github.com/ixty/xarch_shellcode/blob/master/README.md">https://github.com/ixty/xarch_shellcode/blob/master/README.md</a>
-Build portable, architecture independent shellcode from C code</li>
+<li><p><a class="reference external" href="https://blog.nelhage.com/2013/12/lightweight-linux-kernel-development-with-kvm/">https://blog.nelhage.com/2013/12/lightweight-linux-kernel-development-with-kvm/</a></p></li>
+<li><p><a class="reference external" href="http://blog.oddbit.com/2014/07/21/tracking-down-a-kernel-bug-wit/">http://blog.oddbit.com/2014/07/21/tracking-down-a-kernel-bug-wit/</a></p></li>
+<li><p><a class="reference external" href="https://www.berrange.com/posts/2011/06/07/what-benefits-does-libvirt-offer-to-developers-targetting-qemukvm/">https://www.berrange.com/posts/2011/06/07/what-benefits-does-libvirt-offer-to-developers-targetting-qemukvm/</a>
+(This article explains what libvirt does)</p></li>
+<li><p><a class="reference external" href="https://wiki.debian.org/QemuUserEmulation">https://wiki.debian.org/QemuUserEmulation</a>
+How to setup and use QEMU user emulation in a “transparent” fashion</p></li>
+<li><p><a class="reference external" href="https://github.com/ixty/xarch_shellcode/blob/master/README.md">https://github.com/ixty/xarch_shellcode/blob/master/README.md</a>
+Build portable, architecture independent shellcode from C code</p></li>
 </ul>
-</div>
-<div class="section" id="a-quick-glance-at-docker">
+</section>
+<section id="a-quick-glance-at-docker">
 <h2>A quick glance at Docker<a class="headerlink" href="#a-quick-glance-at-docker" title="Permalink to this headline">¶</a></h2>
 <p>Docker is known for being able to run containers. It is also good for spawning
 short-lived well-controlled environment like a fresh Ubuntu Precise (12.04 LTS)
@@ -451,10 +451,11 @@ install:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker ps -l
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -494,17 +495,15 @@ install:</p>
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -522,12 +521,13 @@ install:</p>
           <a href="pxe-boot-server.html" title="Configure a server to handle network boot (PXE)"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">QEmu-KVM notes</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

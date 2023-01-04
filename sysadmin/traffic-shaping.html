@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Traffic shaping &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="User management on Linux" href="user.html" />
@@ -32,7 +31,8 @@
           <a href="tmpfs.html" title="Use tmpfs for some directories"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Traffic shaping</a></li> 
       </ul>
     </div>  
 
@@ -41,17 +41,17 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="traffic-shaping">
+  <section id="traffic-shaping">
 <h1>Traffic shaping<a class="headerlink" href="#traffic-shaping" title="Permalink to this headline">¶</a></h1>
 <p>This is not a complete guide which explains how to shape traffic but a list
 of not-so-intuitive commands related to traffic shaping.</p>
 <p>Documentation:</p>
 <ul class="simple">
-<li><a class="reference external" href="http://linux-ip.net/articles/Traffic-Control-HOWTO/">http://linux-ip.net/articles/Traffic-Control-HOWTO/</a></li>
-<li><a class="reference external" href="http://lartc.org/wondershaper/">http://lartc.org/wondershaper/</a> (scripts to do QoS on ADSL)</li>
-<li><a class="reference external" href="https://www.kernel.org/doc/Documentation/cgroups/net_cls.txt">https://www.kernel.org/doc/Documentation/cgroups/net_cls.txt</a> (filter with cgroup)</li>
-<li><a class="reference external" href="http://lartc.org/manpages/tc.html">http://lartc.org/manpages/tc.html</a> (official manpage)</li>
-<li><a class="reference external" href="http://lartc.org/howto/lartc.qdisc.filters.html">http://lartc.org/howto/lartc.qdisc.filters.html</a> (tc filters)</li>
+<li><p><a class="reference external" href="http://linux-ip.net/articles/Traffic-Control-HOWTO/">http://linux-ip.net/articles/Traffic-Control-HOWTO/</a></p></li>
+<li><p><a class="reference external" href="http://lartc.org/wondershaper/">http://lartc.org/wondershaper/</a> (scripts to do QoS on ADSL)</p></li>
+<li><p><a class="reference external" href="https://www.kernel.org/doc/Documentation/cgroups/net_cls.txt">https://www.kernel.org/doc/Documentation/cgroups/net_cls.txt</a> (filter with cgroup)</p></li>
+<li><p><a class="reference external" href="http://lartc.org/manpages/tc.html">http://lartc.org/manpages/tc.html</a> (official manpage)</p></li>
+<li><p><a class="reference external" href="http://lartc.org/howto/lartc.qdisc.filters.html">http://lartc.org/howto/lartc.qdisc.filters.html</a> (tc filters)</p></li>
 </ul>
 <p>First, to dump current traffic shaping rules on interface <code class="docutils literal notranslate"><span class="pre">eth0</span></code>, use the
 following command (<code class="docutils literal notranslate"><span class="pre">tc</span></code> means “Traffic Controller”):</p>
@@ -68,20 +68,20 @@ following command (<code class="docutils literal notranslate"><span class="pre">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="k">del</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">root</span>
 </pre></div>
 </div>
-<div class="section" id="egress-shaping-limiting-outbound-traffic">
+<section id="egress-shaping-limiting-outbound-traffic">
 <h2>Egress shaping (limiting outbound traffic)<a class="headerlink" href="#egress-shaping-limiting-outbound-traffic" title="Permalink to this headline">¶</a></h2>
 <p>This command attaches a TBF (Token Bucket Filter) to <code class="docutils literal notranslate"><span class="pre">eth0</span></code> which :</p>
 <ul class="simple">
-<li>limit the maximum rate to 1 Mbits/s,</li>
-<li>define a peakrate at 2 Mbits/s,</li>
-<li>use a 10 KB buffer,</li>
-<li>limit the latency caused by the TBF to at most 70ms</li>
+<li><p>limit the maximum rate to 1 Mbits/s,</p></li>
+<li><p>define a peakrate at 2 Mbits/s,</p></li>
+<li><p>use a 10 KB buffer,</p></li>
+<li><p>limit the latency caused by the TBF to at most 70ms</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">root</span> <span class="n">tbf</span> <span class="n">rate</span> <span class="mi">1</span><span class="n">mbit</span> <span class="n">peakrate</span> <span class="mi">2</span><span class="n">mbit</span> <span class="n">burst</span> <span class="mi">10</span><span class="n">kb</span> <span class="n">latency</span> <span class="mi">70</span><span class="n">ms</span> <span class="n">minburst</span> <span class="mi">1540</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="delay">
+</section>
+<section id="delay">
 <h2>Delay<a class="headerlink" href="#delay" title="Permalink to this headline">¶</a></h2>
 <p>This command applies a delay of 500ms on each outbound packets:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">root</span> <span class="n">netem</span> <span class="n">delay</span> <span class="mi">500</span><span class="n">ms</span>
@@ -91,8 +91,8 @@ following command (<code class="docutils literal notranslate"><span class="pre">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qdisc</span> <span class="n">netem</span> <span class="mi">8001</span><span class="p">:</span> <span class="n">root</span> <span class="n">refcnt</span> <span class="mi">2</span> <span class="n">limit</span> <span class="mi">1000</span> <span class="n">delay</span> <span class="mf">500.0</span><span class="n">ms</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="http-server-outbound-traffic-shaping">
+</section>
+<section id="http-server-outbound-traffic-shaping">
 <h2>HTTP server outbound traffic shaping<a class="headerlink" href="#http-server-outbound-traffic-shaping" title="Permalink to this headline">¶</a></h2>
 <p>When running an HTTP server on TCP port 80, it is possible to throttle the
 outbound traffic with <code class="docutils literal notranslate"><span class="pre">tc-htb</span></code> (Hierarchy Token Bucket):</p>
@@ -121,9 +121,9 @@ command with <code class="docutils literal notranslate"><span class="pre">iptabl
 </pre></div>
 </div>
 <p>It is also possible to filter by IP address:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">prio</span> <span class="mi">1</span> <span class="n">u32</span> <span class="n">match</span> <span class="n">ip</span> <span class="n">dst</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span><span class="o">/</span><span class="mi">32</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">prio</span> <span class="mi">1</span> <span class="n">u32</span> <span class="n">match</span> <span class="n">ip</span> <span class="n">dst</span> <span class="mf">192.0.2.42</span><span class="o">/</span><span class="mi">32</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">1</span>
 <span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">protocol</span> <span class="n">ipv6</span> <span class="n">prio</span> <span class="mi">2</span> <span class="n">u32</span> <span class="n">match</span> <span class="n">ip6</span> <span class="n">dst</span> <span class="mi">2001</span><span class="p">:</span><span class="n">db8</span><span class="p">::</span><span class="n">beef</span><span class="o">/</span><span class="mi">128</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">1</span>
-<span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">prio</span> <span class="mi">3</span> <span class="n">u32</span> <span class="n">match</span> <span class="n">ip</span> <span class="n">src</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.36</span><span class="o">/</span><span class="mi">32</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span>
+<span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">prio</span> <span class="mi">3</span> <span class="n">u32</span> <span class="n">match</span> <span class="n">ip</span> <span class="n">src</span> <span class="mf">192.0.2.36</span><span class="o">/</span><span class="mi">32</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span>
 <span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span> <span class="n">protocol</span> <span class="n">ipv6</span> <span class="n">prio</span> <span class="mi">4</span> <span class="n">u32</span> <span class="n">match</span> <span class="n">ip6</span> <span class="n">src</span> <span class="mi">2001</span><span class="p">:</span><span class="n">db8</span><span class="p">::</span><span class="n">cafe</span><span class="o">/</span><span class="mi">128</span> <span class="n">flowid</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span>
 </pre></div>
 </div>
@@ -135,14 +135,14 @@ kernel rejects the request with a mysterious message:</p>
 </div>
 <p>When such a thing happens, you only need to use a different “prio” argument for
 your IPv4 and IPv6 filters.</p>
-</div>
-<div class="section" id="make-downloads-slow">
+</section>
+<section id="make-downloads-slow">
 <h2>Make downloads slow<a class="headerlink" href="#make-downloads-slow" title="Permalink to this headline">¶</a></h2>
 <p>In order to slow down downloads to prevent them from filling ISP’s buffers, you
 can attach a filter in ingress mode which drops too fast packets:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">handle</span> <span class="n">ffff</span><span class="p">:</span> <span class="n">ingress</span>
 <span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="n">ffff</span><span class="p">:</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">prio</span> <span class="mi">50</span> <span class="n">u32</span> \
-    <span class="n">match</span> <span class="n">ip</span> <span class="n">src</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span> <span class="n">police</span> <span class="n">rate</span> <span class="mi">800</span><span class="n">kbit</span> <span class="n">burst</span> <span class="mi">10</span><span class="n">k</span> <span class="n">drop</span> <span class="n">flowid</span> <span class="p">:</span><span class="mi">1</span>
+    <span class="k">match</span> <span class="n">ip</span> <span class="n">src</span> <span class="mf">0.0.0.0</span><span class="o">/</span><span class="mi">0</span> <span class="n">police</span> <span class="n">rate</span> <span class="mi">800</span><span class="n">kbit</span> <span class="n">burst</span> <span class="mi">10</span><span class="n">k</span> <span class="n">drop</span> <span class="n">flowid</span> <span class="p">:</span><span class="mi">1</span>
 </pre></div>
 </div>
 <p>After that, statistics commands display this:</p>
@@ -154,7 +154,7 @@ can attach a filter in ingress mode which drops too fast packets:</p>
 <span class="nb">filter</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">pref</span> <span class="mi">50</span> <span class="n">u32</span>
 <span class="nb">filter</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">pref</span> <span class="mi">50</span> <span class="n">u32</span> <span class="n">fh</span> <span class="mi">800</span><span class="p">:</span> <span class="n">ht</span> <span class="n">divisor</span> <span class="mi">1</span>
 <span class="nb">filter</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">pref</span> <span class="mi">50</span> <span class="n">u32</span> <span class="n">fh</span> <span class="mi">800</span><span class="p">::</span><span class="mi">800</span> <span class="n">order</span> <span class="mi">2048</span> <span class="n">key</span> <span class="n">ht</span> <span class="mi">800</span> <span class="n">bkt</span> <span class="mi">0</span> <span class="n">flowid</span> <span class="p">:</span><span class="mi">1</span>
-  <span class="n">match</span> <span class="mi">00000000</span><span class="o">/</span><span class="mi">00000000</span> <span class="n">at</span> <span class="mi">12</span>
+  <span class="k">match</span> <span class="mi">00000000</span><span class="o">/</span><span class="mi">00000000</span> <span class="n">at</span> <span class="mi">12</span>
         <span class="n">action</span> <span class="n">order</span> <span class="mi">0</span><span class="p">:</span>  <span class="n">police</span> <span class="mh">0x1</span> <span class="n">rate</span> <span class="mi">800</span><span class="n">Kbit</span> <span class="n">burst</span> <span class="mi">10</span><span class="n">Kb</span> <span class="n">mtu</span> <span class="mi">2</span><span class="n">Kb</span> <span class="n">action</span> <span class="n">drop</span> <span class="n">overhead</span> <span class="mi">0</span><span class="n">b</span>
 <span class="n">ref</span> <span class="mi">1</span> <span class="n">bind</span> <span class="mi">1</span>
 </pre></div>
@@ -163,10 +163,11 @@ can attach a filter in ingress mode which drops too fast packets:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="k">del</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">ingress</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -199,17 +200,15 @@ can attach a filter in ingress mode which drops too fast packets:</p>
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -227,12 +226,13 @@ can attach a filter in ingress mode which drops too fast packets:</p>
           <a href="tmpfs.html" title="Use tmpfs for some directories"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Traffic shaping</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

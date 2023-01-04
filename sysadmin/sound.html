@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Sound Configuration &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="systemd configuration" href="systemd.html" />
@@ -32,7 +31,8 @@
           <a href="selinux.html" title="Some notes about my SELinux installation"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Sound Configuration</a></li> 
       </ul>
     </div>  
 
@@ -41,10 +41,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="sound-configuration">
+  <section id="sound-configuration">
 <h1>Sound Configuration<a class="headerlink" href="#sound-configuration" title="Permalink to this headline">¶</a></h1>
 <p>Here are some notes about how I setup sound on my desktop systems.</p>
-<div class="section" id="mpd-and-pulseaudio">
+<section id="mpd-and-pulseaudio">
 <h2>MPD and PulseAudio<a class="headerlink" href="#mpd-and-pulseaudio" title="Permalink to this headline">¶</a></h2>
 <p>MPD (Music Player Daemon) is a system daemon which plays music from files,
 playlists… It needs to interact with PulseAudio to get the sound out (using
@@ -91,33 +91,34 @@ systemctl <span class="nb">enable</span> mpd-MYUSER
 <p>Documentation:
 <a class="reference external" href="https://wiki.archlinux.org/index.php/MPD/Tips_and_Tricks#MPD_and_PulseAudio">https://wiki.archlinux.org/index.php/MPD/Tips_and_Tricks#MPD_and_PulseAudio</a>
 (This wiki also describe the setup with a local TCP socket)</p>
-</div>
-<div class="section" id="network">
+</section>
+<section id="network">
 <h2>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h2>
 <p>Streaming audio stream over the network is quite easy with PulseAudio. Let’s
 suppose host <code class="docutils literal notranslate"><span class="pre">192.0.2.42</span></code> wants to send its audio output to a PulseAudio
 server running on host <code class="docutils literal notranslate"><span class="pre">192.0.2.1</span></code>.</p>
 <p>First setup the listener (<code class="docutils literal notranslate"><span class="pre">192.0.2.1</span></code>) to accept connections from the sender
 (<code class="docutils literal notranslate"><span class="pre">192.0.2.42</span></code>). <code class="docutils literal notranslate"><span class="pre">/etc/pulse/default.pa</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span><span class="o">-</span><span class="n">module</span> <span class="n">module</span><span class="o">-</span><span class="n">native</span><span class="o">-</span><span class="n">protocol</span><span class="o">-</span><span class="n">tcp</span> <span class="n">auth</span><span class="o">-</span><span class="n">ip</span><span class="o">-</span><span class="n">acl</span><span class="o">=</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">;</span><span class="mf">192.0</span><span class="o">.</span><span class="mf">2.42</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span><span class="o">-</span><span class="n">module</span> <span class="n">module</span><span class="o">-</span><span class="n">native</span><span class="o">-</span><span class="n">protocol</span><span class="o">-</span><span class="n">tcp</span> <span class="n">auth</span><span class="o">-</span><span class="n">ip</span><span class="o">-</span><span class="n">acl</span><span class="o">=</span><span class="mf">127.0.0.1</span><span class="p">;</span><span class="mf">192.0.2.42</span>
 </pre></div>
 </div>
 <p>Or here is the unsecure configuration:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span><span class="o">-</span><span class="n">module</span> <span class="n">module</span><span class="o">-</span><span class="n">native</span><span class="o">-</span><span class="n">protocol</span><span class="o">-</span><span class="n">tcp</span> <span class="n">listen</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="n">auth</span><span class="o">-</span><span class="n">anonymous</span><span class="o">=</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span><span class="o">-</span><span class="n">module</span> <span class="n">module</span><span class="o">-</span><span class="n">native</span><span class="o">-</span><span class="n">protocol</span><span class="o">-</span><span class="n">tcp</span> <span class="n">listen</span><span class="o">=</span><span class="mf">0.0.0.0</span> <span class="n">auth</span><span class="o">-</span><span class="n">anonymous</span><span class="o">=</span><span class="mi">1</span>
 </pre></div>
 </div>
 <p>Then configure the sender to send its audio output. <code class="docutils literal notranslate"><span class="pre">/etc/pulse/default.pa</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span><span class="o">-</span><span class="n">module</span> <span class="n">module</span><span class="o">-</span><span class="n">rtp</span><span class="o">-</span><span class="n">send</span> <span class="n">destination</span><span class="o">=</span><span class="mf">192.0</span><span class="o">.</span><span class="mf">2.1</span> <span class="n">port</span><span class="o">=</span><span class="mi">16001</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span><span class="o">-</span><span class="n">module</span> <span class="n">module</span><span class="o">-</span><span class="n">rtp</span><span class="o">-</span><span class="n">send</span> <span class="n">destination</span><span class="o">=</span><span class="mf">192.0.2.1</span> <span class="n">port</span><span class="o">=</span><span class="mi">16001</span>
 </pre></div>
 </div>
 <p>To sync the configuration of PulseAudio with X11, there may be needed to run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pax11publish</span> <span class="o">-</span><span class="n">e</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -148,17 +149,15 @@ server running on host <code class="docutils literal notranslate"><span class="p
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -176,12 +175,13 @@ server running on host <code class="docutils literal notranslate"><span class="p
           <a href="selinux.html" title="Some notes about my SELinux installation"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Sound Configuration</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Kernel Network Console (netconsole module) &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Using perf on Linux" href="perf-linux.html" />
@@ -32,7 +31,8 @@
           <a href="netconfig.html" title="Network configuration"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Kernel Network Console (netconsole module)</a></li> 
       </ul>
     </div>  
 
@@ -41,7 +41,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="kernel-network-console-netconsole-module">
+  <section id="kernel-network-console-netconsole-module">
 <h1>Kernel Network Console (netconsole module)<a class="headerlink" href="#kernel-network-console-netconsole-module" title="Permalink to this headline">¶</a></h1>
 <p>To debug hosts when a display is not available, or in other circumstances, it’s
 possible to set up a network console so that kernel messages go through the
@@ -49,30 +49,30 @@ network to a destination host which can display these messages. Let’s say the
 source host (which sends messages) has an ethernet interface <code class="docutils literal notranslate"><span class="pre">eth0</span></code> which is
 linked to the destination host (which receives messages).
 The addresses of each interface is as follows:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="18%" />
-<col width="32%" />
-<col width="42%" />
-<col width="8%" />
+<col style="width: 18%" />
+<col style="width: 32%" />
+<col style="width: 42%" />
+<col style="width: 8%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Host</th>
-<th class="head">MAC address</th>
-<th class="head">Link-local IPv6 address</th>
-<th class="head">Port</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Host</p></th>
+<th class="head"><p>MAC address</p></th>
+<th class="head"><p>Link-local IPv6 address</p></th>
+<th class="head"><p>Port</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Source</td>
-<td><code class="docutils literal notranslate"><span class="pre">00:00:00:00:00:01</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">fe80::0200:00ff:fe00:0001</span></code></td>
-<td>6665</td>
+<tbody>
+<tr class="row-even"><td><p>Source</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">00:00:00:00:00:01</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fe80::0200:00ff:fe00:0001</span></code></p></td>
+<td><p>6665</p></td>
 </tr>
-<tr class="row-odd"><td>Destination</td>
-<td><code class="docutils literal notranslate"><span class="pre">00:00:00:00:00:02</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">fe80::0200:00ff:fe00:0002</span></code></td>
-<td>6666</td>
+<tr class="row-odd"><td><p>Destination</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">00:00:00:00:00:02</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">fe80::0200:00ff:fe00:0002</span></code></p></td>
+<td><p>6666</p></td>
 </tr>
 </tbody>
 </table>
@@ -82,12 +82,12 @@ The addresses of each interface is as follows:</p>
 </div>
 <p>where:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">src-port</span></code> source for UDP packets (defaults to 6665)</li>
-<li><code class="docutils literal notranslate"><span class="pre">src-ip</span></code> source IP to use (interface address)</li>
-<li><code class="docutils literal notranslate"><span class="pre">dev</span> <span class="pre">network</span></code> interface (eth0)</li>
-<li><code class="docutils literal notranslate"><span class="pre">tgt-port</span></code> port for logging agent (6666)</li>
-<li><code class="docutils literal notranslate"><span class="pre">tgt-ip</span></code> IP address for logging agent</li>
-<li><code class="docutils literal notranslate"><span class="pre">tgt-macaddr</span></code> ethernet MAC address for logging agent (broadcast)</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src-port</span></code> source for UDP packets (defaults to 6665)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src-ip</span></code> source IP to use (interface address)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dev</span> <span class="pre">network</span></code> interface (eth0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tgt-port</span></code> port for logging agent (6666)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tgt-ip</span></code> IP address for logging agent</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tgt-macaddr</span></code> ethernet MAC address for logging agent (broadcast)</p></li>
 </ul>
 <p>Hence in the previous scenario, the configuration line is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">netconsole</span><span class="o">=</span><span class="mi">6665</span><span class="nd">@fe80</span><span class="p">::</span><span class="mi">0200</span><span class="p">:</span><span class="mi">00</span><span class="n">ff</span><span class="p">:</span><span class="n">fe00</span><span class="p">:</span><span class="mi">0001</span><span class="o">/</span><span class="n">eth0</span><span class="p">,</span><span class="mi">6666</span><span class="nd">@fe80</span><span class="p">::</span><span class="mi">0200</span><span class="p">:</span><span class="mi">00</span><span class="n">ff</span><span class="p">:</span><span class="n">fe00</span><span class="p">:</span><span class="mi">0002</span><span class="o">/</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">02</span>
@@ -115,7 +115,7 @@ is listening for incoming messages on the destination host. For example with
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="n">h</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">sysrq</span><span class="o">-</span><span class="n">trigger</span>
 </pre></div>
 </div>
-<div class="section" id="dynamic-configuration">
+<section id="dynamic-configuration">
 <h2>Dynamic configuration<a class="headerlink" href="#dynamic-configuration" title="Permalink to this headline">¶</a></h2>
 <p>To dynamically change netconsole’s settings, you need to mount the kernel
 config filesystem:</p>
@@ -138,8 +138,8 @@ file before writing 1 to <code class="docutils literal notranslate"><span class=
 <span class="n">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">enabled</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="firewall-configuration">
+</section>
+<section id="firewall-configuration">
 <h2>Firewall configuration<a class="headerlink" href="#firewall-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Here are the iptables rules to add to the firewall to accept the communication.</p>
 <p>Source host:</p>
@@ -156,21 +156,22 @@ file before writing 1 to <code class="docutils literal notranslate"><span class=
 <span class="n">ip6tables</span> <span class="o">-</span><span class="n">A</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">p</span> <span class="n">udp</span> <span class="o">-</span><span class="n">m</span> <span class="n">udp</span> <span class="o">--</span><span class="n">sport</span> <span class="mi">6665</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">6666</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="documentation-links">
+</section>
+<section id="documentation-links">
 <h2>Documentation links<a class="headerlink" href="#documentation-links" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/networking/netconsole.txt">https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/networking/netconsole.txt</a>
-Linux Documentation</li>
-<li><a class="reference external" href="https://wiki.archlinux.org/index.php/Netconsole">https://wiki.archlinux.org/index.php/Netconsole</a>
-ArchLinux wiki</li>
-<li><a class="reference external" href="https://wiki.ubuntu.com/Kernel/Netconsole">https://wiki.ubuntu.com/Kernel/Netconsole</a>
-Ubuntu wiki</li>
+<li><p><a class="reference external" href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/networking/netconsole.txt">https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/networking/netconsole.txt</a>
+Linux Documentation</p></li>
+<li><p><a class="reference external" href="https://wiki.archlinux.org/index.php/Netconsole">https://wiki.archlinux.org/index.php/Netconsole</a>
+ArchLinux wiki</p></li>
+<li><p><a class="reference external" href="https://wiki.ubuntu.com/Kernel/Netconsole">https://wiki.ubuntu.com/Kernel/Netconsole</a>
+Ubuntu wiki</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -202,17 +203,15 @@ Ubuntu wiki</li>
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -230,12 +229,13 @@ Ubuntu wiki</li>
           <a href="netconfig.html" title="Network configuration"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Kernel Network Console (netconsole module)</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

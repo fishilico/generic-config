@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Configure a server to handle network boot (PXE) &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="QEmu-KVM notes" href="qemu.html" />
@@ -32,7 +31,8 @@
           <a href="perf-linux.html" title="Using perf on Linux"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Configure a server to handle network boot (PXE)</a></li> 
       </ul>
     </div>  
 
@@ -41,7 +41,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="configure-a-server-to-handle-network-boot-pxe">
+  <section id="configure-a-server-to-handle-network-boot-pxe">
 <h1>Configure a server to handle network boot (PXE)<a class="headerlink" href="#configure-a-server-to-handle-network-boot-pxe" title="Permalink to this headline">¶</a></h1>
 <p><em>PXE</em> (Pre-Execution Environment) is a way to boot a computer which can’t boot
 from a physical drive (CD, DVD, USB). The computer gets an IP address from the
@@ -50,7 +50,7 @@ Transfer Protocol) server. On Linux, Dnsmasq does all the networking stuff and
 Syslinux provides a PXE image. The LiveCD of any GNU/Linux distribution contains
 configuration files for Syslinux and a compressed file system which can be used
 by network boot.</p>
-<div class="section" id="example">
+<section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>1- Configure the PXE server network (IP address, DNS…) and make it up and
 running.</p>
@@ -73,23 +73,23 @@ cp /usr/lib/syslinux/pxelinux.0 /srv/tftpboot
 <code class="docutils literal notranslate"><span class="pre">/etc/dnsmasq.conf</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment following line if you want to restrict to one interface</span>
 <span class="c1">#interface=eth0</span>
-<span class="n">dhcp</span><span class="o">-</span><span class="nb">range</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.50</span><span class="p">,</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.150</span><span class="p">,</span><span class="mi">12</span><span class="n">h</span>
-<span class="n">dhcp</span><span class="o">-</span><span class="n">boot</span><span class="o">=</span><span class="n">pxelinux</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">dhcp</span><span class="o">-</span><span class="nb">range</span><span class="o">=</span><span class="mf">192.168.0.50</span><span class="p">,</span><span class="mf">192.168.0.150</span><span class="p">,</span><span class="mi">12</span><span class="n">h</span>
+<span class="n">dhcp</span><span class="o">-</span><span class="n">boot</span><span class="o">=</span><span class="n">pxelinux</span><span class="mf">.0</span>
 <span class="n">enable</span><span class="o">-</span><span class="n">tftp</span>
 <span class="n">tftp</span><span class="o">-</span><span class="n">root</span><span class="o">=/</span><span class="n">srv</span><span class="o">/</span><span class="n">tftpboot</span>
 </pre></div>
 </div>
 <p>5- (Re)Start Dnsmasq service and enjoy your PXE server !</p>
-</div>
-<div class="section" id="debian-network-installation">
+</section>
+<section id="debian-network-installation">
 <h2>Debian network installation<a class="headerlink" href="#debian-network-installation" title="Permalink to this headline">¶</a></h2>
 <p>Debian provides files on its FTP mirrors which can be used to set up a PXE
 server to boot Debian netinstall.</p>
 <ul class="simple">
-<li>32-bit version:
-<a class="reference external" href="ftp://ftp.debian.org/debian/dists/stable/main/installer-i386/current/images/netboot/debian-installer/i386/">ftp://ftp.debian.org/debian/dists/stable/main/installer-i386/current/images/netboot/debian-installer/i386/</a></li>
-<li>64-bit version:
-<a class="reference external" href="ftp://ftp.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/">ftp://ftp.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/</a></li>
+<li><p>32-bit version:
+<a class="reference external" href="ftp://ftp.debian.org/debian/dists/stable/main/installer-i386/current/images/netboot/debian-installer/i386/">ftp://ftp.debian.org/debian/dists/stable/main/installer-i386/current/images/netboot/debian-installer/i386/</a></p></li>
+<li><p>64-bit version:
+<a class="reference external" href="ftp://ftp.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/">ftp://ftp.debian.org/debian/dists/stable/main/installer-amd64/current/images/netboot/debian-installer/amd64/</a></p></li>
 </ul>
 <p>On this FTP, only <code class="docutils literal notranslate"><span class="pre">initrd.gz</span></code>, <code class="docutils literal notranslate"><span class="pre">linux</span></code> and <code class="docutils literal notranslate"><span class="pre">pxelinux.0</span></code> are really useful.
 <code class="docutils literal notranslate"><span class="pre">pxelinux.cfg/default</span></code> can be rewritten in a much simpler version:</p>
@@ -100,10 +100,11 @@ server to boot Debian netinstall.</p>
 <span class="n">TIMEOUT</span> <span class="mi">0</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -134,17 +135,15 @@ server to boot Debian netinstall.</p>
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -162,12 +161,13 @@ server to boot Debian netinstall.</p>
           <a href="perf-linux.html" title="Using perf on Linux"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Configure a server to handle network boot (PXE)</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

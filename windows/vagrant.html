@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Windows Virtual Machine with Vagrant &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Some VBScript commands" href="vbscript.html" />
@@ -32,7 +31,8 @@
           <a href="utc-clock.html" title="Set hardware clock to UTC"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Windows Virtual Machine with Vagrant</a></li> 
       </ul>
     </div>  
 
@@ -41,27 +41,27 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="windows-virtual-machine-with-vagrant">
+  <section id="windows-virtual-machine-with-vagrant">
 <h1>Windows Virtual Machine with Vagrant<a class="headerlink" href="#windows-virtual-machine-with-vagrant" title="Permalink to this headline">¶</a></h1>
 <p>Microsoft provides free Windows Vircual Machines (which expire after 90 days) on
 <a class="reference external" href="https://developer.microsoft.com/en-us/microsoft-edge/">https://developer.microsoft.com/en-us/microsoft-edge/</a>.
 Among the available VM are Vagrant machines. Here are instructions to setup
 a Windows VM through Vagrant using Libvirt and QEmu-KVM as backend.</p>
-<div class="section" id="create-a-libvirt-box">
+<section id="create-a-libvirt-box">
 <h2>Create a Libvirt box<a class="headerlink" href="#create-a-libvirt-box" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><p class="first">Download a ZIP from <a class="reference external" href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/">https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/</a>, like
+<li><p>Download a ZIP from <a class="reference external" href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/">https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/</a>, like
 <a class="reference external" href="https://az792536.vo.msecnd.net/vms/VMBuild_20180425/Vagrant/MSEdge/MSEdge.Win10.Vagrant.zip">https://az792536.vo.msecnd.net/vms/VMBuild_20180425/Vagrant/MSEdge/MSEdge.Win10.Vagrant.zip</a></p>
 <ul class="simple">
-<li>Or pull the Vagrant image from <a class="reference external" href="https://app.vagrantup.com/Microsoft/boxes/EdgeOnWindows10">https://app.vagrantup.com/Microsoft/boxes/EdgeOnWindows10</a></li>
+<li><p>Or pull the Vagrant image from <a class="reference external" href="https://app.vagrantup.com/Microsoft/boxes/EdgeOnWindows10">https://app.vagrantup.com/Microsoft/boxes/EdgeOnWindows10</a></p></li>
 </ul>
 </li>
-<li><p class="first">Extract the box from the ZIP (it is named for example <code class="docutils literal notranslate"><span class="pre">MSEdge</span> <span class="pre">-</span> <span class="pre">Win10.box</span></code>):</p>
+<li><p>Extract the box from the ZIP (it is named for example <code class="docutils literal notranslate"><span class="pre">MSEdge</span> <span class="pre">-</span> <span class="pre">Win10.box</span></code>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">unzip</span> <span class="n">MSEdge</span><span class="o">.</span><span class="n">Win10</span><span class="o">.</span><span class="n">Vagrant</span><span class="o">.</span><span class="n">zip</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Import the VirtualBox-Vagrant box and mutate it to use provider <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>:</p>
+<li><p>Import the VirtualBox-Vagrant box and mutate it to use provider <code class="docutils literal notranslate"><span class="pre">libvirt</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">plugin</span> <span class="n">install</span> <span class="n">vagrant</span><span class="o">-</span><span class="n">mutate</span>
 <span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="n">windows</span><span class="o">/</span><span class="n">win10</span><span class="o">-</span><span class="n">edge</span> <span class="s1">&#39;MSEdge - Win10.box&#39;</span>
 <span class="n">vagrant</span> <span class="n">mutate</span> <span class="n">windows</span><span class="o">/</span><span class="n">win10</span><span class="o">-</span><span class="n">edge</span> <span class="n">libvirt</span>
@@ -71,12 +71,12 @@ a Windows VM through Vagrant using Libvirt and QEmu-KVM as backend.</p>
 <p>The mutate command will use <code class="docutils literal notranslate"><span class="pre">qemu-img</span> <span class="pre">convert</span> <span class="pre">-p</span> <span class="pre">-S</span> <span class="pre">16k</span> <span class="pre">-o</span> <span class="pre">compat=1.1</span> <span class="pre">-O</span> <span class="pre">qcow2</span> <span class="pre">...</span></code>
 to convert the virtual box disk to a QEmu-compatible one.</p>
 </li>
-<li><p class="first">Initialize a new Vagrant box in the current directory:</p>
+<li><p>Initialize a new Vagrant box in the current directory:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">init</span> <span class="n">windows</span><span class="o">/</span><span class="n">win10</span><span class="o">-</span><span class="n">edge</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Configure the box by adding the following lines to <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code> before the
+<li><p>Configure the box by adding the following lines to <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code> before the
 final <code class="docutils literal notranslate"><span class="pre">end</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configure remote access</span>
 <span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;IEUser&quot;</span>
@@ -90,7 +90,7 @@ final <code class="docutils literal notranslate"><span class="pre">end</span></c
 </pre></div>
 </div>
 </li>
-<li><p class="first">Start the new box:</p>
+<li><p>Start the new box:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">up</span> <span class="o">--</span><span class="n">provider</span> <span class="n">libvirt</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">destroy</span><span class="o">-</span><span class="n">on</span><span class="o">-</span><span class="n">error</span>
 </pre></div>
 </div>
@@ -108,18 +108,16 @@ boot mode. For Arch Linux, this is documented in
 <a class="reference external" href="https://wiki.archlinux.org/index.php/libvirt#UEFI_Support">https://wiki.archlinux.org/index.php/libvirt#UEFI_Support</a>. Here are some
 instructions:</p>
 <ul>
-<li><p class="first">Install package <code class="docutils literal notranslate"><span class="pre">ovmf</span></code>.</p>
-</li>
-<li><p class="first">Add the following statements to <code class="docutils literal notranslate"><span class="pre">/etc/libvirt/qemu.conf</span></code>:</p>
+<li><p>Install package <code class="docutils literal notranslate"><span class="pre">ovmf</span></code>.</p></li>
+<li><p>Add the following statements to <code class="docutils literal notranslate"><span class="pre">/etc/libvirt/qemu.conf</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nvram</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;/usr/share/ovmf/x64/OVMF_CODE.fd:/usr/share/ovmf/x64/OVMF_VARS.fd&quot;</span>
 <span class="p">]</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Restart <code class="docutils literal notranslate"><span class="pre">libvirtd</span></code> (for example with <code class="docutils literal notranslate"><span class="pre">systemctl</span> <span class="pre">restart</span> <span class="pre">libvirtd</span></code>).</p>
-</li>
-<li><p class="first">Run <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">edit</span> <span class="pre">windows_default</span></code> (replacing <code class="docutils literal notranslate"><span class="pre">windows_default</span></code> with the
+<li><p>Restart <code class="docutils literal notranslate"><span class="pre">libvirtd</span></code> (for example with <code class="docutils literal notranslate"><span class="pre">systemctl</span> <span class="pre">restart</span> <span class="pre">libvirtd</span></code>).</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">edit</span> <span class="pre">windows_default</span></code> (replacing <code class="docutils literal notranslate"><span class="pre">windows_default</span></code> with the
 name of the domain) and insert a <code class="docutils literal notranslate"><span class="pre">&lt;loader&gt;</span></code> tag into the <code class="docutils literal notranslate"><span class="pre">&lt;os&gt;</span></code> one.
 It should looks like:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;os&gt;</span>
@@ -131,17 +129,16 @@ It should looks like:</p>
 </div>
 </li>
 </ul>
-</div>
-<div class="section" id="first-configuration">
+</section>
+<section id="first-configuration">
 <h2>First configuration<a class="headerlink" href="#first-configuration" title="Permalink to this headline">¶</a></h2>
 <p>By default the virtual machine won’t be able to use the virtual network card as
 it lacks the VirtIO network drivers. The suitable drivers are provided by Redhat
 in a <code class="docutils literal notranslate"><span class="pre">virtio-win</span></code> package:
 <a class="reference external" href="https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/">https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/</a></p>
 <ul>
-<li><p class="first">Download the floppy disk of the drivers, <a class="reference external" href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd">https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd</a></p>
-</li>
-<li><p class="first">Power the virtual machine off and add the floppy drive to the VM   with
+<li><p>Download the floppy disk of the drivers, <a class="reference external" href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd">https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win_amd64.vfd</a></p></li>
+<li><p>Power the virtual machine off and add the floppy drive to the VM   with
 <code class="docutils literal notranslate"><span class="pre">virt-manager</span></code> (GUI) or <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">edit</span> <span class="pre">windows_default</span></code> (CLI):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">disk</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;floppy&#39;</span><span class="o">&gt;</span>
   <span class="o">&lt;</span><span class="n">driver</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;qemu&#39;</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raw&#39;</span><span class="o">/&gt;</span>
@@ -153,13 +150,13 @@ in a <code class="docutils literal notranslate"><span class="pre">virtio-win</sp
 </pre></div>
 </div>
 </li>
-<li><p class="first">Then power the machine on (through Libvirt), open the Explorer (<code class="docutils literal notranslate"><span class="pre">Win</span></code> +
+<li><p>Then power the machine on (through Libvirt), open the Explorer (<code class="docutils literal notranslate"><span class="pre">Win</span></code> +
 <code class="docutils literal notranslate"><span class="pre">E</span></code>), go to directory <code class="docutils literal notranslate"><span class="pre">A:\amd64\Win10\</span></code> and install all <code class="docutils literal notranslate"><span class="pre">.inf</span></code> files.
 There are 3 drivers:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">netkvm.inf</span></code> for the VirtIO Ethernet Adapter,</li>
-<li><code class="docutils literal notranslate"><span class="pre">vioscsi.inf</span></code> for the VirtIO SCSI pass-through controller,</li>
-<li><code class="docutils literal notranslate"><span class="pre">viostor.inf</span></code> for the VirtIO SCSI controller.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">netkvm.inf</span></code> for the VirtIO Ethernet Adapter,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vioscsi.inf</span></code> for the VirtIO SCSI pass-through controller,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">viostor.inf</span></code> for the VirtIO SCSI controller.</p></li>
 </ul>
 </li>
 </ul>
@@ -168,10 +165,10 @@ There are 3 drivers:</p>
 <span class="n">PowerShell</span> <span class="n">Get</span><span class="o">-</span><span class="n">WinUserLanguageList</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="remote-access">
+</section>
+<section id="remote-access">
 <h2>Remote access<a class="headerlink" href="#remote-access" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="rdp-connection">
+<section id="rdp-connection">
 <h3>RDP connection<a class="headerlink" href="#rdp-connection" title="Permalink to this headline">¶</a></h3>
 <p>In order to use the graphical interface, Vagrant supports using RDP (Remote
 Desktop Protocol), using <code class="docutils literal notranslate"><span class="pre">freerdp</span></code> (<code class="docutils literal notranslate"><span class="pre">rdesktop</span></code> can also be used if CredSSP
@@ -188,8 +185,8 @@ xfreerdp /u:IEUser <span class="s1">&#39;/p:Passw0rd!&#39;</span> <span class="s
     /w:1600 /h:900 /cert:ignore
 </pre></div>
 </div>
-</div>
-<div class="section" id="using-winrm">
+</section>
+<section id="using-winrm">
 <h3>Using WinRM<a class="headerlink" href="#using-winrm" title="Permalink to this headline">¶</a></h3>
 <p>In order to use WinRM to connect to the machine, add the following information
 to the <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code>:</p>
@@ -268,7 +265,7 @@ Tunnel adapter Teredo Tunneling Pseudo-Interface:
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">systeminfo</span> <span class="o">|</span> <span class="n">Select</span><span class="o">-</span><span class="n">String</span> <span class="s2">&quot;^OS Name&quot;</span><span class="p">,</span><span class="s2">&quot;^OS Version&quot;</span>
 
 <span class="n">OS</span> <span class="n">Name</span><span class="p">:</span>                   <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="mi">10</span> <span class="n">Enterprise</span> <span class="n">Evaluation</span>
-<span class="n">OS</span> <span class="n">Version</span><span class="p">:</span>                <span class="mf">10.0</span><span class="o">.</span><span class="mi">17134</span> <span class="n">N</span><span class="o">/</span><span class="n">A</span> <span class="n">Build</span> <span class="mi">17134</span>
+<span class="n">OS</span> <span class="n">Version</span><span class="p">:</span>                <span class="mf">10.0.17134</span> <span class="n">N</span><span class="o">/</span><span class="n">A</span> <span class="n">Build</span> <span class="mi">17134</span>
 </pre></div>
 </div>
 <p>Or with:</p>
@@ -276,11 +273,11 @@ Tunnel adapter Teredo Tunneling Pseudo-Interface:
 
 <span class="n">Platform</span> <span class="n">ServicePack</span> <span class="n">Version</span>      <span class="n">VersionString</span>
 <span class="o">--------</span> <span class="o">-----------</span> <span class="o">-------</span>      <span class="o">-------------</span>
- <span class="n">Win32NT</span>             <span class="mf">10.0</span><span class="o">.</span><span class="mf">17134.0</span> <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">NT</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">17134.0</span>
+ <span class="n">Win32NT</span>             <span class="mf">10.0.17134.0</span> <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">NT</span> <span class="mf">10.0.17134.0</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="install-windows-openssh-server">
+</section>
+<section id="install-windows-openssh-server">
 <h3>Install Windows OpenSSH server<a class="headerlink" href="#install-windows-openssh-server" title="Permalink to this headline">¶</a></h3>
 <p>Since Windows 10 Fall Creators Update (1709 or 10.0.16299), Microsoft provides
 OpenSSH client (installed by default) and server (installed on demand):</p>
@@ -397,11 +394,12 @@ This public key can be provisioned with:</p>
     ssh IEUser@$VMIP PowerShell &quot;Read-Host | Out-File -FilePath .ssh/authorized_keys -Encoding ASCII&quot;
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -438,17 +436,15 @@ This public key can be provisioned with:</p>
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -466,12 +462,13 @@ This public key can be provisioned with:</p>
           <a href="utc-clock.html" title="Set hardware clock to UTC"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Windows Virtual Machine with Vagrant</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

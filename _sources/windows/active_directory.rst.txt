@@ -114,7 +114,7 @@ With all these parameters, a LDAP search command looks like:
 
     # -N to not use reverse DNS to canonicalize the SASL host name
     # -H connection string (LDAP URI)
-    # -D login ("bind DN") and -w password, or −W to prompt for the password
+    # -D login ("bind DN") and -w password, or -W to prompt for the password
     #    or -y to specify a password file
     #    or -Y GSSAPI to use Kerberos (with SASL, requires package cyrus-sasl-gssapi)
     # -x to use simple authentication instead of SASL

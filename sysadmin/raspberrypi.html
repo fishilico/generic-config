@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Configuration tweaks on a Raspberry Pi &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Remote Desktop on Linux" href="remote-desktop-linux.html" />
@@ -32,7 +31,8 @@
           <a href="qubes-os.html" title="Qubes OS setup"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Configuration tweaks on a Raspberry Pi</a></li> 
       </ul>
     </div>  
 
@@ -41,9 +41,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="configuration-tweaks-on-a-raspberry-pi">
+  <section id="configuration-tweaks-on-a-raspberry-pi">
 <h1>Configuration tweaks on a Raspberry Pi<a class="headerlink" href="#configuration-tweaks-on-a-raspberry-pi" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="raspbian-installation">
+<section id="raspbian-installation">
 <h2>Raspbian installation<a class="headerlink" href="#raspbian-installation" title="Permalink to this headline">¶</a></h2>
 <p>Download Raspbian image from <a class="reference external" href="http://www.raspberrypi.org/downloads">http://www.raspberrypi.org/downloads</a>.</p>
 <p>Each time the SD card is mounted and files modified, <code class="docutils literal notranslate"><span class="pre">/etc/fake-hwtime</span></code> or
@@ -65,16 +65,16 @@ achieve that, by downloading a special kernel of qemu-arm and running:</p>
 <a class="reference external" href="http://xecdesign.com/compiling-a-kernel/">http://xecdesign.com/compiling-a-kernel/</a>.  It is configured to build a kernel
 for an ARM11 (ARMv6) versatile board, which requires a patch to be applied:
 <a class="reference external" href="http://xecdesign.com/downloads/linux-qemu/linux-arm.patch">http://xecdesign.com/downloads/linux-qemu/linux-arm.patch</a></p>
-</div>
-<div class="section" id="post-install-configuration">
+</section>
+<section id="post-install-configuration">
 <h2>Post-install configuration<a class="headerlink" href="#post-install-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Like all Debian systems, some files needs updating after the initial setup:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">/etc/mailname</span></code> (with the name to be used in mailing)</li>
-<li><code class="docutils literal notranslate"><span class="pre">/etc/sudoers</span></code> (remove <code class="docutils literal notranslate"><span class="pre">pi</span> <span class="pre">ALL=(ALL)</span> <span class="pre">NOPASSWD:</span> <span class="pre">ALL</span></code>)</li>
-<li><code class="docutils literal notranslate"><span class="pre">/etc/ntp.conf</span></code> (remove <code class="docutils literal notranslate"><span class="pre">restrict</span> <span class="pre">::1</span></code> if IPv6 module is not loaded)</li>
-<li>Reconfigure the keyboard: <code class="docutils literal notranslate"><span class="pre">keyboard-configuration</span></code></li>
-<li>Change timezone: <code class="docutils literal notranslate"><span class="pre">tzselect</span></code> (<code class="docutils literal notranslate"><span class="pre">TZ='Europe/Paris';</span> <span class="pre">export</span> <span class="pre">TZ</span></code>)</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/mailname</span></code> (with the name to be used in mailing)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/sudoers</span></code> (remove <code class="docutils literal notranslate"><span class="pre">pi</span> <span class="pre">ALL=(ALL)</span> <span class="pre">NOPASSWD:</span> <span class="pre">ALL</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/ntp.conf</span></code> (remove <code class="docutils literal notranslate"><span class="pre">restrict</span> <span class="pre">::1</span></code> if IPv6 module is not loaded)</p></li>
+<li><p>Reconfigure the keyboard: <code class="docutils literal notranslate"><span class="pre">keyboard-configuration</span></code></p></li>
+<li><p>Change timezone: <code class="docutils literal notranslate"><span class="pre">tzselect</span></code> (<code class="docutils literal notranslate"><span class="pre">TZ='Europe/Paris';</span> <span class="pre">export</span> <span class="pre">TZ</span></code>)</p></li>
 </ul>
 <p>Moreover, <code class="docutils literal notranslate"><span class="pre">/etc/sysctl.conf</span></code> contains Raspberry Pi-specific configuration:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># rpi tweaks</span>
@@ -82,8 +82,8 @@ for an ARM11 (ARMv6) versatile board, which requires a patch to be applied:
 <span class="n">vm</span><span class="o">.</span><span class="n">min_free_kbytes</span> <span class="o">=</span> <span class="mi">8192</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="networking">
+</section>
+<section id="networking">
 <h2>Networking<a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">/etc/network/interfaces</span></code> with a dynamic configuration:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="n">lo</span>
@@ -101,13 +101,13 @@ for an ARM11 (ARMv6) versatile board, which requires a patch to be applied:
 </div>
 <p>Static configuration may be used with the following lines:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iface</span> <span class="n">eth0</span> <span class="n">inet</span> <span class="n">static</span>
-    <span class="n">address</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.2</span>
-    <span class="n">netmask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
-    <span class="n">gateway</span> <span class="mf">192.0</span><span class="o">.</span><span class="mf">2.1</span>
+    <span class="n">address</span> <span class="mf">192.0.2.2</span>
+    <span class="n">netmask</span> <span class="mf">255.255.255.0</span>
+    <span class="n">gateway</span> <span class="mf">192.0.2.1</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="enable-ipv6">
+</section>
+<section id="enable-ipv6">
 <h2>Enable IPv6<a class="headerlink" href="#enable-ipv6" title="Permalink to this headline">¶</a></h2>
 <p>To enable IPv6, use the following commands:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>modprobe ipv6
@@ -117,21 +117,21 @@ sysctl -w net.ipv6.conf.all.use_tempaddr<span class="o">=</span><span class="m">
 </div>
 <p>To make these changes persistent, add <code class="docutils literal notranslate"><span class="pre">ipv6</span></code> to <code class="docutils literal notranslate"><span class="pre">/etc/modules</span></code> and
 <code class="docutils literal notranslate"><span class="pre">net.ipv6.conf.default.use_tempaddr</span> <span class="pre">=</span> <span class="pre">2</span></code> to <code class="docutils literal notranslate"><span class="pre">/etc/sysctl.conf</span></code>.</p>
-</div>
-<div class="section" id="some-useful-system-information">
+</section>
+<section id="some-useful-system-information">
 <h2>Some useful system information<a class="headerlink" href="#some-useful-system-information" title="Permalink to this headline">¶</a></h2>
 <p>Here are the outputs of several commands to retrieve system information on a
 Raspberry Pi, model B.</p>
 <ul class="simple">
-<li>As some people consider a Serial Number and a MAC address as being sensitive
+<li><p>As some people consider a Serial Number and a MAC address as being sensitive
 information, each potential sensitive hexadecimal byte has been replaced here
-by <code class="docutils literal notranslate"><span class="pre">XX</span></code>.</li>
-<li>Information about used kernel is not relevant here. So these outputs don’t
+by <code class="docutils literal notranslate"><span class="pre">XX</span></code>.</p></li>
+<li><p>Information about used kernel is not relevant here. So these outputs don’t
 include kernel version and kernel pointers have been protected
-(<code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.kptr_restrict=2</span></code>).</li>
-<li>Address space is randomized (ALSR, <code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.randomize_va_space=2</span></code>)
+(<code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.kptr_restrict=2</span></code>).</p></li>
+<li><p>Address space is randomized (ALSR, <code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-w</span> <span class="pre">kernel.randomize_va_space=2</span></code>)
 so when dumping <code class="docutils literal notranslate"><span class="pre">/proc/*/maps</span></code>, random parts of addresses have been
-replaced by <code class="docutils literal notranslate"><span class="pre">X</span></code>.</li>
+replaced by <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uname -m
 armv6l
@@ -222,17 +222,18 @@ raspberrypi
        Ethernet ip=192.0.2.42 link=yes multicast=yes port=MII speed=100Mbit/s
 </pre></div>
 </div>
-</div>
-<div class="section" id="playing-videos">
+</section>
+<section id="playing-videos">
 <h2>Playing videos<a class="headerlink" href="#playing-videos" title="Permalink to this headline">¶</a></h2>
 <p>In order to play videos at a decent framerate (using the hardware acceleration
 provided by the GPU), a custom version of <code class="docutils literal notranslate"><span class="pre">mpv</span></code> and some other software needs
 to be installed. Instructions are available at
 <a class="reference external" href="https://www.raspberrypi.org/forums/viewtopic.php?t=199775">https://www.raspberrypi.org/forums/viewtopic.php?t=199775</a></p>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -267,17 +268,15 @@ to be installed. Instructions are available at
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -295,12 +294,13 @@ to be installed. Instructions are available at
           <a href="qubes-os.html" title="Qubes OS setup"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Configuration tweaks on a Raspberry Pi</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Some VBScript commands &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="WinDbg-kd, Windows Kernel Debugging" href="windbg-kd.html" />
@@ -32,7 +31,8 @@
           <a href="vagrant.html" title="Windows Virtual Machine with Vagrant"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Some VBScript commands</a></li> 
       </ul>
     </div>  
 
@@ -41,19 +41,19 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="some-vbscript-commands">
+  <section id="some-vbscript-commands">
 <h1>Some VBScript commands<a class="headerlink" href="#some-vbscript-commands" title="Permalink to this headline">¶</a></h1>
 <p>VBScript is a light version of Microsoft’s programming language Visual Basic.
 It can be used in ASP (Active Server Pages) between tags <code class="docutils literal notranslate"><span class="pre">&lt;%</span></code> and <code class="docutils literal notranslate"><span class="pre">%&gt;</span></code>, or run as a standalone script using a file ending with <code class="docutils literal notranslate"><span class="pre">.vbs</span></code> and interpreter <code class="docutils literal notranslate"><span class="pre">wscript.exe</span></code>.</p>
-<div class="section" id="special-variables">
+<section id="special-variables">
 <h2>Special variables<a class="headerlink" href="#special-variables" title="Permalink to this headline">¶</a></h2>
 <p>When launching a script:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">WScript.ScriptFullName</span></code> contains the path of the script</li>
-<li><code class="docutils literal notranslate"><span class="pre">WScript.Arguments(0)</span></code> contains the first argument of the invocation</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WScript.ScriptFullName</span></code> contains the path of the script</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WScript.Arguments(0)</span></code> contains the first argument of the invocation</p></li>
 </ul>
-</div>
-<div class="section" id="launch-a-process">
+</section>
+<section id="launch-a-process">
 <h2>Launch a process<a class="headerlink" href="#launch-a-process" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Dim objShell, strCommand
 Set <span class="nv">objShell</span> <span class="o">=</span> CreateObject<span class="o">(</span><span class="s2">&quot;Wscript.Shell&quot;</span><span class="o">)</span>
@@ -67,10 +67,11 @@ objShell.Run strCommand, <span class="m">0</span>, <span class="nb">true</span>
 Set <span class="nv">objShell</span> <span class="o">=</span> Nothing
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -101,17 +102,15 @@ Set <span class="nv">objShell</span> <span class="o">=</span> Nothing
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -129,12 +128,13 @@ Set <span class="nv">objShell</span> <span class="o">=</span> Nothing
           <a href="vagrant.html" title="Windows Virtual Machine with Vagrant"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Some VBScript commands</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

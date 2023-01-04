@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>SQLite &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="/etc" href="../etc/index.html" />
@@ -32,7 +31,8 @@
           <a href="mysql.html" title="MySQL tips and tricks"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Databases</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Databases</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">SQLite</a></li> 
       </ul>
     </div>  
 
@@ -41,17 +41,17 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="sqlite">
+  <section id="sqlite">
 <h1>SQLite<a class="headerlink" href="#sqlite" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
+<section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>SQLite is a database engine that directly uses a file, for example named <code class="docutils literal notranslate"><span class="pre">db.sqlite</span></code>.
 There is therefore no need to authenticate the database users in order for them to access the data: everything is managed by the access control of the file itself.
 More precisely, when modifying the database, the directory that stores the database file needs also to be writable by the engine, in order to create and remove a journal file.</p>
 <p>SQLite can be used by applications to store settings, user information, messages, etc.
 Its engine is also used by projects such as <a class="reference external" href="https://osquery.io/">OSQuery</a> in order to benefit from a SQL interpreter.</p>
-</div>
-<div class="section" id="basic-commands">
+</section>
+<section id="basic-commands">
 <h2>Basic commands<a class="headerlink" href="#basic-commands" title="Permalink to this headline">¶</a></h2>
 <p>In order to dump the content of a database file named <code class="docutils literal notranslate"><span class="pre">db.sqlite</span></code> from the command line:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sqlite3 &lt; /dev/null -bail -batch -cmd .dump db.sqlite
@@ -90,20 +90,20 @@ Its engine is also used by projects such as <a class="reference external" href="
 .mode list
 </pre></div>
 </div>
-</div>
-<div class="section" id="sql-statements">
+</section>
+<section id="sql-statements">
 <h2>SQL statements<a class="headerlink" href="#sql-statements" title="Permalink to this headline">¶</a></h2>
 <p>SQLite supports standard SQL statements: <code class="docutils literal notranslate"><span class="pre">SELECT</span></code>, <code class="docutils literal notranslate"><span class="pre">INSERT</span> <span class="pre">INTO</span></code>, <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code>, <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>, etc.</p>
 <p>Several <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> statements can be merged together using:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">UNION</span> <span class="pre">ALL</span></code> to concatenate the results ;</li>
-<li><code class="docutils literal notranslate"><span class="pre">UNION</span></code> to concatenate the results, removing the duplicated rows ;</li>
-<li><code class="docutils literal notranslate"><span class="pre">INTERSECT</span></code> to only keep the rows in common ;</li>
-<li><code class="docutils literal notranslate"><span class="pre">EXCEPT</span></code> to exclude some rows.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UNION</span> <span class="pre">ALL</span></code> to concatenate the results ;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UNION</span></code> to concatenate the results, removing the duplicated rows ;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">INTERSECT</span></code> to only keep the rows in common ;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EXCEPT</span></code> to exclude some rows.</p></li>
 </ul>
 <p>It is also possible to join tables (<code class="docutils literal notranslate"><span class="pre">LEFT</span> <span class="pre">JOIN</span></code>, <code class="docutils literal notranslate"><span class="pre">INNER</span> <span class="pre">JOIN</span></code>, etc.) using conditions expressed as:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">user_groups</span> <span class="k">ON</span> <span class="n">users</span><span class="p">.</span><span class="n">uid</span> <span class="o">=</span> <span class="n">user_groups</span><span class="p">.</span><span class="n">uid</span><span class="p">;</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">user_groups</span> <span class="k">USING</span> <span class="p">(</span><span class="n">uid</span><span class="p">);</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">user_groups</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">uid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user_groups</span><span class="p">.</span><span class="n">uid</span><span class="p">;</span><span class="w"></span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">user_groups</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">uid</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>When performing a <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> statement, it is possible to group some rows with a common value using <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span> <span class="pre">column</span></code>.
@@ -112,18 +112,19 @@ To filter results after grouping, the clause to use is <code class="docutils lit
 <p>The filters may use <code class="docutils literal notranslate"><span class="pre">LIKE</span></code> to match cells according to a pattern.
 The pattern can use <code class="docutils literal notranslate"><span class="pre">_</span></code> as a wildcard for a single character and <code class="docutils literal notranslate"><span class="pre">%</span></code> as a wildcard for multiple characters.
 In order to escape <code class="docutils literal notranslate"><span class="pre">_</span></code>, engines such as MSSQL use a syntax like <code class="docutils literal notranslate"><span class="pre">[_]</span></code>, but SQLite uses something else:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">objects</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="k">LIKE</span> <span class="s1">&#39;prefix\_%&#39;</span> <span class="k">ESCAPE</span> <span class="s1">&#39;\&#39;</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">objects</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;prefix\_%&#39;</span><span class="w"> </span><span class="k">ESCAPE</span><span class="w"> </span><span class="s1">&#39;\&#39;</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>To print timestamps as a human-readable date, there exists a function, <code class="docutils literal notranslate"><span class="pre">DATETIME</span></code>.
 For example:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">DATETIME</span><span class="p">(</span><span class="n">users</span><span class="p">.</span><span class="n">last_update_time</span><span class="p">,</span> <span class="s1">&#39;unixepoch&#39;</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">users</span><span class="p">;</span>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">DATETIME</span><span class="p">(</span><span class="n">users</span><span class="p">.</span><span class="n">last_update_time</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;unixepoch&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -155,17 +156,15 @@ For example:</p>
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -183,12 +182,13 @@ For example:</p>
           <a href="mysql.html" title="MySQL tips and tricks"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Databases</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Databases</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">SQLite</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

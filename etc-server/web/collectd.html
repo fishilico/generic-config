@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Collectd &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Git Web and CGit" href="gitweb.html" />
@@ -32,7 +31,8 @@
           <a href="apache.conf.raw.html" title="etc-server/web/apache.conf"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Collectd</a></li> 
       </ul>
     </div>  
 
@@ -41,16 +41,16 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="collectd">
+  <section id="collectd">
 <h1>Collectd<a class="headerlink" href="#collectd" title="Permalink to this headline">¶</a></h1>
 <p>Collectd is a daemon to collect system statistics in RRD (Round-Robin Database)
 files. It is basically a backend daemon and several front-end exist to navigate through the data.</p>
 <ul class="simple">
-<li>Web site: <a class="reference external" href="https://collectd.org/">https://collectd.org/</a></li>
-<li>Plugins: <a class="reference external" href="https://collectd.org/wiki/index.php/Table_of_Plugins">https://collectd.org/wiki/index.php/Table_of_Plugins</a></li>
-<li>Front-ends: <a class="reference external" href="https://collectd.org/wiki/index.php/List_of_front-ends">https://collectd.org/wiki/index.php/List_of_front-ends</a></li>
+<li><p>Web site: <a class="reference external" href="https://collectd.org/">https://collectd.org/</a></p></li>
+<li><p>Plugins: <a class="reference external" href="https://collectd.org/wiki/index.php/Table_of_Plugins">https://collectd.org/wiki/index.php/Table_of_Plugins</a></p></li>
+<li><p>Front-ends: <a class="reference external" href="https://collectd.org/wiki/index.php/List_of_front-ends">https://collectd.org/wiki/index.php/List_of_front-ends</a></p></li>
 </ul>
-<div class="section" id="installation">
+<section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Collectd is packaged for some Linux distribution. In Debian, this command
 installs collectd with the default configuration:</p>
@@ -100,8 +100,8 @@ straightforward and the wiki helps understanding the few tricky fields
 <span class="o">&lt;/</span><span class="n">Plugin</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="network-setup">
+</section>
+<section id="network-setup">
 <h2>Network setup<a class="headerlink" href="#network-setup" title="Permalink to this headline">¶</a></h2>
 <p>To centralise collected data on a server, you need to use the network plugin
 (<a class="reference external" href="https://collectd.org/wiki/index.php/Plugin:Network">https://collectd.org/wiki/index.php/Plugin:Network</a>). If your collectd daemon
@@ -133,8 +133,8 @@ using a password.</p>
 <span class="o">&lt;/</span><span class="n">Plugin</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="collection3-front-end">
+</section>
+<section id="collection3-front-end">
 <h2>Collection3 front-end<a class="headerlink" href="#collection3-front-end" title="Permalink to this headline">¶</a></h2>
 <p>Collectd package often provides front-end examples among which is Collection3.
 This front-end is a web front-end written as a CGI script in Perl.
@@ -145,16 +145,16 @@ can be changed by editing <code class="docutils literal notranslate"><span class
 </div>
 <p>Collection3 needs some Perl modules:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">Config::General</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">Regexp::Common</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">HTML::Entities</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">RRDs</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Config::General</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Regexp::Common</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HTML::Entities</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RRDs</span></code></p></li>
 </ul>
 <p>On a Debian server, this command installs the needed modules:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">lib</span><span class="p">{</span><span class="n">config</span><span class="o">-</span><span class="n">general</span><span class="p">,</span><span class="n">regexp</span><span class="o">-</span><span class="n">common</span><span class="p">,</span><span class="n">html</span><span class="o">-</span><span class="n">parser</span><span class="p">,</span><span class="n">rrds</span><span class="p">}</span><span class="o">-</span><span class="n">perl</span>
 </pre></div>
 </div>
-<div class="section" id="apache-virtual-host-configuration">
+<section id="apache-virtual-host-configuration">
 <h3>Apache virtual host configuration<a class="headerlink" href="#apache-virtual-host-configuration" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
     <span class="n">Alias</span> <span class="o">/</span><span class="n">collection3</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">collectd</span><span class="o">-</span><span class="n">core</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">collection3</span><span class="o">/</span>
@@ -169,8 +169,8 @@ can be changed by editing <code class="docutils literal notranslate"><span class
 <span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="nginx-server-configuration">
+</section>
+<section id="nginx-server-configuration">
 <h3>Nginx server configuration<a class="headerlink" href="#nginx-server-configuration" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server {
     listen 80 default_server;
@@ -190,8 +190,8 @@ can be changed by editing <code class="docutils literal notranslate"><span class
 }
 </pre></div>
 </div>
-</div>
-<div class="section" id="lighttpd-server-configuration">
+</section>
+<section id="lighttpd-server-configuration">
 <h3>Lighttpd server configuration<a class="headerlink" href="#lighttpd-server-configuration" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Note: if the config already enables mod_alias, you must remove it from
 # the next line
@@ -203,9 +203,9 @@ $HTTP[&quot;url&quot;] =~ &quot;^/collection3&quot; {
 index-file.names += ( &quot;bin/index.cgi&quot; )
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="collectd-graph-panel-front-end">
+</section>
+</section>
+<section id="collectd-graph-panel-front-end">
 <h2>Collectd Graph Panel front-end<a class="headerlink" href="#collectd-graph-panel-front-end" title="Permalink to this headline">¶</a></h2>
 <p>CGP (Collectd Graph Panel) is a better front-end than Collection3. It is
 written in PHP. To install it, you just need to download latest release from
@@ -242,10 +242,11 @@ $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
 <span class="n">CMD</span> <span class="p">[</span><span class="s2">&quot;/usr/local/bin/php&quot;</span><span class="p">,</span> <span class="s2">&quot;-S&quot;</span><span class="p">,</span> <span class="s2">&quot;0.0.0.0:80&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -283,17 +284,15 @@ $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -311,12 +310,13 @@ $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
           <a href="apache.conf.raw.html" title="etc-server/web/apache.conf"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">/etc</span></code> for Server</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Collectd</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

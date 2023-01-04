@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Remote Desktop on Linux &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Some notes about my SELinux installation" href="selinux.html" />
@@ -32,7 +31,8 @@
           <a href="raspberrypi.html" title="Configuration tweaks on a Raspberry Pi"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Remote Desktop on Linux</a></li> 
       </ul>
     </div>  
 
@@ -41,17 +41,17 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="remote-desktop-on-linux">
+  <section id="remote-desktop-on-linux">
 <h1>Remote Desktop on Linux<a class="headerlink" href="#remote-desktop-on-linux" title="Permalink to this headline">¶</a></h1>
 <p>Most Linux-based systems use X11 or Wayland in order to render the desktop.
 In order to connect to a remote Linux system and operate with a graphical user interface, there exist several approaches: VNC, RDP, X11 forwarding over SSH, etc.</p>
-<div class="section" id="x11-principles">
+<section id="x11-principles">
 <h2>X11 principles<a class="headerlink" href="#x11-principles" title="Permalink to this headline">¶</a></h2>
 <p>X11 is a specification and a protocol for <em>X window system</em> that enables using a graphical user interface.
 It relies on a client/server pattern where:</p>
 <ul class="simple">
-<li>The server is a physical device with peripherals such as a display, a mouse, a keyboard, etc.</li>
-<li>Each application is a client to the server.</li>
+<li><p>The server is a physical device with peripherals such as a display, a mouse, a keyboard, etc.</p></li>
+<li><p>Each application is a client to the server.</p></li>
 </ul>
 <p>Among applications, some special ones render the window borders, the desktop background, etc.
 These are parts of a desktop environment.</p>
@@ -75,16 +75,16 @@ myhost/unix:0  MIT-MAGIC-COOKIE-1  7a77125b6af11c25a72662e316ab40a0
 </div>
 <p>X11 protocol allows many powerful actions for clients, such as:</p>
 <ul class="simple">
-<li>changing the screen resolution (<code class="docutils literal notranslate"><span class="pre">xrandr</span></code> command)</li>
-<li>getting information about any windows (<code class="docutils literal notranslate"><span class="pre">xwininfo</span></code> command, such as <code class="docutils literal notranslate"><span class="pre">xwininfo</span> <span class="pre">-root</span> <span class="pre">-tree</span></code>)</li>
-<li>getting the PID (process identifier) which owns a window (<code class="docutils literal notranslate"><span class="pre">xprop</span> <span class="pre">_NET_WM_PID</span></code>)</li>
-<li>reading all keystrokes (<code class="docutils literal notranslate"><span class="pre">xinput</span></code> command, such as <code class="docutils literal notranslate"><span class="pre">xinput</span> <span class="pre">test</span> <span class="pre">$KEYBOARD_NUM</span></code>)</li>
-<li>reading and writing the clipboard buffers (<code class="docutils literal notranslate"><span class="pre">xsel</span></code> command)</li>
-<li>taking a screenshot (<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">-display</span> <span class="pre">:0</span> <span class="pre">-window</span> <span class="pre">root</span> <span class="pre">screenshot.png</span></code> from ImageMagick)</li>
-<li>etc.</li>
+<li><p>changing the screen resolution (<code class="docutils literal notranslate"><span class="pre">xrandr</span></code> command)</p></li>
+<li><p>getting information about any windows (<code class="docutils literal notranslate"><span class="pre">xwininfo</span></code> command, such as <code class="docutils literal notranslate"><span class="pre">xwininfo</span> <span class="pre">-root</span> <span class="pre">-tree</span></code>)</p></li>
+<li><p>getting the PID (process identifier) which owns a window (<code class="docutils literal notranslate"><span class="pre">xprop</span> <span class="pre">_NET_WM_PID</span></code>)</p></li>
+<li><p>reading all keystrokes (<code class="docutils literal notranslate"><span class="pre">xinput</span></code> command, such as <code class="docutils literal notranslate"><span class="pre">xinput</span> <span class="pre">test</span> <span class="pre">$KEYBOARD_NUM</span></code>)</p></li>
+<li><p>reading and writing the clipboard buffers (<code class="docutils literal notranslate"><span class="pre">xsel</span></code> command)</p></li>
+<li><p>taking a screenshot (<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">-display</span> <span class="pre">:0</span> <span class="pre">-window</span> <span class="pre">root</span> <span class="pre">screenshot.png</span></code> from ImageMagick)</p></li>
+<li><p>etc.</p></li>
 </ul>
-</div>
-<div class="section" id="remote-x11">
+</section>
+<section id="remote-x11">
 <h2>Remote X11<a class="headerlink" href="#remote-x11" title="Permalink to this headline">¶</a></h2>
 <p>On a trusted network, it is possible to expose a X11 server on a TCP port.
 As the communication does not include encryption, this setup is not recommended as-is.
@@ -92,8 +92,8 @@ It is nonetheless possible to encapsulate the X11 protocol in a secure tunnel (t
 <p>OpenSSH also provides an easy way to forward a X11 server over a SSH connection, so that remote applications can run on the local X11 server.
 This feature is called <em>X11 forwarding</em> and is enabled using a configuration variable (<code class="docutils literal notranslate"><span class="pre">X11Forwarding</span> <span class="pre">yes</span></code> on the SSH server, <code class="docutils literal notranslate"><span class="pre">ForwardX11</span> <span class="pre">yes</span></code> on the SSH client) or a command-line switch (<code class="docutils literal notranslate"><span class="pre">-X</span></code> or <code class="docutils literal notranslate"><span class="pre">-Y</span></code>).
 As X11 clients are powerful, OpenSSH allows specifying whether the remote server is to be fully trusted (<code class="docutils literal notranslate"><span class="pre">ForwardX11Trusted</span></code> configuration variable, <code class="docutils literal notranslate"><span class="pre">-Y</span></code> option) or not (<code class="docutils literal notranslate"><span class="pre">-X</span></code> option).</p>
-</div>
-<div class="section" id="remote-desktop">
+</section>
+<section id="remote-desktop">
 <h2>Remote Desktop<a class="headerlink" href="#remote-desktop" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes, there is a need to connect to a remote host that is running a X11 server with applications.
 Several VNC and RDP servers create a new X11 server for such remote connection, which is fine in order to isolate each user one from each other.</p>
@@ -123,10 +123,11 @@ x11vnc -display :1 -nopw -localhost -xkb
 </pre></div>
 </div>
 <p>This can be used to run software such as QEMU with a graphical output, or a web browser, etc.</p>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -158,17 +159,15 @@ x11vnc -display :1 -nopw -localhost -xkb
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -186,12 +185,13 @@ x11vnc -display :1 -nopw -localhost -xkb
           <a href="raspberrypi.html" title="Configuration tweaks on a Raspberry Pi"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Some notes and tips&amp;tricks about system administration</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Remote Desktop on Linux</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

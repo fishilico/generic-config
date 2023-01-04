@@ -135,6 +135,11 @@ Get the methods and properties:
     # For a class (for the static methods and properties)
     $obj | Get-Member -Static
 
+Set the default output encoding to UTF-8 (cf. https://learn.microsoft.com/fr-fr/powershell/module/microsoft.powershell.core/about/about_character_encoding?view=powershell-7.3)
+
+.. code-block:: sh
+
+    $PSDefaultParameterValues['*:Encoding'] = 'utf8'
 
 Download and run
 ----------------
@@ -179,7 +184,7 @@ Run a PowerShell script:
 
 .. code-block:: sh
 
-    %windir%\System32\WindowsPowerShell\v1.0\powershell.exe -Noninteractive -ExecutionPolicy Bypass –Noprofile -file MyScript.ps1
+    %windir%\System32\WindowsPowerShell\v1.0\powershell.exe -Noninteractive -ExecutionPolicy Bypass -Noprofile -file MyScript.ps1
 
 Run PowerShell code endoded as UTF-16LE+Base64:
 
@@ -301,6 +306,15 @@ Some commands to list and manage users and groups
     net user newuser password /add
     net localgroup Administrators newuser /add
 
+In Powershell, enabling autologin:
+
+.. code-block:: sh
+
+    $key = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
+    Set-ItemProperty $key -Name AutoAdminLogon -Value 1
+    Set-ItemProperty $key -Name DefaultUserName -Value "Administrateur"
+    Set-ItemProperty $key -Name DefaultPassword -Value "password"
+
 Spawn an elevated prompt when UAC is enabled (User Account Control):
 
 .. code-block:: sh
@@ -317,8 +331,8 @@ In order to login as administrator to a remote machine without using the built-i
       /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
 
     PowerShell Set-ItemProperty
-        –Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
-        –Name LocalAccountTokenFilterPolicy –Value 1 –Type DWord
+        -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
+        -Name LocalAccountTokenFilterPolicy -Value 1 -Type DWord
 
 This has been described in many blog posts:
 
@@ -535,6 +549,87 @@ On a WindowsDNS server:
     dnscmd /zoneprint ${ZONE_NAME}
     dnscmd /enumrecords ${ZONE_NAME} ${NODE_NAME}
 
+To disable IPv6 on all network interfaces (with PowerShell):
+
+.. code-block:: sh
+
+    Get-NetAdapterBinding -ComponentID ms_tcpip6 | Where-Object { $_.Enabled } | ForEach-Object {
+        Disable-NetAdapterBinding -Name $_.Name -ComponentID ms_tcpip6
+        Get-NetAdapterBinding -Name $_.Name -ComponentID ms_tcpip6
+    }
+    # https://support.microsoft.com/en-gb/help/929852/guidance-for-configuring-ipv6-in-windows-for-advanced-users
+    reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters" `
+        /v DisabledComponents /t REG_DWORD /d 255 /f
+
+To promote a Windows server (for example an evaluation install from https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2022) to a Domain controller, first renaming it, in a PowerShell script (``.ps1`` file):
+
+.. code-block:: sh
+
+    # References:
+    # - https://github.com/StefanScherer/adfs2/blob/master/scripts/create-domain.ps1
+    # - https://github.com/commial/labs
+
+    $dcname = "DCLAB"
+    $domain = "mylab.local"
+    $domainNetbios = "MYLAB"
+
+    if ($env:COMPUTERNAME -ne $dcname) {
+        Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Renaming the machine..."
+        Rename-Computer $dcname
+        Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Please reboot now! (shutdown /t 0 /r)"
+        Exit
+    }
+
+    if ((Get-WmiObject Win32_ComputerSystem).partofdomain -eq $false) {
+        Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) This system is not part of a domain, configuring a DC"
+
+        Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing RSAT tools"
+        Import-Module ServerManager
+        Add-WindowsFeature RSAT-AD-PowerShell,RSAT-AD-AdminCenter
+
+        Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing AD Domain Services"
+        Install-WindowsFeature AD-domain-services
+
+        Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Reconfiguring DNS server to localhost"
+        $adapters = Get-WmiObject Win32_NetworkAdapterConfiguration | Where-Object { $_.IPAddress }
+        $adapters | ForEach-Object {
+            $_.SetDNSServerSearchOrder("127.0.0.1")
+        }
+
+        Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Deploying an AD"
+        Import-Module ADDSDeployment
+        $PlainPassword = "Super!Password"
+        $SecurePassword = $PlainPassword | ConvertTo-SecureString -AsPlainText -Force
+        Install-ADDSForest `
+            -SafeModeAdministratorPassword $SecurePassword `
+            -CreateDnsDelegation:$false `
+            -DatabasePath "C:\Windows\NTDS" `
+            -DomainMode "Win2012" `
+            -DomainName $domain `
+            -DomainNetbiosName $domainNetbios `
+            -ForestMode "Win2012" `
+            -InstallDns:$true `
+            -LogPath "C:\Windows\NTDS" `
+            -NoRebootOnCompletion:$true `
+            -SysvolPath "C:\Windows\SYSVOL" `
+            -Force:$true
+
+        Add-Content "C:\WINDOWS\System32\drivers\etc\hosts" "127.0.0.1  $dcname.$domain"
+
+        Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Please reboot now! (shutdown /t 0 /r)"
+        Exit
+    }
+
+    Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Checking AD services status..."
+    $svcs = "adws","dns","kdc","netlogon"
+    Get-Service -name $svcs -ComputerName localhost | Select Machinename,Name,Status
+
+Then, Active Directory objects can be requested and created with:
+
+- ``Get-ADOrganizationalUnit`` and ``New-ADOrganizationalUnit`` for organizational units (OU)
+- ``Get-ADComputer`` and ``New-ADComputer`` for computers
+- ``Get-ADUser`` and ``New-ADUser`` for users
+- ``Get-ADGroup`` and ``New-ADGroup`` for groups, ``Add-ADGroupMember`` to add members to a group
 
 Firewall
 --------
@@ -566,8 +661,12 @@ Network shares
     # List the shares on a server (use "localhost" for local shares)
     net view my-server /ALL
 
-    # List shares using WMI (on a remote server or localy)
-    $shares = Get-CIMInstance –Classname Win32_Share -computername my-server -filter "Type=0"
+    # List the available shares (from a server)
+    net share
+    Get-SmbShareAccess C$
+
+    # List shares using WMI (on a remote server or locally)
+    $shares = Get-CIMInstance -Classname Win32_Share -computername my-server -filter "Type=0"
     $shares | foreach {
     "     Share Name   : " + $_.name + "
          Source Folder: " + $_.path + "
@@ -579,7 +678,7 @@ Network shares
 
     # Mount a share to a drive letter
     net use /user:me Z: \\my-server\my-share
-    New-PSDrive –Name "Z" -PSProvider FileSystem –Root "\\my-server\my-share"
+    New-PSDrive -Name "Z" -PSProvider FileSystem -Root "\\my-server\my-share"
 
 In order to easily provide files to a Windows host from a Linux system, it is possible to use impacket to start a simple Samba server:
 

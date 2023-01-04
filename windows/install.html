@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Installing Windows &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Keyboard shortcuts on Windows" href="key_shortcuts.html" />
@@ -32,7 +31,8 @@
           <a href="hardening_script.bat.raw.html" title="windows/hardening_script.bat"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Installing Windows</a></li> 
       </ul>
     </div>  
 
@@ -41,10 +41,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="installing-windows">
+  <section id="installing-windows">
 <h1>Installing Windows<a class="headerlink" href="#installing-windows" title="Permalink to this headline">¶</a></h1>
 <p>Here are some notes about installing Windows 10 Enterprise.</p>
-<div class="section" id="base-installation-of-windows-10">
+<section id="base-installation-of-windows-10">
 <h2>Base installation of Windows 10<a class="headerlink" href="#base-installation-of-windows-10" title="Permalink to this headline">¶</a></h2>
 <p>In order to install Windows 10, a disc image (ISO file) can be downloaded from <a class="reference external" href="https://www.microsoft.com/en-us/software-download/windows10ISO">https://www.microsoft.com/en-us/software-download/windows10ISO</a>.</p>
 <p>This would install Windows 10 Pro by default.
@@ -53,33 +53,34 @@ Microsoft published a table describing what switches are available between Windo
 For example, it is possible to switch from Windows 10 Pro to Windows 10 Enterprise using a KMS (Key Management Service) key.
 The official Microsoft website documents such keys on <a class="reference external" href="https://docs.microsoft.com/en-us/windows-server/get-started/kmsclientkeys">https://docs.microsoft.com/en-us/windows-server/get-started/kmsclientkeys</a>.
 On this website, Windows 10 Enterprise’s KMS key is <code class="docutils literal notranslate"><span class="pre">NPPR9-FWDCX-D2C8J-H872K-2YT43</span></code>.</p>
-</div>
-<div class="section" id="common-settings">
+</section>
+<section id="common-settings">
 <h2>Common settings<a class="headerlink" href="#common-settings" title="Permalink to this headline">¶</a></h2>
 <p>Some tools can be configured as soon as Windows is installed, in order to improve the experience of Windows.</p>
 <p>When the system crashes, it is useful to have a meaningful memory dump file that can be analyzed with WinDbg.
 In order to generate it, there are some settings:</p>
 <ul class="simple">
-<li>In “Advanced System Settings”, go to “Startup and Recovery” settings and choose option “Active Memory Dump” (available since Windows 10).
+<li><p>In “Advanced System Settings”, go to “Startup and Recovery” settings and choose option “Active Memory Dump” (available since Windows 10).
 This enables generating a memory dump file (<code class="docutils literal notranslate"><span class="pre">C:\Windows\MEMORY.DMP</span></code>) with the Kernel memory and the Working Set of all processes (with their PEB, TEB and command line).
-In the dialog box:<ul>
-<li>Tick “Overwrite any existing file”, so that the file gets generated every time the system crashes.</li>
-<li>Untick the automatic restart.</li>
+In the dialog box:</p>
+<ul>
+<li><p>Tick “Overwrite any existing file”, so that the file gets generated every time the system crashes.</p></li>
+<li><p>Untick the automatic restart.</p></li>
 </ul>
 </li>
-<li>In “Performance”, configure the size of the Page File to the size of the RAM, in order for the memory dump to fit in it.
-Also ensure that at least 25 GB is free on the hard drive containing the Page File.</li>
+<li><p>In “Performance”, configure the size of the Page File to the size of the RAM, in order for the memory dump to fit in it.
+Also ensure that at least 25 GB is free on the hard drive containing the Page File.</p></li>
 </ul>
 <p>To enhance the security of the system, several kernelmode hardening features can be enabled using Microsoft’s Driver Verifier, <code class="docutils literal notranslate"><span class="pre">verifier.exe</span></code>:</p>
 <ul class="simple">
-<li>“Special Pool”, in order to detect kernel heap overflows</li>
-<li>“Force IRQL checking”, in order to detect IRQL issues in some drivers (this may detect real bugs!)</li>
-<li>“Security checks”, in order to strengthen the security of the system</li>
+<li><p>“Special Pool”, in order to detect kernel heap overflows</p></li>
+<li><p>“Force IRQL checking”, in order to detect IRQL issues in some drivers (this may detect real bugs!)</p></li>
+<li><p>“Security checks”, in order to strengthen the security of the system</p></li>
 </ul>
 <p>When an application crash occurs, a minidump file is also generated in <code class="docutils literal notranslate"><span class="pre">C:\Windows\minidump\</span></code>.
 This directory contains the 50 last generated minidump files (by default).</p>
-</div>
-<div class="section" id="enable-the-windows-subsystem-for-linux">
+</section>
+<section id="enable-the-windows-subsystem-for-linux">
 <h2>Enable the Windows Subsystem for Linux<a class="headerlink" href="#enable-the-windows-subsystem-for-linux" title="Permalink to this headline">¶</a></h2>
 <p>To install WSL (Windows Subsystem for Linux), run this command as Administrator:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">PowerShell</span> <span class="n">Enable</span><span class="o">-</span><span class="n">WindowsOptionalFeature</span> <span class="o">-</span><span class="n">Online</span> <span class="o">-</span><span class="n">FeatureName</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="n">Subsystem</span><span class="o">-</span><span class="n">Linux</span>
@@ -122,17 +123,17 @@ CustomProperties :
 <p>This last command spawns a shell inside a Ubuntu distribution which is using WSL.</p>
 <p>Documentation about WSL:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">https://docs.microsoft.com/en-us/windows/wsl/install-win10</a>
-Generic installation guide</li>
-<li><a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-on-server">https://docs.microsoft.com/en-us/windows/wsl/install-on-server</a>
-Installation guide for servers</li>
-<li><a class="reference external" href="https://docs.microsoft.com/en-gb/windows/wsl/release-notes">https://docs.microsoft.com/en-gb/windows/wsl/release-notes</a>
-Release notes</li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">https://docs.microsoft.com/en-us/windows/wsl/install-win10</a>
+Generic installation guide</p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-on-server">https://docs.microsoft.com/en-us/windows/wsl/install-on-server</a>
+Installation guide for servers</p></li>
+<li><p><a class="reference external" href="https://docs.microsoft.com/en-gb/windows/wsl/release-notes">https://docs.microsoft.com/en-gb/windows/wsl/release-notes</a>
+Release notes</p></li>
 </ul>
-</div>
-<div class="section" id="software-to-install">
+</section>
+<section id="software-to-install">
 <h2>Software to install<a class="headerlink" href="#software-to-install" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="automatic-installation">
+<section id="automatic-installation">
 <h3>Automatic installation<a class="headerlink" href="#automatic-installation" title="Permalink to this headline">¶</a></h3>
 <p>In order to ease the installation of software, a package manager such as
 <a class="reference external" href="https://ninite.com/">Ninite</a> or <a class="reference external" href="https://chocolatey.org/">Chocolatey</a> can be
@@ -171,7 +172,7 @@ verified in the registry:</p>
 <span class="c1"># Launch MSys with C:/tools/msys64/usr/bin/bash.exe</span>
 
 <span class="c1"># Install Microsoft Visual C++ Runtime and .NET runtime</span>
-<span class="n">choco</span> <span class="n">install</span> <span class="n">vcredist</span><span class="o">-</span><span class="nb">all</span> <span class="n">dotnet3</span><span class="o">.</span><span class="mi">5</span> <span class="n">dotnet4</span><span class="o">.</span><span class="mi">7</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">choco</span> <span class="n">install</span> <span class="n">vcredist</span><span class="o">-</span><span class="nb">all</span> <span class="n">dotnet3</span><span class="mf">.5</span> <span class="n">dotnet4</span><span class="mf">.7</span> <span class="o">-</span><span class="n">y</span>
 
 <span class="c1"># Install .NET framework and .NET Core SDK</span>
 <span class="n">choco</span> <span class="n">install</span> <span class="n">dotnetfx</span> <span class="n">dotnetcore</span><span class="o">-</span><span class="n">sdk</span> <span class="o">-</span><span class="n">y</span>
@@ -192,29 +193,26 @@ verified in the registry:</p>
 </div>
 <p>These commands install the following software:</p>
 <ul>
-<li><p class="first">Notepad++: <a class="reference external" href="https://notepad-plus-plus.org/">https://notepad-plus-plus.org/</a> (the sha1sums of the downloaded files can be verified)</p>
-</li>
-<li><p class="first">Windows Development Kits, debugger (WinDbg…):</p>
+<li><p>Notepad++: <a class="reference external" href="https://notepad-plus-plus.org/">https://notepad-plus-plus.org/</a> (the sha1sums of the downloaded files can be verified)</p></li>
+<li><p>Windows Development Kits, debugger (WinDbg…):</p>
 <ul class="simple">
-<li><a class="reference external" href="https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit">https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit</a></li>
-<li>Create a shortcut to <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Windows</span> <span class="pre">Kits\10\Debuggers\x64</span></code></li>
+<li><p><a class="reference external" href="https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit">https://developer.microsoft.com/en-us/windows/hardware/windows-driver-kit</a></p></li>
+<li><p>Create a shortcut to <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Windows</span> <span class="pre">Kits\10\Debuggers\x64</span></code></p></li>
 </ul>
 </li>
-<li><p class="first">Some Sysinternals tools:</p>
+<li><p>Some Sysinternals tools:</p>
 <ul class="simple">
-<li>Process Explorer <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processexplorer">https://technet.microsoft.com/en-us/sysinternals/processexplorer</a></li>
-<li>Process Monitor <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processmonitor">https://technet.microsoft.com/en-us/sysinternals/processmonitor</a></li>
-<li>DebugView <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/debugview">https://technet.microsoft.com/en-us/sysinternals/debugview</a></li>
-<li>WinObj <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/winobj">https://technet.microsoft.com/en-us/sysinternals/winobj</a></li>
-<li>AccessEnum <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/accessenum">https://technet.microsoft.com/en-us/sysinternals/accessenum</a></li>
-<li>etc.</li>
+<li><p>Process Explorer <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processexplorer">https://technet.microsoft.com/en-us/sysinternals/processexplorer</a></p></li>
+<li><p>Process Monitor <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/processmonitor">https://technet.microsoft.com/en-us/sysinternals/processmonitor</a></p></li>
+<li><p>DebugView <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/debugview">https://technet.microsoft.com/en-us/sysinternals/debugview</a></p></li>
+<li><p>WinObj <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/winobj">https://technet.microsoft.com/en-us/sysinternals/winobj</a></p></li>
+<li><p>AccessEnum <a class="reference external" href="https://technet.microsoft.com/en-us/sysinternals/accessenum">https://technet.microsoft.com/en-us/sysinternals/accessenum</a></p></li>
+<li><p>etc.</p></li>
 </ul>
 </li>
-<li><p class="first">Git: <a class="reference external" href="https://git-scm.com/">https://git-scm.com/</a></p>
-</li>
-<li><p class="first">Python: <a class="reference external" href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></p>
-</li>
-<li><p class="first">MSys2 environment: <a class="reference external" href="https://www.msys2.org/">https://www.msys2.org/</a>. Additional software like GCC
+<li><p>Git: <a class="reference external" href="https://git-scm.com/">https://git-scm.com/</a></p></li>
+<li><p>Python: <a class="reference external" href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></p></li>
+<li><p>MSys2 environment: <a class="reference external" href="https://www.msys2.org/">https://www.msys2.org/</a>. Additional software like GCC
 (to compile C programs) can be installed with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="p">:</span>\<span class="n">tools</span>\<span class="n">msys64</span>\<span class="n">usr</span>\<span class="nb">bin</span>\<span class="n">bash</span><span class="o">.</span><span class="n">exe</span>
 <span class="n">pacman</span> <span class="o">-</span><span class="n">Sy</span> <span class="n">base</span><span class="o">-</span><span class="n">devel</span> <span class="n">mingw</span><span class="o">-</span><span class="n">w64</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">toolchain</span>
@@ -227,8 +225,8 @@ verified in the registry:</p>
 <span class="n">shutdown</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">t</span> <span class="mi">0</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="windows-10-s-packagemanagement">
+</section>
+<section id="windows-10-s-packagemanagement">
 <h3>Windows 10’s PackageManagement<a class="headerlink" href="#windows-10-s-packagemanagement" title="Permalink to this headline">¶</a></h3>
 <p>PackageManagement (aka. <a class="reference external" href="https://github.com/oneget/oneget">OneGet</a>) is a package manager of package managers: it merges together <a class="reference external" href="https://www.nuget.org/">NuGet</a>, <a class="reference external" href="https://chocolatey.org/">Chocolatey</a>, etc.</p>
 <p>It is installed by default on Windows 10 (cf. <a class="reference external" href="https://blogs.technet.microsoft.com/packagemanagement/2015/04/28/introducing-packagemanagement-in-windows-10/">https://blogs.technet.microsoft.com/packagemanagement/2015/04/28/introducing-packagemanagement-in-windows-10/</a>) and provides several commands:</p>
@@ -264,14 +262,14 @@ Find-Package -Provider chocolatey -Name <span class="s2">&quot;*vlc*&quot;</span
 Install-Package -Provider chocolatey notepadplusplus
 </pre></div>
 </div>
-</div>
-<div class="section" id="debloat-windows">
+</section>
+<section id="debloat-windows">
 <h3>Debloat Windows<a class="headerlink" href="#debloat-windows" title="Permalink to this headline">¶</a></h3>
 <p>Windows 10 comes with many features which are better disabled. Here are some
 websites describing them:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/W4RH4WK/Debloat-Windows-10">https://github.com/W4RH4WK/Debloat-Windows-10</a></li>
-<li><a class="reference external" href="https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html">https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html</a></li>
+<li><p><a class="reference external" href="https://github.com/W4RH4WK/Debloat-Windows-10">https://github.com/W4RH4WK/Debloat-Windows-10</a></p></li>
+<li><p><a class="reference external" href="https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html">https://www.01net.com/actualites/comme-windows-10-windows-7-et-8-embarquent-des-mouchards-911343.html</a></p></li>
 </ul>
 <p>Here are commands that can be issued once Git has been installed, in a
 PowerShell administrator console:</p>
@@ -289,9 +287,9 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 .<span class="se">\r</span>emove-onedrive.ps1
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="hyper-v-configuration">
+</section>
+</section>
+<section id="hyper-v-configuration">
 <h2>Hyper-V configuration<a class="headerlink" href="#hyper-v-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Hyper-V is quite straightforward to use but for network management.
 In order to create an internal network which is NAT’ed to the external network, some PowerShell commands are documented on <a class="reference external" href="https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/setup-nat-network">https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/setup-nat-network</a>:</p>
@@ -310,8 +308,8 @@ New-NetNat -Name <span class="s1">&#39;NatOfHyperV&#39;</span> -InternalIPInterf
 </pre></div>
 </div>
 <p>It is then possible to associate the network adapter of Hyper-V virtual machines with internal network <code class="docutils literal notranslate"><span class="pre">Nat4HyperV</span></code>.</p>
-</div>
-<div class="section" id="activation-using-py-kms">
+</section>
+<section id="activation-using-py-kms">
 <h2>Activation using py-kms<a class="headerlink" href="#activation-using-py-kms" title="Permalink to this headline">¶</a></h2>
 <p>In order to activate Windows in an offline environment, it is possible to install py-kms (<a class="reference external" href="https://github.com/SystemRage/py-kms">https://github.com/SystemRage/py-kms</a>) on a Debian Hyper-V virtual machine:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/SystemRage/py-kms
@@ -365,10 +363,11 @@ systemctl <span class="nb">enable</span> py-kms.service
 systemctl start py-kms.service
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -408,17 +407,15 @@ systemctl start py-kms.service
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -436,12 +433,13 @@ systemctl start py-kms.service
           <a href="hardening_script.bat.raw.html" title="windows/hardening_script.bat"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Installing Windows</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

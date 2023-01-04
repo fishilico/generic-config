@@ -1,19 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>windows/hardening_script.bat &#8212; Generic Config</title>
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Installing Windows" href="install.html" />
@@ -32,7 +31,8 @@
           <a href="cmd.html" title="Some cmd.exe commands"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Windows system information</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">windows/hardening_script.bat</span></code></a></li> 
       </ul>
     </div>  
 
@@ -41,7 +41,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="windows-hardening-script-bat">
+  <section id="windows-hardening-script-bat">
 <h1><code class="docutils literal notranslate"><span class="pre">windows/hardening_script.bat</span></code><a class="headerlink" href="#windows-hardening-script-bat" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference download internal" download="" href="../_downloads/08c5e34a61201d05acc0fb9a6c5a3e17/hardening_script.bat"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>:: From https://gist.github.com/mackwage/08604751462126599d7e52f233490efe
@@ -107,7 +107,7 @@ reg add <span class="s2">&quot;HKCU\SOFTWARE\Microsoft\Windows Defender&quot;</s
 :: <span class="m">3</span> is the default which allows good, unknown and <span class="s1">&#39;bad but critical&#39;</span>. Recommend trying <span class="m">1</span> <span class="k">for</span> <span class="s1">&#39;good and unknown&#39;</span> or <span class="m">8</span> which is <span class="s1">&#39;good only&#39;</span>
 reg add <span class="s2">&quot;HKCU\SYSTEM\CurrentControlSet\Policies\EarlyLaunch&quot;</span> /v DriverLoadPolicy /t REG_DWORD /d <span class="m">3</span> /f
 ::
-:: Enable ASR rules in Win10 <span class="m">1903</span> ExploitGuard to mitigate Office malspam
+:: Enable ASR rules <span class="k">in</span> Win10 <span class="m">1903</span> ExploitGuard to mitigate Office malspam
 :: Blocks Office childprocs, Office proc injection, Office win32 api calls <span class="p">&amp;</span> executable content creation
 :: Note these only work when Defender is your primary AV
 ::
@@ -115,7 +115,7 @@ reg add <span class="s2">&quot;HKCU\SYSTEM\CurrentControlSet\Policies\EarlyLaunc
 powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids D4F940AB-401B-4EFC-AADC-AD5F3C50688A -AttackSurfaceReductionRules_Actions Enabled
 :: Block Process Injection
 powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 75668C1F-73B5-4CF0-BB93-3ECF5CB7CC84 -AttackSurfaceReductionRules_Actions Enabled
-:: Block Win32 API calls in macros
+:: Block Win32 API calls <span class="k">in</span> macros
 powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 92E97FA1-2EDF-4476-BDD6-9DD0B4DDDC7B -AttackSurfaceReductionRules_Actions Enabled
 :: Block Office from creating executables
 powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 3B576869-A4EC-4529-8536-B80A7769E899 -AttackSurfaceReductionRules_Actions Enabled
@@ -147,7 +147,7 @@ powershell.exe Set-Processmitigation -System -Enable DEP,EmulateAtlThunks,Bottom
 ::
 :: Enable SmartScreen <span class="k">for</span> Edge
 reg add <span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter&quot;</span> /v EnabledV9 /t REG_DWORD /d <span class="m">1</span> /f
-:: Enable Notifications in IE when a site attempts to install software
+:: Enable Notifications <span class="k">in</span> IE when a site attempts to install software
 reg add <span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer&quot;</span> /v SafeForScripting /t REG_DWORD /d <span class="m">0</span> /f
 :: Disable Edge password manager to encourage use of proper password manager
 reg add <span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Main&quot;</span> /v <span class="s2">&quot;FormSuggest Passwords&quot;</span> /t REG_SZ /d no /f
@@ -586,9 +586,10 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">pause</span>
 </pre></div>
 </div>
-</div>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -610,17 +611,15 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
            </a></li>
   </ul>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -638,12 +637,13 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
           <a href="cmd.html" title="Some cmd.exe commands"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Generic Config</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >Windows system information</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">windows/hardening_script.bat</span></code></a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2013-2022, Nicolas Iooss.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>
