@@ -75,6 +75,10 @@
 -4 -A INPUT -p udp -m udp --sport <span class="m">68</span> --dport <span class="m">67</span> -j DROP
 -4 -A INPUT -p udp -m udp --sport <span class="m">67</span> --dport <span class="m">68</span> -j ACCEPT
 
+<span class="c1"># Drop DHCPv6 requests but accept answers</span>
+-6 -A INPUT -p udp -m udp --sport <span class="m">547</span> --dport <span class="m">546</span> -j DROP
+-6 -A INPUT -p udp -m udp --sport <span class="m">546</span> --dport <span class="m">547</span> -j ACCEPT
+
 <span class="c1"># port range is in /proc/sys/net/ipv4/ip_local_port_range</span>
 <span class="c1"># If conntrack is not available (old kernel), use -m state --state instead</span>
 -A INPUT -p tcp -m tcp --dport <span class="m">32768</span>:61000 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
