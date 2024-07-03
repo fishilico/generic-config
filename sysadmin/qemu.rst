@@ -431,6 +431,20 @@ with ``virsh net-edit default``. It looks like:
 
 The generated dnsmasq configuration is in ``/var/lib/libvirt/dnsmasq/default.conf``.
 
+For information, dnsmasq can also be directly used on the command line:
+
+.. code-block:: sh
+
+    dnsmasq --dhcp-range=192.168.122.2,192.168.122.254,12h --interface=virbr0 \
+        --bind-interfaces --port 1053 --keep-in-foreground --log-dhcp `
+        --server=8.8.8.8 --dhcp-option=6,8.8.8.8
+
+    # To relay DNS servers on a fake systemd-resolved service, without DHCP
+    # Other options: --no-daemon --clear-on-reload --log-queries
+    dnsmasq --listen-address=127.0.0.53 --interface=lo --no-dhcp-interface \
+        --no-resolv --server=1.1.1.1 --server=8.8.8.8 \
+        --host-record=my-own-domain,192.0.2.42
+
 Web links
 ---------
 
