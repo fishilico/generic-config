@@ -413,6 +413,18 @@ with <code class="docutils literal notranslate"><span class="pre">virsh</span> <
 </pre></div>
 </div>
 <p>The generated dnsmasq configuration is in <code class="docutils literal notranslate"><span class="pre">/var/lib/libvirt/dnsmasq/default.conf</span></code>.</p>
+<p>For information, dnsmasq can also be directly used on the command line:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dnsmasq --dhcp-range<span class="o">=</span><span class="m">192</span>.168.122.2,192.168.122.254,12h --interface<span class="o">=</span>virbr0 <span class="se">\</span>
+    --bind-interfaces --port <span class="m">1053</span> --keep-in-foreground --log-dhcp <span class="sb">`</span>
+    --server<span class="o">=</span><span class="m">8</span>.8.8.8 --dhcp-option<span class="o">=</span><span class="m">6</span>,8.8.8.8
+
+<span class="c1"># To relay DNS servers on a fake systemd-resolved service, without DHCP</span>
+<span class="c1"># Other options: --no-daemon --clear-on-reload --log-queries</span>
+dnsmasq --listen-address<span class="o">=</span><span class="m">127</span>.0.0.53 --interface<span class="o">=</span>lo --no-dhcp-interface <span class="se">\</span>
+    --no-resolv --server<span class="o">=</span><span class="m">1</span>.1.1.1 --server<span class="o">=</span><span class="m">8</span>.8.8.8 <span class="se">\</span>
+    --host-record<span class="o">=</span>my-own-domain,192.0.2.42
+</pre></div>
+</div>
 </section>
 <section id="web-links">
 <h2>Web links<a class="headerlink" href="#web-links" title="Permalink to this headline">¶</a></h2>
