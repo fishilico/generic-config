@@ -63,6 +63,7 @@ Its engine is also used by projects such as <a class="reference external" href="
 
 <span class="c1"># Show the version</span>
 .version
+SELECT SQLITE_VERSION<span class="o">()</span><span class="p">;</span>
 
 <span class="c1"># Quit</span>
 .exit
@@ -121,6 +122,68 @@ For example:</p>
 </pre></div>
 </div>
 </section>
+<section id="schema-table">
+<h2>Schema table<a class="headerlink" href="#schema-table" title="Permalink to this headline">¶</a></h2>
+<p>According to the <a class="reference external" href="https://www.sqlite.org/schematab.html">documentation</a>, every SQLite database contains a single “schema table” named <code class="docutils literal notranslate"><span class="pre">sqlite_master</span></code> that stores the schema for that database.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">sqlite</span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="k">schema</span><span class="w"> </span><span class="n">sqlite_master</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sqlite_master</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="k">type</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">tbl_name</span><span class="w"> </span><span class="nb">text</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">rootpage</span><span class="w"> </span><span class="nb">integer</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">sql</span><span class="w"> </span><span class="nb">text</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To understand its content in actual database, let’s create a new table in an empty database.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="o">`</span><span class="n">users</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="o">`</span><span class="n">users</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">uid</span><span class="o">`</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTOINCREMENT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">name</span><span class="o">`</span><span class="w"> </span><span class="nb">TEXT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">email</span><span class="o">`</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w">  </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">password</span><span class="o">`</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">110</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="k">admin</span><span class="o">`</span><span class="w"> </span><span class="n">TINYINT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="s1">&#39;0&#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">created</span><span class="o">`</span><span class="w"> </span><span class="n">DATETIME</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>After executing these statements, the schema table contains the <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> statement and other objects:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>sqlite&gt; SELECT * FROM sqlite_master;
+table|users|users|2|CREATE TABLE `users` (
+  `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+  `name` TEXT NOT NULL,
+  `email` VARCHAR(255)  UNIQUE NOT NULL,
+  `password` VARCHAR(110) NOT NULL,
+  `admin` TINYINT(1) NOT NULL DEFAULT &#39;0&#39;,
+  `created` DATETIME NOT NULL
+)
+index|sqlite_autoindex_users_1|users|3|
+table|sqlite_sequence|sqlite_sequence|4|CREATE TABLE sqlite_sequence(name,seq)
+</pre></div>
+</div>
+<p>From a SQL injection vulnerability, this table can be obtained using queries such as:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Concatenate all fields and select the 1st entry (using COALESCE to support NULL values)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">type</span><span class="o">||</span><span class="s1">&#39;;&#39;</span><span class="o">||</span><span class="n">name</span><span class="o">||</span><span class="s1">&#39;;&#39;</span><span class="o">||</span><span class="n">tbl_name</span><span class="o">||</span><span class="s1">&#39;;&#39;</span><span class="o">||</span><span class="n">rootpage</span><span class="o">||</span><span class="s1">&#39;;&#39;</span><span class="o">||</span><span class="k">COALESCE</span><span class="p">(</span><span class="k">sql</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sqlite_master</span><span class="w"></span>
+<span class="w">    </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">-- Concatenate all fields of all rows</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">GROUP_CONCAT</span><span class="p">(</span><span class="k">type</span><span class="o">||</span><span class="s1">&#39;;&#39;</span><span class="o">||</span><span class="n">name</span><span class="o">||</span><span class="s1">&#39;;&#39;</span><span class="o">||</span><span class="n">tbl_name</span><span class="o">||</span><span class="s1">&#39;;&#39;</span><span class="o">||</span><span class="n">rootpage</span><span class="o">||</span><span class="s1">&#39;;&#39;</span><span class="o">||</span><span class="k">COALESCE</span><span class="p">(</span><span class="k">sql</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;^&#39;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">sqlite_master</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To exfiltrate the characters of such a string, functions <code class="docutils literal notranslate"><span class="pre">HEX</span></code>, <code class="docutils literal notranslate"><span class="pre">SUBSTR</span></code> and <code class="docutils literal notranslate"><span class="pre">LENGTH</span></code> (documented in <a class="reference external" href="https://sqlite.org/lang_corefunc.html">Built-In Scalar SQL Functions</a>) can be used.
+For example:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">sqlite</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">HEX</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="mi">68656</span><span class="n">C6C6F</span><span class="w"></span>
+<span class="n">sqlite</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">LENGTH</span><span class="p">(</span><span class="n">HEX</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">));</span><span class="w"></span>
+<span class="mi">10</span><span class="w"></span>
+<span class="n">sqlite</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">SUBSTR</span><span class="p">(</span><span class="n">HEX</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;6&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="mi">1</span><span class="w"></span>
+<span class="n">sqlite</span><span class="o">&gt;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">SUBSTR</span><span class="p">(</span><span class="n">HEX</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">&gt;</span><span class="s1">&#39;9&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="mi">0</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -136,6 +199,7 @@ For example:</p>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#basic-commands">Basic commands</a></li>
 <li><a class="reference internal" href="#sql-statements">SQL statements</a></li>
+<li><a class="reference internal" href="#schema-table">Schema table</a></li>
 </ul>
 </li>
 </ul>

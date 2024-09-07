@@ -30,6 +30,7 @@ From the interactive prompt given by ``sqlite3``, it is possible to run SQL stat
 
     # Show the version
     .version
+    SELECT SQLITE_VERSION();
 
     # Quit
     .exit
@@ -94,3 +95,75 @@ For example:
 .. code-block:: sql
 
     SELECT DATETIME(users.last_update_time, 'unixepoch') FROM users;
+
+Schema table
+------------
+
+According to the `documentation <https://www.sqlite.org/schematab.html>`_, every SQLite database contains a single "schema table" named ``sqlite_master`` that stores the schema for that database.
+
+.. code-block:: sql
+
+    sqlite> .schema sqlite_master
+    CREATE TABLE sqlite_master (
+      type text,
+      name text,
+      tbl_name text,
+      rootpage integer,
+      sql text
+    );
+
+To understand its content in actual database, let's create a new table in an empty database.
+
+.. code-block:: sql
+
+    DROP TABLE IF EXISTS `users`;
+    CREATE TABLE IF NOT EXISTS `users` (
+      `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      `name` TEXT NOT NULL,
+      `email` VARCHAR(255)  UNIQUE NOT NULL,
+      `password` VARCHAR(110) NOT NULL,
+      `admin` TINYINT(1) NOT NULL DEFAULT '0',
+      `created` DATETIME NOT NULL
+    );
+
+After executing these statements, the schema table contains the ``CREATE TABLE`` statement and other objects:
+
+.. code-block:: text
+
+    sqlite> SELECT * FROM sqlite_master;
+    table|users|users|2|CREATE TABLE `users` (
+      `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      `name` TEXT NOT NULL,
+      `email` VARCHAR(255)  UNIQUE NOT NULL,
+      `password` VARCHAR(110) NOT NULL,
+      `admin` TINYINT(1) NOT NULL DEFAULT '0',
+      `created` DATETIME NOT NULL
+    )
+    index|sqlite_autoindex_users_1|users|3|
+    table|sqlite_sequence|sqlite_sequence|4|CREATE TABLE sqlite_sequence(name,seq)
+
+From a SQL injection vulnerability, this table can be obtained using queries such as:
+
+.. code-block:: sql
+
+    -- Concatenate all fields and select the 1st entry (using COALESCE to support NULL values)
+    SELECT type||';'||name||';'||tbl_name||';'||rootpage||';'||COALESCE(sql,'') FROM sqlite_master
+        LIMIT 0,1;
+
+    -- Concatenate all fields of all rows
+    SELECT GROUP_CONCAT(type||';'||name||';'||tbl_name||';'||rootpage||';'||COALESCE(sql,''),'^')
+        FROM sqlite_master;
+
+To exfiltrate the characters of such a string, functions ``HEX``, ``SUBSTR`` and ``LENGTH`` (documented in `Built-In Scalar SQL Functions <https://sqlite.org/lang_corefunc.html>`_) can be used.
+For example:
+
+.. code-block:: sql
+
+    sqlite> SELECT HEX('hello');
+    68656C6C6F
+    sqlite> SELECT LENGTH(HEX('hello'));
+    10
+    sqlite> SELECT SUBSTR(HEX('hello'),1,1)='6';
+    1
+    sqlite> SELECT SUBSTR(HEX('hello'),1,1)>'9';
+    0
