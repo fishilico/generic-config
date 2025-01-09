@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Notes about Arch Linux packages &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Bluetooth on Linux" href="bluetooth.html" />
@@ -42,10 +40,10 @@
           <div class="body" role="main">
             
   <section id="notes-about-arch-linux-packages">
-<h1>Notes about Arch Linux packages<a class="headerlink" href="#notes-about-arch-linux-packages" title="Permalink to this headline">¶</a></h1>
+<h1>Notes about Arch Linux packages<a class="headerlink" href="#notes-about-arch-linux-packages" title="Link to this heading">¶</a></h1>
 <p>Here are some notes about Arch Linux packages.</p>
 <section id="building-packages">
-<h2>Building packages<a class="headerlink" href="#building-packages" title="Permalink to this headline">¶</a></h2>
+<h2>Building packages<a class="headerlink" href="#building-packages" title="Link to this heading">¶</a></h2>
 <p>Arch Linux packages can be found in two main places: official repositories and
 Arch User Repository (AUR). Official repositories are managed throw the Arch
 Build System (ABS). Users interact with them thanks to <code class="docutils literal notranslate"><span class="pre">pacman</span></code>. AUR is
@@ -66,11 +64,11 @@ for example to set up the packager name:</p>
 </pre></div>
 </div>
 <p>It is also possible to enable parallel build and to use a temporary build directory</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cat &gt;&gt; /etc/makepkg.conf <span class="s">&lt;&lt; EOF</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/makepkg.conf<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
 <span class="s">MAKEFLAGS=&quot;-j4&quot;  # According to $(nproc)</span>
 <span class="s">BUILDDIR=/tmp/makepkg</span>
 <span class="s">EOF</span>
-cat &gt;&gt; /etc/fstab <span class="s">&lt;&lt; EOF</span>
+cat<span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/fstab<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
 <span class="s">makepkg /tmp/makepkg tmpfs defaults,auto,nodev,nosuid,exec,gid=100,uid=1000,mode=0700 0 0</span>
 <span class="s">EOF</span>
 </pre></div>
@@ -87,7 +85,7 @@ cat &gt;&gt; /etc/fstab <span class="s">&lt;&lt; EOF</span>
 </ul>
 </section>
 <section id="yaourt-pacaur-and-trizen">
-<h2>Yaourt, pacaur and trizen<a class="headerlink" href="#yaourt-pacaur-and-trizen" title="Permalink to this headline">¶</a></h2>
+<h2>Yaourt, pacaur and trizen<a class="headerlink" href="#yaourt-pacaur-and-trizen" title="Link to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">yaourt</span></code> (Yet AnOther User Repository Tool), <code class="docutils literal notranslate"><span class="pre">pacaur</span></code> and <code class="docutils literal notranslate"><span class="pre">trizen</span></code> ease the
 installation of packages from the AUR. Their interfaces are similar to
 <code class="docutils literal notranslate"><span class="pre">pacman</span></code> but they can download, build and install user packages too, wrapping
@@ -100,7 +98,7 @@ when upgrading AUR packages.</p>
 <p><code class="docutils literal notranslate"><span class="pre">trizen</span></code> is a more recent one and can replace <code class="docutils literal notranslate"><span class="pre">pacaur</span></code>.</p>
 </section>
 <section id="debug-build">
-<h2>Debug build<a class="headerlink" href="#debug-build" title="Permalink to this headline">¶</a></h2>
+<h2>Debug build<a class="headerlink" href="#debug-build" title="Link to this heading">¶</a></h2>
 <p>To build packages with debug symbols, you need to change <code class="docutils literal notranslate"><span class="pre">OPTIONS</span></code> variable
 in <code class="docutils literal notranslate"><span class="pre">/etc/makepkg.conf</span></code>. Here is the default configuration:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>OPTIONS=(strip docs !libtool !staticlibs emptydirs zipman purge !upx !debug)
@@ -120,8 +118,9 @@ in <code class="docutils literal notranslate"><span class="pre">/etc/makepkg.con
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Notes about Arch Linux packages</a><ul>
 <li><a class="reference internal" href="#building-packages">Building packages</a></li>
 <li><a class="reference internal" href="#yaourt-pacaur-and-trizen">Yaourt, pacaur and trizen</a></li>
@@ -130,12 +129,17 @@ in <code class="docutils literal notranslate"><span class="pre">/etc/makepkg.con
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Some notes and tips&amp;tricks about system administration</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="bluetooth.html"
-                        title="next chapter">Bluetooth on Linux</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Some notes and tips&amp;tricks about system administration</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="bluetooth.html"
+                          title="next chapter">Bluetooth on Linux</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/archlinux-pkg.rst.txt"
@@ -154,7 +158,7 @@ in <code class="docutils literal notranslate"><span class="pre">/etc/makepkg.con
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -177,8 +181,8 @@ in <code class="docutils literal notranslate"><span class="pre">/etc/makepkg.con
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

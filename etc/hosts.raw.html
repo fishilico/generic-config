@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>etc/hosts &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="etc/iptables/empty.rules" href="iptables/empty.rules.raw.html" />
@@ -42,42 +40,42 @@
           <div class="body" role="main">
             
   <section id="etc-hosts">
-<h1><code class="docutils literal notranslate"><span class="pre">etc/hosts</span></code><a class="headerlink" href="#etc-hosts" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc/hosts</span></code><a class="headerlink" href="#etc-hosts" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../_downloads/54182dd3455b3e52febe9867e34828cb/hosts"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
 <span class="c1"># /etc/hosts: static lookup table for host names</span>
 <span class="c1">#</span>
 
 <span class="c1">#&lt;ip-address&gt;   &lt;hostname.domain.org&gt;   &lt;hostname&gt;</span>
-<span class="m">127</span>.0.0.1       localhost.localdomain   localhost
+<span class="m">127</span>.0.0.1<span class="w">       </span>localhost.localdomain<span class="w">   </span>localhost
 <span class="c1"># MyHostName should be what&#39;s in /etc/hostname</span>
-<span class="m">127</span>.0.1.1       MyHostName
-::1             localhost.localdomain   localhost ip6-localhost ip6-loopback
+<span class="m">127</span>.0.1.1<span class="w">       </span>MyHostName
+::1<span class="w">             </span>localhost.localdomain<span class="w">   </span>localhost<span class="w"> </span>ip6-localhost<span class="w"> </span>ip6-loopback
 
 <span class="c1"># Speed up non-numeric iptables listing</span>
 <span class="c1"># For IPv4 there are some PTR records in DNS with mcast.net subdomains</span>
-<span class="m">224</span>.0.0.0       ip4-mcast224
-<span class="m">224</span>.0.0.1       ip4-allsystems
-<span class="m">224</span>.0.0.2       ip4-allrouters
-<span class="m">224</span>.0.0.22      ip4-igmp
-<span class="m">224</span>.0.0.251     ip4-mdns
-<span class="m">239</span>.0.0.0       ip4-mcast239
-<span class="m">255</span>.255.255.255 ip4-broadcast
+<span class="m">224</span>.0.0.0<span class="w">       </span>ip4-mcast224
+<span class="m">224</span>.0.0.1<span class="w">       </span>ip4-allsystems
+<span class="m">224</span>.0.0.2<span class="w">       </span>ip4-allrouters
+<span class="m">224</span>.0.0.22<span class="w">      </span>ip4-igmp
+<span class="m">224</span>.0.0.251<span class="w">     </span>ip4-mdns
+<span class="m">239</span>.0.0.0<span class="w">       </span>ip4-mcast239
+<span class="m">255</span>.255.255.255<span class="w"> </span>ip4-broadcast
 
-fe00::0         ip6-localnet
-ff00::0         ip6-mcastprefix
-ff02::1         ip6-allnodes
-ff02::2         ip6-allrouters
-ff02::fb        ip6-mdns
+fe00::0<span class="w">         </span>ip6-localnet
+ff00::0<span class="w">         </span>ip6-mcastprefix
+ff02::1<span class="w">         </span>ip6-allnodes
+ff02::2<span class="w">         </span>ip6-allrouters
+ff02::fb<span class="w">        </span>ip6-mdns
 
 <span class="c1"># Blacklist some advertisement providers with DNS</span>
 <span class="c1"># To follow every DNS query on Linux, you can use a command such as:</span>
 <span class="c1">#   tshark -n udp dst port 53</span>
-<span class="m">0</span>.0.0.1 ad.doubleclick.net
-<span class="m">0</span>.0.0.1 googleads.g.doubleclick.net
-<span class="m">0</span>.0.0.1 pubads.g.doubleclick.net
-<span class="m">0</span>.0.0.1 pagead2.googlesyndication.com
-<span class="m">0</span>.0.0.1 pixel.quantserve.com
+<span class="m">0</span>.0.0.1<span class="w"> </span>ad.doubleclick.net
+<span class="m">0</span>.0.0.1<span class="w"> </span>googleads.g.doubleclick.net
+<span class="m">0</span>.0.0.1<span class="w"> </span>pubads.g.doubleclick.net
+<span class="m">0</span>.0.0.1<span class="w"> </span>pagead2.googlesyndication.com
+<span class="m">0</span>.0.0.1<span class="w"> </span>pixel.quantserve.com
 
 <span class="c1"># See also https://github.com/StevenBlack/hosts to block ads using /etc/hosts</span>
 </pre></div>
@@ -91,12 +89,16 @@ ff02::fb        ip6-mdns
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="audit/audit.rules.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/audit/audit.rules</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="iptables/empty.rules.raw.html"
-                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/iptables/empty.rules</span></code></a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="audit/audit.rules.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/audit/audit.rules</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="iptables/empty.rules.raw.html"
+                          title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/iptables/empty.rules</span></code></a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/etc/hosts.raw.rst.txt"
@@ -115,7 +117,7 @@ ff02::fb        ip6-mdns
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -138,8 +140,8 @@ ff02::fb        ip6-mdns
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

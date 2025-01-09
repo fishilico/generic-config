@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>etc-server/dhcp/dhcpd.conf &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="etc-server/dhcp/dnsmasq.conf and doc" href="dnsmasq.conf.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="etc-server-dhcp-dhcpd-conf">
-<h1><code class="docutils literal notranslate"><span class="pre">etc-server/dhcp/dhcpd.conf</span></code><a class="headerlink" href="#etc-server-dhcp-dhcpd-conf" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc-server/dhcp/dhcpd.conf</span></code><a class="headerlink" href="#etc-server-dhcp-dhcpd-conf" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../../_downloads/e7661e2a9d3d145039bf55fb66e670cd/dhcpd.conf"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
 <span class="c1"># Sample configuration file for ISC dhcpd for Debian</span>
@@ -56,14 +54,14 @@
 <span class="c1"># attempt to do a DNS update when a lease is confirmed. We default to the</span>
 <span class="c1"># behavior of the version 2 packages (&#39;none&#39;, since DHCP v2 didn&#39;t</span>
 <span class="c1"># have support for DDNS.)</span>
-ddns-update-style none<span class="p">;</span>
+ddns-update-style<span class="w"> </span>none<span class="p">;</span>
 
 <span class="c1"># option definitions common to all supported networks...</span>
-option domain-name <span class="s2">&quot;example.org&quot;</span><span class="p">;</span>
-option domain-name-servers <span class="m">192</span>.168.1.1, <span class="m">208</span>.67.222.222<span class="p">;</span>
+option<span class="w"> </span>domain-name<span class="w"> </span><span class="s2">&quot;example.org&quot;</span><span class="p">;</span>
+option<span class="w"> </span>domain-name-servers<span class="w"> </span><span class="m">192</span>.168.1.1,<span class="w"> </span><span class="m">208</span>.67.222.222<span class="p">;</span>
 
-default-lease-time <span class="m">600</span><span class="p">;</span>
-max-lease-time <span class="m">7200</span><span class="p">;</span>
+default-lease-time<span class="w"> </span><span class="m">600</span><span class="p">;</span>
+max-lease-time<span class="w"> </span><span class="m">7200</span><span class="p">;</span>
 
 <span class="c1"># If this DHCP server is the official DHCP server for the local</span>
 <span class="c1"># network, the authoritative directive should be uncommented.</span>
@@ -71,7 +69,7 @@ max-lease-time <span class="m">7200</span><span class="p">;</span>
 
 <span class="c1"># Use this to send dhcp log messages to a different log file (you also</span>
 <span class="c1"># have to hack syslog.conf to complete the redirection).</span>
-log-facility local7<span class="p">;</span>
+log-facility<span class="w"> </span>local7<span class="p">;</span>
 
 <span class="c1"># No service will be given on this subnet, but declaring it helps the</span>
 <span class="c1"># DHCP server to understand the network topology.</span>
@@ -156,15 +154,15 @@ log-facility local7<span class="p">;</span>
 <span class="c1">#}</span>
 
 <span class="c1"># These options are used to add static routes</span>
-option rfc3442-classless-static-routes code <span class="nv">121</span> <span class="o">=</span> array of integer <span class="m">8</span><span class="p">;</span>
-option ms-classless-static-routes code <span class="nv">249</span> <span class="o">=</span> array of integer <span class="m">8</span><span class="p">;</span>
+option<span class="w"> </span>rfc3442-classless-static-routes<span class="w"> </span>code<span class="w"> </span><span class="nv">121</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>array<span class="w"> </span>of<span class="w"> </span>integer<span class="w"> </span><span class="m">8</span><span class="p">;</span>
+option<span class="w"> </span>ms-classless-static-routes<span class="w"> </span>code<span class="w"> </span><span class="nv">249</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>array<span class="w"> </span>of<span class="w"> </span>integer<span class="w"> </span><span class="m">8</span><span class="p">;</span>
 
 <span class="c1"># Publish static a route to 192.168.1.0/24 via 10.13.37.1</span>
-subnet <span class="m">10</span>.13.37.0 netmask <span class="m">255</span>.255.255.0 <span class="o">{</span>
-  range <span class="m">10</span>.13.37.100 <span class="m">10</span>.13.37.200<span class="p">;</span>
-  option routers <span class="m">10</span>.13.37.1<span class="p">;</span>
-  option rfc3442-classless-static-routes <span class="m">24</span>, <span class="m">192</span>, <span class="m">168</span>, <span class="m">1</span>, <span class="m">10</span>, <span class="m">13</span>, <span class="m">37</span>, <span class="m">1</span><span class="p">;</span>
-  option ms-classless-static-routes <span class="m">24</span>, <span class="m">192</span>, <span class="m">168</span>, <span class="m">1</span>, <span class="m">10</span>, <span class="m">13</span>, <span class="m">37</span>, <span class="m">1</span><span class="p">;</span>
+subnet<span class="w"> </span><span class="m">10</span>.13.37.0<span class="w"> </span>netmask<span class="w"> </span><span class="m">255</span>.255.255.0<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span>range<span class="w"> </span><span class="m">10</span>.13.37.100<span class="w"> </span><span class="m">10</span>.13.37.200<span class="p">;</span>
+<span class="w">  </span>option<span class="w"> </span>routers<span class="w"> </span><span class="m">10</span>.13.37.1<span class="p">;</span>
+<span class="w">  </span>option<span class="w"> </span>rfc3442-classless-static-routes<span class="w"> </span><span class="m">24</span>,<span class="w"> </span><span class="m">192</span>,<span class="w"> </span><span class="m">168</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">10</span>,<span class="w"> </span><span class="m">13</span>,<span class="w"> </span><span class="m">37</span>,<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">  </span>option<span class="w"> </span>ms-classless-static-routes<span class="w"> </span><span class="m">24</span>,<span class="w"> </span><span class="m">192</span>,<span class="w"> </span><span class="m">168</span>,<span class="w"> </span><span class="m">1</span>,<span class="w"> </span><span class="m">10</span>,<span class="w"> </span><span class="m">13</span>,<span class="w"> </span><span class="m">37</span>,<span class="w"> </span><span class="m">1</span><span class="p">;</span>
 <span class="o">}</span>
 </pre></div>
 </div>
@@ -177,12 +175,16 @@ subnet <span class="m">10</span>.13.37.0 netmask <span class="m">255</span>.255.
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../bitlbee/bitlbee.conf.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/bitlbee/</span></code>: BitlBee IRC gateway</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="dnsmasq.conf.html"
-                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dhcp/dnsmasq.conf</span></code> and doc</a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../bitlbee/bitlbee.conf.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/bitlbee/</span></code>: BitlBee IRC gateway</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="dnsmasq.conf.html"
+                          title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dhcp/dnsmasq.conf</span></code> and doc</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc-server/dhcp/dhcpd.conf.raw.rst.txt"
@@ -201,7 +203,7 @@ subnet <span class="m">10</span>.13.37.0 netmask <span class="m">255</span>.255.
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -224,8 +226,8 @@ subnet <span class="m">10</span>.13.37.0 netmask <span class="m">255</span>.255.
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

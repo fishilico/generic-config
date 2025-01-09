@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>windows/hardening_script.bat &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Installing Windows" href="install.html" />
@@ -42,50 +40,50 @@
           <div class="body" role="main">
             
   <section id="windows-hardening-script-bat">
-<h1><code class="docutils literal notranslate"><span class="pre">windows/hardening_script.bat</span></code><a class="headerlink" href="#windows-hardening-script-bat" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">windows/hardening_script.bat</span></code><a class="headerlink" href="#windows-hardening-script-bat" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../_downloads/08c5e34a61201d05acc0fb9a6c5a3e17/hardening_script.bat"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>:: From https://gist.github.com/mackwage/08604751462126599d7e52f233490efe
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>::<span class="w"> </span>From<span class="w"> </span>https://gist.github.com/mackwage/08604751462126599d7e52f233490efe
 
-:: Windows <span class="m">10</span> Hardening Script
-:: This is based mostly on my own personal research and testing. My objective is
-:: to secure/harden Windows <span class="m">10</span> as much as possible <span class="k">while</span> not impacting usability
-:: at all. <span class="o">(</span>Think being able to run on this computer<span class="s1">&#39;s of family members so</span>
+::<span class="w"> </span>Windows<span class="w"> </span><span class="m">10</span><span class="w"> </span>Hardening<span class="w"> </span>Script
+::<span class="w"> </span>This<span class="w"> </span>is<span class="w"> </span>based<span class="w"> </span>mostly<span class="w"> </span>on<span class="w"> </span>my<span class="w"> </span>own<span class="w"> </span>personal<span class="w"> </span>research<span class="w"> </span>and<span class="w"> </span>testing.<span class="w"> </span>My<span class="w"> </span>objective<span class="w"> </span>is
+::<span class="w"> </span>to<span class="w"> </span>secure/harden<span class="w"> </span>Windows<span class="w"> </span><span class="m">10</span><span class="w"> </span>as<span class="w"> </span>much<span class="w"> </span>as<span class="w"> </span>possible<span class="w"> </span><span class="k">while</span><span class="w"> </span>not<span class="w"> </span>impacting<span class="w"> </span>usability
+::<span class="w"> </span>at<span class="w"> </span>all.<span class="w"> </span><span class="o">(</span>Think<span class="w"> </span>being<span class="w"> </span>able<span class="w"> </span>to<span class="w"> </span>run<span class="w"> </span>on<span class="w"> </span>this<span class="w"> </span>computer<span class="s1">&#39;s of family members so</span>
 <span class="s1">:: secure them but not increase the chances of them having to call you to</span>
 <span class="s1">:: troubleshoot something related to it later on). References for virtually all</span>
 <span class="s1">:: settings can be found at the bottom. Just before the references section, you</span>
 <span class="s1">:: will always find several security settings commented out as they could lead</span>
-<span class="s1">:: to compatibility issues in common consumer setups but they&#39;</span>re worth
-:: considering. 
-:: Obligatory <span class="s1">&#39;views are my own&#39;</span>. :<span class="o">)</span>
-:: Thank you @jaredhaight <span class="k">for</span> the Win Firewall config recommendations!
-:: Thank you @ricardojba <span class="k">for</span> the DLL Safe Order Search reg key! 
-:: Thank you @jessicaknotts <span class="k">for</span> the <span class="nb">help</span> on testing Exploit Guard configs and checking privacy settings!
-:: Best script I<span class="s1">&#39;ve found for Debloating Windows 10: https://github.com/Sycnex/Windows10Debloater</span>
+<span class="s1">:: to compatibility issues in common consumer setups but they&#39;</span>re<span class="w"> </span>worth
+::<span class="w"> </span>considering.<span class="w"> </span>
+::<span class="w"> </span>Obligatory<span class="w"> </span><span class="s1">&#39;views are my own&#39;</span>.<span class="w"> </span>:<span class="o">)</span>
+::<span class="w"> </span>Thank<span class="w"> </span>you<span class="w"> </span>@jaredhaight<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>Win<span class="w"> </span>Firewall<span class="w"> </span>config<span class="w"> </span>recommendations!
+::<span class="w"> </span>Thank<span class="w"> </span>you<span class="w"> </span>@ricardojba<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>DLL<span class="w"> </span>Safe<span class="w"> </span>Order<span class="w"> </span>Search<span class="w"> </span>reg<span class="w"> </span>key!<span class="w"> </span>
+::<span class="w"> </span>Thank<span class="w"> </span>you<span class="w"> </span>@jessicaknotts<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span><span class="nb">help</span><span class="w"> </span>on<span class="w"> </span>testing<span class="w"> </span>Exploit<span class="w"> </span>Guard<span class="w"> </span>configs<span class="w"> </span>and<span class="w"> </span>checking<span class="w"> </span>privacy<span class="w"> </span>settings!
+::<span class="w"> </span>Best<span class="w"> </span>script<span class="w"> </span>I<span class="s1">&#39;ve found for Debloating Windows 10: https://github.com/Sycnex/Windows10Debloater</span>
 <span class="s1">::</span>
 <span class="s1">::#######################################################################</span>
 <span class="s1">::</span>
 <span class="s1">:: Change file associations to protect against common ransomware attacks</span>
 <span class="s1">:: Note that if you legitimately use these extensions, like .bat, you will now</span>
 <span class="s1">:: need to execute them manually from cmd or powershel</span>
-<span class="s1">:: Alternatively, you can right-click on them and hit &#39;</span>Run as Administrator<span class="s1">&#39; but</span>
-<span class="s1">:: ensure it&#39;</span>s a script you want to run :<span class="o">)</span> 
-:: https://support.microsoft.com/en-us/help/883260/information-about-the-attachment-manager-in-microsoft-windows
-:: ---------------------
-ftype <span class="nv">htafile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
-ftype <span class="nv">wshfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
-ftype <span class="nv">wsffile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
-ftype <span class="nv">batfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
-ftype <span class="nv">jsfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
-ftype <span class="nv">jsefile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
-ftype <span class="nv">vbefile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
-ftype <span class="nv">vbsfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span> <span class="s2">&quot;%1&quot;</span>
+<span class="s1">:: Alternatively, you can right-click on them and hit &#39;</span>Run<span class="w"> </span>as<span class="w"> </span>Administrator<span class="s1">&#39; but</span>
+<span class="s1">:: ensure it&#39;</span>s<span class="w"> </span>a<span class="w"> </span>script<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>run<span class="w"> </span>:<span class="o">)</span><span class="w"> </span>
+::<span class="w"> </span>https://support.microsoft.com/en-us/help/883260/information-about-the-attachment-manager-in-microsoft-windows
+::<span class="w"> </span>---------------------
+ftype<span class="w"> </span><span class="nv">htafile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span><span class="w"> </span><span class="s2">&quot;%1&quot;</span>
+ftype<span class="w"> </span><span class="nv">wshfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span><span class="w"> </span><span class="s2">&quot;%1&quot;</span>
+ftype<span class="w"> </span><span class="nv">wsffile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span><span class="w"> </span><span class="s2">&quot;%1&quot;</span>
+ftype<span class="w"> </span><span class="nv">batfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span><span class="w"> </span><span class="s2">&quot;%1&quot;</span>
+ftype<span class="w"> </span><span class="nv">jsfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span><span class="w"> </span><span class="s2">&quot;%1&quot;</span>
+ftype<span class="w"> </span><span class="nv">jsefile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span><span class="w"> </span><span class="s2">&quot;%1&quot;</span>
+ftype<span class="w"> </span><span class="nv">vbefile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span><span class="w"> </span><span class="s2">&quot;%1&quot;</span>
+ftype<span class="w"> </span><span class="nv">vbsfile</span><span class="o">=</span><span class="s2">&quot;%SystemRoot%\system32\NOTEPAD.EXE&quot;</span><span class="w"> </span><span class="s2">&quot;%1&quot;</span>
 ::
 ::#######################################################################
-:: Enable and configure Windows Defender and advanced settings
+::<span class="w"> </span>Enable<span class="w"> </span>and<span class="w"> </span>configure<span class="w"> </span>Windows<span class="w"> </span>Defender<span class="w"> </span>and<span class="w"> </span>advanced<span class="w"> </span>settings
 ::#######################################################################
 ::
-:: Reset Defender to defaults. Commented out but available <span class="k">for</span> reference
-::<span class="s2">&quot;%programfiles%&quot;</span><span class="se">\&quot;</span>Windows Defender<span class="s2">&quot;\MpCmdRun.exe -RestoreDefaults</span>
+::<span class="w"> </span>Reset<span class="w"> </span>Defender<span class="w"> </span>to<span class="w"> </span>defaults.<span class="w"> </span>Commented<span class="w"> </span>out<span class="w"> </span>but<span class="w"> </span>available<span class="w"> </span><span class="k">for</span><span class="w"> </span>reference
+::<span class="s2">&quot;%programfiles%&quot;</span><span class="se">\&quot;</span>Windows<span class="w"> </span>Defender<span class="s2">&quot;\MpCmdRun.exe -RestoreDefaults</span>
 <span class="s2">:: https://docs.microsoft.com/en-us/windows/client-management/mdm/policy-csp-defender#defender-submitsamplesconsent</span>
 <span class="s2">:: https://docs.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=win10-ps</span>
 <span class="s2">::</span>
@@ -94,169 +92,169 @@ ftype <span class="nv">vbsfile</span><span class="o">=</span><span class="s2">&q
 <span class="s2">::Enable Windows Defender sandboxing</span>
 <span class="s2">setx /M MP_FORCE_USE_SANDBOX 1</span>
 <span class="s2">:: Update signatures</span>
-<span class="s2">&quot;</span>%ProgramFiles%<span class="s2">&quot;\&quot;Windows Defender&quot;</span><span class="se">\M</span>pCmdRun.exe -SignatureUpdate
-:: Enable Defender signatures <span class="k">for</span> Potentially Unwanted Applications <span class="o">(</span>PUA<span class="o">)</span>
-powershell.exe Set-MpPreference -PUAProtection <span class="nb">enable</span>
-:: Enable Defender periodic scanning
-reg add <span class="s2">&quot;HKCU\SOFTWARE\Microsoft\Windows Defender&quot;</span> /v PassiveMode /t REG_DWORD /d <span class="m">2</span> /f
-:: Enable Cloud functionality of Windows Defender
-:: powershell.exe Set-MpPreference -MAPSReporting Advanced
-:: powershell.exe Set-MpPreference -SubmitSamplesConsent <span class="m">0</span>
+<span class="s2">&quot;</span>%ProgramFiles%<span class="s2">&quot;\&quot;Windows Defender&quot;</span><span class="se">\M</span>pCmdRun.exe<span class="w"> </span>-SignatureUpdate
+::<span class="w"> </span>Enable<span class="w"> </span>Defender<span class="w"> </span>signatures<span class="w"> </span><span class="k">for</span><span class="w"> </span>Potentially<span class="w"> </span>Unwanted<span class="w"> </span>Applications<span class="w"> </span><span class="o">(</span>PUA<span class="o">)</span>
+powershell.exe<span class="w"> </span>Set-MpPreference<span class="w"> </span>-PUAProtection<span class="w"> </span><span class="nb">enable</span>
+::<span class="w"> </span>Enable<span class="w"> </span>Defender<span class="w"> </span>periodic<span class="w"> </span>scanning
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\SOFTWARE\Microsoft\Windows Defender&quot;</span><span class="w"> </span>/v<span class="w"> </span>PassiveMode<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/f
+::<span class="w"> </span>Enable<span class="w"> </span>Cloud<span class="w"> </span>functionality<span class="w"> </span>of<span class="w"> </span>Windows<span class="w"> </span>Defender
+::<span class="w"> </span>powershell.exe<span class="w"> </span>Set-MpPreference<span class="w"> </span>-MAPSReporting<span class="w"> </span>Advanced
+::<span class="w"> </span>powershell.exe<span class="w"> </span>Set-MpPreference<span class="w"> </span>-SubmitSamplesConsent<span class="w"> </span><span class="m">0</span>
 ::
-:: Enable early launch antimalware driver <span class="k">for</span> scan of boot-start drivers
-:: <span class="m">3</span> is the default which allows good, unknown and <span class="s1">&#39;bad but critical&#39;</span>. Recommend trying <span class="m">1</span> <span class="k">for</span> <span class="s1">&#39;good and unknown&#39;</span> or <span class="m">8</span> which is <span class="s1">&#39;good only&#39;</span>
-reg add <span class="s2">&quot;HKCU\SYSTEM\CurrentControlSet\Policies\EarlyLaunch&quot;</span> /v DriverLoadPolicy /t REG_DWORD /d <span class="m">3</span> /f
+::<span class="w"> </span>Enable<span class="w"> </span>early<span class="w"> </span>launch<span class="w"> </span>antimalware<span class="w"> </span>driver<span class="w"> </span><span class="k">for</span><span class="w"> </span>scan<span class="w"> </span>of<span class="w"> </span>boot-start<span class="w"> </span>drivers
+::<span class="w"> </span><span class="m">3</span><span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>default<span class="w"> </span>which<span class="w"> </span>allows<span class="w"> </span>good,<span class="w"> </span>unknown<span class="w"> </span>and<span class="w"> </span><span class="s1">&#39;bad but critical&#39;</span>.<span class="w"> </span>Recommend<span class="w"> </span>trying<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="s1">&#39;good and unknown&#39;</span><span class="w"> </span>or<span class="w"> </span><span class="m">8</span><span class="w"> </span>which<span class="w"> </span>is<span class="w"> </span><span class="s1">&#39;good only&#39;</span>
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\SYSTEM\CurrentControlSet\Policies\EarlyLaunch&quot;</span><span class="w"> </span>/v<span class="w"> </span>DriverLoadPolicy<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">3</span><span class="w"> </span>/f
 ::
-:: Enable ASR rules <span class="k">in</span> Win10 <span class="m">1903</span> ExploitGuard to mitigate Office malspam
-:: Blocks Office childprocs, Office proc injection, Office win32 api calls <span class="p">&amp;</span> executable content creation
-:: Note these only work when Defender is your primary AV
+::<span class="w"> </span>Enable<span class="w"> </span>ASR<span class="w"> </span>rules<span class="w"> </span><span class="k">in</span><span class="w"> </span>Win10<span class="w"> </span><span class="m">1903</span><span class="w"> </span>ExploitGuard<span class="w"> </span>to<span class="w"> </span>mitigate<span class="w"> </span>Office<span class="w"> </span>malspam
+::<span class="w"> </span>Blocks<span class="w"> </span>Office<span class="w"> </span>childprocs,<span class="w"> </span>Office<span class="w"> </span>proc<span class="w"> </span>injection,<span class="w"> </span>Office<span class="w"> </span>win32<span class="w"> </span>api<span class="w"> </span>calls<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>executable<span class="w"> </span>content<span class="w"> </span>creation
+::<span class="w"> </span>Note<span class="w"> </span>these<span class="w"> </span>only<span class="w"> </span>work<span class="w"> </span>when<span class="w"> </span>Defender<span class="w"> </span>is<span class="w"> </span>your<span class="w"> </span>primary<span class="w"> </span>AV
 ::
-:: Block Office Child Process Creation 
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids D4F940AB-401B-4EFC-AADC-AD5F3C50688A -AttackSurfaceReductionRules_Actions Enabled
-:: Block Process Injection
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 75668C1F-73B5-4CF0-BB93-3ECF5CB7CC84 -AttackSurfaceReductionRules_Actions Enabled
-:: Block Win32 API calls <span class="k">in</span> macros
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 92E97FA1-2EDF-4476-BDD6-9DD0B4DDDC7B -AttackSurfaceReductionRules_Actions Enabled
-:: Block Office from creating executables
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 3B576869-A4EC-4529-8536-B80A7769E899 -AttackSurfaceReductionRules_Actions Enabled
-:: Block execution of potentially obfuscated scripts
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 5BEB7EFE-FD9A-4556-801D-275E5FFC04CC -AttackSurfaceReductionRules_Actions Enabled
-:: Block executable content from email client and webmail
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids BE9BA2D9-53EA-4CDC-84E5-9B1EEEE46550 -AttackSurfaceReductionRules_Actions Enabled
-:: Block JavaScript or VBScript from launching downloaded executable content
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids D3E037E1-3EB8-44C8-A917-57927947596D -AttackSurfaceReductionRules_Actions Enabled
-:: Block lsass cred theft
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2 -AttackSurfaceReductionRules_Actions Enabled
-:: Block untrusted and unsigned processes that run from USB
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids b2b3f03d-6a65-4f7b-a9c7-1c7ef74a9ba4 -AttackSurfaceReductionRules_Actions Enabled
-:: Block Adobe Reader from creating child processes
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids 7674ba52-37eb-4a4f-a9a1-f0f9a1619a2c -AttackSurfaceReductionRules_Actions Enabled
-:: Block persistence through WMI event subscription
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids e6db77e5-3df2-4cf1-b95a-636979351e5b -AttackSurfaceReductionRules_Actions Enabled
-:: Block process creations originating from PSExec and WMI commands
-powershell.exe Add-MpPreference -AttackSurfaceReductionRules_Ids d1e49aac-8f56-4280-b9ba-993a6d77406c -AttackSurfaceReductionRules_Actions Enabled
+::<span class="w"> </span>Block<span class="w"> </span>Office<span class="w"> </span>Child<span class="w"> </span>Process<span class="w"> </span>Creation<span class="w"> </span>
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>D4F940AB-401B-4EFC-AADC-AD5F3C50688A<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
+::<span class="w"> </span>Block<span class="w"> </span>Process<span class="w"> </span>Injection
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>75668C1F-73B5-4CF0-BB93-3ECF5CB7CC84<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
+::<span class="w"> </span>Block<span class="w"> </span>Win32<span class="w"> </span>API<span class="w"> </span>calls<span class="w"> </span><span class="k">in</span><span class="w"> </span>macros
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>92E97FA1-2EDF-4476-BDD6-9DD0B4DDDC7B<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
+::<span class="w"> </span>Block<span class="w"> </span>Office<span class="w"> </span>from<span class="w"> </span>creating<span class="w"> </span>executables
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>3B576869-A4EC-4529-8536-B80A7769E899<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
+::<span class="w"> </span>Block<span class="w"> </span>execution<span class="w"> </span>of<span class="w"> </span>potentially<span class="w"> </span>obfuscated<span class="w"> </span>scripts
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>5BEB7EFE-FD9A-4556-801D-275E5FFC04CC<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
+::<span class="w"> </span>Block<span class="w"> </span>executable<span class="w"> </span>content<span class="w"> </span>from<span class="w"> </span>email<span class="w"> </span>client<span class="w"> </span>and<span class="w"> </span>webmail
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>BE9BA2D9-53EA-4CDC-84E5-9B1EEEE46550<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
+::<span class="w"> </span>Block<span class="w"> </span>JavaScript<span class="w"> </span>or<span class="w"> </span>VBScript<span class="w"> </span>from<span class="w"> </span>launching<span class="w"> </span>downloaded<span class="w"> </span>executable<span class="w"> </span>content
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>D3E037E1-3EB8-44C8-A917-57927947596D<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
+::<span class="w"> </span>Block<span class="w"> </span>lsass<span class="w"> </span>cred<span class="w"> </span>theft
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
+::<span class="w"> </span>Block<span class="w"> </span>untrusted<span class="w"> </span>and<span class="w"> </span>unsigned<span class="w"> </span>processes<span class="w"> </span>that<span class="w"> </span>run<span class="w"> </span>from<span class="w"> </span>USB
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>b2b3f03d-6a65-4f7b-a9c7-1c7ef74a9ba4<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
+::<span class="w"> </span>Block<span class="w"> </span>Adobe<span class="w"> </span>Reader<span class="w"> </span>from<span class="w"> </span>creating<span class="w"> </span>child<span class="w"> </span>processes
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>7674ba52-37eb-4a4f-a9a1-f0f9a1619a2c<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
+::<span class="w"> </span>Block<span class="w"> </span>persistence<span class="w"> </span>through<span class="w"> </span>WMI<span class="w"> </span>event<span class="w"> </span>subscription
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>e6db77e5-3df2-4cf1-b95a-636979351e5b<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
+::<span class="w"> </span>Block<span class="w"> </span>process<span class="w"> </span>creations<span class="w"> </span>originating<span class="w"> </span>from<span class="w"> </span>PSExec<span class="w"> </span>and<span class="w"> </span>WMI<span class="w"> </span>commands
+powershell.exe<span class="w"> </span>Add-MpPreference<span class="w"> </span>-AttackSurfaceReductionRules_Ids<span class="w"> </span>d1e49aac-8f56-4280-b9ba-993a6d77406c<span class="w"> </span>-AttackSurfaceReductionRules_Actions<span class="w"> </span>Enabled
 ::
-:: Enable Defender exploit system-wide protection
-:: The commented line includes CFG which can cause issues with apps like Discord <span class="p">&amp;</span> Mouse Without Borders
-:: powershell.exe Set-Processmitigation -System -Enable DEP,EmulateAtlThunks,BottomUp,HighEntropy,SEHOP,SEHOPTelemetry,TerminateOnError,CFG
-powershell.exe Set-Processmitigation -System -Enable DEP,EmulateAtlThunks,BottomUp,HighEntropy,SEHOP,SEHOPTelemetry,TerminateOnError
-::
-::#######################################################################
-:: Enable and Configure Internet Browser Settings
-::#######################################################################
-::
-:: Enable SmartScreen <span class="k">for</span> Edge
-reg add <span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter&quot;</span> /v EnabledV9 /t REG_DWORD /d <span class="m">1</span> /f
-:: Enable Notifications <span class="k">in</span> IE when a site attempts to install software
-reg add <span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer&quot;</span> /v SafeForScripting /t REG_DWORD /d <span class="m">0</span> /f
-:: Disable Edge password manager to encourage use of proper password manager
-reg add <span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Main&quot;</span> /v <span class="s2">&quot;FormSuggest Passwords&quot;</span> /t REG_SZ /d no /f
+::<span class="w"> </span>Enable<span class="w"> </span>Defender<span class="w"> </span>exploit<span class="w"> </span>system-wide<span class="w"> </span>protection
+::<span class="w"> </span>The<span class="w"> </span>commented<span class="w"> </span>line<span class="w"> </span>includes<span class="w"> </span>CFG<span class="w"> </span>which<span class="w"> </span>can<span class="w"> </span>cause<span class="w"> </span>issues<span class="w"> </span>with<span class="w"> </span>apps<span class="w"> </span>like<span class="w"> </span>Discord<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>Mouse<span class="w"> </span>Without<span class="w"> </span>Borders
+::<span class="w"> </span>powershell.exe<span class="w"> </span>Set-Processmitigation<span class="w"> </span>-System<span class="w"> </span>-Enable<span class="w"> </span>DEP,EmulateAtlThunks,BottomUp,HighEntropy,SEHOP,SEHOPTelemetry,TerminateOnError,CFG
+powershell.exe<span class="w"> </span>Set-Processmitigation<span class="w"> </span>-System<span class="w"> </span>-Enable<span class="w"> </span>DEP,EmulateAtlThunks,BottomUp,HighEntropy,SEHOP,SEHOPTelemetry,TerminateOnError
 ::
 ::#######################################################################
-:: Enable and Configure Google Chrome Internet Browser Settings
+::<span class="w"> </span>Enable<span class="w"> </span>and<span class="w"> </span>Configure<span class="w"> </span>Internet<span class="w"> </span>Browser<span class="w"> </span>Settings
 ::#######################################################################
 ::
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AdvancedProtectionAllowed&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AllowCrossOriginAuthPrompt&quot;</span> /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AlwaysOpenPdfExternally&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AmbientAuthenticationInPrivateModesEnabled&quot;</span> /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AudioCaptureAllowed&quot;</span> /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;AudioSandboxEnabled&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;BlockExternalExtensions&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;DnsOverHttpsMode&quot;</span> /t REG_SZ /d on /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;SSLVersionMin&quot;</span> /t REG_SZ /d tls1 /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;ScreenCaptureAllowed&quot;</span> /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;SitePerProcess&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;TLS13HardeningForLocalAnchorsEnabled&quot;</span> /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span> /v <span class="s2">&quot;VideoCaptureAllowed&quot;</span> /t REG_DWORD /d <span class="m">0</span> /f
+::<span class="w"> </span>Enable<span class="w"> </span>SmartScreen<span class="w"> </span><span class="k">for</span><span class="w"> </span>Edge
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter&quot;</span><span class="w"> </span>/v<span class="w"> </span>EnabledV9<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+::<span class="w"> </span>Enable<span class="w"> </span>Notifications<span class="w"> </span><span class="k">in</span><span class="w"> </span>IE<span class="w"> </span>when<span class="w"> </span>a<span class="w"> </span>site<span class="w"> </span>attempts<span class="w"> </span>to<span class="w"> </span>install<span class="w"> </span>software
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer&quot;</span><span class="w"> </span>/v<span class="w"> </span>SafeForScripting<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+::<span class="w"> </span>Disable<span class="w"> </span>Edge<span class="w"> </span>password<span class="w"> </span>manager<span class="w"> </span>to<span class="w"> </span>encourage<span class="w"> </span>use<span class="w"> </span>of<span class="w"> </span>proper<span class="w"> </span>password<span class="w"> </span>manager
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\SOFTWARE\Policies\Microsoft\MicrosoftEdge\Main&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;FormSuggest Passwords&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_SZ<span class="w"> </span>/d<span class="w"> </span>no<span class="w"> </span>/f
 ::
 ::#######################################################################
-:: Enable and Configure Microsoft Office Security Settings
+::<span class="w"> </span>Enable<span class="w"> </span>and<span class="w"> </span>Configure<span class="w"> </span>Google<span class="w"> </span>Chrome<span class="w"> </span>Internet<span class="w"> </span>Browser<span class="w"> </span>Settings
 ::#######################################################################
 ::
-:: Harden all version of MS Office itself against common malspam attacks
-:: Disables Macros, enables ProtectedView
-:: ---------------------
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\12.0\Publisher\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\12.0\Word\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\14.0\Publisher\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\14.0\Word\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Outlook\Security&quot;</span> /v markinternalasunsafe /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Word\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Excel\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\PowerPoint\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Word\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Publisher\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Outlook\Security&quot;</span> /v markinternalasunsafe /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Word\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Excel\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\PowerPoint\Security&quot;</span> /v blockcontentexecutionfrominternet /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Word\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Publisher\Security&quot;</span> /v vbawarnings /t REG_DWORD /d <span class="m">4</span> /f
-::
-:: Harden all version of MS Office itself against DDE malspam attacks
-:: Disables Macros, enables ProtectedView
-:: ---------------------
-::
-reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\14.0\Word\Options&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\14.0\Word\Options\WordMail&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\15.0\Word\Options&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\15.0\Word\Options\WordMail&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\16.0\Word\Options&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
-reg add <span class="s2">&quot;HKCU\Software\Microsoft\Office\16.0\Word\Options\WordMail&quot;</span> /v DontUpdateLinks /t REG_DWORD /d <span class="m">00000001</span> /f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;AdvancedProtectionAllowed&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;AllowCrossOriginAuthPrompt&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;AlwaysOpenPdfExternally&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;AmbientAuthenticationInPrivateModesEnabled&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;AudioCaptureAllowed&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;AudioSandboxEnabled&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;BlockExternalExtensions&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;DnsOverHttpsMode&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_SZ<span class="w"> </span>/d<span class="w"> </span>on<span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;SSLVersionMin&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_SZ<span class="w"> </span>/d<span class="w"> </span>tls1<span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;ScreenCaptureAllowed&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;SitePerProcess&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;TLS13HardeningForLocalAnchorsEnabled&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Google\Chrome&quot;</span><span class="w"> </span>/v<span class="w"> </span><span class="s2">&quot;VideoCaptureAllowed&quot;</span><span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
 ::
 ::#######################################################################
-:: Enable and Configure General Windows Security Settings
+::<span class="w"> </span>Enable<span class="w"> </span>and<span class="w"> </span>Configure<span class="w"> </span>Microsoft<span class="w"> </span>Office<span class="w"> </span>Security<span class="w"> </span>Settings
 ::#######################################################################
-:: Disables DNS multicast, smart mutli-homed resolution, netbios, powershellv2, printer driver download and printing over http, icmp redirect
-:: Enables UAC and sets to always notify, Safe DLL loading <span class="o">(</span>DLL Hijacking prevention<span class="o">)</span>, saving zone information, explorer DEP, explorer shell protocol protected mode
-:: ---------------------
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient&quot;</span> /v EnableMulticast /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient&quot;</span> /v DisableSmartNameResolution /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters&quot;</span> /v DisableParallelAandAAAA /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters&quot;</span> /v SMB1 /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters&quot;</span> /v IGMPLevel /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters&quot;</span> /v DisableIPSourceRouting /t REG_DWORD /d <span class="m">2</span> /f
-reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters&quot;</span> /v EnableICMPRedirect /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters&quot;</span> /v DisableIPSourceRouting /t REG_DWORD /d <span class="m">2</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot;</span> /v EnableLUA /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot;</span> /v EnableVirtualization /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot;</span> /v ConsentPromptBehaviorAdmin /t REG_DWORD /d <span class="m">2</span> /f
-reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Control\Session Manager&quot;</span> /v SafeDLLSearchMode /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Control\Session Manager&quot;</span> /v ProtectionMode /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments&quot;</span> /v SaveZoneInformation /t REG_DWORD /d <span class="m">2</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer&quot;</span> /v NoDataExecutionPrevention /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer&quot;</span> /v NoHeapTerminationOnCorruption /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer&quot;</span> /v PreXPSP2ShellProtocolBehavior /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Printers&quot;</span> /v DisableWebPnPDownload /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Printers&quot;</span> /v DisableHTTPPrinting /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config&quot;</span> /v AutoConnectAllowedOEM /t REG_DWORD /d <span class="m">0</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\WcmSvc\GroupPolicy&quot;</span> /v fMinimizeConnections /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Netbt\Parameters&quot;</span> /v NoNameReleaseOnDemand /t REG_DWORD /d <span class="m">1</span> /f
-wmic /interactive:off nicconfig where <span class="o">(</span><span class="nv">TcpipNetbiosOptions</span><span class="o">=</span><span class="m">0</span> OR <span class="nv">TcpipNetbiosOptions</span><span class="o">=</span><span class="m">1</span><span class="o">)</span> call SetTcpipNetbios <span class="m">2</span>
-powershell.exe Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2 -norestart
-powershell.exe Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -norestart
 ::
-:: Prioritize ECC Curves with longer keys
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Cryptography\Configuration\SSL\00010002&quot;</span> /v EccCurves /t REG_MULTI_SZ /d NistP384,NistP256 /f
-:: Prevent Kerberos from using DES or RC4
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters&quot;</span> /v SupportedEncryptionTypes /t REG_DWORD /d <span class="m">2147483640</span> /f
-:: Encrypt and sign outgoing secure channel traffic when possible
-reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters&quot;</span> /v SealSecureChannel /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters&quot;</span> /v SignSecureChannel /t REG_DWORD /d <span class="m">1</span> /f
+::<span class="w"> </span>Harden<span class="w"> </span>all<span class="w"> </span>version<span class="w"> </span>of<span class="w"> </span>MS<span class="w"> </span>Office<span class="w"> </span>itself<span class="w"> </span>against<span class="w"> </span>common<span class="w"> </span>malspam<span class="w"> </span>attacks
+::<span class="w"> </span>Disables<span class="w"> </span>Macros,<span class="w"> </span>enables<span class="w"> </span>ProtectedView
+::<span class="w"> </span>---------------------
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\12.0\Publisher\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>vbawarnings<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">4</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\12.0\Word\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>vbawarnings<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">4</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\14.0\Publisher\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>vbawarnings<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">4</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\14.0\Word\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>vbawarnings<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">4</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Outlook\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>markinternalasunsafe<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Word\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>blockcontentexecutionfrominternet<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Excel\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>blockcontentexecutionfrominternet<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\PowerPoint\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>blockcontentexecutionfrominternet<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Word\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>vbawarnings<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">4</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\15.0\Publisher\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>vbawarnings<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">4</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Outlook\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>markinternalasunsafe<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Word\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>blockcontentexecutionfrominternet<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Excel\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>blockcontentexecutionfrominternet<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\PowerPoint\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>blockcontentexecutionfrominternet<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Word\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>vbawarnings<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">4</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Policies\Microsoft\Office\16.0\Publisher\Security&quot;</span><span class="w"> </span>/v<span class="w"> </span>vbawarnings<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">4</span><span class="w"> </span>/f
 ::
-:: Enable SmartScreen
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\System&quot;</span> /v EnableSmartScreen /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\System&quot;</span> /v ShellSmartScreenLevel /t REG_SZ /d Block /f
+::<span class="w"> </span>Harden<span class="w"> </span>all<span class="w"> </span>version<span class="w"> </span>of<span class="w"> </span>MS<span class="w"> </span>Office<span class="w"> </span>itself<span class="w"> </span>against<span class="w"> </span>DDE<span class="w"> </span>malspam<span class="w"> </span>attacks
+::<span class="w"> </span>Disables<span class="w"> </span>Macros,<span class="w"> </span>enables<span class="w"> </span>ProtectedView
+::<span class="w"> </span>---------------------
 ::
-:: Enforce device driver signing
-BCDEDIT /set nointegritychecks OFF
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Microsoft\Office\14.0\Word\Options&quot;</span><span class="w"> </span>/v<span class="w"> </span>DontUpdateLinks<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">00000001</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Microsoft\Office\14.0\Word\Options\WordMail&quot;</span><span class="w"> </span>/v<span class="w"> </span>DontUpdateLinks<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">00000001</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Microsoft\Office\15.0\Word\Options&quot;</span><span class="w"> </span>/v<span class="w"> </span>DontUpdateLinks<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">00000001</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Microsoft\Office\15.0\Word\Options\WordMail&quot;</span><span class="w"> </span>/v<span class="w"> </span>DontUpdateLinks<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">00000001</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Microsoft\Office\16.0\Word\Options&quot;</span><span class="w"> </span>/v<span class="w"> </span>DontUpdateLinks<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">00000001</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKCU\Software\Microsoft\Office\16.0\Word\Options\WordMail&quot;</span><span class="w"> </span>/v<span class="w"> </span>DontUpdateLinks<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">00000001</span><span class="w"> </span>/f
 ::
-:: Windows Update Settings
-:: Prevent Delivery Optimization from downloading Updates from other computers across the internet
-:: <span class="m">1</span> will restrict to LAN only. <span class="m">0</span> will disable the feature entirely
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization&quot;</span> /v DODownloadMode /t REG_DWORD /d <span class="m">1</span> /f
-reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\&quot; /v DODownloadMode /t REG_DWORD /d 1 /f</span>
+::#######################################################################
+::<span class="w"> </span>Enable<span class="w"> </span>and<span class="w"> </span>Configure<span class="w"> </span>General<span class="w"> </span>Windows<span class="w"> </span>Security<span class="w"> </span>Settings
+::#######################################################################
+::<span class="w"> </span>Disables<span class="w"> </span>DNS<span class="w"> </span>multicast,<span class="w"> </span>smart<span class="w"> </span>mutli-homed<span class="w"> </span>resolution,<span class="w"> </span>netbios,<span class="w"> </span>powershellv2,<span class="w"> </span>printer<span class="w"> </span>driver<span class="w"> </span>download<span class="w"> </span>and<span class="w"> </span>printing<span class="w"> </span>over<span class="w"> </span>http,<span class="w"> </span>icmp<span class="w"> </span>redirect
+::<span class="w"> </span>Enables<span class="w"> </span>UAC<span class="w"> </span>and<span class="w"> </span>sets<span class="w"> </span>to<span class="w"> </span>always<span class="w"> </span>notify,<span class="w"> </span>Safe<span class="w"> </span>DLL<span class="w"> </span>loading<span class="w"> </span><span class="o">(</span>DLL<span class="w"> </span>Hijacking<span class="w"> </span>prevention<span class="o">)</span>,<span class="w"> </span>saving<span class="w"> </span>zone<span class="w"> </span>information,<span class="w"> </span>explorer<span class="w"> </span>DEP,<span class="w"> </span>explorer<span class="w"> </span>shell<span class="w"> </span>protocol<span class="w"> </span>protected<span class="w"> </span>mode
+::<span class="w"> </span>---------------------
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient&quot;</span><span class="w"> </span>/v<span class="w"> </span>EnableMulticast<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient&quot;</span><span class="w"> </span>/v<span class="w"> </span>DisableSmartNameResolution<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters&quot;</span><span class="w"> </span>/v<span class="w"> </span>DisableParallelAandAAAA<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters&quot;</span><span class="w"> </span>/v<span class="w"> </span>SMB1<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters&quot;</span><span class="w"> </span>/v<span class="w"> </span>IGMPLevel<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters&quot;</span><span class="w"> </span>/v<span class="w"> </span>DisableIPSourceRouting<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters&quot;</span><span class="w"> </span>/v<span class="w"> </span>EnableICMPRedirect<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters&quot;</span><span class="w"> </span>/v<span class="w"> </span>DisableIPSourceRouting<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot;</span><span class="w"> </span>/v<span class="w"> </span>EnableLUA<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot;</span><span class="w"> </span>/v<span class="w"> </span>EnableVirtualization<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot;</span><span class="w"> </span>/v<span class="w"> </span>ConsentPromptBehaviorAdmin<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Control\Session Manager&quot;</span><span class="w"> </span>/v<span class="w"> </span>SafeDLLSearchMode<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Control\Session Manager&quot;</span><span class="w"> </span>/v<span class="w"> </span>ProtectionMode<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments&quot;</span><span class="w"> </span>/v<span class="w"> </span>SaveZoneInformation<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">2</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer&quot;</span><span class="w"> </span>/v<span class="w"> </span>NoDataExecutionPrevention<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer&quot;</span><span class="w"> </span>/v<span class="w"> </span>NoHeapTerminationOnCorruption<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer&quot;</span><span class="w"> </span>/v<span class="w"> </span>PreXPSP2ShellProtocolBehavior<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Printers&quot;</span><span class="w"> </span>/v<span class="w"> </span>DisableWebPnPDownload<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Printers&quot;</span><span class="w"> </span>/v<span class="w"> </span>DisableHTTPPrinting<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config&quot;</span><span class="w"> </span>/v<span class="w"> </span>AutoConnectAllowedOEM<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">0</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\WcmSvc\GroupPolicy&quot;</span><span class="w"> </span>/v<span class="w"> </span>fMinimizeConnections<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Netbt\Parameters&quot;</span><span class="w"> </span>/v<span class="w"> </span>NoNameReleaseOnDemand<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+wmic<span class="w"> </span>/interactive:off<span class="w"> </span>nicconfig<span class="w"> </span>where<span class="w"> </span><span class="o">(</span><span class="nv">TcpipNetbiosOptions</span><span class="o">=</span><span class="m">0</span><span class="w"> </span>OR<span class="w"> </span><span class="nv">TcpipNetbiosOptions</span><span class="o">=</span><span class="m">1</span><span class="o">)</span><span class="w"> </span>call<span class="w"> </span>SetTcpipNetbios<span class="w"> </span><span class="m">2</span>
+powershell.exe<span class="w"> </span>Disable-WindowsOptionalFeature<span class="w"> </span>-Online<span class="w"> </span>-FeatureName<span class="w"> </span>MicrosoftWindowsPowerShellV2<span class="w"> </span>-norestart
+powershell.exe<span class="w"> </span>Disable-WindowsOptionalFeature<span class="w"> </span>-Online<span class="w"> </span>-FeatureName<span class="w"> </span>MicrosoftWindowsPowerShellV2Root<span class="w"> </span>-norestart
+::
+::<span class="w"> </span>Prioritize<span class="w"> </span>ECC<span class="w"> </span>Curves<span class="w"> </span>with<span class="w"> </span>longer<span class="w"> </span>keys
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Cryptography\Configuration\SSL\00010002&quot;</span><span class="w"> </span>/v<span class="w"> </span>EccCurves<span class="w"> </span>/t<span class="w"> </span>REG_MULTI_SZ<span class="w"> </span>/d<span class="w"> </span>NistP384,NistP256<span class="w"> </span>/f
+::<span class="w"> </span>Prevent<span class="w"> </span>Kerberos<span class="w"> </span>from<span class="w"> </span>using<span class="w"> </span>DES<span class="w"> </span>or<span class="w"> </span>RC4
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters&quot;</span><span class="w"> </span>/v<span class="w"> </span>SupportedEncryptionTypes<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">2147483640</span><span class="w"> </span>/f
+::<span class="w"> </span>Encrypt<span class="w"> </span>and<span class="w"> </span>sign<span class="w"> </span>outgoing<span class="w"> </span>secure<span class="w"> </span>channel<span class="w"> </span>traffic<span class="w"> </span>when<span class="w"> </span>possible
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters&quot;</span><span class="w"> </span>/v<span class="w"> </span>SealSecureChannel<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters&quot;</span><span class="w"> </span>/v<span class="w"> </span>SignSecureChannel<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+::
+::<span class="w"> </span>Enable<span class="w"> </span>SmartScreen
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\System&quot;</span><span class="w"> </span>/v<span class="w"> </span>EnableSmartScreen<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\System&quot;</span><span class="w"> </span>/v<span class="w"> </span>ShellSmartScreenLevel<span class="w"> </span>/t<span class="w"> </span>REG_SZ<span class="w"> </span>/d<span class="w"> </span>Block<span class="w"> </span>/f
+::
+::<span class="w"> </span>Enforce<span class="w"> </span>device<span class="w"> </span>driver<span class="w"> </span>signing
+BCDEDIT<span class="w"> </span>/set<span class="w"> </span>nointegritychecks<span class="w"> </span>OFF
+::
+::<span class="w"> </span>Windows<span class="w"> </span>Update<span class="w"> </span>Settings
+::<span class="w"> </span>Prevent<span class="w"> </span>Delivery<span class="w"> </span>Optimization<span class="w"> </span>from<span class="w"> </span>downloading<span class="w"> </span>Updates<span class="w"> </span>from<span class="w"> </span>other<span class="w"> </span>computers<span class="w"> </span>across<span class="w"> </span>the<span class="w"> </span>internet
+::<span class="w"> </span><span class="m">1</span><span class="w"> </span>will<span class="w"> </span>restrict<span class="w"> </span>to<span class="w"> </span>LAN<span class="w"> </span>only.<span class="w"> </span><span class="m">0</span><span class="w"> </span>will<span class="w"> </span>disable<span class="w"> </span>the<span class="w"> </span>feature<span class="w"> </span>entirely
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization&quot;</span><span class="w"> </span>/v<span class="w"> </span>DODownloadMode<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\&quot; /v DODownloadMode /t REG_DWORD /d 1 /f</span>
 <span class="s2">::</span>
 <span class="s2">:: Set screen saver inactivity timeout to 15 minutes</span>
 <span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\P</span>olicies<span class="se">\S</span>ystem<span class="s2">&quot; /v InactivityTimeoutSecs /t REG_DWORD /d 900 /f</span>
@@ -266,11 +264,11 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">::</span>
 <span class="s2">:: Windows Remote Access Settings</span>
 <span class="s2">:: Disable solicited remote assistance</span>
-<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\T</span>erminal Services<span class="s2">&quot; /v fAllowToGetHelp /t REG_DWORD /d 0 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="w"> </span>NT<span class="se">\T</span>erminal<span class="w"> </span>Services<span class="s2">&quot; /v fAllowToGetHelp /t REG_DWORD /d 0 /f</span>
 <span class="s2">:: Require encrypted RPC connections to Remote Desktop</span>
-<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\T</span>erminal Services<span class="s2">&quot; /v fEncryptRPCTraffic /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="w"> </span>NT<span class="se">\T</span>erminal<span class="w"> </span>Services<span class="s2">&quot; /v fEncryptRPCTraffic /t REG_DWORD /d 1 /f</span>
 <span class="s2">:: Prevent sharing of local drives via Remote Desktop Session Hosts</span>
-<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\T</span>erminal Services<span class="s2">&quot; /v fDisableCdm /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="w"> </span>NT<span class="se">\T</span>erminal<span class="w"> </span>Services<span class="s2">&quot; /v fDisableCdm /t REG_DWORD /d 1 /f</span>
 <span class="s2">:: </span>
 <span class="s2">:: Removal Media Settings</span>
 <span class="s2">:: Disable autorun/autoplay on all drives</span>
@@ -301,7 +299,7 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">:: Configures lsass.exe as a protected process and disables wdigest</span>
 <span class="s2">:: Enables delegation of non-exported credentials which enables support for Restricted Admin Mode or Remote Credential Guard</span>
 <span class="s2">:: ---------------------</span>
-<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\C</span>urrentVersion<span class="se">\I</span>mage File Execution Options<span class="se">\L</span>SASS.exe<span class="s2">&quot; /v AuditLevel /t REG_DWORD /d 00000008 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="w"> </span>NT<span class="se">\C</span>urrentVersion<span class="se">\I</span>mage<span class="w"> </span>File<span class="w"> </span>Execution<span class="w"> </span>Options<span class="se">\L</span>SASS.exe<span class="s2">&quot; /v AuditLevel /t REG_DWORD /d 00000008 /f</span>
 <span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\L</span>sa<span class="s2">&quot; /v RunAsPPL /t REG_DWORD /d 00000001 /f</span>
 <span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="se">\S</span>ecurityProviders<span class="se">\W</span>Digest<span class="s2">&quot; /v UseLogonCredential /t REG_DWORD /d 0 /f</span>
 <span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>redentialsDelegation<span class="s2">&quot; /v AllowProtectedCreds /t REG_DWORD /d 1 /f</span>
@@ -311,11 +309,11 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">net stop WinRM</span>
 <span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\W</span>inRM<span class="se">\S</span>ervice<span class="s2">&quot; /v AllowUnencryptedTraffic /t REG_DWORD /d 0 /f</span>
 <span class="s2">:: Prevent unauthenticated RPC connections</span>
-<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\R</span>pc<span class="s2">&quot; /v RestrictRemoteClients /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="w"> </span>NT<span class="se">\R</span>pc<span class="s2">&quot; /v RestrictRemoteClients /t REG_DWORD /d 1 /f</span>
 <span class="s2">:: Disable WinRM Client Digiest authentication</span>
 <span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\W</span>inRM<span class="se">\C</span>lient<span class="s2">&quot; /v AllowDigest /t REG_DWORD /d 0 /f</span>
 <span class="s2">:: Disabling RPC usage from a remote asset interacting with scheduled tasks</span>
-<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\C</span>urrentVersion<span class="se">\S</span>chedule<span class="s2">&quot; /v DisableRpcOverTcp /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="w"> </span>NT<span class="se">\C</span>urrentVersion<span class="se">\S</span>chedule<span class="s2">&quot; /v DisableRpcOverTcp /t REG_DWORD /d 1 /f</span>
 <span class="s2">:: Disabling RPC usage from a remote asset interacting with services</span>
 <span class="s2">reg add &quot;</span>HKEY_LOCAL_MACHINE<span class="se">\S</span>YSTEM<span class="se">\C</span>urrentControlSet<span class="se">\C</span>ontrol<span class="s2">&quot; /v DisableRemoteScmEndpoints /t REG_DWORD /d 1 /f</span>
 <span class="s2">::</span>
@@ -347,14 +345,14 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">::</span>
 <span class="s2">:: Block Win32 binaries from making netconns when they shouldn&#39;t - specifically targeting native processes known to be abused by bad actors</span>
 <span class="s2">:: ---------------------</span>
-<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block Notepad.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\n</span>otepad.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
-<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block regsvr32.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\r</span>egsvr32.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
-<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block calc.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\c</span>alc.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
-<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block mshta.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\m</span>shta.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
-<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block wscript.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\w</span>script.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
-<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block cscript.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\c</span>script.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
-<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block runscripthelper.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\r</span>unscripthelper.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
-<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block hh.exe netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\h</span>h.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block<span class="w"> </span>Notepad.exe<span class="w"> </span>netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\n</span>otepad.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block<span class="w"> </span>regsvr32.exe<span class="w"> </span>netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\r</span>egsvr32.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block<span class="w"> </span>calc.exe<span class="w"> </span>netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\c</span>alc.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block<span class="w"> </span>mshta.exe<span class="w"> </span>netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\m</span>shta.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block<span class="w"> </span>wscript.exe<span class="w"> </span>netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\w</span>script.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block<span class="w"> </span>cscript.exe<span class="w"> </span>netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\c</span>script.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block<span class="w"> </span>runscripthelper.exe<span class="w"> </span>netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\r</span>unscripthelper.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
+<span class="s2">Netsh.exe advfirewall firewall add rule name=&quot;</span>Block<span class="w"> </span>hh.exe<span class="w"> </span>netconns<span class="s2">&quot; program=&quot;</span>%systemroot%<span class="se">\s</span>ystem32<span class="se">\h</span>h.exe<span class="s2">&quot; protocol=tcp dir=out enable=yes action=block profile=any</span>
 <span class="s2">::</span>
 <span class="s2">::#######################################################################</span>
 <span class="s2">:: Windows 10 Privacy Settings</span>
@@ -390,7 +388,7 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">reg add &quot;</span>HKCU<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\C</span>ontentDeliveryManager<span class="s2">&quot; /v PreInstalledAppsEnabled /t REG_DWORD /d 0 /f</span>
 <span class="s2">reg add &quot;</span>HKCU<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\C</span>ontentDeliveryManager<span class="s2">&quot; /v OemPreInstalledAppsEnabled /t REG_DWORD /d 0 /f</span>
 <span class="s2">:: Disable websites accessing local language list</span>
-<span class="s2">reg add &quot;</span>HKCU<span class="se">\C</span>ontrol Panel<span class="se">\I</span>nternational<span class="se">\U</span>ser Profile<span class="s2">&quot; /v HttpAcceptLanguageOptOut /t REG_DWORD /d 1 /f</span>
+<span class="s2">reg add &quot;</span>HKCU<span class="se">\C</span>ontrol<span class="w"> </span>Panel<span class="se">\I</span>nternational<span class="se">\U</span>ser<span class="w"> </span>Profile<span class="s2">&quot; /v HttpAcceptLanguageOptOut /t REG_DWORD /d 1 /f</span>
 <span class="s2">:: Prevent toast notifications from appearing on lock screen</span>
 <span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\P</span>ushNotifications<span class="s2">&quot; /v NoToastApplicationNotificationOnLockScreen /t REG_DWORD /d 1 /f</span>
 <span class="s2">::</span>
@@ -402,7 +400,7 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">wevtutil sl Security /ms:1024000 /f</span>
 <span class="s2">wevtutil sl Application /ms:1024000 /f</span>
 <span class="s2">wevtutil sl System /ms:1024000 /f</span>
-<span class="s2">wevtutil sl &quot;</span>Windows Powershell<span class="s2">&quot; /ms:1024000 /f</span>
+<span class="s2">wevtutil sl &quot;</span>Windows<span class="w"> </span>Powershell<span class="s2">&quot; /ms:1024000 /f</span>
 <span class="s2">wevtutil sl &quot;</span>Microsoft-Windows-PowerShell/Operational<span class="s2">&quot; /ms:1024000 /f</span>
 <span class="s2">:: Record command line data in process creation events eventid 4688</span>
 <span class="s2">reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\P</span>olicies<span class="se">\S</span>ystem<span class="se">\A</span>udit<span class="s2">&quot; /v ProcessCreationIncludeCmdLine_Enabled /t REG_DWORD /d 1 /f</span>
@@ -416,18 +414,18 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">:: Enable Windows Event Detailed Logging</span>
 <span class="s2">:: This is intentionally meant to be a subset of expected enterprise logging as this script may be used on consumer devices.</span>
 <span class="s2">:: For more extensive Windows logging, I recommend https://www.malwarearchaeology.com/cheat-sheets</span>
-<span class="s2">Auditpol /set /subcategory:&quot;</span>Security Group Management<span class="s2">&quot; /success:enable /failure:enable</span>
-<span class="s2">Auditpol /set /subcategory:&quot;</span>Process Creation<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Security<span class="w"> </span>Group<span class="w"> </span>Management<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Process<span class="w"> </span>Creation<span class="s2">&quot; /success:enable /failure:enable</span>
 <span class="s2">Auditpol /set /subcategory:&quot;</span>Logoff<span class="s2">&quot; /success:enable /failure:disable</span>
 <span class="s2">Auditpol /set /subcategory:&quot;</span>Logon<span class="s2">&quot; /success:enable /failure:enable </span>
-<span class="s2">Auditpol /set /subcategory:&quot;</span>Filtering Platform Connection<span class="s2">&quot; /success:enable /failure:disable</span>
-<span class="s2">Auditpol /set /subcategory:&quot;</span>Removable Storage<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Filtering<span class="w"> </span>Platform<span class="w"> </span>Connection<span class="s2">&quot; /success:enable /failure:disable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Removable<span class="w"> </span>Storage<span class="s2">&quot; /success:enable /failure:enable</span>
 <span class="s2">Auditpol /set /subcategory:&quot;</span>SAM<span class="s2">&quot; /success:disable /failure:disable</span>
-<span class="s2">Auditpol /set /subcategory:&quot;</span>Filtering Platform Policy Change<span class="s2">&quot; /success:disable /failure:disable</span>
-<span class="s2">Auditpol /set /subcategory:&quot;</span>IPsec Driver<span class="s2">&quot; /success:enable /failure:enable</span>
-<span class="s2">Auditpol /set /subcategory:&quot;</span>Security State Change<span class="s2">&quot; /success:enable /failure:enable</span>
-<span class="s2">Auditpol /set /subcategory:&quot;</span>Security System Extension<span class="s2">&quot; /success:enable /failure:enable</span>
-<span class="s2">Auditpol /set /subcategory:&quot;</span>System Integrity<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Filtering<span class="w"> </span>Platform<span class="w"> </span>Policy<span class="w"> </span>Change<span class="s2">&quot; /success:disable /failure:disable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>IPsec<span class="w"> </span>Driver<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Security<span class="w"> </span>State<span class="w"> </span>Change<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>Security<span class="w"> </span>System<span class="w"> </span>Extension<span class="s2">&quot; /success:enable /failure:enable</span>
+<span class="s2">Auditpol /set /subcategory:&quot;</span>System<span class="w"> </span>Integrity<span class="s2">&quot; /success:enable /failure:enable</span>
 <span class="s2">::</span>
 <span class="s2">::#######################################################################</span>
 <span class="s2">:: Extra settings commented out but worth considering</span>
@@ -438,52 +436,52 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">:: https://docs.microsoft.com/en-us/windows/application-management/apps-in-windows-10</span>
 <span class="s2">:: PowerShell command to reinstall all pre-installed apps below</span>
 <span class="s2">:: Get-AppxPackage -AllUsers| Foreach {Add-AppxPackage -DisableDevelopmentMode -Register &quot;</span><span class="k">$(</span><span class="nv">$_</span>.InstallLocation<span class="k">)</span><span class="se">\A</span>ppXManifest.xml<span class="s2">&quot;}</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.BingWeather* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.DesktopAppInstaller* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.GetHelp* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Getstarted* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Messaging* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Microsoft3DViewer* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.MicrosoftOfficeHub* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.MicrosoftSolitaireCollection* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.MicrosoftStickyNotes* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.MixedReality.Portal* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Office.OneNote* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.OneConnect* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Print3D* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.SkypeApp* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Wallet* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WebMediaExtensions* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WebpImageExtension* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsAlarms* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsCamera* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *microsoft.windowscommunicationsapps* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsFeedbackHub* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsMaps* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsSoundRecorder* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Xbox.TCUI* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.XboxApp* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.XboxGameOverlay* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.XboxGamingOverlay* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.XboxIdentityProvider* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.XboxSpeechToTextOverlay* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.YourPhone* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.ZuneMusic* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.ZuneVideo* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.WindowsFeedback* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Windows.ContactSupport* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *PandoraMedia* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *AdobeSystemIncorporated. AdobePhotoshop* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Duolingo* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.BingNews* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Office.Sway* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Advertising.Xaml* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.Services.Store.Engagement* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *ActiproSoftware* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *EclipseManager* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *SpotifyAB.SpotifyMusic* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *king.com.* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
-<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage *Microsoft.NET.Native.Framework.1.* -AllUsers <span class="p">|</span> Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.BingWeather*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.DesktopAppInstaller*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.GetHelp*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.Getstarted*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.Messaging*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.Microsoft3DViewer*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.MicrosoftOfficeHub*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.MicrosoftSolitaireCollection*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.MicrosoftStickyNotes*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.MixedReality.Portal*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.Office.OneNote*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.OneConnect*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.Print3D*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.SkypeApp*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.Wallet*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.WebMediaExtensions*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.WebpImageExtension*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.WindowsAlarms*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.WindowsCamera*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*microsoft.windowscommunicationsapps*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.WindowsFeedbackHub*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.WindowsMaps*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.WindowsSoundRecorder*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.Xbox.TCUI*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.XboxApp*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.XboxGameOverlay*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.XboxGamingOverlay*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.XboxIdentityProvider*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.XboxSpeechToTextOverlay*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.YourPhone*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.ZuneMusic*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.ZuneVideo*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.WindowsFeedback*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Windows.ContactSupport*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*PandoraMedia*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*AdobeSystemIncorporated.<span class="w"> </span>AdobePhotoshop*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Duolingo*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.BingNews*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.Office.Sway*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.Advertising.Xaml*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.Services.Store.Engagement*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*ActiproSoftware*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*EclipseManager*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*SpotifyAB.SpotifyMusic*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*king.com.*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
+<span class="s2">powershell.exe -command &quot;</span>Get-AppxPackage<span class="w"> </span>*Microsoft.NET.Native.Framework.1.*<span class="w"> </span>-AllUsers<span class="w"> </span><span class="p">|</span><span class="w"> </span>Remove-AppxPackage<span class="s2">&quot;</span>
 <span class="s2">::</span>
 <span class="s2">::#######################################################################</span>
 <span class="s2">:: Extra settings commented out but worth considering</span>
@@ -524,21 +522,21 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
 <span class="s2">::</span>
 <span class="s2">:: Enable Windows Defender real time monitoring</span>
 <span class="s2">:: Commented out given consumers often run third party anti-virus. You can run either. </span>
-<span class="s2">:: powershell.exe -command &quot;</span>Set-MpPreference -DisableRealtimeMonitoring <span class="nv">$false</span><span class="s2">&quot;</span>
-<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows Defender<span class="se">\R</span>eal-Time Protection<span class="s2">&quot; /v DisableRealtimeMonitoring /t REG_DWORD /d 0 /f</span>
+<span class="s2">:: powershell.exe -command &quot;</span>Set-MpPreference<span class="w"> </span>-DisableRealtimeMonitoring<span class="w"> </span><span class="nv">$false</span><span class="s2">&quot;</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="w"> </span>Defender<span class="se">\R</span>eal-Time<span class="w"> </span>Protection<span class="s2">&quot; /v DisableRealtimeMonitoring /t REG_DWORD /d 0 /f</span>
 <span class="s2">::</span>
 <span class="s2">:: Disable internet connection sharing</span>
 <span class="s2">:: Commented out as it&#39;s not enabled by default and if it is enabled, may be for a reason</span>
-<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\N</span>etwork Connections<span class="s2">&quot; /v NC_ShowSharedAccessUI /t REG_DWORD /d 0 /f</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\N</span>etwork<span class="w"> </span>Connections<span class="s2">&quot; /v NC_ShowSharedAccessUI /t REG_DWORD /d 0 /f</span>
 <span class="s2">::</span>
 <span class="s2">:: Always re-process Group Policy even if no changes</span>
 <span class="s2">:: Commented out as consumers don&#39;t typically use GPO</span>
-<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\G</span>roup Policy<span class="se">\{</span>35378EAC-683F-11D2-A89A-00C04FBBCFA2<span class="o">}</span><span class="s2">&quot; /v NoGPOListChanges /t REG_DWORD /d 0 /f</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\P</span>olicies<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\G</span>roup<span class="w"> </span>Policy<span class="se">\{</span>35378EAC-683F-11D2-A89A-00C04FBBCFA2<span class="o">}</span><span class="s2">&quot; /v NoGPOListChanges /t REG_DWORD /d 0 /f</span>
 <span class="s2">::</span>
 <span class="s2">:: Force logoff if smart card removed</span>
 <span class="s2">:: Set to &quot;</span><span class="m">2</span><span class="s2">&quot; for logoff, set to &quot;</span><span class="m">1</span><span class="s2">&quot; for lock</span>
 <span class="s2">:: Commented out as consumers don&#39;t typically use smart cards</span>
-<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows NT<span class="se">\C</span>urrentVersion<span class="se">\W</span>inlogon<span class="s2">&quot; /v SCRemoveOption /t REG_DWORD /d 2 /f</span>
+<span class="s2">:: reg add &quot;</span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="w"> </span>NT<span class="se">\C</span>urrentVersion<span class="se">\W</span>inlogon<span class="s2">&quot; /v SCRemoveOption /t REG_DWORD /d 2 /f</span>
 <span class="s2">::</span>
 <span class="s2">:: Restrict privileged local admin tokens being used from network </span>
 <span class="s2">:: Commented out as it only works on domain-joined assets</span>
@@ -595,12 +593,16 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="cmd.html"
-                        title="previous chapter">Some cmd.exe commands</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="install.html"
-                        title="next chapter">Installing Windows</a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="cmd.html"
+                          title="previous chapter">Some cmd.exe commands</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="install.html"
+                          title="next chapter">Installing Windows</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/windows/hardening_script.bat.raw.rst.txt"
@@ -619,7 +621,7 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -642,8 +644,8 @@ reg add <span class="s2">&quot;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\De
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

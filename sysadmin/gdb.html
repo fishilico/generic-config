@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>GDB, The GNU Project Debugger &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Installing a Linux system" href="installation.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="gdb-the-gnu-project-debugger">
-<h1>GDB, The GNU Project Debugger<a class="headerlink" href="#gdb-the-gnu-project-debugger" title="Permalink to this headline">¶</a></h1>
+<h1>GDB, The GNU Project Debugger<a class="headerlink" href="#gdb-the-gnu-project-debugger" title="Link to this heading">¶</a></h1>
 <p>When debugging an application or investigating a crash, several tools exist to
 understand what’s going on:</p>
 <ul class="simple">
@@ -62,7 +60,7 @@ reporting bugs, to help developers investigate further, and it can also be used
 to get precise information about the environment context (allocated memory,
 global variables…).</p>
 <section id="starting-gdb">
-<h2>Starting GDB<a class="headerlink" href="#starting-gdb" title="Permalink to this headline">¶</a></h2>
+<h2>Starting GDB<a class="headerlink" href="#starting-gdb" title="Link to this heading">¶</a></h2>
 <p>To load a program into <code class="docutils literal notranslate"><span class="pre">gdb</span></code>, the command is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gdb</span> <span class="n">program</span>
 </pre></div>
@@ -79,7 +77,7 @@ as defining breakpoints, loading shared libraries, customizing the interface…<
 </div>
 </section>
 <section id="basic-commands">
-<h2>Basic commands<a class="headerlink" href="#basic-commands" title="Permalink to this headline">¶</a></h2>
+<h2>Basic commands<a class="headerlink" href="#basic-commands" title="Link to this heading">¶</a></h2>
 <p>Once <code class="docutils literal notranslate"><span class="pre">gdb</span></code> is started, it prints a few lines and presents a prompt with
 “<code class="docutils literal notranslate"><span class="pre">(gdb)</span></code>”.  The commands which are mandatory to know then are:</p>
 <ul class="simple">
@@ -110,7 +108,7 @@ several times.  Pressing enter with an empty prompt repeats the last command.</p
 key binding is <code class="docutils literal notranslate"><span class="pre">Ctrl-X</span> <span class="pre">A</span></code> (<code class="docutils literal notranslate"><span class="pre">^Xa</span></code>, <code class="docutils literal notranslate"><span class="pre">^XA</span></code> or <code class="docutils literal notranslate"><span class="pre">^X^A</span></code>).</p>
 </section>
 <section id="analysis-commands">
-<h2>Analysis commands<a class="headerlink" href="#analysis-commands" title="Permalink to this headline">¶</a></h2>
+<h2>Analysis commands<a class="headerlink" href="#analysis-commands" title="Link to this heading">¶</a></h2>
 <p>Once a program is interrupted, either because of a breakpoint, a segmentation
 fault, an interrupt signal (Ctrl-C) or other trapped signals, it is possible to
 analysis the execution context of a program.</p>
@@ -159,7 +157,7 @@ instruction, which is useful when running step-by-step with <code class="docutil
 </ul>
 </section>
 <section id="remote-debug">
-<h2>Remote debug<a class="headerlink" href="#remote-debug" title="Permalink to this headline">¶</a></h2>
+<h2>Remote debug<a class="headerlink" href="#remote-debug" title="Link to this heading">¶</a></h2>
 <p>It is possible debug a program through a network connection using <code class="docutils literal notranslate"><span class="pre">target</span></code>
 command in <code class="docutils literal notranslate"><span class="pre">gdb</span></code>.  Even if it is quite crazy to do such a thing for an usual
 application, it comes handy when debugging an emulated program (with QEmu),
@@ -182,7 +180,7 @@ Continuing.
 <p><code class="docutils literal notranslate"><span class="pre">target</span></code> can also be used to load a core dump and other things.</p>
 </section>
 <section id="using-core-dumps">
-<h2>Using core dumps<a class="headerlink" href="#using-core-dumps" title="Permalink to this headline">¶</a></h2>
+<h2>Using core dumps<a class="headerlink" href="#using-core-dumps" title="Link to this heading">¶</a></h2>
 <p>When a program crashes, Linux can dump its execution context to a file.  This
 file is called a “core dump” and it is possible to run gdb to analyze it using:</p>
 <blockquote>
@@ -198,10 +196,10 @@ kernel.core_pattern = core
 </pre></div>
 </div>
 <p>Here is an example to dump core of “sleep”:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo sysctl -w kernel.core_pattern<span class="o">=</span>%e.core
-<span class="nb">ulimit</span> -c unlimited
-sleep <span class="m">3600</span> <span class="p">&amp;</span>
-<span class="nb">kill</span> -SEGV <span class="nv">$!</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>sysctl<span class="w"> </span>-w<span class="w"> </span>kernel.core_pattern<span class="o">=</span>%e.core
+<span class="nb">ulimit</span><span class="w"> </span>-c<span class="w"> </span>unlimited
+sleep<span class="w"> </span><span class="m">3600</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="nb">kill</span><span class="w"> </span>-SEGV<span class="w"> </span><span class="nv">$!</span>
 </pre></div>
 </div>
 <p>The shell would print something like:</p>
@@ -211,7 +209,7 @@ sleep <span class="m">3600</span> <span class="p">&amp;</span>
 <p>and the current directory now contains a file named <code class="docutils literal notranslate"><span class="pre">sleep.core.1234</span></code> with
 1234 being the PID of the sleep process.  To launch <code class="docutils literal notranslate"><span class="pre">gdb</span></code> on the coredump,
 the command is:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>gdb <span class="k">$(</span>which sleep<span class="k">)</span> sleep.core.1234
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>gdb<span class="w"> </span><span class="k">$(</span>which<span class="w"> </span>sleep<span class="k">)</span><span class="w"> </span>sleep.core.1234
 </pre></div>
 </div>
 <p>and it prints lines such as:</p>
@@ -229,7 +227,7 @@ system, you need to configure <code class="docutils literal notranslate"><span c
 which provides an easy way to launch <code class="docutils literal notranslate"><span class="pre">gdb</span></code> on the dumps.</p>
 </section>
 <section id="debug-options-for-compilation">
-<h2>Debug options for compilation<a class="headerlink" href="#debug-options-for-compilation" title="Permalink to this headline">¶</a></h2>
+<h2>Debug options for compilation<a class="headerlink" href="#debug-options-for-compilation" title="Link to this heading">¶</a></h2>
 <p>To compile a C program with debug symbols, the compiler command line is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gcc</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">ggdb</span> <span class="o">-</span><span class="n">fvar</span><span class="o">-</span><span class="n">tracking</span><span class="o">-</span><span class="n">assignments</span>
 </pre></div>
@@ -244,8 +242,8 @@ which installs files in <code class="docutils literal notranslate"><span class="
 information is given in the <code class="docutils literal notranslate"><span class="pre">PKGBUILD</span></code> manpage.</p>
 <p>To build a Debian package with debug symbols, the following commands can be
 used:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">DEB_BUILD_OPTIONS</span><span class="o">=</span><span class="s2">&quot;nostrip noopt&quot;</span>
-debuild -uc -us
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">DEB_BUILD_OPTIONS</span><span class="o">=</span><span class="s2">&quot;nostrip noopt&quot;</span>
+debuild<span class="w"> </span>-uc<span class="w"> </span>-us
 </pre></div>
 </div>
 <p>When the debug symbols are separated from a binary, the build ID is used to
@@ -271,7 +269,7 @@ Contents of section .note.gnu.build-id:
 if this file is installed.</p>
 </section>
 <section id="documentations">
-<h2>Documentations<a class="headerlink" href="#documentations" title="Permalink to this headline">¶</a></h2>
+<h2>Documentations<a class="headerlink" href="#documentations" title="Link to this heading">¶</a></h2>
 <p>Zenk Security made a useful Quick Reference PDF for gdb:
 <a class="reference external" href="https://repo.zenk-security.com/Reversing%20.%20cracking/GDB%20QUICK%20REFERENCE.pdf">https://repo.zenk-security.com/Reversing%20.%20cracking/GDB%20QUICK%20REFERENCE.pdf</a></p>
 <p>More information about core dumps and <code class="docutils literal notranslate"><span class="pre">kernel.core_pattern</span></code> format can be
@@ -294,8 +292,9 @@ provide the decompressed unstripped <code class="docutils literal notranslate"><
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">GDB, The GNU Project Debugger</a><ul>
 <li><a class="reference internal" href="#starting-gdb">Starting GDB</a></li>
 <li><a class="reference internal" href="#basic-commands">Basic commands</a></li>
@@ -308,12 +307,17 @@ provide the decompressed unstripped <code class="docutils literal notranslate"><
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="debian-dev.html"
-                        title="previous chapter">Build a development environment for Debian</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="installation.html"
-                        title="next chapter">Installing a Linux system</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="debian-dev.html"
+                          title="previous chapter">Build a development environment for Debian</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="installation.html"
+                          title="next chapter">Installing a Linux system</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/gdb.rst.txt"
@@ -332,7 +336,7 @@ provide the decompressed unstripped <code class="docutils literal notranslate"><
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -355,8 +359,8 @@ provide the decompressed unstripped <code class="docutils literal notranslate"><
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

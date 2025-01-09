@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Installing Windows &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Keyboard shortcuts on Windows" href="key_shortcuts.html" />
@@ -42,10 +40,10 @@
           <div class="body" role="main">
             
   <section id="installing-windows">
-<h1>Installing Windows<a class="headerlink" href="#installing-windows" title="Permalink to this headline">¶</a></h1>
+<h1>Installing Windows<a class="headerlink" href="#installing-windows" title="Link to this heading">¶</a></h1>
 <p>Here are some notes about installing Windows 10 Enterprise.</p>
 <section id="base-installation-of-windows-10">
-<h2>Base installation of Windows 10<a class="headerlink" href="#base-installation-of-windows-10" title="Permalink to this headline">¶</a></h2>
+<h2>Base installation of Windows 10<a class="headerlink" href="#base-installation-of-windows-10" title="Link to this heading">¶</a></h2>
 <p>In order to install Windows 10, a disc image (ISO file) can be downloaded from <a class="reference external" href="https://www.microsoft.com/en-us/software-download/windows10ISO">https://www.microsoft.com/en-us/software-download/windows10ISO</a>.</p>
 <p>This would install Windows 10 Pro by default.
 In order to set up another edition, all that is needed is to provide a matching license key.
@@ -55,7 +53,7 @@ The official Microsoft website documents such keys on <a class="reference extern
 On this website, Windows 10 Enterprise’s KMS key is <code class="docutils literal notranslate"><span class="pre">NPPR9-FWDCX-D2C8J-H872K-2YT43</span></code>.</p>
 </section>
 <section id="common-settings">
-<h2>Common settings<a class="headerlink" href="#common-settings" title="Permalink to this headline">¶</a></h2>
+<h2>Common settings<a class="headerlink" href="#common-settings" title="Link to this heading">¶</a></h2>
 <p>Some tools can be configured as soon as Windows is installed, in order to improve the experience of Windows.</p>
 <p>When the system crashes, it is useful to have a meaningful memory dump file that can be analyzed with WinDbg.
 In order to generate it, there are some settings:</p>
@@ -81,7 +79,7 @@ Also ensure that at least 25 GB is free on the hard drive containing the Page Fi
 This directory contains the 50 last generated minidump files (by default).</p>
 </section>
 <section id="enable-the-windows-subsystem-for-linux">
-<h2>Enable the Windows Subsystem for Linux<a class="headerlink" href="#enable-the-windows-subsystem-for-linux" title="Permalink to this headline">¶</a></h2>
+<h2>Enable the Windows Subsystem for Linux<a class="headerlink" href="#enable-the-windows-subsystem-for-linux" title="Link to this heading">¶</a></h2>
 <p>To install WSL (Windows Subsystem for Linux), run this command as Administrator:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="o">&gt;</span> <span class="n">PowerShell</span> <span class="n">Enable</span><span class="o">-</span><span class="n">WindowsOptionalFeature</span> <span class="o">-</span><span class="n">Online</span> <span class="o">-</span><span class="n">FeatureName</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">Windows</span><span class="o">-</span><span class="n">Subsystem</span><span class="o">-</span><span class="n">Linux</span>
 
@@ -132,9 +130,9 @@ Release notes</p></li>
 </ul>
 </section>
 <section id="software-to-install">
-<h2>Software to install<a class="headerlink" href="#software-to-install" title="Permalink to this headline">¶</a></h2>
+<h2>Software to install<a class="headerlink" href="#software-to-install" title="Link to this heading">¶</a></h2>
 <section id="automatic-installation">
-<h3>Automatic installation<a class="headerlink" href="#automatic-installation" title="Permalink to this headline">¶</a></h3>
+<h3>Automatic installation<a class="headerlink" href="#automatic-installation" title="Link to this heading">¶</a></h3>
 <p>In order to ease the installation of software, a package manager such as
 <a class="reference external" href="https://ninite.com/">Ninite</a> or <a class="reference external" href="https://chocolatey.org/">Chocolatey</a> can be
 used (cf. <a class="reference external" href="https://chocolatey.org/docs/chocolatey-vs-ninite">https://chocolatey.org/docs/chocolatey-vs-ninite</a>).
@@ -227,7 +225,7 @@ verified in the registry:</p>
 </div>
 </section>
 <section id="windows-10-s-packagemanagement">
-<h3>Windows 10’s PackageManagement<a class="headerlink" href="#windows-10-s-packagemanagement" title="Permalink to this headline">¶</a></h3>
+<h3>Windows 10’s PackageManagement<a class="headerlink" href="#windows-10-s-packagemanagement" title="Link to this heading">¶</a></h3>
 <p>PackageManagement (aka. <a class="reference external" href="https://github.com/oneget/oneget">OneGet</a>) is a package manager of package managers: it merges together <a class="reference external" href="https://www.nuget.org/">NuGet</a>, <a class="reference external" href="https://chocolatey.org/">Chocolatey</a>, etc.</p>
 <p>It is installed by default on Windows 10 (cf. <a class="reference external" href="https://blogs.technet.microsoft.com/packagemanagement/2015/04/28/introducing-packagemanagement-in-windows-10/">https://blogs.technet.microsoft.com/packagemanagement/2015/04/28/introducing-packagemanagement-in-windows-10/</a>) and provides several commands:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>PS C:\&gt; Get-Command -module PackageManagement | sort Noun, Verb
@@ -253,18 +251,18 @@ Cmdlet          Unregister-PackageSource                           1.0.0.1    Pa
 <p>Package managers can be enumerated using <code class="docutils literal notranslate"><span class="pre">Find-PackageProvider</span></code> and installed using <code class="docutils literal notranslate"><span class="pre">Get-PackageProvider</span></code>.
 Here is an example of its use:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install Chocolatey through PackageManagement</span>
-Get-PackageProvider -Name chocolatey
+Get-PackageProvider<span class="w"> </span>-Name<span class="w"> </span>chocolatey
 
 <span class="c1"># Enumerate packages named with &quot;VLC&quot;</span>
-Find-Package -Provider chocolatey -Name <span class="s2">&quot;*vlc*&quot;</span>
+Find-Package<span class="w"> </span>-Provider<span class="w"> </span>chocolatey<span class="w"> </span>-Name<span class="w"> </span><span class="s2">&quot;*vlc*&quot;</span>
 
 <span class="c1"># Install Notepad++</span>
-Install-Package -Provider chocolatey notepadplusplus
+Install-Package<span class="w"> </span>-Provider<span class="w"> </span>chocolatey<span class="w"> </span>notepadplusplus
 </pre></div>
 </div>
 </section>
 <section id="debloat-windows">
-<h3>Debloat Windows<a class="headerlink" href="#debloat-windows" title="Permalink to this headline">¶</a></h3>
+<h3>Debloat Windows<a class="headerlink" href="#debloat-windows" title="Link to this heading">¶</a></h3>
 <p>Windows 10 comes with many features which are better disabled. Here are some
 websites describing them:</p>
 <ul class="simple">
@@ -273,9 +271,9 @@ websites describing them:</p>
 </ul>
 <p>Here are commands that can be issued once Git has been installed, in a
 PowerShell administrator console:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/W4RH4WK/Debloat-Windows-10
-<span class="nb">cd</span> Debloat-Windows-10<span class="se">\s</span>cripts
-Set-ExecutionPolicy Bypass -Scope Process -Force
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/W4RH4WK/Debloat-Windows-10
+<span class="nb">cd</span><span class="w"> </span>Debloat-Windows-10<span class="se">\s</span>cripts
+Set-ExecutionPolicy<span class="w"> </span>Bypass<span class="w"> </span>-Scope<span class="w"> </span>Process<span class="w"> </span>-Force
 .<span class="se">\b</span>lock-telemetry.ps1
 .<span class="se">\d</span>isable-services.ps1
 <span class="c1"># .\disable-windows-defender.ps1</span>
@@ -290,59 +288,59 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 </section>
 </section>
 <section id="hyper-v-configuration">
-<h2>Hyper-V configuration<a class="headerlink" href="#hyper-v-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Hyper-V configuration<a class="headerlink" href="#hyper-v-configuration" title="Link to this heading">¶</a></h2>
 <p>Hyper-V is quite straightforward to use but for network management.
 In order to create an internal network which is NAT’ed to the external network, some PowerShell commands are documented on <a class="reference external" href="https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/setup-nat-network">https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/setup-nat-network</a>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a new virtual switch</span>
-New-VMSwitch -SwitchName <span class="s1">&#39;Nat4HyperV&#39;</span> -SwitchType Internal
+New-VMSwitch<span class="w"> </span>-SwitchName<span class="w"> </span><span class="s1">&#39;Nat4HyperV&#39;</span><span class="w"> </span>-SwitchType<span class="w"> </span>Internal
 
 <span class="c1"># Retrieve the index of the new interface, with one of these two commands</span>
 Get-NetAdapter
-<span class="nv">$nat_ifindex</span> <span class="o">=</span> <span class="o">(</span>Get-NetAdapter -Name <span class="s1">&#39;vEthernet (Nat4HyperV)&#39;</span><span class="o">)</span>.ifIndex
+<span class="nv">$nat_ifindex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>Get-NetAdapter<span class="w"> </span>-Name<span class="w"> </span><span class="s1">&#39;vEthernet (Nat4HyperV)&#39;</span><span class="o">)</span>.ifIndex
 
 <span class="c1"># Assign a static IP address to the host interface of the new switch</span>
-New-NetIPAddress -IPAddress <span class="s1">&#39;10.0.0.1&#39;</span> -PrefixLength <span class="m">24</span> -InterfaceIndex <span class="nv">$nat_ifindex</span>
+New-NetIPAddress<span class="w"> </span>-IPAddress<span class="w"> </span><span class="s1">&#39;10.0.0.1&#39;</span><span class="w"> </span>-PrefixLength<span class="w"> </span><span class="m">24</span><span class="w"> </span>-InterfaceIndex<span class="w"> </span><span class="nv">$nat_ifindex</span>
 
 <span class="c1"># Create a new NAT (Network Address Translation)</span>
-New-NetNat -Name <span class="s1">&#39;NatOfHyperV&#39;</span> -InternalIPInterfaceAddressPrefix <span class="s1">&#39;10.0.0.0/24&#39;</span>
+New-NetNat<span class="w"> </span>-Name<span class="w"> </span><span class="s1">&#39;NatOfHyperV&#39;</span><span class="w"> </span>-InternalIPInterfaceAddressPrefix<span class="w"> </span><span class="s1">&#39;10.0.0.0/24&#39;</span>
 </pre></div>
 </div>
 <p>It is then possible to associate the network adapter of Hyper-V virtual machines with internal network <code class="docutils literal notranslate"><span class="pre">Nat4HyperV</span></code>.</p>
 </section>
 <section id="activation-using-py-kms">
-<h2>Activation using py-kms<a class="headerlink" href="#activation-using-py-kms" title="Permalink to this headline">¶</a></h2>
+<h2>Activation using py-kms<a class="headerlink" href="#activation-using-py-kms" title="Link to this heading">¶</a></h2>
 <p>In order to activate Windows in an offline environment, it is possible to install py-kms (<a class="reference external" href="https://github.com/SystemRage/py-kms">https://github.com/SystemRage/py-kms</a>) on a Debian Hyper-V virtual machine:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/SystemRage/py-kms
-<span class="nb">cd</span> py-kms/py3-kms
-python3 server.py -v DEBUG --sqlite
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/SystemRage/py-kms
+<span class="nb">cd</span><span class="w"> </span>py-kms/py3-kms
+python3<span class="w"> </span>server.py<span class="w"> </span>-v<span class="w"> </span>DEBUG<span class="w"> </span>--sqlite
 </pre></div>
 </div>
 <p>This will launch a KMS (Key Management Service) on TCP port 1688.
 The following PowerShell commands configure a Windows system to use it, using SLMGR (the Software License Manager):</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># In C:\Windows\system32</span>
-<span class="nb">cd</span> %WINDIR%<span class="se">\s</span>ystem32
+<span class="nb">cd</span><span class="w"> </span>%WINDIR%<span class="se">\s</span>ystem32
 
 <span class="c1"># /upk for &quot;Uninstall Product Key&quot;</span>
-cscript //Nologo slmgr.vbs /upk
+cscript<span class="w"> </span>//Nologo<span class="w"> </span>slmgr.vbs<span class="w"> </span>/upk
 
 <span class="c1"># /ipk for &quot;Install Product Key&quot;, for example for Windows 10 Enterprise</span>
-cscript //Nologo slmgr.vbs /ipk NPPR9-FWDCX-D2C8J-H872K-2YT43
+cscript<span class="w"> </span>//Nologo<span class="w"> </span>slmgr.vbs<span class="w"> </span>/ipk<span class="w"> </span>NPPR9-FWDCX-D2C8J-H872K-2YT43
 
 <span class="c1"># /skms to specify the KMS on IP address 192.0.2.42</span>
-cscript //Nologo slmgr.vbs /skms <span class="m">192</span>.0.2.42:1688
+cscript<span class="w"> </span>//Nologo<span class="w"> </span>slmgr.vbs<span class="w"> </span>/skms<span class="w"> </span><span class="m">192</span>.0.2.42:1688
 
 <span class="c1"># /ato to prompt Windows to attempt online activation</span>
-cscript //Nologo slmgr.vbs /ato
+cscript<span class="w"> </span>//Nologo<span class="w"> </span>slmgr.vbs<span class="w"> </span>/ato
 
 <span class="c1"># Display license information and detailed license information</span>
-cscript //Nologo slmgr.vbs /dli
-cscript //Nologo slmgr.vbs /dlv
+cscript<span class="w"> </span>//Nologo<span class="w"> </span>slmgr.vbs<span class="w"> </span>/dli
+cscript<span class="w"> </span>//Nologo<span class="w"> </span>slmgr.vbs<span class="w"> </span>/dlv
 </pre></div>
 </div>
 <p>This creates an entry in database <code class="docutils literal notranslate"><span class="pre">py-kms/py3-kms/clients.db</span></code> (table <code class="docutils literal notranslate"><span class="pre">clients</span></code>).</p>
 <p>In order to launch py-kms as a systemd service, a service file can be created:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># cf. https://github.com/SystemRage/py-kms/issues/4</span>
-cat &gt; /etc/systemd/system/py-kms.service <span class="s">&lt;&lt; EOF</span>
+cat<span class="w"> </span>&gt;<span class="w"> </span>/etc/systemd/system/py-kms.service<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
 <span class="s">[Unit]</span>
 <span class="s">Description=py3-kms</span>
 <span class="s">After=network-online.target</span>
@@ -358,9 +356,9 @@ cat &gt; /etc/systemd/system/py-kms.service <span class="s">&lt;&lt; EOF</span>
 <span class="s">WantedBy=multi-user.target</span>
 <span class="s">EOF</span>
 
-systemctl daemon-reload
-systemctl <span class="nb">enable</span> py-kms.service
-systemctl start py-kms.service
+systemctl<span class="w"> </span>daemon-reload
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>py-kms.service
+systemctl<span class="w"> </span>start<span class="w"> </span>py-kms.service
 </pre></div>
 </div>
 </section>
@@ -373,8 +371,9 @@ systemctl start py-kms.service
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Installing Windows</a><ul>
 <li><a class="reference internal" href="#base-installation-of-windows-10">Base installation of Windows 10</a></li>
 <li><a class="reference internal" href="#common-settings">Common settings</a></li>
@@ -391,12 +390,17 @@ systemctl start py-kms.service
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="hardening_script.bat.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">windows/hardening_script.bat</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="key_shortcuts.html"
-                        title="next chapter">Keyboard shortcuts on Windows</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="hardening_script.bat.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">windows/hardening_script.bat</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="key_shortcuts.html"
+                          title="next chapter">Keyboard shortcuts on Windows</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/windows/install.rst.txt"
@@ -415,7 +419,7 @@ systemctl start py-kms.service
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -438,8 +442,8 @@ systemctl start py-kms.service
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

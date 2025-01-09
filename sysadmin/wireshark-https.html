@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Wireshark: analyzing HTTPS traffic &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Databases" href="../database/index.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="wireshark-analyzing-https-traffic">
-<h1>Wireshark: analyzing HTTPS traffic<a class="headerlink" href="#wireshark-analyzing-https-traffic" title="Permalink to this headline">¶</a></h1>
+<h1>Wireshark: analyzing HTTPS traffic<a class="headerlink" href="#wireshark-analyzing-https-traffic" title="Link to this heading">¶</a></h1>
 <p>HTTPS packets can be decrypted using the server private key when non-Perfect Forward Secrecy cipher suites are used.
 In most cases nowadays, this will not work.
 Instead, the master secret needs to be recorded, for example using <code class="docutils literal notranslate"><span class="pre">SSLKEYLOGFILE</span></code>:</p>
@@ -55,13 +53,13 @@ Instead, the master secret needs to be recorded, for example using <code class="
 </ul>
 <p>For example:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Capture network traffic</span>
-tshark -ni any -w capture.pcapng
+tshark<span class="w"> </span>-ni<span class="w"> </span>any<span class="w"> </span>-w<span class="w"> </span>capture.pcapng
 
 <span class="c1"># Perform a request to a HTTPS website, for example with curl</span>
-<span class="nv">SSLKEYLOGFILE</span><span class="o">=</span>keylogfile.txt curl https://wiki.wireshark.org/
+<span class="nv">SSLKEYLOGFILE</span><span class="o">=</span>keylogfile.txt<span class="w"> </span>curl<span class="w"> </span>https://wiki.wireshark.org/
 
 <span class="c1"># Merge the secrets in the Decryption Secrets Block part of the capture file</span>
-editcap --inject-secrets tls,keylogfile.txt capture.pcapng capture-with-secrets.pcapng
+editcap<span class="w"> </span>--inject-secrets<span class="w"> </span>tls,keylogfile.txt<span class="w"> </span>capture.pcapng<span class="w"> </span>capture-with-secrets.pcapng
 </pre></div>
 </div>
 <p>The keylogfile then looks like (for TLS 1.3):</p>
@@ -91,12 +89,16 @@ CLIENT_TRAFFIC_SECRET_0 f3cac18f4b5042390a8929a1bef9e5d543a214d3a163a8649843457e
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="user.html"
-                        title="previous chapter">User management on Linux</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../database/index.html"
-                        title="next chapter">Databases</a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="user.html"
+                          title="previous chapter">User management on Linux</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../database/index.html"
+                          title="next chapter">Databases</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/wireshark-https.rst.txt"
@@ -115,7 +117,7 @@ CLIENT_TRAFFIC_SECRET_0 f3cac18f4b5042390a8929a1bef9e5d543a214d3a163a8649843457e
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -138,8 +140,8 @@ CLIENT_TRAFFIC_SECRET_0 f3cac18f4b5042390a8929a1bef9e5d543a214d3a163a8649843457e
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Active Directory by Microsoft &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Some cmd.exe commands" href="cmd.html" />
@@ -42,9 +40,9 @@
           <div class="body" role="main">
             
   <section id="active-directory-by-microsoft">
-<h1>Active Directory by Microsoft<a class="headerlink" href="#active-directory-by-microsoft" title="Permalink to this headline">¶</a></h1>
+<h1>Active Directory by Microsoft<a class="headerlink" href="#active-directory-by-microsoft" title="Link to this heading">¶</a></h1>
 <section id="network-discovery">
-<h2>Network discovery<a class="headerlink" href="#network-discovery" title="Permalink to this headline">¶</a></h2>
+<h2>Network discovery<a class="headerlink" href="#network-discovery" title="Link to this heading">¶</a></h2>
 <p>An Active Directory (“AD”) is a technology from Microsoft which aims to ease the management of organizations through a centralized authentication (“SSO” for Single Sign-On), an inventory of users and machines, a way to apply configurations, etc.
 This uses several protocols:</p>
 <ul class="simple">
@@ -77,60 +75,60 @@ Such a configuration can be easily discovered, for example through DHCP.</p>
 </ul>
 </section>
 <section id="kerberos-configuration">
-<h2>Kerberos configuration<a class="headerlink" href="#kerberos-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Kerberos configuration<a class="headerlink" href="#kerberos-configuration" title="Link to this heading">¶</a></h2>
 <p>In order to authenticate to an AD using an account through Kerberos protocol, <code class="docutils literal notranslate"><span class="pre">kinit</span></code> can be used (from package <code class="docutils literal notranslate"><span class="pre">krb5</span></code>).
 Its configuration lies in <code class="docutils literal notranslate"><span class="pre">/etc/krb5.conf</span></code> and looks like:</p>
-<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[libdefaults]</span><span class="w"></span>
-<span class="w">    </span><span class="na">default_realm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">CONTOSO.COM</span><span class="w"></span>
-<span class="w">    </span><span class="na">dns_lookup_realm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span><span class="w"></span>
-<span class="w">    </span><span class="na">dns_lookup_kdc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span><span class="w"></span>
-<span class="w">    </span><span class="na">forwardable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span><span class="w"></span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[libdefaults]</span>
+<span class="w">    </span><span class="na">default_realm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">CONTOSO.COM</span>
+<span class="w">    </span><span class="na">dns_lookup_realm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+<span class="w">    </span><span class="na">dns_lookup_kdc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="w">    </span><span class="na">forwardable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
 
-<span class="k">[realms]</span><span class="w"></span>
-<span class="c1"># use &quot;kdc = ...&quot; if realm admins haven&#39;t put SRV records into DNS</span><span class="w"></span>
-<span class="w">    </span><span class="na">ATHENA.MIT.EDU</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">{</span><span class="w"></span>
-<span class="w">        </span><span class="na">admin_server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">kerberos.mit.edu</span><span class="w"></span>
-<span class="w">    </span><span class="na">}</span><span class="w"></span>
-<span class="w">    </span><span class="na">CONTOSO.COM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">{</span><span class="w"></span>
-<span class="w">        </span><span class="na">kdc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">192.168.0.1:88</span><span class="w"></span>
-<span class="w">        </span><span class="na">kdc_tcp_ports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">88</span><span class="w"></span>
-<span class="w">        </span><span class="na">admin_server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">192.168.0.1</span><span class="w"></span>
-<span class="w">        </span><span class="na">default_domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">CONTOSO.COM</span><span class="w"></span>
+<span class="k">[realms]</span>
+<span class="c1"># use &quot;kdc = ...&quot; if realm admins haven&#39;t put SRV records into DNS</span>
+<span class="w">    </span><span class="na">ATHENA.MIT.EDU</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">{</span>
+<span class="w">        </span><span class="na">admin_server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">kerberos.mit.edu</span>
+<span class="w">    </span><span class="na">}</span>
+<span class="w">    </span><span class="na">CONTOSO.COM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">{</span>
+<span class="w">        </span><span class="na">kdc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">192.168.0.1:88</span>
+<span class="w">        </span><span class="na">kdc_tcp_ports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">88</span>
+<span class="w">        </span><span class="na">admin_server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">192.168.0.1</span>
+<span class="w">        </span><span class="na">default_domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">CONTOSO.COM</span>
 
-<span class="w">        </span><span class="c1"># For smartcard authentication</span><span class="w"></span>
-<span class="w">        </span><span class="na">pkinit_anchors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">FILE:/etc/ssl/contoso.com/ca.crt</span><span class="w"></span>
-<span class="w">        </span><span class="na">pkinit_kdc_hostname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">dc1.contoso.com</span><span class="w"></span>
-<span class="w">        </span><span class="na">pkinit_kdc_hostname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">dc2.contoso.com</span><span class="w"></span>
-<span class="w">        </span><span class="na">pkinit_cert_match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;SUBJECT&gt;CN=mylogin.*</span><span class="w"></span>
-<span class="w">        </span><span class="na">pkinit_identities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">PKCS11:/usr/lib/pkcs11/opensc-pkcs11.so</span><span class="w"></span>
-<span class="w">    </span><span class="na">}</span><span class="w"></span>
+<span class="w">        </span><span class="c1"># For smartcard authentication</span>
+<span class="w">        </span><span class="na">pkinit_anchors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">FILE:/etc/ssl/contoso.com/ca.crt</span>
+<span class="w">        </span><span class="na">pkinit_kdc_hostname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">dc1.contoso.com</span>
+<span class="w">        </span><span class="na">pkinit_kdc_hostname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">dc2.contoso.com</span>
+<span class="w">        </span><span class="na">pkinit_cert_match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;SUBJECT&gt;CN=mylogin.*</span>
+<span class="w">        </span><span class="na">pkinit_identities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">PKCS11:/usr/lib/pkcs11/opensc-pkcs11.so</span>
+<span class="w">    </span><span class="na">}</span>
 
-<span class="k">[domain_realm]</span><span class="w"></span>
-<span class="w">    </span><span class="na">.contoso.com</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">CONTOSO.COM</span><span class="w"></span>
-<span class="w">    </span><span class="na">contoso.com</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">CONTOSO.COM</span><span class="w"></span>
+<span class="k">[domain_realm]</span>
+<span class="w">    </span><span class="na">.contoso.com</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">CONTOSO.COM</span>
+<span class="w">    </span><span class="na">contoso.com</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">CONTOSO.COM</span>
 
-<span class="k">[logging]</span><span class="w"></span>
-<span class="c1">#    kdc = CONSOLE</span><span class="w"></span>
-<span class="c1">#    default = FILE:/tmp/krb5log.log</span><span class="w"></span>
-<span class="c1">#    kdc = FILE:/tmp/krb5log.log</span><span class="w"></span>
-<span class="c1">#    admin_server = FILE:/tmp/krb5admin.log</span><span class="w"></span>
+<span class="k">[logging]</span>
+<span class="c1">#    kdc = CONSOLE</span>
+<span class="c1">#    default = FILE:/tmp/krb5log.log</span>
+<span class="c1">#    kdc = FILE:/tmp/krb5log.log</span>
+<span class="c1">#    admin_server = FILE:/tmp/krb5admin.log</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">kinit</span></code> stores Kerberos tickets in <code class="docutils literal notranslate"><span class="pre">/tmp/krb5cc_${UID}</span></code> where <code class="docutils literal notranslate"><span class="pre">UID</span></code> is the user identifier.
 This can be overridden using variable <code class="docutils literal notranslate"><span class="pre">$KRB5CCNAME</span></code>.
 The tickets can then be used for example with:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># From samba</span>
-smbclient -k //machine.contoso.com/IPC$
-rpclient -k machine.contoso.com
+smbclient<span class="w"> </span>-k<span class="w"> </span>//machine.contoso.com/IPC$
+rpclient<span class="w"> </span>-k<span class="w"> </span>machine.contoso.com
 <span class="c1"># ... and issue &quot;getusername&quot;</span>
 
 <span class="c1"># From impacket</span>
-wmiexec.py -k -no-pass contoso.com/mylogin@machine.contoso.com
+wmiexec.py<span class="w"> </span>-k<span class="w"> </span>-no-pass<span class="w"> </span>contoso.com/mylogin@machine.contoso.com
 </pre></div>
 </div>
 </section>
 <section id="ldap-queries">
-<h2>LDAP queries<a class="headerlink" href="#ldap-queries" title="Permalink to this headline">¶</a></h2>
+<h2>LDAP queries<a class="headerlink" href="#ldap-queries" title="Link to this heading">¶</a></h2>
 <p>In order to query an AD using <code class="docutils literal notranslate"><span class="pre">ldapsearch</span></code>, several parameters need to be found:</p>
 <ul class="simple">
 <li><p>The connection string (protocol, host name, TCP port) to the LDAP or LDAPS server, like <code class="docutils literal notranslate"><span class="pre">ldaps://dc1.contoso.com</span></code>.</p></li>
@@ -153,15 +151,15 @@ wmiexec.py -k -no-pass contoso.com/mylogin@machine.contoso.com
 <span class="c1"># -LLL to disable printing LDIF version and comments</span>
 <span class="c1"># -b search base</span>
 <span class="c1"># -v -o ldif-wrap=no to prevent wrapping the output</span>
-ldapsearch <span class="se">\</span>
-    -N <span class="se">\</span>
-    -H ldaps://dc1.contoso.com <span class="se">\</span>
-    -D mylogin@contoso.com <span class="se">\</span>
-    -w <span class="s1">&#39;P@ssw0rd!&#39;</span> <span class="se">\</span>
-    -xLLL <span class="se">\</span>
-    -b <span class="nv">DC</span><span class="o">=</span>contoso,DC<span class="o">=</span>com <span class="se">\</span>
-    -v -o ldif-wrap<span class="o">=</span>no <span class="se">\</span>
-    <span class="nv">$FILTER</span> <span class="nv">$ATTRIBUTES</span>
+ldapsearch<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-N<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span>ldaps://dc1.contoso.com<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-D<span class="w"> </span>mylogin@contoso.com<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-w<span class="w"> </span><span class="s1">&#39;P@ssw0rd!&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-xLLL<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-b<span class="w"> </span><span class="nv">DC</span><span class="o">=</span>contoso,DC<span class="o">=</span>com<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span>-o<span class="w"> </span>ldif-wrap<span class="o">=</span>no<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">$FILTER</span><span class="w"> </span><span class="nv">$ATTRIBUTES</span>
 </pre></div>
 </div>
 <p>The LDAP filter is a LDAP query on attributes:</p>
@@ -180,10 +178,10 @@ ldapsearch <span class="se">\</span>
 <p>To ignore certificate issues, this environment variable can be used: <code class="docutils literal notranslate"><span class="pre">LDAPTLS_REQCERT=never</span></code>.</p>
 <p>In order to find out the search base, the scope of the search can be modified using option <code class="docutils literal notranslate"><span class="pre">-s</span> <span class="pre">base</span></code>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Look in the result for &quot;namingContexts&quot;, &quot;defaultNamingContext&quot;, etc.</span>
-ldapsearch -H ldaps://dc1.contoso.com -xLLL -b <span class="s1">&#39;&#39;</span> -s base
+ldapsearch<span class="w"> </span>-H<span class="w"> </span>ldaps://dc1.contoso.com<span class="w"> </span>-xLLL<span class="w"> </span>-b<span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span>-s<span class="w"> </span>base
 
 <span class="c1"># ... or specify the attribute that is printed</span>
-ldapsearch -H ldaps://dc1.contoso.com -xLLL -b <span class="s1">&#39;&#39;</span> -s base namingContexts
+ldapsearch<span class="w"> </span>-H<span class="w"> </span>ldaps://dc1.contoso.com<span class="w"> </span>-xLLL<span class="w"> </span>-b<span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span>-s<span class="w"> </span>base<span class="w"> </span>namingContexts
 </pre></div>
 </div>
 <p>User accounts have several interesting attributes:</p>
@@ -239,7 +237,7 @@ The Kerberos ticket for the service (TGS) is encrypted using the NTLM password h
 </ul>
 </section>
 <section id="resources">
-<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<h2>Resources<a class="headerlink" href="#resources" title="Link to this heading">¶</a></h2>
 <ul>
 <li><p><a class="reference external" href="https://syscall.eu/blog/2018/09/03/ldapsearch_ad_tls/">https://syscall.eu/blog/2018/09/03/ldapsearch_ad_tls/</a>
 Active Directory searches from Linux</p></li>
@@ -250,13 +248,13 @@ Tool to interact with ADIDNS over LDAP (query the DNS zones and nodes through LD
 <li><p><a class="reference external" href="https://www.synacktiv.com/ressources/delegation_kerberos_biere_secu_toulouse.pdf">https://www.synacktiv.com/ressources/delegation_kerberos_biere_secu_toulouse.pdf</a>
 Non-constrained Kerberos Delegation.
 Search of machine accounts with flag <code class="docutils literal notranslate"><span class="pre">TRUSTED_FOR_DELEGATION</span></code>:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ldapsearch -H ldap://DC.VICTIM.LAN -b <span class="nv">DC</span><span class="o">=</span>VICTIM,DC<span class="o">=</span>LAN <span class="se">\</span>
-  -D VICTIM<span class="se">\\</span>user -w P@ssw0rd <span class="s1">&#39;(&amp;(objectClass=computer) \</span>
-<span class="s1">  (userAccountControl:1.2.840.113556.1.4.803:=524288))&#39;</span> <span class="se">\</span>
-  sAMAccountName
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ldapsearch<span class="w"> </span>-H<span class="w"> </span>ldap://DC.VICTIM.LAN<span class="w"> </span>-b<span class="w"> </span><span class="nv">DC</span><span class="o">=</span>VICTIM,DC<span class="o">=</span>LAN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-D<span class="w"> </span>VICTIM<span class="se">\\</span>user<span class="w"> </span>-w<span class="w"> </span>P@ssw0rd<span class="w"> </span><span class="s1">&#39;(&amp;(objectClass=computer) \</span>
+<span class="s1">  (userAccountControl:1.2.840.113556.1.4.803:=524288))&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>sAMAccountName
 
-dn: <span class="nv">CN</span><span class="o">=</span>CLIENT1SHARE,OU<span class="o">=</span>Share,DC<span class="o">=</span>VICTIM.LAN
-sAMAccountName: CLIENT1SHARE$
+dn:<span class="w"> </span><span class="nv">CN</span><span class="o">=</span>CLIENT1SHARE,OU<span class="o">=</span>Share,DC<span class="o">=</span>VICTIM.LAN
+sAMAccountName:<span class="w"> </span>CLIENT1SHARE$
 </pre></div>
 </div>
 </li>
@@ -271,8 +269,9 @@ sAMAccountName: CLIENT1SHARE$
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Active Directory by Microsoft</a><ul>
 <li><a class="reference internal" href="#network-discovery">Network discovery</a></li>
 <li><a class="reference internal" href="#kerberos-configuration">Kerberos configuration</a></li>
@@ -282,12 +281,17 @@ sAMAccountName: CLIENT1SHARE$
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="Vagrantfile.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">windows/Vagrantfile</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="cmd.html"
-                        title="next chapter">Some cmd.exe commands</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="Vagrantfile.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">windows/Vagrantfile</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cmd.html"
+                          title="next chapter">Some cmd.exe commands</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/windows/active_directory.rst.txt"
@@ -306,7 +310,7 @@ sAMAccountName: CLIENT1SHARE$
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -329,8 +333,8 @@ sAMAccountName: CLIENT1SHARE$
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

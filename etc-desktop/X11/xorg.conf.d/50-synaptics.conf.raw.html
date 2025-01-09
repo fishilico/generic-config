@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>etc-desktop/X11/xorg.conf.d/50-synaptics.conf &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/nature.css" />
-    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/nature.css?v=601dbdee" />
+    <script src="../../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="etc-desktop/avahi/avahi-daemon.conf" href="../../avahi/avahi-daemon.conf.raw.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="etc-desktop-x11-xorg-conf-d-50-synaptics-conf">
-<h1><code class="docutils literal notranslate"><span class="pre">etc-desktop/X11/xorg.conf.d/50-synaptics.conf</span></code><a class="headerlink" href="#etc-desktop-x11-xorg-conf-d-50-synaptics-conf" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc-desktop/X11/xorg.conf.d/50-synaptics.conf</span></code><a class="headerlink" href="#etc-desktop-x11-xorg-conf-d-50-synaptics-conf" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../../../_downloads/9407b457aff35a3bdb3a3d2dfc42fd4c/50-synaptics.conf"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example xorg.conf.d snippet that assigns the touchpad driver</span>
 <span class="c1"># to all touchpads. See xorg.conf.d(5) for more information on</span>
@@ -55,37 +53,37 @@
 <span class="c1">#</span>
 <span class="c1"># This file has been modified to setup Circule Scrolling with Touchpad:</span>
 <span class="c1"># https://wiki.archlinux.org/index.php/Touchpad_Synaptics#Circular_Scrolling</span>
-Section <span class="s2">&quot;InputClass&quot;</span>
-        Identifier <span class="s2">&quot;touchpad catchall&quot;</span>
-        Driver <span class="s2">&quot;synaptics&quot;</span>
-        MatchIsTouchpad <span class="s2">&quot;on&quot;</span>
-        Option <span class="s2">&quot;TapButton1&quot;</span> <span class="s2">&quot;1&quot;</span>
-        Option <span class="s2">&quot;TapButton2&quot;</span> <span class="s2">&quot;2&quot;</span>
-        Option <span class="s2">&quot;TapButton3&quot;</span> <span class="s2">&quot;3&quot;</span>
+Section<span class="w"> </span><span class="s2">&quot;InputClass&quot;</span>
+<span class="w">        </span>Identifier<span class="w"> </span><span class="s2">&quot;touchpad catchall&quot;</span>
+<span class="w">        </span>Driver<span class="w"> </span><span class="s2">&quot;synaptics&quot;</span>
+<span class="w">        </span>MatchIsTouchpad<span class="w"> </span><span class="s2">&quot;on&quot;</span>
+<span class="w">        </span>Option<span class="w"> </span><span class="s2">&quot;TapButton1&quot;</span><span class="w"> </span><span class="s2">&quot;1&quot;</span>
+<span class="w">        </span>Option<span class="w"> </span><span class="s2">&quot;TapButton2&quot;</span><span class="w"> </span><span class="s2">&quot;2&quot;</span>
+<span class="w">        </span>Option<span class="w"> </span><span class="s2">&quot;TapButton3&quot;</span><span class="w"> </span><span class="s2">&quot;3&quot;</span>
 
-        Option <span class="s2">&quot;CircularScrolling&quot;</span> <span class="s2">&quot;1&quot;</span>
+<span class="w">        </span>Option<span class="w"> </span><span class="s2">&quot;CircularScrolling&quot;</span><span class="w"> </span><span class="s2">&quot;1&quot;</span>
 
 <span class="c1"># This option is recommend on all Linux systems using evdev, but cannot be</span>
 <span class="c1"># enabled by default. See the following link for details:</span>
 <span class="c1"># http://who-t.blogspot.com/2010/11/how-to-ignore-configuration-errors.html</span>
-        MatchDevicePath <span class="s2">&quot;/dev/input/event*&quot;</span>
+<span class="w">        </span>MatchDevicePath<span class="w"> </span><span class="s2">&quot;/dev/input/event*&quot;</span>
 EndSection
 
-Section <span class="s2">&quot;InputClass&quot;</span>
-        Identifier <span class="s2">&quot;touchpad ignore duplicates&quot;</span>
-        MatchIsTouchpad <span class="s2">&quot;on&quot;</span>
-        MatchOS <span class="s2">&quot;Linux&quot;</span>
-        MatchDevicePath <span class="s2">&quot;/dev/input/mouse*&quot;</span>
-        Option <span class="s2">&quot;Ignore&quot;</span> <span class="s2">&quot;on&quot;</span>
+Section<span class="w"> </span><span class="s2">&quot;InputClass&quot;</span>
+<span class="w">        </span>Identifier<span class="w"> </span><span class="s2">&quot;touchpad ignore duplicates&quot;</span>
+<span class="w">        </span>MatchIsTouchpad<span class="w"> </span><span class="s2">&quot;on&quot;</span>
+<span class="w">        </span>MatchOS<span class="w"> </span><span class="s2">&quot;Linux&quot;</span>
+<span class="w">        </span>MatchDevicePath<span class="w"> </span><span class="s2">&quot;/dev/input/mouse*&quot;</span>
+<span class="w">        </span>Option<span class="w"> </span><span class="s2">&quot;Ignore&quot;</span><span class="w"> </span><span class="s2">&quot;on&quot;</span>
 EndSection
 
 <span class="c1"># This option enables the bottom right corner to be a right button on</span>
 <span class="c1"># non-synaptics clickpads.</span>
 <span class="c1"># This option is only interpreted by clickpads.</span>
-Section <span class="s2">&quot;InputClass&quot;</span>
-        Identifier <span class="s2">&quot;Default clickpad buttons&quot;</span>
-        MatchDriver <span class="s2">&quot;synaptics&quot;</span>
-        Option <span class="s2">&quot;SoftButtonAreas&quot;</span> <span class="s2">&quot;50% 0 82% 0 0 0 0 0&quot;</span>
+Section<span class="w"> </span><span class="s2">&quot;InputClass&quot;</span>
+<span class="w">        </span>Identifier<span class="w"> </span><span class="s2">&quot;Default clickpad buttons&quot;</span>
+<span class="w">        </span>MatchDriver<span class="w"> </span><span class="s2">&quot;synaptics&quot;</span>
+<span class="w">        </span>Option<span class="w"> </span><span class="s2">&quot;SoftButtonAreas&quot;</span><span class="w"> </span><span class="s2">&quot;50% 0 82% 0 0 0 0 0&quot;</span>
 <span class="c1">#       To disable the bottom edge area so the buttons only work as buttons,</span>
 <span class="c1">#       not for movement, set the AreaBottomEdge</span>
 <span class="c1">#       Option &quot;AreaBottomEdge&quot; &quot;82%&quot;</span>
@@ -93,11 +91,11 @@ EndSection
 
 <span class="c1"># This option disables software buttons on Apple touchpads.</span>
 <span class="c1"># This option is only interpreted by clickpads.</span>
-Section <span class="s2">&quot;InputClass&quot;</span>
-        Identifier <span class="s2">&quot;Disable clickpad buttons on Apple touchpads&quot;</span>
-        MatchProduct <span class="s2">&quot;Apple|bcm5974&quot;</span>
-        MatchDriver <span class="s2">&quot;synaptics&quot;</span>
-        Option <span class="s2">&quot;SoftButtonAreas&quot;</span> <span class="s2">&quot;0 0 0 0 0 0 0 0&quot;</span>
+Section<span class="w"> </span><span class="s2">&quot;InputClass&quot;</span>
+<span class="w">        </span>Identifier<span class="w"> </span><span class="s2">&quot;Disable clickpad buttons on Apple touchpads&quot;</span>
+<span class="w">        </span>MatchProduct<span class="w"> </span><span class="s2">&quot;Apple|bcm5974&quot;</span>
+<span class="w">        </span>MatchDriver<span class="w"> </span><span class="s2">&quot;synaptics&quot;</span>
+<span class="w">        </span>Option<span class="w"> </span><span class="s2">&quot;SoftButtonAreas&quot;</span><span class="w"> </span><span class="s2">&quot;0 0 0 0 0 0 0 0&quot;</span>
 EndSection
 </pre></div>
 </div>
@@ -110,12 +108,16 @@ EndSection
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="00-french-keyboard.conf.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-desktop/X11/xorg.conf.d/00-french-keyboard.conf</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../../avahi/avahi-daemon.conf.raw.html"
-                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc-desktop/avahi/avahi-daemon.conf</span></code></a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="00-french-keyboard.conf.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-desktop/X11/xorg.conf.d/00-french-keyboard.conf</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../../avahi/avahi-daemon.conf.raw.html"
+                          title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc-desktop/avahi/avahi-daemon.conf</span></code></a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../../_sources/etc-desktop/X11/xorg.conf.d/50-synaptics.conf.raw.rst.txt"
@@ -134,7 +136,7 @@ EndSection
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -157,8 +159,8 @@ EndSection
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

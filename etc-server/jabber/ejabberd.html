@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>ejabberd configuration &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Mail server configuration with Postfix and dovecot" href="../mail.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="ejabberd-configuration">
-<h1>ejabberd configuration<a class="headerlink" href="#ejabberd-configuration" title="Permalink to this headline">¶</a></h1>
+<h1>ejabberd configuration<a class="headerlink" href="#ejabberd-configuration" title="Link to this heading">¶</a></h1>
 <p>Here is how ejabberd can be installed and configured on a Debian system.</p>
 <p>First install the package:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ejabberd</span>
@@ -101,7 +99,7 @@ access to this server (reverse proxy, VPN, firewall, …).</p>
 </pre></div>
 </div>
 <section id="dns-configuration">
-<h2>DNS configuration<a class="headerlink" href="#dns-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>DNS configuration<a class="headerlink" href="#dns-configuration" title="Link to this heading">¶</a></h2>
 <p>Here is how a DNS zone may be configured:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">;</span><span class="n">service</span><span class="o">.</span><span class="n">proto</span><span class="o">.</span><span class="n">name</span>          <span class="k">class</span> <span class="nc">rr</span>   <span class="n">pri</span> <span class="n">weight</span> <span class="n">port</span> <span class="n">target</span>
 <span class="n">_jabber</span><span class="o">.</span><span class="n">_tcp</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">.</span>      <span class="n">IN</span>  <span class="n">SRV</span>  <span class="mi">10</span>    <span class="mi">0</span>    <span class="mi">5269</span> <span class="n">jabber</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">.</span>
@@ -113,7 +111,7 @@ access to this server (reverse proxy, VPN, firewall, …).</p>
 </div>
 </section>
 <section id="bitlbee-configuration">
-<h2>Bitlbee configuration<a class="headerlink" href="#bitlbee-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Bitlbee configuration<a class="headerlink" href="#bitlbee-configuration" title="Link to this heading">¶</a></h2>
 <p>Bitlbee can be used to interact with jabber through an IRC server.
 Here are some useful commands from <a class="reference external" href="http://wiki.bitlbee.org/quickstart">http://wiki.bitlbee.org/quickstart</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="n">add</span> <span class="n">jabber</span> <span class="n">bitlbee</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span> <span class="n">UserPassword</span>
@@ -127,7 +125,7 @@ you know this ID, you may run:</p>
 </div>
 </section>
 <section id="source">
-<h2>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h2>
+<h2>Source<a class="headerlink" href="#source" title="Link to this heading">¶</a></h2>
 <p><a class="reference external" href="http://wiki.linuxwall.info/doku.php/en:ressources:articles:ejabberd">http://wiki.linuxwall.info/doku.php/en:ressources:articles:ejabberd</a></p>
 </section>
 </section>
@@ -139,8 +137,9 @@ you know this ID, you may run:</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">ejabberd configuration</a><ul>
 <li><a class="reference internal" href="#dns-configuration">DNS configuration</a></li>
 <li><a class="reference internal" href="#bitlbee-configuration">Bitlbee configuration</a></li>
@@ -149,12 +148,17 @@ you know this ID, you may run:</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../dns/unbound.conf.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound.conf</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../mail.html"
-                        title="next chapter">Mail server configuration with Postfix and dovecot</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../dns/unbound.conf.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound.conf</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../mail.html"
+                          title="next chapter">Mail server configuration with Postfix and dovecot</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc-server/jabber/ejabberd.rst.txt"
@@ -173,7 +177,7 @@ you know this ID, you may run:</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -196,8 +200,8 @@ you know this ID, you may run:</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

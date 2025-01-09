@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Sound Configuration &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="systemd configuration" href="systemd.html" />
@@ -42,10 +40,10 @@
           <div class="body" role="main">
             
   <section id="sound-configuration">
-<h1>Sound Configuration<a class="headerlink" href="#sound-configuration" title="Permalink to this headline">¶</a></h1>
+<h1>Sound Configuration<a class="headerlink" href="#sound-configuration" title="Link to this heading">¶</a></h1>
 <p>Here are some notes about how I setup sound on my desktop systems.</p>
 <section id="mpd-and-pulseaudio">
-<h2>MPD and PulseAudio<a class="headerlink" href="#mpd-and-pulseaudio" title="Permalink to this headline">¶</a></h2>
+<h2>MPD and PulseAudio<a class="headerlink" href="#mpd-and-pulseaudio" title="Link to this heading">¶</a></h2>
 <p>MPD (Music Player Daemon) is a system daemon which plays music from files,
 playlists… It needs to interact with PulseAudio to get the sound out (using
 ALSA) to enable multiplexing several audio output streams (like the ones which
@@ -82,10 +80,10 @@ First, configure these two files:</p>
 </pre></div>
 </div>
 <p>Then disable the system-wide MPD service and enable the new one:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl disable mpd
-systemctl stop mpd
-systemctl start mpd-MYUSER
-systemctl <span class="nb">enable</span> mpd-MYUSER
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>disable<span class="w"> </span>mpd
+systemctl<span class="w"> </span>stop<span class="w"> </span>mpd
+systemctl<span class="w"> </span>start<span class="w"> </span>mpd-MYUSER
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>mpd-MYUSER
 </pre></div>
 </div>
 <p>Documentation:
@@ -93,7 +91,7 @@ systemctl <span class="nb">enable</span> mpd-MYUSER
 (This wiki also describe the setup with a local TCP socket)</p>
 </section>
 <section id="network">
-<h2>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h2>
+<h2>Network<a class="headerlink" href="#network" title="Link to this heading">¶</a></h2>
 <p>Streaming audio stream over the network is quite easy with PulseAudio. Let’s
 suppose host <code class="docutils literal notranslate"><span class="pre">192.0.2.42</span></code> wants to send its audio output to a PulseAudio
 server running on host <code class="docutils literal notranslate"><span class="pre">192.0.2.1</span></code>.</p>
@@ -124,8 +122,9 @@ server running on host <code class="docutils literal notranslate"><span class="p
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Sound Configuration</a><ul>
 <li><a class="reference internal" href="#mpd-and-pulseaudio">MPD and PulseAudio</a></li>
 <li><a class="reference internal" href="#network">Network</a></li>
@@ -133,12 +132,17 @@ server running on host <code class="docutils literal notranslate"><span class="p
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="selinux.html"
-                        title="previous chapter">Some notes about my SELinux installation</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="systemd.html"
-                        title="next chapter">systemd configuration</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="selinux.html"
+                          title="previous chapter">Some notes about my SELinux installation</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="systemd.html"
+                          title="next chapter">systemd configuration</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/sound.rst.txt"
@@ -157,7 +161,7 @@ server running on host <code class="docutils literal notranslate"><span class="p
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -180,8 +184,8 @@ server running on host <code class="docutils literal notranslate"><span class="p
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

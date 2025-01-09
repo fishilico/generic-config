@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>etc/iptables/iptables-desktop.rules &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="etc/iptables/iptables-server.rules" href="iptables-server.rules.raw.html" />
@@ -42,49 +40,49 @@
           <div class="body" role="main">
             
   <section id="etc-iptables-iptables-desktop-rules">
-<h1><code class="docutils literal notranslate"><span class="pre">etc/iptables/iptables-desktop.rules</span></code><a class="headerlink" href="#etc-iptables-iptables-desktop-rules" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc/iptables/iptables-desktop.rules</span></code><a class="headerlink" href="#etc-iptables-iptables-desktop-rules" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../../_downloads/c1d29b92e996a84cdb219fd6e3038383/iptables-desktop.rules"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># This file contains a basic set of rules to apply for an Internet client.</span>
 <span class="c1"># Please adapt these rules to make them match what you use.</span>
 
 
 *filter
-:INPUT DROP <span class="o">[</span><span class="m">0</span>:0<span class="o">]</span>
-:FORWARD DROP <span class="o">[</span><span class="m">0</span>:0<span class="o">]</span>
-:OUTPUT DROP <span class="o">[</span><span class="m">0</span>:0<span class="o">]</span>
+:INPUT<span class="w"> </span>DROP<span class="w"> </span><span class="o">[</span><span class="m">0</span>:0<span class="o">]</span>
+:FORWARD<span class="w"> </span>DROP<span class="w"> </span><span class="o">[</span><span class="m">0</span>:0<span class="o">]</span>
+:OUTPUT<span class="w"> </span>DROP<span class="w"> </span><span class="o">[</span><span class="m">0</span>:0<span class="o">]</span>
 
 <span class="c1"># IPv6: Disable processing of any RH0 packet to prevent ping-pong</span>
--6 -A INPUT -m rt --rt-type <span class="m">0</span> -j DROP
--6 -A FORWARD -m rt --rt-type <span class="m">0</span> -j DROP
--6 -A OUTPUT -m rt --rt-type <span class="m">0</span> -j DROP
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-m<span class="w"> </span>rt<span class="w"> </span>--rt-type<span class="w"> </span><span class="m">0</span><span class="w"> </span>-j<span class="w"> </span>DROP
+-6<span class="w"> </span>-A<span class="w"> </span>FORWARD<span class="w"> </span>-m<span class="w"> </span>rt<span class="w"> </span>--rt-type<span class="w"> </span><span class="m">0</span><span class="w"> </span>-j<span class="w"> </span>DROP
+-6<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-m<span class="w"> </span>rt<span class="w"> </span>--rt-type<span class="w"> </span><span class="m">0</span><span class="w"> </span>-j<span class="w"> </span>DROP
 
 <span class="c1">##############################################################################</span>
 <span class="c1"># INPUT filters</span>
 
 <span class="c1"># Trust local loopback</span>
--A INPUT -i lo -j ACCEPT
+-A<span class="w"> </span>INPUT<span class="w"> </span>-i<span class="w"> </span>lo<span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 <span class="c1"># Broadcast pings are allowed and produce replies in invalid states</span>
--4 -A INPUT -p icmp -m icmp --icmp-type <span class="m">0</span>/0 -m limit --limit <span class="m">2</span>/sec -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">129</span>/0 -m limit --limit <span class="m">2</span>/sec -j ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>icmp<span class="w"> </span>-m<span class="w"> </span>icmp<span class="w"> </span>--icmp-type<span class="w"> </span><span class="m">0</span>/0<span class="w"> </span>-m<span class="w"> </span>limit<span class="w"> </span>--limit<span class="w"> </span><span class="m">2</span>/sec<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">129</span>/0<span class="w"> </span>-m<span class="w"> </span>limit<span class="w"> </span>--limit<span class="w"> </span><span class="m">2</span>/sec<span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 <span class="c1"># Drop invalid packets</span>
--A INPUT -m conntrack --ctstate INVALID -j DROP
+-A<span class="w"> </span>INPUT<span class="w"> </span>-m<span class="w"> </span>conntrack<span class="w"> </span>--ctstate<span class="w"> </span>INVALID<span class="w"> </span>-j<span class="w"> </span>DROP
 
 <span class="c1"># Drop DHCP requests but accept answers</span>
--4 -A INPUT -p udp -m udp --sport <span class="m">68</span> --dport <span class="m">67</span> -j DROP
--4 -A INPUT -p udp -m udp --sport <span class="m">67</span> --dport <span class="m">68</span> -j ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">68</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">67</span><span class="w"> </span>-j<span class="w"> </span>DROP
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">67</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">68</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 <span class="c1"># Drop DHCPv6 requests but accept answers</span>
--6 -A INPUT -p udp -m udp --sport <span class="m">547</span> --dport <span class="m">546</span> -j DROP
--6 -A INPUT -p udp -m udp --sport <span class="m">546</span> --dport <span class="m">547</span> -j ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">547</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">546</span><span class="w"> </span>-j<span class="w"> </span>DROP
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">546</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">547</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 <span class="c1"># port range is in /proc/sys/net/ipv4/ip_local_port_range</span>
 <span class="c1"># If conntrack is not available (old kernel), use -m state --state instead</span>
--A INPUT -p tcp -m tcp --dport <span class="m">32768</span>:61000 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
--A INPUT -p udp -m udp --dport <span class="m">32768</span>:61000 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>-m<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">32768</span>:61000<span class="w"> </span>-m<span class="w"> </span>conntrack<span class="w"> </span>--ctstate<span class="w"> </span>RELATED,ESTABLISHED<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--dport<span class="w"> </span><span class="m">32768</span>:61000<span class="w"> </span>-m<span class="w"> </span>conntrack<span class="w"> </span>--ctstate<span class="w"> </span>ESTABLISHED<span class="w"> </span>-j<span class="w"> </span>ACCEPT
 <span class="c1"># Most DNS resolvers (BIND, PowerDNS, ...) use their own ports numbers</span>
--A INPUT -p udp -m udp --sport <span class="m">53</span> --dport <span class="m">1024</span>:65535 -j ACCEPT
+-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">53</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">1024</span>:65535<span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 <span class="c1"># If conntrack module is not available, state module doesn&#39;t work well for IPv6</span>
 <span class="c1"># so use these rules instead</span>
@@ -93,36 +91,36 @@
 
 
 <span class="c1"># ICMPv4 echo reply, dest unreachable, echo request, time exceeded, parameter problem</span>
--4 -A INPUT -p icmp -m icmp --icmp-type <span class="m">0</span>/0 -j ACCEPT
--4 -A INPUT -p icmp -m icmp --icmp-type <span class="m">3</span> -j ACCEPT
--4 -A INPUT -p icmp -m icmp --icmp-type <span class="m">8</span>/0 -j ACCEPT
--4 -A INPUT -p icmp -m icmp --icmp-type <span class="m">11</span> -j ACCEPT
--4 -A INPUT -p icmp -m icmp --icmp-type <span class="m">12</span> -j ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>icmp<span class="w"> </span>-m<span class="w"> </span>icmp<span class="w"> </span>--icmp-type<span class="w"> </span><span class="m">0</span>/0<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>icmp<span class="w"> </span>-m<span class="w"> </span>icmp<span class="w"> </span>--icmp-type<span class="w"> </span><span class="m">3</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>icmp<span class="w"> </span>-m<span class="w"> </span>icmp<span class="w"> </span>--icmp-type<span class="w"> </span><span class="m">8</span>/0<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>icmp<span class="w"> </span>-m<span class="w"> </span>icmp<span class="w"> </span>--icmp-type<span class="w"> </span><span class="m">11</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>icmp<span class="w"> </span>-m<span class="w"> </span>icmp<span class="w"> </span>--icmp-type<span class="w"> </span><span class="m">12</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 <span class="c1"># ICMPv6 dest unreachable, packet too big, time exceeded, parameter problem</span>
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">1</span> -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">2</span> -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">3</span> -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">4</span> -j ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">1</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">2</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">3</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">4</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
 <span class="c1"># ICMPv6 echo request, echo reply</span>
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">128</span>/0 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">129</span>/0 -j ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">128</span>/0<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">129</span>/0<span class="w"> </span>-j<span class="w"> </span>ACCEPT
 <span class="c1"># IPv6 Multicast Listener Query, Report and Done</span>
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">130</span>/0 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">131</span>/0 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">132</span>/0 -j ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">130</span>/0<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">131</span>/0<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">132</span>/0<span class="w"> </span>-j<span class="w"> </span>ACCEPT
 <span class="c1"># Neighbor Discovery Protocol: RS, RA, NS, NA</span>
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">133</span>/0 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">134</span>/0 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">135</span>/0 -j ACCEPT
--6 -A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type <span class="m">136</span>/0 -j ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">133</span>/0<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">134</span>/0<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">135</span>/0<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-m<span class="w"> </span>icmp6<span class="w"> </span>--icmpv6-type<span class="w"> </span><span class="m">136</span>/0<span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 
 <span class="c1"># Accept SSH, HTTP, HTTPS, ... (activate only the ones needed)</span>
 <span class="c1">#-A INPUT -p tcp -m multiport --dports 22,80,443 -j ACCEPT</span>
 
 <span class="c1"># Accept NTP</span>
--A INPUT -p udp -m udp --sport <span class="m">123</span> --dport <span class="m">123</span> -j ACCEPT
+-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">123</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">123</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 
 <span class="c1"># Accept IGMP (multicast) and mDNS</span>
@@ -131,39 +129,39 @@
 <span class="c1">#  224.0.0.22 = IGMPv3</span>
 <span class="c1">#  224.0.0.251 = mDNS</span>
 <span class="c1"># TODO: use -m pkttype --pkt-type multicast -j ACCEPT ?</span>
--4 -A INPUT -d <span class="m">224</span>.0.0.1/32 -p igmp -j ACCEPT
--4 -A INPUT -d <span class="m">224</span>.0.0.2/32 -p igmp -j ACCEPT
--4 -A INPUT -d <span class="m">224</span>.0.0.22/32 -p igmp -j ACCEPT
--4 -A INPUT -d <span class="m">224</span>.0.0.251/32 -p igmp -j ACCEPT
--4 -A INPUT -d <span class="m">224</span>.0.0.251/32 -p udp -m udp --sport <span class="m">5353</span> --dport <span class="m">5353</span> -j ACCEPT
--6 -A INPUT -d ff02::fb/128 -p udp -m udp --sport <span class="m">5353</span> --dport <span class="m">5353</span> -j ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">224</span>.0.0.1/32<span class="w"> </span>-p<span class="w"> </span>igmp<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">224</span>.0.0.2/32<span class="w"> </span>-p<span class="w"> </span>igmp<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">224</span>.0.0.22/32<span class="w"> </span>-p<span class="w"> </span>igmp<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">224</span>.0.0.251/32<span class="w"> </span>-p<span class="w"> </span>igmp<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">224</span>.0.0.251/32<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">5353</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">5353</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-d<span class="w"> </span>ff02::fb/128<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">5353</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">5353</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 <span class="c1"># Accept NetBios</span>
--A INPUT -p tcp -m multiport --dports <span class="m">139</span>,445 -j ACCEPT
--A INPUT -p udp -m udp --sport <span class="m">137</span>:138 --dport <span class="m">137</span>:138 -j ACCEPT
+-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>-m<span class="w"> </span>multiport<span class="w"> </span>--dports<span class="w"> </span><span class="m">139</span>,445<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">137</span>:138<span class="w"> </span>--dport<span class="w"> </span><span class="m">137</span>:138<span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 <span class="c1"># Silently drop some LAN discovery services</span>
--4 -A INPUT -p udp -m udp --sport <span class="m">3483</span> --dport <span class="m">3483</span> -m comment --comment <span class="s2">&quot;Slim Devices&quot;</span> -j DROP
--4 -A INPUT -p udp -m udp --sport <span class="m">17500</span> --dport <span class="m">17500</span> -m comment --comment <span class="s2">&quot;DropBox&quot;</span> -j DROP
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">3483</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">3483</span><span class="w"> </span>-m<span class="w"> </span>comment<span class="w"> </span>--comment<span class="w"> </span><span class="s2">&quot;Slim Devices&quot;</span><span class="w"> </span>-j<span class="w"> </span>DROP
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">17500</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">17500</span><span class="w"> </span>-m<span class="w"> </span>comment<span class="w"> </span>--comment<span class="w"> </span><span class="s2">&quot;DropBox&quot;</span><span class="w"> </span>-j<span class="w"> </span>DROP
 
 <span class="c1"># Silently drop unsollicited broadcast and multicast</span>
--A INPUT -m pkttype --pkt-type broadcast -j DROP
--A INPUT -m pkttype --pkt-type multicast -j DROP
+-A<span class="w"> </span>INPUT<span class="w"> </span>-m<span class="w"> </span>pkttype<span class="w"> </span>--pkt-type<span class="w"> </span>broadcast<span class="w"> </span>-j<span class="w"> </span>DROP
+-A<span class="w"> </span>INPUT<span class="w"> </span>-m<span class="w"> </span>pkttype<span class="w"> </span>--pkt-type<span class="w"> </span>multicast<span class="w"> </span>-j<span class="w"> </span>DROP
 <span class="c1"># This rule is still here to really avoid rejecting an IPv4 broadcast</span>
--4 -A INPUT -d <span class="m">255</span>.255.255.255/32 -j DROP
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">255</span>.255.255.255/32<span class="w"> </span>-j<span class="w"> </span>DROP
 
 <span class="c1"># Log to NetFilter, so that logs don&#39;t fills up and debugging is quick</span>
 <span class="c1">#-A INPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix &quot;[IN DROP] &quot;</span>
--A INPUT -m limit --limit <span class="m">1</span>/sec --limit-burst <span class="m">1000</span> -j NFLOG
+-A<span class="w"> </span>INPUT<span class="w"> </span>-m<span class="w"> </span>limit<span class="w"> </span>--limit<span class="w"> </span><span class="m">1</span>/sec<span class="w"> </span>--limit-burst<span class="w"> </span><span class="m">1000</span><span class="w"> </span>-j<span class="w"> </span>NFLOG
 
 <span class="c1"># Reject packet, with some stats in iptables -nvL and ip6tables -nvL</span>
--A INPUT -p tcp -j REJECT --reject-with tcp-reset
--4 -A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
--6 -A INPUT -p udp -j REJECT --reject-with icmp6-port-unreachable
--4 -A INPUT -p icmp -j DROP
--6 -A INPUT -p ipv6-icmp -j DROP
--4 -A INPUT -j REJECT --reject-with icmp-proto-unreachable
--6 -A INPUT -j REJECT
+-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>-j<span class="w"> </span>REJECT<span class="w"> </span>--reject-with<span class="w"> </span>tcp-reset
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-j<span class="w"> </span>REJECT<span class="w"> </span>--reject-with<span class="w"> </span>icmp-port-unreachable
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-j<span class="w"> </span>REJECT<span class="w"> </span>--reject-with<span class="w"> </span>icmp6-port-unreachable
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>icmp<span class="w"> </span>-j<span class="w"> </span>DROP
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-j<span class="w"> </span>DROP
+-4<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-j<span class="w"> </span>REJECT<span class="w"> </span>--reject-with<span class="w"> </span>icmp-proto-unreachable
+-6<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-j<span class="w"> </span>REJECT
 
 
 <span class="c1">##############################################################################</span>
@@ -171,45 +169,45 @@
 
 <span class="c1"># These filters respect the symmetry of INPUT filters</span>
 
--A OUTPUT -o lo -j ACCEPT
--4 -A OUTPUT -p udp -m udp --sport <span class="m">67</span> --dport <span class="m">68</span> -j DROP
--4 -A OUTPUT -p udp -m udp --sport <span class="m">68</span> --dport <span class="m">67</span> -j ACCEPT
--4 -A OUTPUT -p icmp -j ACCEPT
--6 -A OUTPUT -p ipv6-icmp -j ACCEPT
+-A<span class="w"> </span>OUTPUT<span class="w"> </span>-o<span class="w"> </span>lo<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">67</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">68</span><span class="w"> </span>-j<span class="w"> </span>DROP
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">68</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">67</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>icmp<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>ipv6-icmp<span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 <span class="c1"># Accept TCP reset and FIN+ACK</span>
--A OUTPUT -p tcp -m tcp --tcp-flags RST RST -j ACCEPT
--A OUTPUT -p tcp -m tcp --tcp-flags FIN,ACK FIN,ACK -j ACCEPT
+-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>-m<span class="w"> </span>tcp<span class="w"> </span>--tcp-flags<span class="w"> </span>RST<span class="w"> </span>RST<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>-m<span class="w"> </span>tcp<span class="w"> </span>--tcp-flags<span class="w"> </span>FIN,ACK<span class="w"> </span>FIN,ACK<span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
--4 -A OUTPUT -d <span class="m">255</span>.255.255.255/32 -j DROP
--4 -A OUTPUT -m conntrack --ctstate INVALID -j DROP
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">255</span>.255.255.255/32<span class="w"> </span>-j<span class="w"> </span>DROP
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-m<span class="w"> </span>conntrack<span class="w"> </span>--ctstate<span class="w"> </span>INVALID<span class="w"> </span>-j<span class="w"> </span>DROP
 
 <span class="c1"># Refuse to send emails directly through SMTP. Use SMTPS (port 587) to send mail.</span>
--A OUTPUT -p tcp -m tcp --dport <span class="m">25</span> -j REJECT
+-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>-m<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">25</span><span class="w"> </span>-j<span class="w"> </span>REJECT
 
--A OUTPUT -p tcp -m tcp --sport <span class="m">32768</span>:61000 -j ACCEPT
--A OUTPUT -p udp -m udp --sport <span class="m">32768</span>:61000 -j ACCEPT
--A OUTPUT -p udp -m udp --sport <span class="m">1024</span>:65535 --dport <span class="m">53</span> -j ACCEPT
+-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>-m<span class="w"> </span>tcp<span class="w"> </span>--sport<span class="w"> </span><span class="m">32768</span>:61000<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">32768</span>:61000<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">1024</span>:65535<span class="w"> </span>--dport<span class="w"> </span><span class="m">53</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 <span class="c1">#-A OUTPUT -p tcp -m multiport --sports 22,80,443 -j ACCEPT</span>
--A OUTPUT -p udp -m udp --dport <span class="m">123</span> -j ACCEPT
+-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--dport<span class="w"> </span><span class="m">123</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
--4 -A OUTPUT -d <span class="m">224</span>.0.0.1/32 -p igmp -j ACCEPT
--4 -A OUTPUT -d <span class="m">224</span>.0.0.2/32 -p igmp -j ACCEPT
--4 -A OUTPUT -d <span class="m">224</span>.0.0.22/32 -p igmp -j ACCEPT
--4 -A OUTPUT -d <span class="m">224</span>.0.0.251/32 -p igmp -j ACCEPT
--4 -A OUTPUT -d <span class="m">224</span>.0.0.251/32 -p udp -m udp --sport <span class="m">5353</span> --dport <span class="m">5353</span> -j ACCEPT
--6 -A OUTPUT -d ff02::fb/128 -p udp -m udp --sport <span class="m">5353</span> --dport <span class="m">5353</span> -j ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">224</span>.0.0.1/32<span class="w"> </span>-p<span class="w"> </span>igmp<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">224</span>.0.0.2/32<span class="w"> </span>-p<span class="w"> </span>igmp<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">224</span>.0.0.22/32<span class="w"> </span>-p<span class="w"> </span>igmp<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">224</span>.0.0.251/32<span class="w"> </span>-p<span class="w"> </span>igmp<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-d<span class="w"> </span><span class="m">224</span>.0.0.251/32<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">5353</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">5353</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+-6<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-d<span class="w"> </span>ff02::fb/128<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>udp<span class="w"> </span>--sport<span class="w"> </span><span class="m">5353</span><span class="w"> </span>--dport<span class="w"> </span><span class="m">5353</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
 
 <span class="c1">#-A OUTPUT -m limit --limit 1/sec --limit-burst 1000 -j LOG --log-prefix &quot;[OUT DROP] &quot;</span>
--A OUTPUT -m limit --limit <span class="m">1</span>/sec --limit-burst <span class="m">1000</span> -j NFLOG
+-A<span class="w"> </span>OUTPUT<span class="w"> </span>-m<span class="w"> </span>limit<span class="w"> </span>--limit<span class="w"> </span><span class="m">1</span>/sec<span class="w"> </span>--limit-burst<span class="w"> </span><span class="m">1000</span><span class="w"> </span>-j<span class="w"> </span>NFLOG
 
 <span class="c1"># Reject other packets, with some stats in iptables -nvL and ip6tables -nvL</span>
--A OUTPUT -p tcp -j REJECT --reject-with tcp-reset
--4 -A OUTPUT -p udp -j REJECT --reject-with icmp-port-unreachable
--6 -A OUTPUT -p udp -j REJECT --reject-with icmp6-port-unreachable
--4 -A OUTPUT -j REJECT --reject-with icmp-proto-unreachable
--6 -A OUTPUT -j REJECT
+-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>-j<span class="w"> </span>REJECT<span class="w"> </span>--reject-with<span class="w"> </span>tcp-reset
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-j<span class="w"> </span>REJECT<span class="w"> </span>--reject-with<span class="w"> </span>icmp-port-unreachable
+-6<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-j<span class="w"> </span>REJECT<span class="w"> </span>--reject-with<span class="w"> </span>icmp6-port-unreachable
+-4<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-j<span class="w"> </span>REJECT<span class="w"> </span>--reject-with<span class="w"> </span>icmp-proto-unreachable
+-6<span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-j<span class="w"> </span>REJECT
 
 COMMIT
 </pre></div>
@@ -223,12 +221,16 @@ COMMIT
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="empty.rules.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/iptables/empty.rules</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="iptables-server.rules.raw.html"
-                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/iptables/iptables-server.rules</span></code></a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="empty.rules.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/iptables/empty.rules</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="iptables-server.rules.raw.html"
+                          title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/iptables/iptables-server.rules</span></code></a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc/iptables/iptables-desktop.rules.raw.rst.txt"
@@ -247,7 +249,7 @@ COMMIT
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -270,8 +272,8 @@ COMMIT
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

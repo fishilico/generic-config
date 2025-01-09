@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>etc/ssh/sshd_config &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="etc/sudoers" href="../sudoers.raw.html" />
@@ -42,23 +40,23 @@
           <div class="body" role="main">
             
   <section id="etc-ssh-sshd-config">
-<h1><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config</span></code><a class="headerlink" href="#etc-ssh-sshd-config" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config</span></code><a class="headerlink" href="#etc-ssh-sshd-config" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../../_downloads/c22859400a1682039052ff422273dba8/sshd_config"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here is a general configuration file for SSH server</span>
 <span class="c1"># Verify the applied configuration with: sshd -T</span>
 
 <span class="c1"># Authentication mechanisms: allow public key, disable password access</span>
-PubkeyAuthentication yes
-PasswordAuthentication no
+PubkeyAuthentication<span class="w"> </span>yes
+PasswordAuthentication<span class="w"> </span>no
 
 <span class="c1"># Some other config values</span>
-PermitRootLogin no
-PermitEmptyPasswords no
-ChallengeResponseAuthentication no
-UsePAM yes
-X11Forwarding no
-UseDNS yes
-PermitTunnel no
+PermitRootLogin<span class="w"> </span>no
+PermitEmptyPasswords<span class="w"> </span>no
+ChallengeResponseAuthentication<span class="w"> </span>no
+UsePAM<span class="w"> </span>yes
+X11Forwarding<span class="w"> </span>no
+UseDNS<span class="w"> </span>yes
+PermitTunnel<span class="w"> </span>no
 
 <span class="c1"># Restrict allowed users</span>
 <span class="c1">#AllowUsers user</span>
@@ -68,12 +66,12 @@ PermitTunnel no
 <span class="c1"># Their home directory must belong to root, otherwise sshd complains with:</span>
 <span class="c1">#    fatal: bad ownership or modes for chroot directory &quot;/home/user&quot;</span>
 <span class="c1"># Documentation: https://wiki.archlinux.org/index.php/SFTP_chroot</span>
-Subsystem sftp internal-sftp
-Match Group sftpusers
-   ChrootDirectory /home/%u
-   ForceCommand internal-sftp
-   AllowTcpForwarding no
-   X11Forwarding no
+Subsystem<span class="w"> </span>sftp<span class="w"> </span>internal-sftp
+Match<span class="w"> </span>Group<span class="w"> </span>sftpusers
+<span class="w">   </span>ChrootDirectory<span class="w"> </span>/home/%u
+<span class="w">   </span>ForceCommand<span class="w"> </span>internal-sftp
+<span class="w">   </span>AllowTcpForwarding<span class="w"> </span>no
+<span class="w">   </span>X11Forwarding<span class="w"> </span>no
 </pre></div>
 </div>
 </section>
@@ -85,12 +83,16 @@ Match Group sftpusers
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="sshd_config.default.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config.default</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../sudoers.raw.html"
-                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/sudoers</span></code></a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="sshd_config.default.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config.default</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../sudoers.raw.html"
+                          title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/sudoers</span></code></a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc/ssh/sshd_config.raw.rst.txt"
@@ -109,7 +111,7 @@ Match Group sftpusers
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -132,8 +134,8 @@ Match Group sftpusers
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

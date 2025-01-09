@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Build a development environment for Debian &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="GDB, The GNU Project Debugger" href="gdb.html" />
@@ -42,10 +40,10 @@
           <div class="body" role="main">
             
   <section id="build-a-development-environment-for-debian">
-<h1>Build a development environment for Debian<a class="headerlink" href="#build-a-development-environment-for-debian" title="Permalink to this headline">¶</a></h1>
+<h1>Build a development environment for Debian<a class="headerlink" href="#build-a-development-environment-for-debian" title="Link to this heading">¶</a></h1>
 <p>Here is a memo about how some development activities can be done in Debian.</p>
 <section id="compile-a-debian-package-in-debug-mode">
-<h2>Compile a Debian package in debug mode<a class="headerlink" href="#compile-a-debian-package-in-debug-mode" title="Permalink to this headline">¶</a></h2>
+<h2>Compile a Debian package in debug mode<a class="headerlink" href="#compile-a-debian-package-in-debug-mode" title="Link to this heading">¶</a></h2>
 <p>Sometimes a program crashes and you need to reinstall it to be able to debug it.
 With debug symbols, you may attach a process with gdb and then follow the
 execution with commands such as <code class="docutils literal notranslate"><span class="pre">layout</span> <span class="pre">src</span></code> and <code class="docutils literal notranslate"><span class="pre">layout</span> <span class="pre">split</span></code> instead of
@@ -75,7 +73,7 @@ the build process (don’t sign any produced files). Instead of calling debuild,
 calling <code class="docutils literal notranslate"><span class="pre">dpkg-buildpackage</span> <span class="pre">-rfakeroot</span></code> may work, as some documents suggest.</p>
 </section>
 <section id="set-up-your-own-debian-repository">
-<h2>Set up your own Debian repository<a class="headerlink" href="#set-up-your-own-debian-repository" title="Permalink to this headline">¶</a></h2>
+<h2>Set up your own Debian repository<a class="headerlink" href="#set-up-your-own-debian-repository" title="Link to this heading">¶</a></h2>
 <p>You may want to install some package you compiled in several systems or to make
 this package publicly available. This can be achieved thanks to <code class="docutils literal notranslate"><span class="pre">reprepro</span></code>,
 which is a simple tool to maintain a repository tree. To do that, let’s assume
@@ -129,7 +127,7 @@ GPG keychain.</p>
 <a class="reference external" href="https://wiki.debian.org/SettingUpSignedAptRepositoryWithReprepro">https://wiki.debian.org/SettingUpSignedAptRepositoryWithReprepro</a></p>
 </section>
 <section id="package-a-python-library-for-debian">
-<h2>Package a Python library for Debian<a class="headerlink" href="#package-a-python-library-for-debian" title="Permalink to this headline">¶</a></h2>
+<h2>Package a Python library for Debian<a class="headerlink" href="#package-a-python-library-for-debian" title="Link to this heading">¶</a></h2>
 <p>Relevant Debian wiki articles:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://wiki.debian.org/IntroDebianPackaging">https://wiki.debian.org/IntroDebianPackaging</a></p></li>
@@ -211,7 +209,7 @@ and sign it with your GPG key:</p>
 a Debian package repository or wherever you like.</p>
 </section>
 <section id="test-patches-in-git-code-with-a-clean-package">
-<h2>Test patches in git code with a clean package<a class="headerlink" href="#test-patches-in-git-code-with-a-clean-package" title="Permalink to this headline">¶</a></h2>
+<h2>Test patches in git code with a clean package<a class="headerlink" href="#test-patches-in-git-code-with-a-clean-package" title="Link to this heading">¶</a></h2>
 <p>Let’s say you’re working on <code class="docutils literal notranslate"><span class="pre">mysoftware</span></code> (add features, fix bugs…) and you
 need to test it “for real” on your Debian system. To make the installation
 process really looks like a common installation, the best way is to build a
@@ -247,8 +245,9 @@ For the sake of the example, let’s say your testing version is <code class="do
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Build a development environment for Debian</a><ul>
 <li><a class="reference internal" href="#compile-a-debian-package-in-debug-mode">Compile a Debian package in debug mode</a></li>
 <li><a class="reference internal" href="#set-up-your-own-debian-repository">Set up your own Debian repository</a></li>
@@ -258,12 +257,17 @@ For the sake of the example, let’s say your testing version is <code class="do
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="debian.html"
-                        title="previous chapter">Some information of Debian systems</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="gdb.html"
-                        title="next chapter">GDB, The GNU Project Debugger</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="debian.html"
+                          title="previous chapter">Some information of Debian systems</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="gdb.html"
+                          title="next chapter">GDB, The GNU Project Debugger</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/debian-dev.rst.txt"
@@ -282,7 +286,7 @@ For the sake of the example, let’s say your testing version is <code class="do
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -305,8 +309,8 @@ For the sake of the example, let’s say your testing version is <code class="do
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Kernel Network Console (netconsole module) &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Using perf on Linux" href="perf-linux.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="kernel-network-console-netconsole-module">
-<h1>Kernel Network Console (netconsole module)<a class="headerlink" href="#kernel-network-console-netconsole-module" title="Permalink to this headline">¶</a></h1>
+<h1>Kernel Network Console (netconsole module)<a class="headerlink" href="#kernel-network-console-netconsole-module" title="Link to this heading">¶</a></h1>
 <p>To debug hosts when a display is not available, or in other circumstances, it’s
 possible to set up a network console so that kernel messages go through the
 network to a destination host which can display these messages. Let’s say the
@@ -50,12 +48,6 @@ source host (which sends messages) has an ethernet interface <code class="docuti
 linked to the destination host (which receives messages).
 The addresses of each interface is as follows:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 32%" />
-<col style="width: 42%" />
-<col style="width: 8%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Host</p></th>
 <th class="head"><p>MAC address</p></th>
@@ -116,7 +108,7 @@ is listening for incoming messages on the destination host. For example with
 </pre></div>
 </div>
 <section id="dynamic-configuration">
-<h2>Dynamic configuration<a class="headerlink" href="#dynamic-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Dynamic configuration<a class="headerlink" href="#dynamic-configuration" title="Link to this heading">¶</a></h2>
 <p>To dynamically change netconsole’s settings, you need to mount the kernel
 config filesystem:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">modprobe</span> <span class="n">configfs</span>
@@ -140,7 +132,7 @@ file before writing 1 to <code class="docutils literal notranslate"><span class=
 </div>
 </section>
 <section id="firewall-configuration">
-<h2>Firewall configuration<a class="headerlink" href="#firewall-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Firewall configuration<a class="headerlink" href="#firewall-configuration" title="Link to this heading">¶</a></h2>
 <p>Here are the iptables rules to add to the firewall to accept the communication.</p>
 <p>Source host:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">OUTPUT</span> <span class="o">-</span><span class="n">p</span> <span class="n">udp</span> <span class="o">-</span><span class="n">m</span> <span class="n">udp</span> <span class="o">--</span><span class="n">sport</span> <span class="mi">6665</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">6666</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
@@ -158,7 +150,7 @@ file before writing 1 to <code class="docutils literal notranslate"><span class=
 </div>
 </section>
 <section id="documentation-links">
-<h2>Documentation links<a class="headerlink" href="#documentation-links" title="Permalink to this headline">¶</a></h2>
+<h2>Documentation links<a class="headerlink" href="#documentation-links" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/networking/netconsole.txt">https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/networking/netconsole.txt</a>
 Linux Documentation</p></li>
@@ -177,8 +169,9 @@ Ubuntu wiki</p></li>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Kernel Network Console (netconsole module)</a><ul>
 <li><a class="reference internal" href="#dynamic-configuration">Dynamic configuration</a></li>
 <li><a class="reference internal" href="#firewall-configuration">Firewall configuration</a></li>
@@ -187,12 +180,17 @@ Ubuntu wiki</p></li>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="netconfig.html"
-                        title="previous chapter">Network configuration</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="perf-linux.html"
-                        title="next chapter">Using perf on Linux</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="netconfig.html"
+                          title="previous chapter">Network configuration</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="perf-linux.html"
+                          title="next chapter">Using perf on Linux</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/netconsole.rst.txt"
@@ -211,7 +209,7 @@ Ubuntu wiki</p></li>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -234,8 +232,8 @@ Ubuntu wiki</p></li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>etc-server/web/apache.conf &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Collectd" href="collectd.html" />
@@ -42,65 +40,65 @@
           <div class="body" role="main">
             
   <section id="etc-server-web-apache-conf">
-<h1><code class="docutils literal notranslate"><span class="pre">etc-server/web/apache.conf</span></code><a class="headerlink" href="#etc-server-web-apache-conf" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc-server/web/apache.conf</span></code><a class="headerlink" href="#etc-server-web-apache-conf" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../../_downloads/c2f137f87efaee98a46604e9037b75be/apache.conf"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
-<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="c"># This file contains some customizations from the default Apache configuration.</span><span class="w"></span>
-<span class="c"># The main config file can be located in:</span><span class="w"></span>
-<span class="c">#   * /etc/httpd/conf/httpd.conf (ArchLinux)</span><span class="w"></span>
-<span class="c">#   * /etc/apache2/apache2.conf (Debian)</span><span class="w"></span>
-<span class="c">#</span><span class="w"></span>
-<span class="c"># Documentation:</span><span class="w"></span>
-<span class="c">#   * http://httpd.apache.org/docs/current/</span><span class="w"></span>
-<span class="c">#   * https://wiki.archlinux.org/index.php/LAMP</span><span class="w"></span>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="c"># This file contains some customizations from the default Apache configuration.</span>
+<span class="c"># The main config file can be located in:</span>
+<span class="c">#   * /etc/httpd/conf/httpd.conf (ArchLinux)</span>
+<span class="c">#   * /etc/apache2/apache2.conf (Debian)</span>
+<span class="c">#</span>
+<span class="c"># Documentation:</span>
+<span class="c">#   * http://httpd.apache.org/docs/current/</span>
+<span class="c">#   * https://wiki.archlinux.org/index.php/LAMP</span>
 
-<span class="nb">ServerSignature</span><span class="w"> </span><span class="k">Off</span><span class="w"></span>
-<span class="nb">ServerTokens</span><span class="w"> </span>Prod<span class="w"></span>
+<span class="nb">ServerSignature</span><span class="w"> </span><span class="k">Off</span>
+<span class="nb">ServerTokens</span><span class="w"> </span>Prod
 
-<span class="c"># Configuration for a local web server</span><span class="w"></span>
-<span class="nb">ServerName</span><span class="w"> </span>localhost<span class="w"></span>
-<span class="nb">Listen</span><span class="w"> </span><span class="m">127.0.0.1</span>:80<span class="w"></span>
-<span class="nb">Listen</span><span class="w"> </span>[::1]:80<span class="w"></span>
+<span class="c"># Configuration for a local web server</span>
+<span class="nb">ServerName</span><span class="w"> </span>localhost
+<span class="nb">Listen</span><span class="w"> </span><span class="m">127.0.0.1</span>:80
+<span class="nb">Listen</span><span class="w"> </span>[::1]:80
 
-<span class="nb">AllowOverride</span><span class="w"> </span><span class="k">None</span><span class="w"></span>
+<span class="nb">AllowOverride</span><span class="w"> </span><span class="k">None</span>
 
-<span class="nt">&lt;Directory</span><span class="w"> </span><span class="s">&quot;/srv/http&quot;</span><span class="nt">&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">Options</span><span class="w"> </span>Indexes<span class="w"> </span>FollowSymLinks<span class="w"></span>
-<span class="w">    </span><span class="nb">AllowOverride</span><span class="w"> </span><span class="k">None</span><span class="w"></span>
-<span class="w">    </span><span class="nb">Require</span><span class="w"> </span><span class="k">all</span><span class="w"> </span>granted<span class="w"></span>
-<span class="w">    </span><span class="c"># Apache &lt;2.3 configuration:</span><span class="w"></span>
-<span class="w">    </span><span class="c"># &lt;IfVersion &lt; 2.3&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="c">#   Order allow,deny</span><span class="w"></span>
-<span class="w">    </span><span class="c">#   Allow from all</span><span class="w"></span>
-<span class="w">    </span><span class="c"># &lt;/IfVersion&gt;</span><span class="w"></span>
-<span class="nt">&lt;/Directory&gt;</span><span class="w"></span>
-<span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">dir_module</span><span class="nt">&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">DirectoryIndex</span><span class="w"> </span>index.html<span class="w"></span>
-<span class="nt">&lt;/IfModule&gt;</span><span class="w"></span>
+<span class="nt">&lt;Directory</span><span class="w"> </span><span class="s">&quot;/srv/http&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nb">Options</span><span class="w"> </span>Indexes<span class="w"> </span>FollowSymLinks
+<span class="w">    </span><span class="nb">AllowOverride</span><span class="w"> </span><span class="k">None</span>
+<span class="w">    </span><span class="nb">Require</span><span class="w"> </span><span class="k">all</span><span class="w"> </span>granted
+<span class="w">    </span><span class="c"># Apache &lt;2.3 configuration:</span>
+<span class="w">    </span><span class="c"># &lt;IfVersion &lt; 2.3&gt;</span>
+<span class="w">    </span><span class="c">#   Order allow,deny</span>
+<span class="w">    </span><span class="c">#   Allow from all</span>
+<span class="w">    </span><span class="c"># &lt;/IfVersion&gt;</span>
+<span class="nt">&lt;/Directory&gt;</span>
+<span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">dir_module</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nb">DirectoryIndex</span><span class="w"> </span>index.html
+<span class="nt">&lt;/IfModule&gt;</span>
 
-<span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">alias_module</span><span class="nt">&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">Alias</span><span class="w"> </span><span class="s2">&quot;/doc&quot;</span><span class="w"> </span><span class="s2">&quot;/usr/share/doc/&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&lt;Directory</span><span class="w"> </span><span class="s">&quot;/usr/share/doc/&quot;</span><span class="nt">&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="nb">Options</span><span class="w"> </span>Indexes<span class="w"> </span>MultiViews<span class="w"> </span>FollowSymLinks<span class="w"></span>
-<span class="w">        </span><span class="nb">AllowOverride</span><span class="w"> </span><span class="k">None</span><span class="w"></span>
+<span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">alias_module</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nb">Alias</span><span class="w"> </span><span class="s2">&quot;/doc&quot;</span><span class="w"> </span><span class="s2">&quot;/usr/share/doc/&quot;</span>
+<span class="w">    </span><span class="nt">&lt;Directory</span><span class="w"> </span><span class="s">&quot;/usr/share/doc/&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nb">Options</span><span class="w"> </span>Indexes<span class="w"> </span>MultiViews<span class="w"> </span>FollowSymLinks
+<span class="w">        </span><span class="nb">AllowOverride</span><span class="w"> </span><span class="k">None</span>
 
-<span class="w">        </span><span class="c"># &quot;Require local&quot; is better than:</span><span class="w"></span>
-<span class="w">        </span><span class="c">#   Require ip 127.0.0.0/8 ::1/128</span><span class="w"></span>
-<span class="w">        </span><span class="c">#   Require host localhost</span><span class="w"></span>
-<span class="w">        </span><span class="nb">Require</span><span class="w"> </span>local<span class="w"></span>
+<span class="w">        </span><span class="c"># &quot;Require local&quot; is better than:</span>
+<span class="w">        </span><span class="c">#   Require ip 127.0.0.0/8 ::1/128</span>
+<span class="w">        </span><span class="c">#   Require host localhost</span>
+<span class="w">        </span><span class="nb">Require</span><span class="w"> </span>local
 
-<span class="w">        </span><span class="c"># Apache &lt;2.4 configuration:</span><span class="w"></span>
-<span class="w">        </span><span class="c">#Order deny,allow</span><span class="w"></span>
-<span class="w">        </span><span class="c">#Deny from all</span><span class="w"></span>
-<span class="w">        </span><span class="c">#Allow from 127.0.0.0/255.0.0.0 ::1/128</span><span class="w"></span>
+<span class="w">        </span><span class="c"># Apache &lt;2.4 configuration:</span>
+<span class="w">        </span><span class="c">#Order deny,allow</span>
+<span class="w">        </span><span class="c">#Deny from all</span>
+<span class="w">        </span><span class="c">#Allow from 127.0.0.0/255.0.0.0 ::1/128</span>
 
-<span class="w">        </span><span class="c"># Disable PHP in this directory</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">php5_module</span><span class="nt">&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="nb">php_admin_value</span><span class="w"> </span>engine<span class="w"> </span><span class="k">Off</span><span class="w"></span>
-<span class="w">            </span><span class="c"># If PHP is enabled, this directive restricts fopen</span><span class="w"></span>
-<span class="w">            </span><span class="nb">php_admin_value</span><span class="w"> </span>open_basedir<span class="w"> </span><span class="s2">&quot;/usr/share/doc/&quot;</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&lt;/IfModule&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&lt;/Directory&gt;</span><span class="w"></span>
-<span class="nt">&lt;/IfModule&gt;</span><span class="w"></span>
+<span class="w">        </span><span class="c"># Disable PHP in this directory</span>
+<span class="w">        </span><span class="nt">&lt;IfModule</span><span class="w"> </span><span class="s">php5_module</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nb">php_admin_value</span><span class="w"> </span>engine<span class="w"> </span><span class="k">Off</span>
+<span class="w">            </span><span class="c"># If PHP is enabled, this directive restricts fopen</span>
+<span class="w">            </span><span class="nb">php_admin_value</span><span class="w"> </span>open_basedir<span class="w"> </span><span class="s2">&quot;/usr/share/doc/&quot;</span>
+<span class="w">        </span><span class="nt">&lt;/IfModule&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Directory&gt;</span>
+<span class="nt">&lt;/IfModule&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -112,12 +110,16 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../mysql/my.cnf.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/mysql/my.cnf</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="collectd.html"
-                        title="next chapter">Collectd</a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../mysql/my.cnf.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/mysql/my.cnf</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="collectd.html"
+                          title="next chapter">Collectd</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc-server/web/apache.conf.raw.rst.txt"
@@ -136,7 +138,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -159,8 +161,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

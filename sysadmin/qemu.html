@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>QEmu-KVM notes &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Qubes OS setup" href="qubes-os.html" />
@@ -42,116 +40,116 @@
           <div class="body" role="main">
             
   <section id="qemu-kvm-notes">
-<h1>QEmu-KVM notes<a class="headerlink" href="#qemu-kvm-notes" title="Permalink to this headline">¶</a></h1>
+<h1>QEmu-KVM notes<a class="headerlink" href="#qemu-kvm-notes" title="Link to this heading">¶</a></h1>
 <p>This document contains some useful command lines to use QEmu to work with
 virtual images.</p>
 <section id="simple-qemu-invocation-commands">
-<h2>Simple QEmu invocation commands<a class="headerlink" href="#simple-qemu-invocation-commands" title="Permalink to this headline">¶</a></h2>
+<h2>Simple QEmu invocation commands<a class="headerlink" href="#simple-qemu-invocation-commands" title="Link to this heading">¶</a></h2>
 <p>The most simple QEmu usage consists in running a disk image or a liveCD/liveUSB
 in a virtual machine, with a NAT network.  Here are some commands:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run a LiveCD</span>
-qemu-system-x86_64 -cdrom livecd.iso -boot d
+qemu-system-x86_64<span class="w"> </span>-cdrom<span class="w"> </span>livecd.iso<span class="w"> </span>-boot<span class="w"> </span>d
 
 <span class="c1"># Run a disk image with KVM acceleration, 1GB memory and 4 cores</span>
-qemu-system-x86_64 -enable-kvm -m 1024M -cpu host -smp <span class="nv">cores</span><span class="o">=</span><span class="m">4</span> disk-image.img
+qemu-system-x86_64<span class="w"> </span>-enable-kvm<span class="w"> </span>-m<span class="w"> </span>1024M<span class="w"> </span>-cpu<span class="w"> </span>host<span class="w"> </span>-smp<span class="w"> </span><span class="nv">cores</span><span class="o">=</span><span class="m">4</span><span class="w"> </span>disk-image.img
 
 <span class="c1"># Run a kernel with a cow images and output its console on the current tty</span>
-qemu-system-x86_64 -nographic <span class="se">\</span>
-    -drive <span class="nv">file</span><span class="o">=</span>image.qcow2,if<span class="o">=</span>virtio <span class="se">\</span>
-    -kernel vmlinuz -initrd initrd.img <span class="se">\</span>
-    -append <span class="s2">&quot;root=/dev/vda1 console=ttyS0,16550A earlyprint=serial,ttyS0,16550A&quot;</span>
+qemu-system-x86_64<span class="w"> </span>-nographic<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-drive<span class="w"> </span><span class="nv">file</span><span class="o">=</span>image.qcow2,if<span class="o">=</span>virtio<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-kernel<span class="w"> </span>vmlinuz<span class="w"> </span>-initrd<span class="w"> </span>initrd.img<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-append<span class="w"> </span><span class="s2">&quot;root=/dev/vda1 console=ttyS0,16550A earlyprint=serial,ttyS0,16550A&quot;</span>
 
 <span class="c1"># Boot in UEFI mode with a Tianocore UEFI firmware (from https://github.com/tianocore/edk2)</span>
-qemu-system-x86_64 -bios /usr/share/ovmf/ovmf_x64.bin ...
+qemu-system-x86_64<span class="w"> </span>-bios<span class="w"> </span>/usr/share/ovmf/ovmf_x64.bin<span class="w"> </span>...
 
 <span class="c1"># Run a kernel with an initrd (made with &quot;find . -print | cpio -o -Hcrc | gzip &gt; ../initrd.img&quot;</span>
 <span class="c1"># for example) on a KVM CPU, maybe booted from the network</span>
 <span class="c1"># (source https://lkml.org/lkml/2014/9/2/11)</span>
 <span class="c1"># By the way, to extract initrd images: &quot;cat ../initrd.img | cpio -id&quot;</span>
-qemu-system-x86_64 -enable-kvm -cpu kvm64 -m <span class="m">320</span> -smp <span class="m">2</span> <span class="se">\</span>
-    -kernel vmlinux -initrd initrd.img <span class="se">\</span>
-    -net nic,vlan<span class="o">=</span><span class="m">1</span>,model<span class="o">=</span>e1000 -net user,vlan<span class="o">=</span><span class="m">1</span> -boot <span class="nv">order</span><span class="o">=</span>nc <span class="se">\</span>
-    -no-reboot -watchdog i6300esb -rtc <span class="nv">base</span><span class="o">=</span>localtime <span class="se">\</span>
-    -serial stdio -display none -monitor null <span class="se">\</span>
-    -append <span class="s2">&quot; \</span>
+qemu-system-x86_64<span class="w"> </span>-enable-kvm<span class="w"> </span>-cpu<span class="w"> </span>kvm64<span class="w"> </span>-m<span class="w"> </span><span class="m">320</span><span class="w"> </span>-smp<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-kernel<span class="w"> </span>vmlinux<span class="w"> </span>-initrd<span class="w"> </span>initrd.img<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-net<span class="w"> </span>nic,vlan<span class="o">=</span><span class="m">1</span>,model<span class="o">=</span>e1000<span class="w"> </span>-net<span class="w"> </span>user,vlan<span class="o">=</span><span class="m">1</span><span class="w"> </span>-boot<span class="w"> </span><span class="nv">order</span><span class="o">=</span>nc<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-no-reboot<span class="w"> </span>-watchdog<span class="w"> </span>i6300esb<span class="w"> </span>-rtc<span class="w"> </span><span class="nv">base</span><span class="o">=</span>localtime<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-serial<span class="w"> </span>stdio<span class="w"> </span>-display<span class="w"> </span>none<span class="w"> </span>-monitor<span class="w"> </span>null<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-append<span class="w"> </span><span class="s2">&quot; \</span>
 <span class="s2">        earlyprintk=ttyS0,115200 console=ttyS0,115200 console=tty0 \</span>
 <span class="s2">        panic=-1 oops=panic vga=normal \</span>
 <span class="s2">        load_ramdisk=2 prompt_ramdisk=0 root=/dev/ram0 rw&quot;</span>
 
 <span class="c1"># Run an ARM kernel in a Versatile QEmu machine with a Raspberry-Pi-like CPU</span>
 <span class="c1"># (source http://web.archive.org/web/20150512213356/http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/)</span>
-qemu-system-arm <span class="se">\</span>
-    -kernel kernel-qemu <span class="se">\</span>
-    -cpu arm1176 -m <span class="m">256</span> <span class="se">\</span>
-    -machine versatilepb <span class="se">\</span>
-    -chardev socket,id<span class="o">=</span>monitor,path<span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/monitor.sock,server,nowait <span class="se">\</span>
-    -monitor chardev:monitor <span class="se">\</span>
-    -hda rpiarch.qcow2 <span class="se">\</span>
-    -net nic -net user,hostname<span class="o">=</span>raspberrypi <span class="se">\</span>
-    -serial pty -nographic -no-reboot <span class="se">\</span>
-    -append <span class="s2">&quot;root=/dev/sda rw rootfstype=ext4 panic=0 earlyprint=serial,ttyAMA0,38400 loglevel=7 console=ttyAMA0,38400 kgdboc=ttyAMA0,38400&quot;</span>
+qemu-system-arm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-kernel<span class="w"> </span>kernel-qemu<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-cpu<span class="w"> </span>arm1176<span class="w"> </span>-m<span class="w"> </span><span class="m">256</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-machine<span class="w"> </span>versatilepb<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-chardev<span class="w"> </span>socket,id<span class="o">=</span>monitor,path<span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/monitor.sock,server,nowait<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-monitor<span class="w"> </span>chardev:monitor<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-hda<span class="w"> </span>rpiarch.qcow2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-net<span class="w"> </span>nic<span class="w"> </span>-net<span class="w"> </span>user,hostname<span class="o">=</span>raspberrypi<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-serial<span class="w"> </span>pty<span class="w"> </span>-nographic<span class="w"> </span>-no-reboot<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-append<span class="w"> </span><span class="s2">&quot;root=/dev/sda rw rootfstype=ext4 panic=0 earlyprint=serial,ttyAMA0,38400 loglevel=7 console=ttyAMA0,38400 kgdboc=ttyAMA0,38400&quot;</span>
 
 <span class="c1"># Run a MIPS kernel</span>
 <span class="c1"># (source https://doar-e.github.io/blog/2014/10/11/taiming-a-wild-nanomite-protected-mips-binary-with-symbolic-execution-no-such-crackme/)</span>
-qemu-system-mipsel -M malta -kernel vmlinux-malta -hda root.qcow2 <span class="se">\</span>
-    -nographic -append <span class="s2">&quot;root=/dev/sda1 console=tty0&quot;</span>
+qemu-system-mipsel<span class="w"> </span>-M<span class="w"> </span>malta<span class="w"> </span>-kernel<span class="w"> </span>vmlinux-malta<span class="w"> </span>-hda<span class="w"> </span>root.qcow2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-nographic<span class="w"> </span>-append<span class="w"> </span><span class="s2">&quot;root=/dev/sda1 console=tty0&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="networking">
-<h2>Networking<a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h2>
+<h2>Networking<a class="headerlink" href="#networking" title="Link to this heading">¶</a></h2>
 <p>It is possible to run a virtual machine which only exposes some TCP ports
 through local TCP redirections using the “user network” with options:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Redirect local host 2222 (on host) to guest SSH port (legacy parameters)</span>
--net nic -net user,hostname<span class="o">=</span>myvm -redir tcp:2222::22
+-net<span class="w"> </span>nic<span class="w"> </span>-net<span class="w"> </span>user,hostname<span class="o">=</span>myvm<span class="w"> </span>-redir<span class="w"> </span>tcp:2222::22
 
 <span class="c1"># Or, more complex (recent parameters)</span>
--net nic,model<span class="o">=</span>virtio,macaddr<span class="o">=</span><span class="m">52</span>:54:00:12:34:56 -net user,hostfwd<span class="o">=</span>tcp:127.0.0.1:2222-:22
+-net<span class="w"> </span>nic,model<span class="o">=</span>virtio,macaddr<span class="o">=</span><span class="m">52</span>:54:00:12:34:56<span class="w"> </span>-net<span class="w"> </span>user,hostfwd<span class="o">=</span>tcp:127.0.0.1:2222-:22
 </pre></div>
 </div>
 <p>To run a virtual machine with a tap interface which is bridged to a <code class="docutils literal notranslate"><span class="pre">br0</span></code>
 interface (created for example with <code class="docutils literal notranslate"><span class="pre">brctl</span> <span class="pre">addbr</span> <span class="pre">br0</span></code>), here are commands
 which can be used:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Old command: tunctl -u &quot;$(id -nu)&quot; -t tap_vm</span>
-sudo ip tuntap add dev tap_vm mode tap user <span class="s2">&quot;</span><span class="k">$(</span>id -nu<span class="k">)</span><span class="s2">&quot;</span>
-<span class="nb">trap</span> <span class="s2">&quot;ip tuntap del dev tap_vm mode tap&quot;</span> EXIT HUP INT QUIT TERM
-sudo ip link <span class="nb">set</span> tap_vm up promisc on
-sudo brctl addif br0 tap_vm
+sudo<span class="w"> </span>ip<span class="w"> </span>tuntap<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>tap_vm<span class="w"> </span>mode<span class="w"> </span>tap<span class="w"> </span>user<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>id<span class="w"> </span>-nu<span class="k">)</span><span class="s2">&quot;</span>
+<span class="nb">trap</span><span class="w"> </span><span class="s2">&quot;ip tuntap del dev tap_vm mode tap&quot;</span><span class="w"> </span>EXIT<span class="w"> </span>HUP<span class="w"> </span>INT<span class="w"> </span>QUIT<span class="w"> </span>TERM
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>tap_vm<span class="w"> </span>up<span class="w"> </span>promisc<span class="w"> </span>on
+sudo<span class="w"> </span>brctl<span class="w"> </span>addif<span class="w"> </span>br0<span class="w"> </span>tap_vm
 </pre></div>
 </div>
 <p>The result of these commands can be checked with <code class="docutils literal notranslate"><span class="pre">ip</span></code> and <code class="docutils literal notranslate"><span class="pre">brctl</span></code> commands:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ip link show tap_vm
-<span class="m">4</span>: tap_vm: &lt;NO-CARRIER,BROADCAST,MULTICAST,PROMISC,UP&gt; mtu <span class="m">1500</span> qdisc fq_codel
-master br0 state DOWN mode DEFAULT group default qlen <span class="m">500</span>
-link/ether 3a:d9:20:17:d3:c0 brd ff:ff:ff:ff:ff:ff
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>tap_vm
+<span class="m">4</span>:<span class="w"> </span>tap_vm:<span class="w"> </span>&lt;NO-CARRIER,BROADCAST,MULTICAST,PROMISC,UP&gt;<span class="w"> </span>mtu<span class="w"> </span><span class="m">1500</span><span class="w"> </span>qdisc<span class="w"> </span>fq_codel
+master<span class="w"> </span>br0<span class="w"> </span>state<span class="w"> </span>DOWN<span class="w"> </span>mode<span class="w"> </span>DEFAULT<span class="w"> </span>group<span class="w"> </span>default<span class="w"> </span>qlen<span class="w"> </span><span class="m">500</span>
+link/ether<span class="w"> </span>3a:d9:20:17:d3:c0<span class="w"> </span>brd<span class="w"> </span>ff:ff:ff:ff:ff:ff
 
-$ brctl show br0
-bridge name bridge id               STP enabled     interfaces
-br0         <span class="m">8000</span>.be2f28151bed       no              tap_vm
+$<span class="w"> </span>brctl<span class="w"> </span>show<span class="w"> </span>br0
+bridge<span class="w"> </span>name<span class="w"> </span>bridge<span class="w"> </span>id<span class="w">               </span>STP<span class="w"> </span>enabled<span class="w">     </span>interfaces
+br0<span class="w">         </span><span class="m">8000</span>.be2f28151bed<span class="w">       </span>no<span class="w">              </span>tap_vm
 </pre></div>
 </div>
 <p>To add this new virtual interface to a QEmu virtual machine, these command-line
 arguments can be used:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-net nic,macaddr<span class="o">=</span><span class="nv">$MAC</span> -net tap,ifname<span class="o">=</span>tap_vm,script<span class="o">=</span>no,downscript<span class="o">=</span>no
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-net<span class="w"> </span>nic,macaddr<span class="o">=</span><span class="nv">$MAC</span><span class="w"> </span>-net<span class="w"> </span>tap,ifname<span class="o">=</span>tap_vm,script<span class="o">=</span>no,downscript<span class="o">=</span>no
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">$MAC</span></code> is the MAC address to use, for example generated with:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">MAC</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s1">&#39;52:54:%02x:%02x:%02x:%02x&#39;</span> <span class="k">$((</span>RANDOM <span class="o">&amp;</span> <span class="m">0</span>xff<span class="k">))</span> <span class="k">$((</span>RANDOM <span class="o">&amp;</span> <span class="m">0</span>xff<span class="k">))</span> <span class="se">\</span>
-   <span class="k">$((</span>RANDOM <span class="o">&amp;</span> <span class="m">0</span>xff<span class="k">))</span> <span class="k">$((</span>RANDOM <span class="o">&amp;</span> <span class="m">0</span>xff<span class="k">)))</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">MAC</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;52:54:%02x:%02x:%02x:%02x&#39;</span><span class="w"> </span><span class="k">$((</span><span class="nv">RANDOM</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="m">0xff</span><span class="k">))</span><span class="w"> </span><span class="k">$((</span><span class="nv">RANDOM</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="m">0xff</span><span class="k">))</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="k">$((</span><span class="nv">RANDOM</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="m">0xff</span><span class="k">))</span><span class="w"> </span><span class="k">$((</span><span class="nv">RANDOM</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="m">0xff</span><span class="k">)))</span>
 </pre></div>
 </div>
 <p>Another possible choice of arguments is:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-device virtio-net,netdev<span class="o">=</span>tap,mac<span class="o">=</span><span class="nv">$MAC</span>
--netdev <span class="nv">type</span><span class="o">=</span>tap,ifname<span class="o">=</span>tap_vm,script<span class="o">=</span>no,downscript<span class="o">=</span>no,id<span class="o">=</span>tap
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-device<span class="w"> </span>virtio-net,netdev<span class="o">=</span>tap,mac<span class="o">=</span><span class="nv">$MAC</span>
+-netdev<span class="w"> </span><span class="nv">type</span><span class="o">=</span>tap,ifname<span class="o">=</span>tap_vm,script<span class="o">=</span>no,downscript<span class="o">=</span>no,id<span class="o">=</span>tap
 </pre></div>
 </div>
 </section>
 <section id="qcow2-format-and-virtual-disk-usage">
-<h2>QCow2 format and virtual disk usage<a class="headerlink" href="#qcow2-format-and-virtual-disk-usage" title="Permalink to this headline">¶</a></h2>
+<h2>QCow2 format and virtual disk usage<a class="headerlink" href="#qcow2-format-and-virtual-disk-usage" title="Link to this heading">¶</a></h2>
 <p>QEmu can use the QCow2 format for disks to efficiently store the data of virtual
 disks (documentation: <a class="reference external" href="https://en.wikibooks.org/wiki/QEMU/Images">https://en.wikibooks.org/wiki/QEMU/Images</a>).</p>
 <p>To create a 10G disk image, the following command can be used:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>qemu-img create -f qcow2 virtual_disk.qcow2 10G
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>qemu-img<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>qcow2<span class="w"> </span>virtual_disk.qcow2<span class="w"> </span>10G
 </pre></div>
 </div>
 <p>The resulting file weights 193KB and will expand once the disk image begins to
@@ -159,28 +157,28 @@ be filled with data.</p>
 <p>The QCow2 images can not be directly mounted and an indirection layer needs to
 be used to use such disks in a live system.  For example a kernel module can be
 used, by issuing the following commands as root:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>modprobe nbd <span class="nv">max_part</span><span class="o">=</span><span class="m">8</span>
-qemu-nbd -c /dev/nbd0 virtual_disk.qcow2
-mount /dev/nbd0p1 /mnt
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>modprobe<span class="w"> </span>nbd<span class="w"> </span><span class="nv">max_part</span><span class="o">=</span><span class="m">8</span>
+qemu-nbd<span class="w"> </span>-c<span class="w"> </span>/dev/nbd0<span class="w"> </span>virtual_disk.qcow2
+mount<span class="w"> </span>/dev/nbd0p1<span class="w"> </span>/mnt
 ...
-umount /mnt
-qemu-nbd -d /dev/nbd0
+umount<span class="w"> </span>/mnt
+qemu-nbd<span class="w"> </span>-d<span class="w"> </span>/dev/nbd0
 </pre></div>
 </div>
 <p>This can be used to use the files stored on the virtual disk.  Another use when
 the virtual disk is the root partition of a systemd-based system is to be able
 to launch the system in a container, with:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemd-nspawn -D /mnt
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemd-nspawn<span class="w"> </span>-D<span class="w"> </span>/mnt
 </pre></div>
 </div>
 <p>In order to mount a journalised filesystem read-only, the option <code class="docutils literal notranslate"><span class="pre">norecovery</span></code>
 can be required (for example on ext4fs):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mount -o ro,norecovery /dev/nbd0p1 /mnt
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mount<span class="w"> </span>-o<span class="w"> </span>ro,norecovery<span class="w"> </span>/dev/nbd0p1<span class="w"> </span>/mnt
 </pre></div>
 </div>
 </section>
 <section id="nfs-configuration">
-<h2>NFS configuration<a class="headerlink" href="#nfs-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>NFS configuration<a class="headerlink" href="#nfs-configuration" title="Link to this heading">¶</a></h2>
 <p>To share files between a virtual machine and the host, it is possible to set
 up and Network Filesystem (NFS) share.  Here is a sample configuration to share
 <code class="docutils literal notranslate"><span class="pre">/srv/nfs/ro</span></code> read-only and <code class="docutils literal notranslate"><span class="pre">/srv/nfs/user-rw</span></code> read-write, with writing
@@ -201,20 +199,20 @@ chmod-ed <code class="docutils literal notranslate"><span class="pre">o-x</span>
 <ul class="simple">
 <li><p>Reload the currently exported entries:</p></li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>exportfs -arv
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>exportfs<span class="w"> </span>-arv
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Start the NFS services:</p></li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl start rpcbind.service nfs-server.service
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>start<span class="w"> </span>rpcbind.service<span class="w"> </span>nfs-server.service
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Open the ports in the firewall configuration:</p></li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>iptables -A INPUT -i br0 -p tcp -m multiport --dports <span class="m">111</span>,2049,20048,49367 -j ACCEPT
-iptables -A INPUT -i br0 -p udp -m multiport --dports <span class="m">111</span>,745,2049,20048,57797 -j ACCEPT
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-i<span class="w"> </span>br0<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>-m<span class="w"> </span>multiport<span class="w"> </span>--dports<span class="w"> </span><span class="m">111</span>,2049,20048,49367<span class="w"> </span>-j<span class="w"> </span>ACCEPT
+iptables<span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-i<span class="w"> </span>br0<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>-m<span class="w"> </span>multiport<span class="w"> </span>--dports<span class="w"> </span><span class="m">111</span>,745,2049,20048,57797<span class="w"> </span>-j<span class="w"> </span>ACCEPT
 </pre></div>
 </div>
 <p>On the virtual machine:</p>
@@ -222,14 +220,14 @@ iptables -A INPUT -i br0 -p udp -m multiport --dports <span class="m">111</span>
 <li><p>Install <code class="docutils literal notranslate"><span class="pre">nfs-utils</span></code> package or something similar.</p></li>
 <li><p>Check that the exported directory are accessible:</p></li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>showmount -e <span class="m">10</span>.0.0.1
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>showmount<span class="w"> </span>-e<span class="w"> </span><span class="m">10</span>.0.0.1
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Mount the directories by hand:</p></li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mount -t nfs <span class="m">10</span>.0.0.1:/srv/nfs/ro /mnt/ro -o ro
-mount -t nfs <span class="m">10</span>.0.0.1:/srv/nfs/user-rw /mnt/rw
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mount<span class="w"> </span>-t<span class="w"> </span>nfs<span class="w"> </span><span class="m">10</span>.0.0.1:/srv/nfs/ro<span class="w"> </span>/mnt/ro<span class="w"> </span>-o<span class="w"> </span>ro
+mount<span class="w"> </span>-t<span class="w"> </span>nfs<span class="w"> </span><span class="m">10</span>.0.0.1:/srv/nfs/user-rw<span class="w"> </span>/mnt/rw
 </pre></div>
 </div>
 <ul class="simple">
@@ -241,17 +239,17 @@ mount -t nfs <span class="m">10</span>.0.0.1:/srv/nfs/user-rw /mnt/rw
 </div>
 </section>
 <section id="p-shared-directory">
-<h2>9p shared directory<a class="headerlink" href="#p-shared-directory" title="Permalink to this headline">¶</a></h2>
+<h2>9p shared directory<a class="headerlink" href="#p-shared-directory" title="Link to this heading">¶</a></h2>
 <p>Another way of sharing files between a guest and the host which is simpler than
 NFS in its configuration is 9p.</p>
 <p>This QEmu parameter shares the content of <code class="docutils literal notranslate"><span class="pre">/var/vmsh</span></code> on the host with the
 guest:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-virtfs local,id<span class="o">=</span>fs0,mount_tag<span class="o">=</span>vmsh,security_model<span class="o">=</span>none,path<span class="o">=</span>/var/vmsh
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-virtfs<span class="w"> </span>local,id<span class="o">=</span>fs0,mount_tag<span class="o">=</span>vmsh,security_model<span class="o">=</span>none,path<span class="o">=</span>/var/vmsh
 </pre></div>
 </div>
 <p>or:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-fsdev local,id<span class="o">=</span>fs0,security_model<span class="o">=</span>none,path<span class="o">=</span>/var/vmsh
--device virtio-9p-pci,fsdev<span class="o">=</span>fs0,mount_tag<span class="o">=</span>vmsh
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-fsdev<span class="w"> </span>local,id<span class="o">=</span>fs0,security_model<span class="o">=</span>none,path<span class="o">=</span>/var/vmsh
+-device<span class="w"> </span>virtio-9p-pci,fsdev<span class="o">=</span>fs0,mount_tag<span class="o">=</span>vmsh
 </pre></div>
 </div>
 <p>On the guest, <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code> may contain the following line to mount the shared
@@ -261,25 +259,25 @@ directory on <code class="docutils literal notranslate"><span class="pre">/mnt/v
 </div>
 </section>
 <section id="interaction-based-on-unix-sockets">
-<h2>Interaction based on Unix sockets<a class="headerlink" href="#interaction-based-on-unix-sockets" title="Permalink to this headline">¶</a></h2>
+<h2>Interaction based on Unix sockets<a class="headerlink" href="#interaction-based-on-unix-sockets" title="Link to this heading">¶</a></h2>
 <p>QEmu virtual machines are usually used either in graphical mode, with a QEmu
 windown, or in console mode (<code class="docutils literal notranslate"><span class="pre">-nographic</span></code> option), with a serial console
 redirected to the standard input/output. A third alternative consists in using
 Unix sockets to communicate with the guest. This can be achieved with two QEmu
 options:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-monitor unix:monitor.sock,server,nowait
--serial unix:console.sock,server,nowait
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-monitor<span class="w"> </span>unix:monitor.sock,server,nowait
+-serial<span class="w"> </span>unix:console.sock,server,nowait
 </pre></div>
 </div>
 <p>If the guest machine runs Linux, the virtual serial port will be available
 through device <code class="docutils literal notranslate"><span class="pre">ttyS0</span></code>.  It can be used as a console with early kernel
 messages with these kernel command line parameters:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">console</span><span class="o">=</span>ttyS0,38400n8 <span class="nv">earlyprint</span><span class="o">=</span>serial,ttyS0,38400n8
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">console</span><span class="o">=</span>ttyS0,38400n8<span class="w"> </span><span class="nv">earlyprint</span><span class="o">=</span>serial,ttyS0,38400n8
 </pre></div>
 </div>
 <p>If the guest machine runs systemd, it is possible to automatically spawn a
 login shell on the serial port with the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> serial-getty@ttyS0.service
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>serial-getty@ttyS0.service
 </pre></div>
 </div>
 <p>Then it is possible to:</p>
@@ -287,24 +285,24 @@ login shell on the serial port with the following command:</p>
 <li><p>connect to QEmu monitor console for example with:</p></li>
 </ul>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use cfmakeraw to make TAB work and isig=1 to allow using Ctrl+C</span>
-socat STDIO,cfmakeraw,isig<span class="o">=</span><span class="m">1</span> UNIX:monitor.sock
+socat<span class="w"> </span>STDIO,cfmakeraw,isig<span class="o">=</span><span class="m">1</span><span class="w"> </span>UNIX:monitor.sock
 
 <span class="c1"># socat&lt;1.7.3.0 does not support cfmakeraw. Use raw instead</span>
-socat STDIO,raw,echo<span class="o">=</span><span class="m">0</span>,isig<span class="o">=</span><span class="m">1</span> UNIX:monitor.sock
+socat<span class="w"> </span>STDIO,raw,echo<span class="o">=</span><span class="m">0</span>,isig<span class="o">=</span><span class="m">1</span><span class="w"> </span>UNIX:monitor.sock
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>connect to QEmu guest console for example with:</p></li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>socat STDIO,cfmakeraw UNIX:console.sock
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>socat<span class="w"> </span>STDIO,cfmakeraw<span class="w"> </span>UNIX:console.sock
 
 <span class="c1"># or, with socat&lt;1.7.3.0</span>
-socat STDIO,raw,echo<span class="o">=</span><span class="m">0</span> UNIX:console.sock
+socat<span class="w"> </span>STDIO,raw,echo<span class="o">=</span><span class="m">0</span><span class="w"> </span>UNIX:console.sock
 </pre></div>
 </div>
 </section>
 <section id="other-qemu-options">
-<h2>Other QEmu options<a class="headerlink" href="#other-qemu-options" title="Permalink to this headline">¶</a></h2>
+<h2>Other QEmu options<a class="headerlink" href="#other-qemu-options" title="Link to this heading">¶</a></h2>
 <p>Here are some options which may be useful when invoking QEmu:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-cpu</span> <span class="pre">kvm64</span></code>: use KVM virtual CPU, not the one of the host.</p></li>
@@ -322,7 +320,7 @@ Multiplex the console and the monitor on stdio (<code class="docutils literal no
 </ul>
 </section>
 <section id="qemu-static-chroot">
-<h2>QEmu-static chroot<a class="headerlink" href="#qemu-static-chroot" title="Permalink to this headline">¶</a></h2>
+<h2>QEmu-static chroot<a class="headerlink" href="#qemu-static-chroot" title="Link to this heading">¶</a></h2>
 <p>To run programs from a foreign CPU architecture without building a virtual
 machine, it is possible to setup a chroot environment with QEmu emulation.</p>
 <p>For this, the <code class="docutils literal notranslate"><span class="pre">qemu-user-static</span></code> binaries are needed
@@ -355,16 +353,16 @@ Arch Linux), and</p></li>
 chroot.</p></li>
 </ul>
 <p>On debian, there also exists command <code class="docutils literal notranslate"><span class="pre">qemu-debootstrap</span></code>:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>apt-get install qemu qemu-user-static qemu-utils binfmt-support debootstrap
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>install<span class="w"> </span>qemu<span class="w"> </span>qemu-user-static<span class="w"> </span>qemu-utils<span class="w"> </span>binfmt-support<span class="w"> </span>debootstrap
 
 <span class="c1"># arm64 for ARMv8</span>
-qemu-debootstrap --arch<span class="o">=</span>arm64 sid /opt/arm64/ http://ftp.debian.org/debian
+qemu-debootstrap<span class="w"> </span>--arch<span class="o">=</span>arm64<span class="w"> </span>sid<span class="w"> </span>/opt/arm64/<span class="w"> </span>http://ftp.debian.org/debian
 
 <span class="c1"># armhf for ARMv7 (hardware floating-point)</span>
-qemu-debootstrap --arch<span class="o">=</span>armhf sid /opt/armhf/ http://ftp.debian.org/debian
+qemu-debootstrap<span class="w"> </span>--arch<span class="o">=</span>armhf<span class="w"> </span>sid<span class="w"> </span>/opt/armhf/<span class="w"> </span>http://ftp.debian.org/debian
 
 <span class="c1"># armel for ARMv4 (software floating-point, Little Endian)</span>
-qemu-debootstrap --arch<span class="o">=</span>armel sid /opt/armel/ http://ftp.debian.org/debian
+qemu-debootstrap<span class="w"> </span>--arch<span class="o">=</span>armel<span class="w"> </span>sid<span class="w"> </span>/opt/armel/<span class="w"> </span>http://ftp.debian.org/debian
 </pre></div>
 </div>
 <p>This allows using usual programs but some have some issues running with
@@ -373,22 +371,22 @@ implemented.  Nevertheless <code class="docutils literal notranslate"><span clas
 system calls which are emulated, so a simple work-around consists in creating
 a <code class="docutils literal notranslate"><span class="pre">strace</span></code> shell script for example in <code class="docutils literal notranslate"><span class="pre">/usr/local/bin</span></code> in the chroot with:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
-<span class="nb">exec</span> qemu-arm-static -strace <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="nb">exec</span><span class="w"> </span>qemu-arm-static<span class="w"> </span>-strace<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="libvirt-integration">
-<h2>Libvirt integration<a class="headerlink" href="#libvirt-integration" title="Permalink to this headline">¶</a></h2>
+<h2>Libvirt integration<a class="headerlink" href="#libvirt-integration" title="Link to this heading">¶</a></h2>
 <p>Libvirt can be used to managed virtual machines. Some commands:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all known virtual machines (domains)</span>
 <span class="c1"># This command may need to be run as root</span>
-virsh list --all
+virsh<span class="w"> </span>list<span class="w"> </span>--all
 
 <span class="c1"># Edit the XML configuration of a domain</span>
-virsh edit &lt;domain&gt;
+virsh<span class="w"> </span>edit<span class="w"> </span>&lt;domain&gt;
 
 <span class="c1"># Start a domain</span>
-virsh start &lt;domain&gt;
+virsh<span class="w"> </span>start<span class="w"> </span>&lt;domain&gt;
 </pre></div>
 </div>
 <p>virt-manager can also be used as a graphical interface to interact with virtual
@@ -397,37 +395,37 @@ machines (by default in <code class="docutils literal notranslate"><span class="
 dnsmasq process to attribute IP addresses. This default network is configured
 with <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">net-edit</span> <span class="pre">default</span></code>. It looks like:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;network&gt;</span>
-  <span class="nt">&lt;name&gt;</span>default<span class="nt">&lt;/name&gt;</span>
-  <span class="nt">&lt;uuid&gt;</span>bb24f0ba-754c-4f00-b16b-5e7dbb35807e<span class="nt">&lt;/uuid&gt;</span>
-  <span class="nt">&lt;forward</span> <span class="na">mode=</span><span class="s">&#39;nat&#39;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;bridge</span> <span class="na">name=</span><span class="s">&#39;virbr0&#39;</span> <span class="na">stp=</span><span class="s">&#39;on&#39;</span> <span class="na">delay=</span><span class="s">&#39;0&#39;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;mac</span> <span class="na">address=</span><span class="s">&#39;52:54:00:12:34:56&#39;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;ip</span> <span class="na">address=</span><span class="s">&#39;192.168.122.1&#39;</span> <span class="na">netmask=</span><span class="s">&#39;255.255.255.0&#39;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;dhcp&gt;</span>
-      <span class="nt">&lt;range</span> <span class="na">start=</span><span class="s">&#39;192.168.122.2&#39;</span> <span class="na">end=</span><span class="s">&#39;192.168.122.254&#39;</span><span class="nt">/&gt;</span>
-      <span class="cm">&lt;!-- Static IP addresses --&gt;</span>
-      <span class="nt">&lt;host</span> <span class="na">mac=</span><span class="s">&#39;52:54:00:11:22:33&#39;</span> <span class="na">name=</span><span class="s">&#39;vm1&#39;</span> <span class="na">ip=</span><span class="s">&#39;192.168.122.11&#39;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/dhcp&gt;</span>
-  <span class="nt">&lt;/ip&gt;</span>
+<span class="w">  </span><span class="nt">&lt;name&gt;</span>default<span class="nt">&lt;/name&gt;</span>
+<span class="w">  </span><span class="nt">&lt;uuid&gt;</span>bb24f0ba-754c-4f00-b16b-5e7dbb35807e<span class="nt">&lt;/uuid&gt;</span>
+<span class="w">  </span><span class="nt">&lt;forward</span><span class="w"> </span><span class="na">mode=</span><span class="s">&#39;nat&#39;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;bridge</span><span class="w"> </span><span class="na">name=</span><span class="s">&#39;virbr0&#39;</span><span class="w"> </span><span class="na">stp=</span><span class="s">&#39;on&#39;</span><span class="w"> </span><span class="na">delay=</span><span class="s">&#39;0&#39;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;mac</span><span class="w"> </span><span class="na">address=</span><span class="s">&#39;52:54:00:12:34:56&#39;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;ip</span><span class="w"> </span><span class="na">address=</span><span class="s">&#39;192.168.122.1&#39;</span><span class="w"> </span><span class="na">netmask=</span><span class="s">&#39;255.255.255.0&#39;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;dhcp&gt;</span>
+<span class="w">      </span><span class="nt">&lt;range</span><span class="w"> </span><span class="na">start=</span><span class="s">&#39;192.168.122.2&#39;</span><span class="w"> </span><span class="na">end=</span><span class="s">&#39;192.168.122.254&#39;</span><span class="nt">/&gt;</span>
+<span class="w">      </span><span class="cm">&lt;!-- Static IP addresses --&gt;</span>
+<span class="w">      </span><span class="nt">&lt;host</span><span class="w"> </span><span class="na">mac=</span><span class="s">&#39;52:54:00:11:22:33&#39;</span><span class="w"> </span><span class="na">name=</span><span class="s">&#39;vm1&#39;</span><span class="w"> </span><span class="na">ip=</span><span class="s">&#39;192.168.122.11&#39;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/dhcp&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/ip&gt;</span>
 <span class="nt">&lt;/network&gt;</span>
 </pre></div>
 </div>
 <p>The generated dnsmasq configuration is in <code class="docutils literal notranslate"><span class="pre">/var/lib/libvirt/dnsmasq/default.conf</span></code>.</p>
 <p>For information, dnsmasq can also be directly used on the command line:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dnsmasq --dhcp-range<span class="o">=</span><span class="m">192</span>.168.122.2,192.168.122.254,12h --interface<span class="o">=</span>virbr0 <span class="se">\</span>
-    --bind-interfaces --port <span class="m">1053</span> --keep-in-foreground --log-dhcp <span class="sb">`</span>
-    --server<span class="o">=</span><span class="m">8</span>.8.8.8 --dhcp-option<span class="o">=</span><span class="m">6</span>,8.8.8.8
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dnsmasq<span class="w"> </span>--dhcp-range<span class="o">=</span><span class="m">192</span>.168.122.2,192.168.122.254,12h<span class="w"> </span>--interface<span class="o">=</span>virbr0<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--bind-interfaces<span class="w"> </span>--port<span class="w"> </span><span class="m">1053</span><span class="w"> </span>--keep-in-foreground<span class="w"> </span>--log-dhcp<span class="w"> </span><span class="sb">`</span>
+<span class="w">    </span>--server<span class="o">=</span><span class="m">8</span>.8.8.8<span class="w"> </span>--dhcp-option<span class="o">=</span><span class="m">6</span>,8.8.8.8
 
 <span class="c1"># To relay DNS servers on a fake systemd-resolved service, without DHCP</span>
 <span class="c1"># Other options: --no-daemon --clear-on-reload --log-queries</span>
-dnsmasq --listen-address<span class="o">=</span><span class="m">127</span>.0.0.53 --interface<span class="o">=</span>lo --no-dhcp-interface <span class="se">\</span>
-    --no-resolv --server<span class="o">=</span><span class="m">1</span>.1.1.1 --server<span class="o">=</span><span class="m">8</span>.8.8.8 <span class="se">\</span>
-    --host-record<span class="o">=</span>my-own-domain,192.0.2.42
+dnsmasq<span class="w"> </span>--listen-address<span class="o">=</span><span class="m">127</span>.0.0.53<span class="w"> </span>--interface<span class="o">=</span>lo<span class="w"> </span>--no-dhcp-interface<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--no-resolv<span class="w"> </span>--server<span class="o">=</span><span class="m">1</span>.1.1.1<span class="w"> </span>--server<span class="o">=</span><span class="m">8</span>.8.8.8<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--host-record<span class="o">=</span>my-own-domain,192.0.2.42
 </pre></div>
 </div>
 </section>
 <section id="web-links">
-<h2>Web links<a class="headerlink" href="#web-links" title="Permalink to this headline">¶</a></h2>
+<h2>Web links<a class="headerlink" href="#web-links" title="Link to this heading">¶</a></h2>
 <p>Here are some links to online articles and documentation relevant with QEmu:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="http://wiki.qemu.org/Testing">http://wiki.qemu.org/Testing</a> QEmu testing images</p></li>
@@ -448,19 +446,19 @@ Build portable, architecture independent shellcode from C code</p></li>
 </ul>
 </section>
 <section id="a-quick-glance-at-docker">
-<h2>A quick glance at Docker<a class="headerlink" href="#a-quick-glance-at-docker" title="Permalink to this headline">¶</a></h2>
+<h2>A quick glance at Docker<a class="headerlink" href="#a-quick-glance-at-docker" title="Link to this heading">¶</a></h2>
 <p>Docker is known for being able to run containers. It is also good for spawning
 short-lived well-controlled environment like a fresh Ubuntu Precise (12.04 LTS)
 install:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker run -t -i ubuntu:12.04 /bin/bash
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-t<span class="w"> </span>-i<span class="w"> </span>ubuntu:12.04<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
 <p>To list images:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker images
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>images
 </pre></div>
 </div>
 <p>To list containers:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker ps -l
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>ps<span class="w"> </span>-l
 </pre></div>
 </div>
 </section>
@@ -473,8 +471,9 @@ install:</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">QEmu-KVM notes</a><ul>
 <li><a class="reference internal" href="#simple-qemu-invocation-commands">Simple QEmu invocation commands</a></li>
 <li><a class="reference internal" href="#networking">Networking</a></li>
@@ -491,12 +490,17 @@ install:</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="pxe-boot-server.html"
-                        title="previous chapter">Configure a server to handle network boot (PXE)</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="qubes-os.html"
-                        title="next chapter">Qubes OS setup</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="pxe-boot-server.html"
+                          title="previous chapter">Configure a server to handle network boot (PXE)</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="qubes-os.html"
+                          title="next chapter">Qubes OS setup</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/qemu.rst.txt"
@@ -515,7 +519,7 @@ install:</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -538,8 +542,8 @@ install:</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Remote Desktop on Linux &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Some notes about my SELinux installation" href="selinux.html" />
@@ -42,11 +40,11 @@
           <div class="body" role="main">
             
   <section id="remote-desktop-on-linux">
-<h1>Remote Desktop on Linux<a class="headerlink" href="#remote-desktop-on-linux" title="Permalink to this headline">¶</a></h1>
+<h1>Remote Desktop on Linux<a class="headerlink" href="#remote-desktop-on-linux" title="Link to this heading">¶</a></h1>
 <p>Most Linux-based systems use X11 or Wayland in order to render the desktop.
 In order to connect to a remote Linux system and operate with a graphical user interface, there exist several approaches: VNC, RDP, X11 forwarding over SSH, etc.</p>
 <section id="x11-principles">
-<h2>X11 principles<a class="headerlink" href="#x11-principles" title="Permalink to this headline">¶</a></h2>
+<h2>X11 principles<a class="headerlink" href="#x11-principles" title="Link to this heading">¶</a></h2>
 <p>X11 is a specification and a protocol for <em>X window system</em> that enables using a graphical user interface.
 It relies on a client/server pattern where:</p>
 <ul class="simple">
@@ -58,7 +56,7 @@ These are parts of a desktop environment.</p>
 <p>On a local system, the X11 server listens on a Unix socket located at <code class="docutils literal notranslate"><span class="pre">/tmp/.X11-unix/X0</span></code>.
 This is referred by client applications as <code class="docutils literal notranslate"><span class="pre">:0.0</span></code>.
 A client knows to which server it talks using the <code class="docutils literal notranslate"><span class="pre">$DISPLAY</span></code> environment variable:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="nv">$DISPLAY</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$DISPLAY</span>
 :0.0
 </pre></div>
 </div>
@@ -85,7 +83,7 @@ myhost/unix:0  MIT-MAGIC-COOKIE-1  7a77125b6af11c25a72662e316ab40a0
 </ul>
 </section>
 <section id="remote-x11">
-<h2>Remote X11<a class="headerlink" href="#remote-x11" title="Permalink to this headline">¶</a></h2>
+<h2>Remote X11<a class="headerlink" href="#remote-x11" title="Link to this heading">¶</a></h2>
 <p>On a trusted network, it is possible to expose a X11 server on a TCP port.
 As the communication does not include encryption, this setup is not recommended as-is.
 It is nonetheless possible to encapsulate the X11 protocol in a secure tunnel (that provides confidentiality, integrity and authentication), such as a VPN.</p>
@@ -94,32 +92,32 @@ This feature is called <em>X11 forwarding</em> and is enabled using a configurat
 As X11 clients are powerful, OpenSSH allows specifying whether the remote server is to be fully trusted (<code class="docutils literal notranslate"><span class="pre">ForwardX11Trusted</span></code> configuration variable, <code class="docutils literal notranslate"><span class="pre">-Y</span></code> option) or not (<code class="docutils literal notranslate"><span class="pre">-X</span></code> option).</p>
 </section>
 <section id="remote-desktop">
-<h2>Remote Desktop<a class="headerlink" href="#remote-desktop" title="Permalink to this headline">¶</a></h2>
+<h2>Remote Desktop<a class="headerlink" href="#remote-desktop" title="Link to this heading">¶</a></h2>
 <p>Sometimes, there is a need to connect to a remote host that is running a X11 server with applications.
 Several VNC and RDP servers create a new X11 server for such remote connection, which is fine in order to isolate each user one from each other.</p>
 <p>For example Microsoft documents how to setup xrdp on <a class="reference external" href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/use-remote-desktop">https://docs.microsoft.com/en-us/azure/virtual-machines/linux/use-remote-desktop</a>:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> xfce4-session &gt;~/.xsession
-sudo service xrdp restart
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>xfce4-session<span class="w"> </span>&gt;~/.xsession
+sudo<span class="w"> </span>service<span class="w"> </span>xrdp<span class="w"> </span>restart
 </pre></div>
 </div>
 <p>It is also possible to expose the X11 server as a VNC server using <code class="docutils literal notranslate"><span class="pre">x11vnc</span></code>, as described in <a class="reference external" href="https://undeadly.org/cgi?action=article;sid=20071108214134">https://undeadly.org/cgi?action=article;sid=20071108214134</a>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Connect using SSH to the remote host, forwarding VNC port</span>
 <span class="c1"># Several websites state that allocating a PTY (-t) for x11vnc makes it faster</span>
-ssh -t -L <span class="m">5900</span>:localhost:5900 remotehost
+ssh<span class="w"> </span>-t<span class="w"> </span>-L<span class="w"> </span><span class="m">5900</span>:localhost:5900<span class="w"> </span>remotehost
 
 <span class="c1"># Start x11vnc on the remote host to expose the first display as a VNC server</span>
 <span class="c1"># The user display can also be found using &quot;-find&quot;</span>
-x11vnc -display :0 -auth <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.Xauthority&quot;</span> -localhost
+x11vnc<span class="w"> </span>-display<span class="w"> </span>:0<span class="w"> </span>-auth<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.Xauthority&quot;</span><span class="w"> </span>-localhost
 
 <span class="c1"># Connect from the local host to the VNC server, reachable through localhost:5900</span>
-vncviewer -depth <span class="m">8</span> -encodings hextile localhost:0
+vncviewer<span class="w"> </span>-depth<span class="w"> </span><span class="m">8</span><span class="w"> </span>-encodings<span class="w"> </span>hextile<span class="w"> </span>localhost:0
 </pre></div>
 </div>
 <p>If the remote host does not have an X11 server, it is possible to start a virtual one such as Xvfb:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># On the remote host</span>
-<span class="nb">export</span> <span class="nv">DISPLAY</span><span class="o">=</span>:1
-Xvfb :1 -screen <span class="m">0</span> 1024x768x16 <span class="p">&amp;</span>
-x11vnc -display :1 -nopw -localhost -xkb
+<span class="nb">export</span><span class="w"> </span><span class="nv">DISPLAY</span><span class="o">=</span>:1
+Xvfb<span class="w"> </span>:1<span class="w"> </span>-screen<span class="w"> </span><span class="m">0</span><span class="w"> </span>1024x768x16<span class="w"> </span><span class="p">&amp;</span>
+x11vnc<span class="w"> </span>-display<span class="w"> </span>:1<span class="w"> </span>-nopw<span class="w"> </span>-localhost<span class="w"> </span>-xkb
 </pre></div>
 </div>
 <p>This can be used to run software such as QEMU with a graphical output, or a web browser, etc.</p>
@@ -133,8 +131,9 @@ x11vnc -display :1 -nopw -localhost -xkb
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Remote Desktop on Linux</a><ul>
 <li><a class="reference internal" href="#x11-principles">X11 principles</a></li>
 <li><a class="reference internal" href="#remote-x11">Remote X11</a></li>
@@ -143,12 +142,17 @@ x11vnc -display :1 -nopw -localhost -xkb
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="raspberrypi.html"
-                        title="previous chapter">Configuration tweaks on a Raspberry Pi</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="selinux.html"
-                        title="next chapter">Some notes about my SELinux installation</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="raspberrypi.html"
+                          title="previous chapter">Configuration tweaks on a Raspberry Pi</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="selinux.html"
+                          title="next chapter">Some notes about my SELinux installation</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/remote-desktop-linux.rst.txt"
@@ -167,7 +171,7 @@ x11vnc -display :1 -nopw -localhost -xkb
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -190,8 +194,8 @@ x11vnc -display :1 -nopw -localhost -xkb
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

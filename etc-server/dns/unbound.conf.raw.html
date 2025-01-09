@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>etc-server/dns/unbound.conf &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="ejabberd configuration" href="../jabber/ejabberd.html" />
@@ -42,34 +40,34 @@
           <div class="body" role="main">
             
   <section id="etc-server-dns-unbound-conf">
-<h1><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound.conf</span></code><a class="headerlink" href="#etc-server-dns-unbound-conf" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound.conf</span></code><a class="headerlink" href="#etc-server-dns-unbound-conf" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../../_downloads/7aa5fd034c7429d793f71ff00e9ee086/unbound.conf"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># This file summaries several files for Unbound configuration, in one file for</span>
 <span class="c1"># clarity purposes.</span>
 
 <span class="c1"># /etc/unbound/unbound.conf</span>
 <span class="c1"># On Debian this file only contains one non-commented line:</span>
-include: <span class="s2">&quot;/etc/unbound/unbound.conf.d/*.conf&quot;</span>
+include:<span class="w"> </span><span class="s2">&quot;/etc/unbound/unbound.conf.d/*.conf&quot;</span>
 
 <span class="c1"># /etc/unbound/unbound.conf.d/root-auto-trust-anchor-file.conf</span>
 server:
-    <span class="c1"># The following line will configure unbound to perform cryptographic</span>
-    <span class="c1"># DNSSEC validation using the root trust anchor.</span>
-    auto-trust-anchor-file: <span class="s2">&quot;/var/lib/unbound/root.key&quot;</span>
+<span class="w">    </span><span class="c1"># The following line will configure unbound to perform cryptographic</span>
+<span class="w">    </span><span class="c1"># DNSSEC validation using the root trust anchor.</span>
+<span class="w">    </span>auto-trust-anchor-file:<span class="w"> </span><span class="s2">&quot;/var/lib/unbound/root.key&quot;</span>
 
 <span class="c1"># /etc/unbound/unbound.conf.d/localhost.conf</span>
 <span class="c1"># Allow access from localhost</span>
 server:
-    interface: <span class="m">127</span>.0.0.1
-    interface: ::1
-    access-control: <span class="m">127</span>.0.0.0/8 allow
-    access-control: ::1/128 allow
+<span class="w">    </span>interface:<span class="w"> </span><span class="m">127</span>.0.0.1
+<span class="w">    </span>interface:<span class="w"> </span>::1
+<span class="w">    </span>access-control:<span class="w"> </span><span class="m">127</span>.0.0.0/8<span class="w"> </span>allow
+<span class="w">    </span>access-control:<span class="w"> </span>::1/128<span class="w"> </span>allow
 
 <span class="c1"># /etc/unbound/unbound.conf.d/vpn.conf</span>
 <span class="c1"># Allow access from VPN clients in 10.0.0.0/24 network</span>
 server:
-    interface: <span class="m">10</span>.0.0.1
-    access-control: <span class="m">10</span>.0.0.0/24 allow
+<span class="w">    </span>interface:<span class="w"> </span><span class="m">10</span>.0.0.1
+<span class="w">    </span>access-control:<span class="w"> </span><span class="m">10</span>.0.0.0/24<span class="w"> </span>allow
 </pre></div>
 </div>
 </section>
@@ -81,12 +79,16 @@ server:
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="unbound-with-stubby.conf.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound-with-stubby.conf</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../jabber/ejabberd.html"
-                        title="next chapter">ejabberd configuration</a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="unbound-with-stubby.conf.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/dns/unbound-with-stubby.conf</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../jabber/ejabberd.html"
+                          title="next chapter">ejabberd configuration</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc-server/dns/unbound.conf.raw.rst.txt"
@@ -105,7 +107,7 @@ server:
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -128,8 +130,8 @@ server:
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

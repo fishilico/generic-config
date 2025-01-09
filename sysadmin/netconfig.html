@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Network configuration &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Kernel Network Console (netconsole module)" href="netconsole.html" />
@@ -42,14 +40,14 @@
           <div class="body" role="main">
             
   <section id="network-configuration">
-<h1>Network configuration<a class="headerlink" href="#network-configuration" title="Permalink to this headline">¶</a></h1>
+<h1>Network configuration<a class="headerlink" href="#network-configuration" title="Link to this heading">¶</a></h1>
 <p>This short document is a quick reference to some commands you would like to
 know when you’re connecting to a network and asking “What’s the conf, here?”
 If there is a kind of “automatic configuration” taking place, you may want to
 know what information the network is giving you. In the other case, you need to
 know how to set up a manual configuration by hand.</p>
 <section id="ipv4-configuration">
-<h2>IPv4 configuration<a class="headerlink" href="#ipv4-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>IPv4 configuration<a class="headerlink" href="#ipv4-configuration" title="Link to this heading">¶</a></h2>
 <p>Automatic IPv4 configuration is quite straightforward: run a DHCP client! For
 example, to discover a DHCP server on <code class="docutils literal notranslate"><span class="pre">eth0</span></code> interface:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dhclient</span> <span class="n">eth0</span>
@@ -66,7 +64,7 @@ example, to discover a DHCP server on <code class="docutils literal notranslate"
 knowledge, you need to sniff and/or scan the network to find it.</p>
 </section>
 <section id="ipv6-configuration">
-<h2>IPv6 configuration<a class="headerlink" href="#ipv6-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>IPv6 configuration<a class="headerlink" href="#ipv6-configuration" title="Link to this heading">¶</a></h2>
 <p>Automatic IPv6 configuration is more straightforward than IPv4: it is done by
 the kernel and you have nothing to do! Sometimes you may want to ignore the
 automatic configuration. This command disables it on <code class="docutils literal notranslate"><span class="pre">eth0</span></code>:</p>
@@ -105,7 +103,7 @@ you can run this command to get its IPv6 address:</p>
 </div>
 </section>
 <section id="dns-configuration">
-<h2>DNS configuration<a class="headerlink" href="#dns-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>DNS configuration<a class="headerlink" href="#dns-configuration" title="Link to this heading">¶</a></h2>
 <p>In automatic configurations, the IP addresses of the local DNS servers and the
 search domains are found in DHCP headers and RA options. If you use a software
 like NetworkManager or resolvconf or wicd, this information is directly written
@@ -120,7 +118,7 @@ in <code class="docutils literal notranslate"><span class="pre">/etc/resolv.conf
 </div>
 </section>
 <section id="systemd-network-configuration">
-<h2>Systemd network configuration<a class="headerlink" href="#systemd-network-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Systemd network configuration<a class="headerlink" href="#systemd-network-configuration" title="Link to this heading">¶</a></h2>
 <p>On a server which provides an ens42 wired connection with a static IP
 configuration, it is possible to use systemd-networkd with the following
 configuration in <code class="docutils literal notranslate"><span class="pre">/etc/systemd/network/wired.network</span></code>:</p>
@@ -134,7 +132,7 @@ configuration in <code class="docutils literal notranslate"><span class="pre">/e
 </div>
 </section>
 <section id="broadcast-ping">
-<h2>Broadcast ping<a class="headerlink" href="#broadcast-ping" title="Permalink to this headline">¶</a></h2>
+<h2>Broadcast ping<a class="headerlink" href="#broadcast-ping" title="Link to this heading">¶</a></h2>
 <p>To discover pingable hosts on your network, send an Echo Request (ping) to
 every host. In IPv4 this broadcasts an ICMP type 8 message:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ping</span> <span class="o">-</span><span class="n">b</span> <span class="mf">255.255.255.255</span> <span class="o">-</span><span class="n">I</span> <span class="n">eth0</span>
@@ -151,7 +149,7 @@ issuing:</p>
 </div>
 </section>
 <section id="link-layer-ping">
-<h2>Link-layer ping<a class="headerlink" href="#link-layer-ping" title="Permalink to this headline">¶</a></h2>
+<h2>Link-layer ping<a class="headerlink" href="#link-layer-ping" title="Link to this heading">¶</a></h2>
 <p>When the network don’t give your host an IP address, you need to find an unused
 one. In IPv4 you can test whether an IP address is free or used by sending ARP
 requests (what doesn’t require an IPv4 address to be configured, unlike
@@ -174,8 +172,9 @@ messages):</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Network configuration</a><ul>
 <li><a class="reference internal" href="#ipv4-configuration">IPv4 configuration</a></li>
 <li><a class="reference internal" href="#ipv6-configuration">IPv6 configuration</a></li>
@@ -187,12 +186,17 @@ messages):</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="nat.html"
-                        title="previous chapter">Linux NAT router</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="netconsole.html"
-                        title="next chapter">Kernel Network Console (netconsole module)</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="nat.html"
+                          title="previous chapter">Linux NAT router</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="netconsole.html"
+                          title="next chapter">Kernel Network Console (netconsole module)</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/netconfig.rst.txt"
@@ -211,7 +215,7 @@ messages):</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -234,8 +238,8 @@ messages):</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Collectd &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Git Web and CGit" href="gitweb.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="collectd">
-<h1>Collectd<a class="headerlink" href="#collectd" title="Permalink to this headline">¶</a></h1>
+<h1>Collectd<a class="headerlink" href="#collectd" title="Link to this heading">¶</a></h1>
 <p>Collectd is a daemon to collect system statistics in RRD (Round-Robin Database)
 files. It is basically a backend daemon and several front-end exist to navigate through the data.</p>
 <ul class="simple">
@@ -51,7 +49,7 @@ files. It is basically a backend daemon and several front-end exist to navigate 
 <li><p>Front-ends: <a class="reference external" href="https://collectd.org/wiki/index.php/List_of_front-ends">https://collectd.org/wiki/index.php/List_of_front-ends</a></p></li>
 </ul>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
 <p>Collectd is packaged for some Linux distribution. In Debian, this command
 installs collectd with the default configuration:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">collectd</span>
@@ -102,7 +100,7 @@ straightforward and the wiki helps understanding the few tricky fields
 </div>
 </section>
 <section id="network-setup">
-<h2>Network setup<a class="headerlink" href="#network-setup" title="Permalink to this headline">¶</a></h2>
+<h2>Network setup<a class="headerlink" href="#network-setup" title="Link to this heading">¶</a></h2>
 <p>To centralise collected data on a server, you need to use the network plugin
 (<a class="reference external" href="https://collectd.org/wiki/index.php/Plugin:Network">https://collectd.org/wiki/index.php/Plugin:Network</a>). If your collectd daemon
 is recent enough, you may use authenticated and encrypted communication channels
@@ -135,7 +133,7 @@ using a password.</p>
 </div>
 </section>
 <section id="collection3-front-end">
-<h2>Collection3 front-end<a class="headerlink" href="#collection3-front-end" title="Permalink to this headline">¶</a></h2>
+<h2>Collection3 front-end<a class="headerlink" href="#collection3-front-end" title="Link to this heading">¶</a></h2>
 <p>Collectd package often provides front-end examples among which is Collection3.
 This front-end is a web front-end written as a CGI script in Perl.
 By default it will look for RRD files in <code class="docutils literal notranslate"><span class="pre">/var/lib/collectd/rrd</span></code> but this
@@ -155,7 +153,7 @@ can be changed by editing <code class="docutils literal notranslate"><span class
 </pre></div>
 </div>
 <section id="apache-virtual-host-configuration">
-<h3>Apache virtual host configuration<a class="headerlink" href="#apache-virtual-host-configuration" title="Permalink to this headline">¶</a></h3>
+<h3>Apache virtual host configuration<a class="headerlink" href="#apache-virtual-host-configuration" title="Link to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
     <span class="n">Alias</span> <span class="o">/</span><span class="n">collection3</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">collectd</span><span class="o">-</span><span class="n">core</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">collection3</span><span class="o">/</span>
     <span class="n">ScriptAlias</span> <span class="o">/</span><span class="n">collection3</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">collectd</span><span class="o">-</span><span class="n">core</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">collection3</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
@@ -171,7 +169,7 @@ can be changed by editing <code class="docutils literal notranslate"><span class
 </div>
 </section>
 <section id="nginx-server-configuration">
-<h3>Nginx server configuration<a class="headerlink" href="#nginx-server-configuration" title="Permalink to this headline">¶</a></h3>
+<h3>Nginx server configuration<a class="headerlink" href="#nginx-server-configuration" title="Link to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server {
     listen 80 default_server;
     location /collection3 {
@@ -192,7 +190,7 @@ can be changed by editing <code class="docutils literal notranslate"><span class
 </div>
 </section>
 <section id="lighttpd-server-configuration">
-<h3>Lighttpd server configuration<a class="headerlink" href="#lighttpd-server-configuration" title="Permalink to this headline">¶</a></h3>
+<h3>Lighttpd server configuration<a class="headerlink" href="#lighttpd-server-configuration" title="Link to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Note: if the config already enables mod_alias, you must remove it from
 # the next line
 server.modules += ( &quot;mod_alias&quot; &quot;mod_cgi&quot; )
@@ -206,7 +204,7 @@ index-file.names += ( &quot;bin/index.cgi&quot; )
 </section>
 </section>
 <section id="collectd-graph-panel-front-end">
-<h2>Collectd Graph Panel front-end<a class="headerlink" href="#collectd-graph-panel-front-end" title="Permalink to this headline">¶</a></h2>
+<h2>Collectd Graph Panel front-end<a class="headerlink" href="#collectd-graph-panel-front-end" title="Link to this heading">¶</a></h2>
 <p>CGP (Collectd Graph Panel) is a better front-end than Collection3. It is
 written in PHP. To install it, you just need to download latest release from
 <a class="reference external" href="https://github.com/pommi/CGP/releases">https://github.com/pommi/CGP/releases</a> in a folder and to configure your web
@@ -252,8 +250,9 @@ $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Collectd</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#network-setup">Network setup</a></li>
@@ -268,12 +267,17 @@ $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="apache.conf.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/web/apache.conf</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="gitweb.html"
-                        title="next chapter">Git Web and CGit</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="apache.conf.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/web/apache.conf</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="gitweb.html"
+                          title="next chapter">Git Web and CGit</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc-server/web/collectd.rst.txt"
@@ -292,7 +296,7 @@ $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -315,8 +319,8 @@ $CONFIG[&#39;time_range&#39;][&#39;default&#39;] = 7200; // 2 hours
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

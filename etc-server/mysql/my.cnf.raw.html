@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>etc-server/mysql/my.cnf &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="etc-server/web/apache.conf" href="../web/apache.conf.raw.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="etc-server-mysql-my-cnf">
-<h1><code class="docutils literal notranslate"><span class="pre">etc-server/mysql/my.cnf</span></code><a class="headerlink" href="#etc-server-mysql-my-cnf" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc-server/mysql/my.cnf</span></code><a class="headerlink" href="#etc-server-mysql-my-cnf" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../../_downloads/8994c4ee9ddb15a57c134fc83c7cb0ab/my.cnf"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example MariaDB config file for medium systems.</span>
 <span class="c1">#</span>
@@ -65,24 +63,24 @@
 <span class="c1"># The following options will be passed to all MariaDB clients</span>
 <span class="o">[</span>client<span class="o">]</span>
 <span class="c1">#password = your_password</span>
-<span class="nv">port</span> <span class="o">=</span> <span class="m">3306</span>
-<span class="nv">socket</span> <span class="o">=</span> /run/mysqld/mysqld.sock
+<span class="nv">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3306</span>
+<span class="nv">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/run/mysqld/mysqld.sock
 
 <span class="c1"># Here follows entries for some specific programs</span>
 
 <span class="c1"># The MariaDB server</span>
 <span class="o">[</span>mysqld<span class="o">]</span>
-<span class="nv">port</span> <span class="o">=</span> <span class="m">3306</span>
-<span class="nv">socket</span> <span class="o">=</span> /run/mysqld/mysqld.sock
+<span class="nv">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3306</span>
+<span class="nv">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/run/mysqld/mysqld.sock
 skip-external-locking
-<span class="nv">key_buffer_size</span> <span class="o">=</span> 16M
-<span class="nv">max_allowed_packet</span> <span class="o">=</span> 16M
-<span class="nv">table_open_cache</span> <span class="o">=</span> <span class="m">64</span>
-<span class="nv">sort_buffer_size</span> <span class="o">=</span> 512K
-<span class="nv">net_buffer_length</span> <span class="o">=</span> 8K
-<span class="nv">read_buffer_size</span> <span class="o">=</span> 256K
-<span class="nv">read_rnd_buffer_size</span> <span class="o">=</span> 512K
-<span class="nv">myisam_sort_buffer_size</span> <span class="o">=</span> 8M
+<span class="nv">key_buffer_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>16M
+<span class="nv">max_allowed_packet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>16M
+<span class="nv">table_open_cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">64</span>
+<span class="nv">sort_buffer_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>512K
+<span class="nv">net_buffer_length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>8K
+<span class="nv">read_buffer_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>256K
+<span class="nv">read_rnd_buffer_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>512K
+<span class="nv">myisam_sort_buffer_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>8M
 
 <span class="c1"># Point the following paths to different dedicated disks</span>
 <span class="c1">#tmpdir = /tmp/</span>
@@ -105,7 +103,7 @@ log-bin<span class="o">=</span>mysql-bin
 <span class="c1"># required unique id between 1 and 2^32 - 1</span>
 <span class="c1"># defaults to 1 if master-host is not set</span>
 <span class="c1"># but will not function as a master if omitted</span>
-server-id <span class="o">=</span> <span class="m">1</span>
+server-id<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
 
 <span class="c1"># Replication Slave (comment out master section to use this)</span>
 <span class="c1">#</span>
@@ -178,7 +176,7 @@ server-id <span class="o">=</span> <span class="m">1</span>
 
 <span class="o">[</span>mysqldump<span class="o">]</span>
 quick
-<span class="nv">max_allowed_packet</span> <span class="o">=</span> 16M
+<span class="nv">max_allowed_packet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>16M
 
 <span class="o">[</span>mysql<span class="o">]</span>
 no-auto-rehash
@@ -186,10 +184,10 @@ no-auto-rehash
 <span class="c1">#safe-updates</span>
 
 <span class="o">[</span>myisamchk<span class="o">]</span>
-<span class="nv">key_buffer_size</span> <span class="o">=</span> 20M
-<span class="nv">sort_buffer_size</span> <span class="o">=</span> 20M
-<span class="nv">read_buffer</span> <span class="o">=</span> 2M
-<span class="nv">write_buffer</span> <span class="o">=</span> 2M
+<span class="nv">key_buffer_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>20M
+<span class="nv">sort_buffer_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>20M
+<span class="nv">read_buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>2M
+<span class="nv">write_buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>2M
 
 <span class="o">[</span>mysqlhotcopy<span class="o">]</span>
 interactive-timeout
@@ -204,12 +202,16 @@ interactive-timeout
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../mail.html"
-                        title="previous chapter">Mail server configuration with Postfix and dovecot</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../web/apache.conf.raw.html"
-                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/web/apache.conf</span></code></a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../mail.html"
+                          title="previous chapter">Mail server configuration with Postfix and dovecot</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../web/apache.conf.raw.html"
+                          title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/web/apache.conf</span></code></a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc-server/mysql/my.cnf.raw.rst.txt"
@@ -228,7 +230,7 @@ interactive-timeout
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -251,8 +253,8 @@ interactive-timeout
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

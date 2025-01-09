@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>etc-server/web/nginx.conf &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="PHP Configuration Customization" href="php.html" />
@@ -42,53 +40,53 @@
           <div class="body" role="main">
             
   <section id="etc-server-web-nginx-conf">
-<h1><code class="docutils literal notranslate"><span class="pre">etc-server/web/nginx.conf</span></code><a class="headerlink" href="#etc-server-web-nginx-conf" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc-server/web/nginx.conf</span></code><a class="headerlink" href="#etc-server-web-nginx-conf" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../../_downloads/3f9daa711a84f3bde9347b09ba854b87/nginx.conf"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="c1"># /etc/nginx/nginx.conf</span>
 <span class="c1"># This file contains some customizations from the default configuration</span>
 
-<span class="k">user</span><span class="w"> </span><span class="s">www-data</span><span class="p">;</span><span class="w"></span>
-<span class="k">worker_processes</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
-<span class="k">pid</span><span class="w"> </span><span class="s">/var/run/nginx.pid</span><span class="p">;</span><span class="w"></span>
+<span class="k">user</span><span class="w"> </span><span class="s">www-data</span><span class="p">;</span>
+<span class="k">worker_processes</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="k">pid</span><span class="w"> </span><span class="s">/var/run/nginx.pid</span><span class="p">;</span>
 
-<span class="k">events</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kn">worker_connections</span><span class="w"> </span><span class="mi">768</span><span class="p">;</span><span class="w"></span>
+<span class="k">events</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">worker_connections</span><span class="w"> </span><span class="mi">768</span><span class="p">;</span>
 <span class="w">    </span><span class="c1"># multi_accept on;</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 
-<span class="k">http</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">http</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">##</span>
 <span class="w">    </span><span class="c1"># Basic Settings</span>
 <span class="w">    </span><span class="c1">##</span>
 
-<span class="w">    </span><span class="kn">sendfile</span><span class="w"> </span><span class="no">on</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">tcp_nopush</span><span class="w"> </span><span class="no">on</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">tcp_nodelay</span><span class="w"> </span><span class="no">on</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">keepalive_timeout</span><span class="w"> </span><span class="mi">65</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">types_hash_max_size</span><span class="w"> </span><span class="mi">2048</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">sendfile</span><span class="w"> </span><span class="no">on</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">tcp_nopush</span><span class="w"> </span><span class="no">on</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">tcp_nodelay</span><span class="w"> </span><span class="no">on</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">keepalive_timeout</span><span class="w"> </span><span class="mi">65</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">types_hash_max_size</span><span class="w"> </span><span class="mi">2048</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1"># Only display &quot;nginx&quot; in Server HTTP header</span>
-<span class="w">    </span><span class="kn">server_tokens</span><span class="w"> </span><span class="no">off</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">server_tokens</span><span class="w"> </span><span class="no">off</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1"># server_names_hash_bucket_size 64;</span>
 <span class="w">    </span><span class="c1"># server_name_in_redirect off;</span>
 
-<span class="w">    </span><span class="kn">include</span><span class="w"> </span><span class="s">/etc/nginx/mime.types</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">default_type</span><span class="w"> </span><span class="s">application/octet-stream</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">include</span><span class="w"> </span><span class="s">/etc/nginx/mime.types</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">default_type</span><span class="w"> </span><span class="s">application/octet-stream</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">##</span>
 <span class="w">    </span><span class="c1"># Logging Settings</span>
 <span class="w">    </span><span class="c1">##</span>
 
-<span class="w">    </span><span class="kn">access_log</span><span class="w"> </span><span class="s">/var/log/nginx/access.log</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">error_log</span><span class="w"> </span><span class="s">/var/log/nginx/error.log</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">access_log</span><span class="w"> </span><span class="s">/var/log/nginx/access.log</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">error_log</span><span class="w"> </span><span class="s">/var/log/nginx/error.log</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">##</span>
 <span class="w">    </span><span class="c1"># Gzip Settings</span>
 <span class="w">    </span><span class="c1">##</span>
 
-<span class="w">    </span><span class="kn">gzip</span><span class="w"> </span><span class="no">on</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">gzip_disable</span><span class="w"> </span><span class="s">&quot;msie6&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">gzip</span><span class="w"> </span><span class="no">on</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">gzip_disable</span><span class="w"> </span><span class="s">&quot;msie6&quot;</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1"># gzip_vary on;</span>
 <span class="w">    </span><span class="c1"># gzip_proxied any;</span>
@@ -100,39 +98,39 @@
 <span class="w">    </span><span class="c1">##</span>
 <span class="w">    </span><span class="c1"># Content charset</span>
 <span class="w">    </span><span class="c1">##</span>
-<span class="w">    </span><span class="kn">charset</span><span class="w"> </span><span class="s">UTF-8</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">charset</span><span class="w"> </span><span class="s">UTF-8</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">##</span>
 <span class="w">    </span><span class="c1"># Virtual Host Configs</span>
 <span class="w">    </span><span class="c1">##</span>
 
-<span class="w">    </span><span class="kn">include</span><span class="w"> </span><span class="s">/etc/nginx/conf.d/*.conf</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">include</span><span class="w"> </span><span class="s">/etc/nginx/sites-enabled/*</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">include</span><span class="w"> </span><span class="s">/etc/nginx/conf.d/*.conf</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">include</span><span class="w"> </span><span class="s">/etc/nginx/sites-enabled/*</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1"># Example of localhost</span>
-<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">80</span><span class="w"> </span><span class="s">default_server</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="s">[::1]:80</span><span class="w"> </span><span class="s">default_server</span><span class="w"> </span><span class="s">ipv6only=on</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="kn">server_name</span><span class="w"> </span><span class="s">localhost</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="kn">root</span><span class="w"> </span><span class="s">/srv/http</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="kn">index</span><span class="w"> </span><span class="s">index.html</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">80</span><span class="w"> </span><span class="s">default_server</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">listen</span><span class="w"> </span><span class="s">[::1]:80</span><span class="w"> </span><span class="s">default_server</span><span class="w"> </span><span class="s">ipv6only=on</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">server_name</span><span class="w"> </span><span class="s">localhost</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">root</span><span class="w"> </span><span class="s">/srv/http</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">index</span><span class="w"> </span><span class="s">index.html</span><span class="p">;</span>
 
 <span class="w">        </span><span class="c1"># Deny anything else than GET/POST</span>
-<span class="w">        </span><span class="kn">limit_except</span><span class="w"> </span><span class="s">GET</span><span class="w"> </span><span class="s">HEAD</span><span class="w"> </span><span class="s">POST</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="kn">deny</span><span class="w"> </span><span class="s">all</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="kn">limit_except</span><span class="w"> </span><span class="s">GET</span><span class="w"> </span><span class="s">HEAD</span><span class="w"> </span><span class="s">POST</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kn">deny</span><span class="w"> </span><span class="s">all</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
 
 <span class="w">        </span><span class="c1"># Deny access to hidden directories</span>
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="p">~</span><span class="w"> </span><span class="sr">/\.</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="kn">return</span><span class="w"> </span><span class="mi">403</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="p">~</span><span class="w"> </span><span class="sr">/\.</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kn">return</span><span class="w"> </span><span class="mi">403</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
 
 <span class="w">        </span><span class="c1"># Allow access to static files</span>
-<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="kn">try_files</span><span class="w"> </span><span class="nv">$uri</span><span class="w"> </span><span class="nv">$uri/</span><span class="w"> </span><span class="p">=</span><span class="mi">404</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kn">try_files</span><span class="w"> </span><span class="nv">$uri</span><span class="w"> </span><span class="nv">$uri/</span><span class="w"> </span><span class="p">=</span><span class="mi">404</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -144,12 +142,16 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="lighttpd.conf.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/web/lighttpd.conf</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="php.html"
-                        title="next chapter">PHP Configuration Customization</a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="lighttpd.conf.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/web/lighttpd.conf</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="php.html"
+                          title="next chapter">PHP Configuration Customization</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc-server/web/nginx.conf.raw.rst.txt"
@@ -168,7 +170,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -191,8 +193,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

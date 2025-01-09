@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Use tmpfs for some directories &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Traffic shaping" href="traffic-shaping.html" />
@@ -42,11 +40,11 @@
           <div class="body" role="main">
             
   <section id="use-tmpfs-for-some-directories">
-<h1>Use tmpfs for some directories<a class="headerlink" href="#use-tmpfs-for-some-directories" title="Permalink to this headline">¶</a></h1>
+<h1>Use tmpfs for some directories<a class="headerlink" href="#use-tmpfs-for-some-directories" title="Link to this heading">¶</a></h1>
 <p>On my hosts I configure some directories to be tmpfs mountpoint to save disk
 writes, which is very important when using SSD drives. Here is how to do so.</p>
 <section id="tmp">
-<h2><code class="docutils literal notranslate"><span class="pre">/tmp</span></code><a class="headerlink" href="#tmp" title="Permalink to this headline">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">/tmp</span></code><a class="headerlink" href="#tmp" title="Link to this heading">¶</a></h2>
 <p>Here is what I usually put in my <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># &lt;file system&gt; &lt;dir&gt; &lt;type&gt; &lt;options&gt;            &lt;dump&gt; &lt;pass&gt;</span>
 <span class="n">tmpfs</span>           <span class="o">/</span><span class="n">tmp</span>  <span class="n">tmpfs</span>  <span class="n">nodev</span><span class="p">,</span><span class="n">nosuid</span><span class="p">,</span><span class="n">noexec</span>  <span class="mi">0</span>      <span class="mi">0</span>
@@ -54,7 +52,7 @@ writes, which is very important when using SSD drives. Here is how to do so.</p>
 </div>
 </section>
 <section id="home-cache">
-<h2><code class="docutils literal notranslate"><span class="pre">$HOME/.cache</span></code><a class="headerlink" href="#home-cache" title="Permalink to this headline">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">$HOME/.cache</span></code><a class="headerlink" href="#home-cache" title="Link to this heading">¶</a></h2>
 <p>Example of <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code> entry for user’s <code class="docutils literal notranslate"><span class="pre">.cache</span></code> home subdirectory:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$USER.cache $HOME/.cache tmpfs defaults,auto,nodev,noexec,nosuid,size=2048M,gid=100,uid=1000,mode=0700 0 0
 </pre></div>
@@ -66,7 +64,7 @@ be set up as a bind-mount:</p>
 </div>
 </section>
 <section id="yaourt-build-dir-on-archlinux">
-<h2>Yaourt build dir on ArchLinux<a class="headerlink" href="#yaourt-build-dir-on-archlinux" title="Permalink to this headline">¶</a></h2>
+<h2>Yaourt build dir on ArchLinux<a class="headerlink" href="#yaourt-build-dir-on-archlinux" title="Link to this heading">¶</a></h2>
 <p>To build AUR packaes, yaourt uses <code class="docutils literal notranslate"><span class="pre">/tmp/yaourt-tmp-$USER</span></code>. To make this
 directory a tmpfs mountpoint the time of a build, add the following line to
 <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code>:</p>
@@ -77,7 +75,7 @@ directory a tmpfs mountpoint the time of a build, add the following line to
 yaourt.</p>
 </section>
 <section id="other-directories">
-<h2>Other directories<a class="headerlink" href="#other-directories" title="Permalink to this headline">¶</a></h2>
+<h2>Other directories<a class="headerlink" href="#other-directories" title="Link to this heading">¶</a></h2>
 <p>Here are some entries which may be written into <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Web browser downloads
 $HOME/Downloads/tmp tmpfs defaults,auto,nodev,nosuid,exec,gid=$GID,uid=$UID,mode=0700,rootcontext=$(getfattr --only-values -n security.selinux $HOME/Downloads) 0 0
@@ -96,8 +94,9 @@ $USER.yaourt /tmp/makepkg-$USER tmpfs defaults,user,noauto,nodev,exec,nosuid,gid
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Use tmpfs for some directories</a><ul>
 <li><a class="reference internal" href="#tmp"><code class="docutils literal notranslate"><span class="pre">/tmp</span></code></a></li>
 <li><a class="reference internal" href="#home-cache"><code class="docutils literal notranslate"><span class="pre">$HOME/.cache</span></code></a></li>
@@ -107,12 +106,17 @@ $USER.yaourt /tmp/makepkg-$USER tmpfs defaults,user,noauto,nodev,exec,nosuid,gid
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="systemd.html"
-                        title="previous chapter">systemd configuration</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="traffic-shaping.html"
-                        title="next chapter">Traffic shaping</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="systemd.html"
+                          title="previous chapter">systemd configuration</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="traffic-shaping.html"
+                          title="next chapter">Traffic shaping</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/tmpfs.rst.txt"
@@ -131,7 +135,7 @@ $USER.yaourt /tmp/makepkg-$USER tmpfs defaults,user,noauto,nodev,exec,nosuid,gid
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -154,8 +158,8 @@ $USER.yaourt /tmp/makepkg-$USER tmpfs defaults,user,noauto,nodev,exec,nosuid,gid
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

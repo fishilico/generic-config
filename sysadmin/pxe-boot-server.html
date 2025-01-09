@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Configure a server to handle network boot (PXE) &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="QEmu-KVM notes" href="qemu.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="configure-a-server-to-handle-network-boot-pxe">
-<h1>Configure a server to handle network boot (PXE)<a class="headerlink" href="#configure-a-server-to-handle-network-boot-pxe" title="Permalink to this headline">¶</a></h1>
+<h1>Configure a server to handle network boot (PXE)<a class="headerlink" href="#configure-a-server-to-handle-network-boot-pxe" title="Link to this heading">¶</a></h1>
 <p><em>PXE</em> (Pre-Execution Environment) is a way to boot a computer which can’t boot
 from a physical drive (CD, DVD, USB). The computer gets an IP address from the
 network using DHCP and then download a PXE image from a TFTP (Trivial File
@@ -51,22 +49,22 @@ Syslinux provides a PXE image. The LiveCD of any GNU/Linux distribution contains
 configuration files for Syslinux and a compressed file system which can be used
 by network boot.</p>
 <section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h2>
 <p>1- Configure the PXE server network (IP address, DNS…) and make it up and
 running.</p>
 <p>2- Uncompress or mount an ISO image of an Ubuntu LiveCD to <code class="docutils literal notranslate"><span class="pre">/tmp/iso</span></code>.
 This may work too with other distributions, but this example has only been
 tested with Ubuntu.</p>
 <p>3- Prepare a TFTP directory:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir -p /srv/tftpboot
-cp -a /tmp/iso/isolinux/* /srv/tftpboot/
-mkdir /srv/tftpboot/pxelinux.cfg
-mv /srv/tftpboot/isolinux.cfg /srv/tftpboot/pxelinux.cfg/default
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>/srv/tftpboot
+cp<span class="w"> </span>-a<span class="w"> </span>/tmp/iso/isolinux/*<span class="w"> </span>/srv/tftpboot/
+mkdir<span class="w"> </span>/srv/tftpboot/pxelinux.cfg
+mv<span class="w"> </span>/srv/tftpboot/isolinux.cfg<span class="w"> </span>/srv/tftpboot/pxelinux.cfg/default
 
-cp -r /tmp/iso/casper /src/tftpboot
+cp<span class="w"> </span>-r<span class="w"> </span>/tmp/iso/casper<span class="w"> </span>/src/tftpboot
 
 <span class="c1"># This requires Syslinux to be installed</span>
-cp /usr/lib/syslinux/pxelinux.0 /srv/tftpboot
+cp<span class="w"> </span>/usr/lib/syslinux/pxelinux.0<span class="w"> </span>/srv/tftpboot
 </pre></div>
 </div>
 <p>4- Configure DNSMasq to be both a DHCP server and a TFTP one. To do so, edit
@@ -82,7 +80,7 @@ cp /usr/lib/syslinux/pxelinux.0 /srv/tftpboot
 <p>5- (Re)Start Dnsmasq service and enjoy your PXE server !</p>
 </section>
 <section id="debian-network-installation">
-<h2>Debian network installation<a class="headerlink" href="#debian-network-installation" title="Permalink to this headline">¶</a></h2>
+<h2>Debian network installation<a class="headerlink" href="#debian-network-installation" title="Link to this heading">¶</a></h2>
 <p>Debian provides files on its FTP mirrors which can be used to set up a PXE
 server to boot Debian netinstall.</p>
 <ul class="simple">
@@ -110,8 +108,9 @@ server to boot Debian netinstall.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Configure a server to handle network boot (PXE)</a><ul>
 <li><a class="reference internal" href="#example">Example</a></li>
 <li><a class="reference internal" href="#debian-network-installation">Debian network installation</a></li>
@@ -119,12 +118,17 @@ server to boot Debian netinstall.</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="perf-linux.html"
-                        title="previous chapter">Using perf on Linux</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="qemu.html"
-                        title="next chapter">QEmu-KVM notes</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="perf-linux.html"
+                          title="previous chapter">Using perf on Linux</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="qemu.html"
+                          title="next chapter">QEmu-KVM notes</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/pxe-boot-server.rst.txt"
@@ -143,7 +147,7 @@ server to boot Debian netinstall.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -166,8 +170,8 @@ server to boot Debian netinstall.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Microsoft SQL Server &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="MySQL tips and tricks" href="mysql.html" />
@@ -42,56 +40,56 @@
           <div class="body" role="main">
             
   <section id="microsoft-sql-server">
-<h1>Microsoft SQL Server<a class="headerlink" href="#microsoft-sql-server" title="Permalink to this headline">¶</a></h1>
+<h1>Microsoft SQL Server<a class="headerlink" href="#microsoft-sql-server" title="Link to this heading">¶</a></h1>
 <section id="mssql-queries">
-<h2>MSSQL queries<a class="headerlink" href="#mssql-queries" title="Permalink to this headline">¶</a></h2>
+<h2>MSSQL queries<a class="headerlink" href="#mssql-queries" title="Link to this heading">¶</a></h2>
 <p>Show the version of the database:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nv">@@version</span><span class="w"></span>
-<span class="n">GO</span><span class="w"></span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nv">@@version</span>
+<span class="n">GO</span>
 </pre></div>
 </div>
 <p>List available databases:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="k">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="k">Databases</span><span class="p">;</span><span class="w"></span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">master</span><span class="p">..</span><span class="n">sysdatabases</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="k">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="k">Databases</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">master</span><span class="p">..</span><span class="n">sysdatabases</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>List available tables from a database:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">USE</span><span class="w"> </span><span class="n">msdb</span><span class="p">;</span><span class="w"></span>
-<span class="k">SELECT</span><span class="w"> </span><span class="k">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="k">Tables</span><span class="w"></span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">USE</span><span class="w"> </span><span class="n">msdb</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="k">Tables</span>
 
-<span class="k">SELECT</span><span class="w"> </span><span class="k">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sysobjects</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">xtype</span><span class="o">=</span><span class="s1">&#39;U&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sysobjects</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">xtype</span><span class="o">=</span><span class="s1">&#39;U&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>List columns of a table:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">syscolumns</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">syscolumns</span><span class="w"></span>
-<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">sysobjects</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">syscolumn</span><span class="p">.</span><span class="n">id</span><span class="o">=</span><span class="n">sysobjects</span><span class="p">.</span><span class="n">id</span><span class="w"></span>
-<span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">sysobjects</span><span class="p">.</span><span class="k">name</span><span class="o">=</span><span class="s1">&#39;my_table&#39;</span><span class="w"></span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">syscolumns</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">syscolumns</span>
+<span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">sysobjects</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">syscolumn</span><span class="p">.</span><span class="n">id</span><span class="o">=</span><span class="n">sysobjects</span><span class="p">.</span><span class="n">id</span>
+<span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">sysobjects</span><span class="p">.</span><span class="k">name</span><span class="o">=</span><span class="s1">&#39;my_table&#39;</span>
 </pre></div>
 </div>
 <p>Enumerate users (type “<code class="docutils literal notranslate"><span class="pre">U</span></code>” is for <code class="docutils literal notranslate"><span class="pre">WINDOWS_LOGIN</span></code>, like <code class="docutils literal notranslate"><span class="pre">NT</span> <span class="pre">AUTHORITY\SYSTEM</span></code> account, and “<code class="docutils literal notranslate"><span class="pre">S</span></code>” is for <code class="docutils literal notranslate"><span class="pre">SQL_LOGIN</span></code>, like <code class="docutils literal notranslate"><span class="pre">sa</span></code> account):</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">principal_id</span><span class="p">,</span><span class="w"> </span><span class="n">sid</span><span class="p">,</span><span class="w"> </span><span class="k">name</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="n">type_desc</span><span class="p">,</span><span class="w"> </span><span class="n">credential_id</span><span class="p">,</span><span class="w"> </span><span class="n">owning_principal_id</span><span class="w"></span>
-<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="k">master</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">server_principals</span><span class="w"></span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">principal_id</span><span class="p">,</span><span class="w"> </span><span class="n">sid</span><span class="p">,</span><span class="w"> </span><span class="k">name</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="n">type_desc</span><span class="p">,</span><span class="w"> </span><span class="n">credential_id</span><span class="p">,</span><span class="w"> </span><span class="n">owning_principal_id</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="k">master</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">server_principals</span>
 
-<span class="c1">-- With passwords (John The Ripper format &quot;mssql&quot;)</span><span class="w"></span>
-<span class="k">SELECT</span><span class="w"> </span><span class="k">name</span><span class="p">,</span><span class="w"> </span><span class="k">password</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sysxlogins</span><span class="p">;</span><span class="w"></span>
-<span class="c1">-- since MSSQL 2005 (JtR format &quot;mssql05&quot;, after adding &quot;0x&quot; prefix to hashes):</span><span class="w"></span>
-<span class="k">SELECT</span><span class="w"> </span><span class="k">name</span><span class="p">,</span><span class="w"> </span><span class="n">password_hash</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="n">sql_logins</span><span class="p">;</span><span class="w"></span>
+<span class="c1">-- With passwords (John The Ripper format &quot;mssql&quot;)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">name</span><span class="p">,</span><span class="w"> </span><span class="k">password</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sysxlogins</span><span class="p">;</span>
+<span class="c1">-- since MSSQL 2005 (JtR format &quot;mssql05&quot;, after adding &quot;0x&quot; prefix to hashes):</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">name</span><span class="p">,</span><span class="w"> </span><span class="n">password_hash</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="n">sql_logins</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Run system commands:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="n">EXEC</span><span class="w"> </span><span class="k">master</span><span class="p">.</span><span class="n">dbo</span><span class="p">.</span><span class="n">sp_configure</span><span class="w"> </span><span class="s1">&#39;show advanced options&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="n">RECONFIGURE</span><span class="w"></span>
-<span class="n">EXEC</span><span class="w"> </span><span class="k">master</span><span class="p">.</span><span class="n">dbo</span><span class="p">.</span><span class="n">sp_configure</span><span class="w"> </span><span class="s1">&#39;xp_cmdshell&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="n">RECONFIGURE</span><span class="w"></span>
-<span class="n">GO</span><span class="w"></span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="n">EXEC</span><span class="w"> </span><span class="k">master</span><span class="p">.</span><span class="n">dbo</span><span class="p">.</span><span class="n">sp_configure</span><span class="w"> </span><span class="s1">&#39;show advanced options&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">RECONFIGURE</span>
+<span class="n">EXEC</span><span class="w"> </span><span class="k">master</span><span class="p">.</span><span class="n">dbo</span><span class="p">.</span><span class="n">sp_configure</span><span class="w"> </span><span class="s1">&#39;xp_cmdshell&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">RECONFIGURE</span>
+<span class="n">GO</span>
 
-<span class="n">xp_cmdshell</span><span class="w"> </span><span class="s2">&quot;whoami&quot;</span><span class="w"></span>
-<span class="n">GO</span><span class="w"></span>
+<span class="n">xp_cmdshell</span><span class="w"> </span><span class="s2">&quot;whoami&quot;</span>
+<span class="n">GO</span>
 </pre></div>
 </div>
 </section>
 <section id="docker-container-on-linux">
-<h2>Docker container on Linux<a class="headerlink" href="#docker-container-on-linux" title="Permalink to this headline">¶</a></h2>
+<h2>Docker container on Linux<a class="headerlink" href="#docker-container-on-linux" title="Link to this heading">¶</a></h2>
 <p>In order to use a MSSQL server on a development workstation, a Docker image can be used.
 Microsoft provides an image for both Linux and Windows environments.
 This is documented on <a class="reference external" href="https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-2017&amp;pivots=cs1-bash">https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-2017&amp;pivots=cs1-bash</a> and the building scripts are published on <a class="reference external" href="https://github.com/Microsoft/mssql-docker">https://github.com/Microsoft/mssql-docker</a>.</p>
@@ -100,28 +98,28 @@ This is documented on <a class="reference external" href="https://docs.microsoft
 <li><p>Enable Docker overlay2 storage driver (cf. <a class="reference external" href="https://docs.docker.com/storage/storagedriver/overlayfs-driver/#configure-docker-with-the-overlay-or-overlay2-storage-driver">https://docs.docker.com/storage/storagedriver/overlayfs-driver/#configure-docker-with-the-overlay-or-overlay2-storage-driver</a>).
 Write this in <code class="docutils literal notranslate"><span class="pre">/etc/docker/daemon.json</span></code>:</p></li>
 </ul>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;storage-driver&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;overlay2&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;storage-driver&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;overlay2&quot;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Pull Microsoft Docker image (cf. <a class="reference external" href="https://hub.docker.com/_/microsoft-mssql-server">https://hub.docker.com/_/microsoft-mssql-server</a>):</p></li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker pull mcr.microsoft.com/mssql/server:2017-latest
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>mcr.microsoft.com/mssql/server:2017-latest
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Run a server:</p></li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker run -e <span class="s1">&#39;ACCEPT_EULA=Y&#39;</span> -e <span class="s1">&#39;SA_PASSWORD=yourStrong(!)Password&#39;</span> -p <span class="m">127</span>.0.0.1:1433:1433 --name mssql -d mcr.microsoft.com/mssql/server:2017-latest
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;ACCEPT_EULA=Y&#39;</span><span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;SA_PASSWORD=yourStrong(!)Password&#39;</span><span class="w"> </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:1433:1433<span class="w"> </span>--name<span class="w"> </span>mssql<span class="w"> </span>-d<span class="w"> </span>mcr.microsoft.com/mssql/server:2017-latest
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Run SQL commands on the server (if <code class="docutils literal notranslate"><span class="pre">-Q</span></code> option is not used, an interactive prompt appears and the user needs to enter <code class="docutils literal notranslate"><span class="pre">GO</span></code> in order to launch queries and <code class="docutils literal notranslate"><span class="pre">QUIT</span></code> to exit):</p></li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker <span class="nb">exec</span> -it mssql /bin/bash
-/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P <span class="s2">&quot;</span><span class="nv">$SA_PASSWORD</span><span class="s2">&quot;</span> -Q <span class="s1">&#39;SELECT @@SERVERNAME&#39;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mssql<span class="w"> </span>/bin/bash
+/opt/mssql-tools/bin/sqlcmd<span class="w"> </span>-S<span class="w"> </span>localhost<span class="w"> </span>-U<span class="w"> </span>sa<span class="w"> </span>-P<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SA_PASSWORD</span><span class="s2">&quot;</span><span class="w"> </span>-Q<span class="w"> </span><span class="s1">&#39;SELECT @@SERVERNAME&#39;</span>
 </pre></div>
 </div>
 <p>On Windows, the Docker images is available on <a class="reference external" href="https://hub.docker.com/r/microsoft/mssql-server-windows-developer/">https://hub.docker.com/r/microsoft/mssql-server-windows-developer/</a></p>
@@ -135,8 +133,9 @@ Write this in <code class="docutils literal notranslate"><span class="pre">/etc/
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Microsoft SQL Server</a><ul>
 <li><a class="reference internal" href="#mssql-queries">MSSQL queries</a></li>
 <li><a class="reference internal" href="#docker-container-on-linux">Docker container on Linux</a></li>
@@ -144,12 +143,17 @@ Write this in <code class="docutils literal notranslate"><span class="pre">/etc/
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Databases</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="mysql.html"
-                        title="next chapter">MySQL tips and tricks</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Databases</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="mysql.html"
+                          title="next chapter">MySQL tips and tricks</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/database/microsoft-mssql.rst.txt"
@@ -168,7 +172,7 @@ Write this in <code class="docutils literal notranslate"><span class="pre">/etc/
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -191,8 +195,8 @@ Write this in <code class="docutils literal notranslate"><span class="pre">/etc/
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

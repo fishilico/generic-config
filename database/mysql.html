@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>MySQL tips and tricks &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="SQLite" href="sqlite.html" />
@@ -42,12 +40,12 @@
           <div class="body" role="main">
             
   <section id="mysql-tips-and-tricks">
-<h1>MySQL tips and tricks<a class="headerlink" href="#mysql-tips-and-tricks" title="Permalink to this headline">¶</a></h1>
+<h1>MySQL tips and tricks<a class="headerlink" href="#mysql-tips-and-tricks" title="Link to this heading">¶</a></h1>
 <p>Here are some useful reference for MySQL command line.  This file does not
 contain anything related to server configuration</p>
 <p>The official documentation is available at: <a class="reference external" href="http://dev.mysql.com/doc/">http://dev.mysql.com/doc/</a></p>
 <section id="basic-commands">
-<h2>Basic commands<a class="headerlink" href="#basic-commands" title="Permalink to this headline">¶</a></h2>
+<h2>Basic commands<a class="headerlink" href="#basic-commands" title="Link to this heading">¶</a></h2>
 <p>The basic MySQL commands are:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">DATABASES</span></code> to list available databases,</p></li>
@@ -59,21 +57,21 @@ contain anything related to server configuration</p>
 <p>Once a database is selected, standard SQL queries are possible.</p>
 </section>
 <section id="account-management">
-<h2>Account management<a class="headerlink" href="#account-management" title="Permalink to this headline">¶</a></h2>
+<h2>Account management<a class="headerlink" href="#account-management" title="Link to this heading">¶</a></h2>
 <p>To create a new MySQL user and give her a special database, which is useful for
 example when creating a new website, three commands are needed:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;newsite&#39;</span><span class="nv">@&#39;localhost&#39;</span><span class="w"> </span><span class="k">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;a-random-password&#39;</span><span class="p">;</span><span class="w"></span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">newsite</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CHARACTER</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="s1">&#39;utf8&#39;</span><span class="p">;</span><span class="w"></span>
-<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="p">,</span><span class="w"> </span><span class="k">INSERT</span><span class="p">,</span><span class="w"> </span><span class="k">DELETE</span><span class="p">,</span><span class="w"> </span><span class="k">UPDATE</span><span class="p">,</span><span class="w"> </span><span class="k">CREATE</span><span class="p">,</span><span class="w"> </span><span class="k">DROP</span><span class="p">,</span><span class="w"> </span><span class="k">INDEX</span><span class="p">,</span><span class="w"> </span><span class="k">ALTER</span><span class="p">,</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">TABLES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">newsite</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;newsite&#39;</span><span class="nv">@&#39;localhost&#39;</span><span class="p">;</span><span class="w"></span>
-<span class="k">FLUSH</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;newsite&#39;</span><span class="nv">@&#39;localhost&#39;</span><span class="w"> </span><span class="k">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;a-random-password&#39;</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">newsite</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CHARACTER</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="s1">&#39;utf8&#39;</span><span class="p">;</span>
+<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="p">,</span><span class="w"> </span><span class="k">INSERT</span><span class="p">,</span><span class="w"> </span><span class="k">DELETE</span><span class="p">,</span><span class="w"> </span><span class="k">UPDATE</span><span class="p">,</span><span class="w"> </span><span class="k">CREATE</span><span class="p">,</span><span class="w"> </span><span class="k">DROP</span><span class="p">,</span><span class="w"> </span><span class="k">INDEX</span><span class="p">,</span><span class="w"> </span><span class="k">ALTER</span><span class="p">,</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">TABLES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">newsite</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;newsite&#39;</span><span class="nv">@&#39;localhost&#39;</span><span class="p">;</span>
+<span class="k">FLUSH</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The following command changes the password associated to the user:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span><span class="w"> </span><span class="k">PASSWORD</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="s1">&#39;newsite&#39;</span><span class="nv">@&#39;localhost&#39;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">PASSWORD</span><span class="p">(</span><span class="s1">&#39;an other random password!&#39;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span><span class="w"> </span><span class="k">PASSWORD</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="s1">&#39;newsite&#39;</span><span class="nv">@&#39;localhost&#39;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">PASSWORD</span><span class="p">(</span><span class="s1">&#39;an other random password!&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>To list all users, you need SELECT access to <code class="docutils literal notranslate"><span class="pre">mysql</span></code> database:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="k">User</span><span class="p">,</span><span class="w"> </span><span class="k">Host</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="k">User</span><span class="p">,</span><span class="w"> </span><span class="k">Host</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The permissions of a specific user can be seen with <code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">GRANTS</span></code>.  Here is
@@ -89,16 +87,16 @@ an example:</p>
 </div>
 </section>
 <section id="shell-connection">
-<h2>Shell connection<a class="headerlink" href="#shell-connection" title="Permalink to this headline">¶</a></h2>
+<h2>Shell connection<a class="headerlink" href="#shell-connection" title="Link to this heading">¶</a></h2>
 <p>To connect to a database when being in a shell, use the <code class="docutils literal notranslate"><span class="pre">mysql</span></code> command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mysql -H server -u user -p database
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mysql<span class="w"> </span>-H<span class="w"> </span>server<span class="w"> </span>-u<span class="w"> </span>user<span class="w"> </span>-p<span class="w"> </span>database
 </pre></div>
 </div>
 <p>This command asks for the password of user and then connects and use the
 specified database.</p>
 <p>To give the password directly on the command line, do not put a space between
 <code class="docutils literal notranslate"><span class="pre">-p</span></code> and the password:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mysql -u user <span class="s2">&quot;-p</span><span class="nv">$PASSWORD</span><span class="s2">&quot;</span> database
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mysql<span class="w"> </span>-u<span class="w"> </span>user<span class="w"> </span><span class="s2">&quot;-p</span><span class="nv">$PASSWORD</span><span class="s2">&quot;</span><span class="w"> </span>database
 </pre></div>
 </div>
 <p>It is also possible to put login information in a hidden file in your home
@@ -110,20 +108,15 @@ folder, in <code class="docutils literal notranslate"><span class="pre">~/.my.cn
 </pre></div>
 </div>
 <p>To dump a database, the command is <code class="docutils literal notranslate"><span class="pre">mysqldump</span></code>.  Here are some examples:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mysqldump --lock-tables database mytable
-mysqldump --single-transaction --add-drop-table database_with_innoDB
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mysqldump<span class="w"> </span>--lock-tables<span class="w"> </span>database<span class="w"> </span>mytable
+mysqldump<span class="w"> </span>--single-transaction<span class="w"> </span>--add-drop-table<span class="w"> </span>database_with_innoDB
 </pre></div>
 </div>
 </section>
 <section id="list-of-permissions">
-<h2>List of permissions<a class="headerlink" href="#list-of-permissions" title="Permalink to this headline">¶</a></h2>
+<h2>List of permissions<a class="headerlink" href="#list-of-permissions" title="Link to this heading">¶</a></h2>
 <p>This table lists the available permissions, used by <code class="docutils literal notranslate"><span class="pre">GRANT</span></code>:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 45%" />
-<col style="width: 37%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Data</p></th>
 <th class="head"><p>Structure</p></th>
@@ -177,98 +170,98 @@ mysqldump --single-transaction --add-drop-table database_with_innoDB
 </table>
 </section>
 <section id="mysql-query-examples">
-<h2>MySQL query examples<a class="headerlink" href="#mysql-query-examples" title="Permalink to this headline">¶</a></h2>
+<h2>MySQL query examples<a class="headerlink" href="#mysql-query-examples" title="Link to this heading">¶</a></h2>
 <p>These queries create an empty account table with some fields:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n n-Quoted">`account`</span><span class="p">;</span><span class="w"></span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n n-Quoted">`account`</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
-<span class="w">  </span><span class="n n-Quoted">`uid`</span><span class="w"> </span><span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="w"> </span><span class="k">AUTO_INCREMENT</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n n-Quoted">`hruid`</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">CHARACTER</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="k">ascii</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n n-Quoted">`name`</span><span class="w"> </span><span class="kt">tinytext</span><span class="w"> </span><span class="k">CHARACTER</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">utf8</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8_unicode_ci</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n n-Quoted">`email`</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">CHARACTER</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">utf8</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8_unicode_ci</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n n-Quoted">`admin`</span><span class="w"> </span><span class="kt">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="s1">&#39;0&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n n-Quoted">`birthday`</span><span class="w"> </span><span class="kt">datetime</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n n-Quoted">`uid`</span><span class="p">),</span><span class="w"></span>
-<span class="w">  </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n n-Quoted">`hruid`</span><span class="w"> </span><span class="p">(</span><span class="n n-Quoted">`hruid`</span><span class="p">)</span><span class="w"></span>
-<span class="p">)</span><span class="w"> </span><span class="k">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n n-Quoted">`account`</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n n-Quoted">`account`</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n n-Quoted">`uid`</span><span class="w"> </span><span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="w"> </span><span class="k">AUTO_INCREMENT</span><span class="p">,</span>
+<span class="w">  </span><span class="n n-Quoted">`hruid`</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">CHARACTER</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="k">ascii</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n n-Quoted">`name`</span><span class="w"> </span><span class="kt">tinytext</span><span class="w"> </span><span class="k">CHARACTER</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">utf8</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8_unicode_ci</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n n-Quoted">`email`</span><span class="w"> </span><span class="kt">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">CHARACTER</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">utf8</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8_unicode_ci</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="n n-Quoted">`admin`</span><span class="w"> </span><span class="kt">tinyint</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="s1">&#39;0&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="n n-Quoted">`birthday`</span><span class="w"> </span><span class="kt">datetime</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="no">NULL</span><span class="p">,</span>
+<span class="w">  </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n n-Quoted">`uid`</span><span class="p">),</span>
+<span class="w">  </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n n-Quoted">`hruid`</span><span class="w"> </span><span class="p">(</span><span class="n n-Quoted">`hruid`</span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>When the user is allowed to interact with the filesystem:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Read a file from the filesystem</span><span class="w"></span>
-<span class="k">SELECT</span><span class="w"> </span><span class="nf">LOAD_FILE</span><span class="p">(</span><span class="s1">&#39;/etc/hosts&#39;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Read a file from the filesystem</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="nf">LOAD_FILE</span><span class="p">(</span><span class="s1">&#39;/etc/hosts&#39;</span><span class="p">);</span>
 
-<span class="c1">-- Write a file that does not exist</span><span class="w"></span>
-<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Hello, world!&#39;</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="k">OUTFILE</span><span class="w"> </span><span class="s1">&#39;/tmp/my_hello.txt&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="c1">-- Write a file that does not exist</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Hello, world!&#39;</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="k">OUTFILE</span><span class="w"> </span><span class="s1">&#39;/tmp/my_hello.txt&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
 <section id="sql-injection-queries">
-<h2>SQL injection queries<a class="headerlink" href="#sql-injection-queries" title="Permalink to this headline">¶</a></h2>
+<h2>SQL injection queries<a class="headerlink" href="#sql-injection-queries" title="Link to this heading">¶</a></h2>
 <p>When a SQL injection vulnerability hits an application and makes it possible to
 run arbitrary <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> queries, here are some queries that can be used in
 order to gather information about the database.</p>
 <ul>
 <li><p>Which version is the server running?</p>
 <blockquote>
-<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">version</span><span class="p">();</span><span class="w"></span>
-<span class="k">SELECT</span><span class="w"> </span><span class="nv">@@version</span><span class="p">;</span><span class="w"></span>
+<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">version</span><span class="p">();</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="nv">@@version</span><span class="p">;</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>What are the available tables?</p>
 <blockquote>
-<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="n">TABLE_SCHEMA</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">TABLE_NAME</span><span class="p">)</span><span class="w"></span>
-<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="k">TABLES</span><span class="p">;</span><span class="w"></span>
+<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;:&#39;</span><span class="p">,</span>
+<span class="w">              </span><span class="n">TABLE_SCHEMA</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">TABLE_NAME</span><span class="p">)</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="k">TABLES</span><span class="p">;</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>What are the columns in the tables?</p>
 <blockquote>
-<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="n">TABLE_SCHEMA</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">TABLE_NAME</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="k">COLUMN_NAME</span><span class="p">,</span><span class="s1">&#39;(&#39;</span><span class="p">,</span><span class="n">DATA_TYPE</span><span class="p">,</span><span class="s1">&#39;, &#39;</span><span class="p">,</span><span class="n">COLUMN_TYPE</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span><span class="w"></span>
-<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="k">COLUMNS</span><span class="p">;</span><span class="w"></span>
+<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;:&#39;</span><span class="p">,</span>
+<span class="w">              </span><span class="n">TABLE_SCHEMA</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">TABLE_NAME</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+<span class="w">              </span><span class="k">COLUMN_NAME</span><span class="p">,</span><span class="s1">&#39;(&#39;</span><span class="p">,</span><span class="n">DATA_TYPE</span><span class="p">,</span><span class="s1">&#39;, &#39;</span><span class="p">,</span><span class="n">COLUMN_TYPE</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="k">COLUMNS</span><span class="p">;</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>What are the privileges visible from the current user?</p>
 <blockquote>
-<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="n">GRANTEE</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;,&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="n">PRIVILEGE_TYPE</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">IS_GRANTABLE</span><span class="p">,</span><span class="s1">&#39;_grantable&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span><span class="w"></span>
-<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">USER_PRIVILEGES</span><span class="p">;</span><span class="w"></span>
-<span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="n">GRANTEE</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="n">TABLE_SCHEMA</span><span class="p">,</span><span class="s1">&#39;,&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="n">PRIVILEGE_TYPE</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">IS_GRANTABLE</span><span class="p">,</span><span class="s1">&#39;_grantable&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span><span class="w"></span>
-<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">SCHEMA_PRIVILEGES</span><span class="p">;</span><span class="w"></span>
-<span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="n">GRANTEE</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="n">TABLE_SCHEMA</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">TABLE_NAME</span><span class="p">,</span><span class="s1">&#39;,&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="n">PRIVILEGE_TYPE</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">IS_GRANTABLE</span><span class="p">,</span><span class="s1">&#39;_grantable&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span><span class="w"></span>
-<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">TABLE_PRIVILEGES</span><span class="p">;</span><span class="w"></span>
-<span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="n">GRANTEE</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="n">TABLE_SCHEMA</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">TABLE_NAME</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">COLUMN_NAME</span><span class="p">,</span><span class="s1">&#39;,&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="n">PRIVILEGE_TYPE</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">IS_GRANTABLE</span><span class="p">,</span><span class="s1">&#39;_grantable&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span><span class="w"></span>
-<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">COLUMN_PRIVILEGES</span><span class="p">;</span><span class="w"></span>
+<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="n">GRANTEE</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;,&#39;</span><span class="p">,</span>
+<span class="w">              </span><span class="n">PRIVILEGE_TYPE</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">IS_GRANTABLE</span><span class="p">,</span><span class="s1">&#39;_grantable&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">USER_PRIVILEGES</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="n">GRANTEE</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;:&#39;</span><span class="p">,</span>
+<span class="w">              </span><span class="n">TABLE_SCHEMA</span><span class="p">,</span><span class="s1">&#39;,&#39;</span><span class="p">,</span>
+<span class="w">              </span><span class="n">PRIVILEGE_TYPE</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">IS_GRANTABLE</span><span class="p">,</span><span class="s1">&#39;_grantable&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">SCHEMA_PRIVILEGES</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="n">GRANTEE</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;:&#39;</span><span class="p">,</span>
+<span class="w">              </span><span class="n">TABLE_SCHEMA</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">TABLE_NAME</span><span class="p">,</span><span class="s1">&#39;,&#39;</span><span class="p">,</span>
+<span class="w">              </span><span class="n">PRIVILEGE_TYPE</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">IS_GRANTABLE</span><span class="p">,</span><span class="s1">&#39;_grantable&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">TABLE_PRIVILEGES</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="n">GRANTEE</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="n">TABLE_CATALOG</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">),</span><span class="s1">&#39;:&#39;</span><span class="p">,</span>
+<span class="w">              </span><span class="n">TABLE_SCHEMA</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">TABLE_NAME</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">COLUMN_NAME</span><span class="p">,</span><span class="s1">&#39;,&#39;</span><span class="p">,</span>
+<span class="w">              </span><span class="n">PRIVILEGE_TYPE</span><span class="p">,</span><span class="k">IF</span><span class="p">(</span><span class="n">IS_GRANTABLE</span><span class="p">,</span><span class="s1">&#39;_grantable&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">COLUMN_PRIVILEGES</span><span class="p">;</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>Who gave the grants and when?</p>
 <blockquote>
-<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="k">User</span><span class="p">,</span><span class="s1">&#39;@&#39;</span><span class="p">,</span><span class="k">Host</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="n">Db</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">Table_name</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="n">Grantor</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="kt">Timestamp</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">Table_priv</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">Column_priv</span><span class="p">)</span><span class="w"></span>
-<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">tables_priv</span><span class="p">;</span><span class="w"></span>
+<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="k">User</span><span class="p">,</span><span class="s1">&#39;@&#39;</span><span class="p">,</span><span class="k">Host</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="n">Db</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="k">Table_name</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="n">Grantor</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">Timestamp</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">Table_priv</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">Column_priv</span><span class="p">)</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">tables_priv</span><span class="p">;</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>What are the password hashes?</p>
 <blockquote>
-<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="k">User</span><span class="p">,</span><span class="s1">&#39;@&#39;</span><span class="p">,</span><span class="k">Host</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="k">Password</span><span class="p">,</span><span class="w"></span>
-<span class="w">              </span><span class="s1">&#39; (grant=&#39;</span><span class="p">,</span><span class="n">Grant_priv</span><span class="p">,</span><span class="s1">&#39;,super=&#39;</span><span class="p">,</span><span class="n">Super_priv</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span><span class="w"></span>
-<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="p">;</span><span class="w"></span>
+<div><div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="k">User</span><span class="p">,</span><span class="s1">&#39;@&#39;</span><span class="p">,</span><span class="k">Host</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="k">Password</span><span class="p">,</span>
+<span class="w">              </span><span class="s1">&#39; (grant=&#39;</span><span class="p">,</span><span class="n">Grant_priv</span><span class="p">,</span><span class="s1">&#39;,super=&#39;</span><span class="p">,</span><span class="n">Super_priv</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="p">;</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -284,8 +277,9 @@ order to gather information about the database.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">MySQL tips and tricks</a><ul>
 <li><a class="reference internal" href="#basic-commands">Basic commands</a></li>
 <li><a class="reference internal" href="#account-management">Account management</a></li>
@@ -297,12 +291,17 @@ order to gather information about the database.</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="microsoft-mssql.html"
-                        title="previous chapter">Microsoft SQL Server</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sqlite.html"
-                        title="next chapter">SQLite</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="microsoft-mssql.html"
+                          title="previous chapter">Microsoft SQL Server</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="sqlite.html"
+                          title="next chapter">SQLite</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/database/mysql.rst.txt"
@@ -321,7 +320,7 @@ order to gather information about the database.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -344,8 +343,8 @@ order to gather information about the database.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

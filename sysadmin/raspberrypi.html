@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Configuration tweaks on a Raspberry Pi &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Remote Desktop on Linux" href="remote-desktop-linux.html" />
@@ -42,9 +40,9 @@
           <div class="body" role="main">
             
   <section id="configuration-tweaks-on-a-raspberry-pi">
-<h1>Configuration tweaks on a Raspberry Pi<a class="headerlink" href="#configuration-tweaks-on-a-raspberry-pi" title="Permalink to this headline">¶</a></h1>
+<h1>Configuration tweaks on a Raspberry Pi<a class="headerlink" href="#configuration-tweaks-on-a-raspberry-pi" title="Link to this heading">¶</a></h1>
 <section id="raspbian-installation">
-<h2>Raspbian installation<a class="headerlink" href="#raspbian-installation" title="Permalink to this headline">¶</a></h2>
+<h2>Raspbian installation<a class="headerlink" href="#raspbian-installation" title="Link to this heading">¶</a></h2>
 <p>Download Raspbian image from <a class="reference external" href="http://www.raspberrypi.org/downloads">http://www.raspberrypi.org/downloads</a>.</p>
 <p>Each time the SD card is mounted and files modified, <code class="docutils literal notranslate"><span class="pre">/etc/fake-hwtime</span></code> or
 <code class="docutils literal notranslate"><span class="pre">/etc/fake-hwclock.data</span></code> needs to be updated with current date and time in
@@ -57,8 +55,8 @@ This can be done with:</p>
 <p>You may run the system on the SD card in QEMU if you don’t have an HDMI screen.
 <a class="reference external" href="http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/">http://xecdesign.com/qemu-emulating-raspberry-pi-the-easy-way/</a> describes how to
 achieve that, by downloading a special kernel of qemu-arm and running:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>qemu-system-arm -kernel kernel-qemu -cpu arm1176 -m <span class="m">256</span> -M versatilepb <span class="se">\</span>
-    -no-reboot -serial stdio -append <span class="s2">&quot;root=/dev/sda2 panic=1&quot;</span> -hda /dev/sdb
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>qemu-system-arm<span class="w"> </span>-kernel<span class="w"> </span>kernel-qemu<span class="w"> </span>-cpu<span class="w"> </span>arm1176<span class="w"> </span>-m<span class="w"> </span><span class="m">256</span><span class="w"> </span>-M<span class="w"> </span>versatilepb<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-no-reboot<span class="w"> </span>-serial<span class="w"> </span>stdio<span class="w"> </span>-append<span class="w"> </span><span class="s2">&quot;root=/dev/sda2 panic=1&quot;</span><span class="w"> </span>-hda<span class="w"> </span>/dev/sdb
 </pre></div>
 </div>
 <p>This kernel has been compiled with instructions written on
@@ -67,7 +65,7 @@ for an ARM11 (ARMv6) versatile board, which requires a patch to be applied:
 <a class="reference external" href="http://xecdesign.com/downloads/linux-qemu/linux-arm.patch">http://xecdesign.com/downloads/linux-qemu/linux-arm.patch</a></p>
 </section>
 <section id="post-install-configuration">
-<h2>Post-install configuration<a class="headerlink" href="#post-install-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Post-install configuration<a class="headerlink" href="#post-install-configuration" title="Link to this heading">¶</a></h2>
 <p>Like all Debian systems, some files needs updating after the initial setup:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">/etc/mailname</span></code> (with the name to be used in mailing)</p></li>
@@ -84,7 +82,7 @@ for an ARM11 (ARMv6) versatile board, which requires a patch to be applied:
 </div>
 </section>
 <section id="networking">
-<h2>Networking<a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h2>
+<h2>Networking<a class="headerlink" href="#networking" title="Link to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">/etc/network/interfaces</span></code> with a dynamic configuration:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="n">lo</span>
 <span class="c1"># Add contents:</span>
@@ -108,18 +106,18 @@ for an ARM11 (ARMv6) versatile board, which requires a patch to be applied:
 </div>
 </section>
 <section id="enable-ipv6">
-<h2>Enable IPv6<a class="headerlink" href="#enable-ipv6" title="Permalink to this headline">¶</a></h2>
+<h2>Enable IPv6<a class="headerlink" href="#enable-ipv6" title="Link to this heading">¶</a></h2>
 <p>To enable IPv6, use the following commands:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>modprobe ipv6
-sysctl -w net.ipv6.conf.default.use_tempaddr<span class="o">=</span><span class="m">2</span>
-sysctl -w net.ipv6.conf.all.use_tempaddr<span class="o">=</span><span class="m">2</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>modprobe<span class="w"> </span>ipv6
+sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv6.conf.default.use_tempaddr<span class="o">=</span><span class="m">2</span>
+sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv6.conf.all.use_tempaddr<span class="o">=</span><span class="m">2</span>
 </pre></div>
 </div>
 <p>To make these changes persistent, add <code class="docutils literal notranslate"><span class="pre">ipv6</span></code> to <code class="docutils literal notranslate"><span class="pre">/etc/modules</span></code> and
 <code class="docutils literal notranslate"><span class="pre">net.ipv6.conf.default.use_tempaddr</span> <span class="pre">=</span> <span class="pre">2</span></code> to <code class="docutils literal notranslate"><span class="pre">/etc/sysctl.conf</span></code>.</p>
 </section>
 <section id="some-useful-system-information">
-<h2>Some useful system information<a class="headerlink" href="#some-useful-system-information" title="Permalink to this headline">¶</a></h2>
+<h2>Some useful system information<a class="headerlink" href="#some-useful-system-information" title="Link to this heading">¶</a></h2>
 <p>Here are the outputs of several commands to retrieve system information on a
 Raspberry Pi, model B.</p>
 <ul class="simple">
@@ -224,7 +222,7 @@ raspberrypi
 </div>
 </section>
 <section id="playing-videos">
-<h2>Playing videos<a class="headerlink" href="#playing-videos" title="Permalink to this headline">¶</a></h2>
+<h2>Playing videos<a class="headerlink" href="#playing-videos" title="Link to this heading">¶</a></h2>
 <p>In order to play videos at a decent framerate (using the hardware acceleration
 provided by the GPU), a custom version of <code class="docutils literal notranslate"><span class="pre">mpv</span></code> and some other software needs
 to be installed. Instructions are available at
@@ -239,8 +237,9 @@ to be installed. Instructions are available at
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Configuration tweaks on a Raspberry Pi</a><ul>
 <li><a class="reference internal" href="#raspbian-installation">Raspbian installation</a></li>
 <li><a class="reference internal" href="#post-install-configuration">Post-install configuration</a></li>
@@ -252,12 +251,17 @@ to be installed. Instructions are available at
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="qubes-os.html"
-                        title="previous chapter">Qubes OS setup</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="remote-desktop-linux.html"
-                        title="next chapter">Remote Desktop on Linux</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="qubes-os.html"
+                          title="previous chapter">Qubes OS setup</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="remote-desktop-linux.html"
+                          title="next chapter">Remote Desktop on Linux</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/raspberrypi.rst.txt"
@@ -276,7 +280,7 @@ to be installed. Instructions are available at
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -299,8 +303,8 @@ to be installed. Instructions are available at
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Some information of Debian systems &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Build a development environment for Debian" href="debian-dev.html" />
@@ -42,11 +40,11 @@
           <div class="body" role="main">
             
   <section id="some-information-of-debian-systems">
-<h1>Some information of Debian systems<a class="headerlink" href="#some-information-of-debian-systems" title="Permalink to this headline">¶</a></h1>
+<h1>Some information of Debian systems<a class="headerlink" href="#some-information-of-debian-systems" title="Link to this heading">¶</a></h1>
 <p>This document describes some configuration customizations and other sysadmin
 tasks I do when I set up a Debian host.</p>
 <section id="debian-post-installation-commands">
-<h2>Debian post-installation commands<a class="headerlink" href="#debian-post-installation-commands" title="Permalink to this headline">¶</a></h2>
+<h2>Debian post-installation commands<a class="headerlink" href="#debian-post-installation-commands" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">dpkg-reconfigure</span> <span class="pre">locales</span></code></dt><dd><p>Reconfigure locales, for example to <code class="docutils literal notranslate"><span class="pre">en_US</span> <span class="pre">en_US.UTF-8</span> <span class="pre">fr_FR.UTF-8</span> <span class="pre">fr_FR&#64;euro</span></code>.
 Keep in mind SSH preserve locale across the connection so a single UTF-8
@@ -62,17 +60,17 @@ After this: <code class="docutils literal notranslate"><span class="pre">service
 </dd>
 </dl>
 <p>Enable persistent iptables configuration:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>apt-get install iptables-persistent
-systemctl <span class="nb">enable</span> netfilter-persistent.service
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>install<span class="w"> </span>iptables-persistent
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>netfilter-persistent.service
 </pre></div>
 </div>
 <p>Or persistent nftables configuration:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl <span class="nb">enable</span> nftables.service
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>nftables.service
 </pre></div>
 </div>
 </section>
 <section id="apt-configuration">
-<h2>APT configuration<a class="headerlink" href="#apt-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>APT configuration<a class="headerlink" href="#apt-configuration" title="Link to this heading">¶</a></h2>
 <p>This configuration doesn’t install recommended packages by default.</p>
 <p><code class="docutils literal notranslate"><span class="pre">/etc/apt/apt.conf</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">APT</span><span class="p">::</span><span class="n">Install</span><span class="o">-</span><span class="n">Recommends</span> <span class="s2">&quot;0&quot;</span><span class="p">;</span>
@@ -111,7 +109,7 @@ every day. To change this to a weekly-based period, you need to edit
 </div>
 </section>
 <section id="apache-commands">
-<h2>Apache commands<a class="headerlink" href="#apache-commands" title="Permalink to this headline">¶</a></h2>
+<h2>Apache commands<a class="headerlink" href="#apache-commands" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">a2dismod</span> <span class="pre">status</span></code></dt><dd><p>Disable the status module.</p>
 </dd>
@@ -120,7 +118,7 @@ every day. To change this to a weekly-based period, you need to edit
 </dl>
 </section>
 <section id="postfix-configuration">
-<h2>Postfix configuration<a class="headerlink" href="#postfix-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Postfix configuration<a class="headerlink" href="#postfix-configuration" title="Link to this heading">¶</a></h2>
 <p>To send system messages by email, it is a good idea to have a mail server on an
 host which is configured as an “Internet Site”. On a Debian host Postfix seems
 to be a good choice and is easy to install, configure and manage.</p>
@@ -149,8 +147,9 @@ to be a good choice and is easy to install, configure and manage.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Some information of Debian systems</a><ul>
 <li><a class="reference internal" href="#debian-post-installation-commands">Debian post-installation commands</a></li>
 <li><a class="reference internal" href="#apt-configuration">APT configuration</a></li>
@@ -160,12 +159,17 @@ to be a good choice and is easy to install, configure and manage.</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="bluetooth.html"
-                        title="previous chapter">Bluetooth on Linux</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="debian-dev.html"
-                        title="next chapter">Build a development environment for Debian</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="bluetooth.html"
+                          title="previous chapter">Bluetooth on Linux</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="debian-dev.html"
+                          title="next chapter">Build a development environment for Debian</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/debian.rst.txt"
@@ -184,7 +188,7 @@ to be a good choice and is easy to install, configure and manage.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -207,8 +211,8 @@ to be a good choice and is easy to install, configure and manage.</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

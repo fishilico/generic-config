@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>etc/audit/audit.rules &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="etc/hosts" href="../hosts.raw.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="etc-audit-audit-rules">
-<h1><code class="docutils literal notranslate"><span class="pre">etc/audit/audit.rules</span></code><a class="headerlink" href="#etc-audit-audit-rules" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc/audit/audit.rules</span></code><a class="headerlink" href="#etc-audit-audit-rules" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../../_downloads/791b3dba3043a2be2d74a45634b171eb/audit.rules"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reload this file with:</span>
 <span class="c1">#    auditctl -D &amp;&amp; auditctl -R /etc/audit/audit.rules</span>
@@ -57,34 +55,34 @@
 <span class="c1"># - section 6.7.3 of https://www.ssi.gouv.fr/uploads/2015/10/NP_Linux_Configuration.pdf</span>
 
 <span class="c1"># Monitor insmod, rmmod and modprobe</span>
--w /usr/bin/insmod -p x -k audit_modules
--w /usr/bin/modprobe -p x -k audit_modules
--w /usr/bin/rmmod -p x -k audit_modules
--w /sbin/insmod -p x -k audit_modules
--w /sbin/modprobe -p x -k audit_modules
--w /sbin/rmmod -p x -k audit_modules
+-w<span class="w"> </span>/usr/bin/insmod<span class="w"> </span>-p<span class="w"> </span>x<span class="w"> </span>-k<span class="w"> </span>audit_modules
+-w<span class="w"> </span>/usr/bin/modprobe<span class="w"> </span>-p<span class="w"> </span>x<span class="w"> </span>-k<span class="w"> </span>audit_modules
+-w<span class="w"> </span>/usr/bin/rmmod<span class="w"> </span>-p<span class="w"> </span>x<span class="w"> </span>-k<span class="w"> </span>audit_modules
+-w<span class="w"> </span>/sbin/insmod<span class="w"> </span>-p<span class="w"> </span>x<span class="w"> </span>-k<span class="w"> </span>audit_modules
+-w<span class="w"> </span>/sbin/modprobe<span class="w"> </span>-p<span class="w"> </span>x<span class="w"> </span>-k<span class="w"> </span>audit_modules
+-w<span class="w"> </span>/sbin/rmmod<span class="w"> </span>-p<span class="w"> </span>x<span class="w"> </span>-k<span class="w"> </span>audit_modules
 
 <span class="c1"># Log modifications in /etc/</span>
--w /etc/ -p wa -k audit_conf
+-w<span class="w"> </span>/etc/<span class="w"> </span>-p<span class="w"> </span>wa<span class="w"> </span>-k<span class="w"> </span>audit_conf
 
 <span class="c1"># Log mount and unmount operations</span>
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S mount -S umount2 -k audit_mount
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S mount -S umount2 -k audit_mount
+-a<span class="w"> </span>exit,always<span class="w"> </span>-F<span class="w"> </span><span class="nv">arch</span><span class="o">=</span>b32<span class="w"> </span>-S<span class="w"> </span>mount<span class="w"> </span>-S<span class="w"> </span>umount2<span class="w"> </span>-k<span class="w"> </span>audit_mount
+-a<span class="w"> </span>exit,always<span class="w"> </span>-F<span class="w"> </span><span class="nv">arch</span><span class="o">=</span>b64<span class="w"> </span>-S<span class="w"> </span>mount<span class="w"> </span>-S<span class="w"> </span>umount2<span class="w"> </span>-k<span class="w"> </span>audit_mount
 
 <span class="c1"># Log suspicious x86 syscalls</span>
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S ioperm -S modify_ldt -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S ioperm -S modify_ldt -k audit_syscall
+-a<span class="w"> </span>exit,always<span class="w"> </span>-F<span class="w"> </span><span class="nv">arch</span><span class="o">=</span>b32<span class="w"> </span>-S<span class="w"> </span>ioperm<span class="w"> </span>-S<span class="w"> </span>modify_ldt<span class="w"> </span>-k<span class="w"> </span>audit_syscall
+-a<span class="w"> </span>exit,always<span class="w"> </span>-F<span class="w"> </span><span class="nv">arch</span><span class="o">=</span>b64<span class="w"> </span>-S<span class="w"> </span>ioperm<span class="w"> </span>-S<span class="w"> </span>modify_ldt<span class="w"> </span>-k<span class="w"> </span>audit_syscall
 
 <span class="c1"># Log uncommon syscalls which need some close monitoring</span>
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S get_kernel_syms -S ptrace -S prctl -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S init_module -S finit_module -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b32 -S perf_event_open -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S get_kernel_syms -S ptrace -S prctl -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S init_module -S finit_module -k audit_syscall
--a exit,always -F <span class="nv">arch</span><span class="o">=</span>b64 -S perf_event_open -k audit_syscall
+-a<span class="w"> </span>exit,always<span class="w"> </span>-F<span class="w"> </span><span class="nv">arch</span><span class="o">=</span>b32<span class="w"> </span>-S<span class="w"> </span>get_kernel_syms<span class="w"> </span>-S<span class="w"> </span>ptrace<span class="w"> </span>-S<span class="w"> </span>prctl<span class="w"> </span>-k<span class="w"> </span>audit_syscall
+-a<span class="w"> </span>exit,always<span class="w"> </span>-F<span class="w"> </span><span class="nv">arch</span><span class="o">=</span>b32<span class="w"> </span>-S<span class="w"> </span>init_module<span class="w"> </span>-S<span class="w"> </span>finit_module<span class="w"> </span>-k<span class="w"> </span>audit_syscall
+-a<span class="w"> </span>exit,always<span class="w"> </span>-F<span class="w"> </span><span class="nv">arch</span><span class="o">=</span>b32<span class="w"> </span>-S<span class="w"> </span>perf_event_open<span class="w"> </span>-k<span class="w"> </span>audit_syscall
+-a<span class="w"> </span>exit,always<span class="w"> </span>-F<span class="w"> </span><span class="nv">arch</span><span class="o">=</span>b64<span class="w"> </span>-S<span class="w"> </span>get_kernel_syms<span class="w"> </span>-S<span class="w"> </span>ptrace<span class="w"> </span>-S<span class="w"> </span>prctl<span class="w"> </span>-k<span class="w"> </span>audit_syscall
+-a<span class="w"> </span>exit,always<span class="w"> </span>-F<span class="w"> </span><span class="nv">arch</span><span class="o">=</span>b64<span class="w"> </span>-S<span class="w"> </span>init_module<span class="w"> </span>-S<span class="w"> </span>finit_module<span class="w"> </span>-k<span class="w"> </span>audit_syscall
+-a<span class="w"> </span>exit,always<span class="w"> </span>-F<span class="w"> </span><span class="nv">arch</span><span class="o">=</span>b64<span class="w"> </span>-S<span class="w"> </span>perf_event_open<span class="w"> </span>-k<span class="w"> </span>audit_syscall
 
 <span class="c1"># Lock auditd configuration</span>
--e <span class="m">2</span>
+-e<span class="w"> </span><span class="m">2</span>
 </pre></div>
 </div>
 </section>
@@ -96,12 +94,16 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../index.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../hosts.raw.html"
-                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/hosts</span></code></a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../index.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">/etc</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../hosts.raw.html"
+                          title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/hosts</span></code></a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc/audit/audit.rules.raw.rst.txt"
@@ -120,7 +122,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -143,8 +145,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

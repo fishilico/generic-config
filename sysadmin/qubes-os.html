@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Qubes OS setup &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Configuration tweaks on a Raspberry Pi" href="raspberrypi.html" />
@@ -42,19 +40,19 @@
           <div class="body" role="main">
             
   <section id="qubes-os-setup">
-<h1>Qubes OS setup<a class="headerlink" href="#qubes-os-setup" title="Permalink to this headline">¶</a></h1>
+<h1>Qubes OS setup<a class="headerlink" href="#qubes-os-setup" title="Link to this heading">¶</a></h1>
 <p>Here is some information on Qubes OS, a resonably secure operating system
 (according to <a class="reference external" href="https://www.qubes-os.org/">https://www.qubes-os.org/</a>).</p>
 <p>This document was written using Qubes OS R4.0, released in April 2018.
 There are some differences with previous versions (Qubes OS 3 and below), which
 are not covered.</p>
 <section id="useful-commands">
-<h2>Useful commands<a class="headerlink" href="#useful-commands" title="Permalink to this headline">¶</a></h2>
+<h2>Useful commands<a class="headerlink" href="#useful-commands" title="Link to this heading">¶</a></h2>
 <p>When using Qubes OS, some specific commands are quite useful:</p>
 <ul>
 <li><p>Copy a file from a Qube to <code class="docutils literal notranslate"><span class="pre">dom0</span></code>:</p>
 <blockquote>
-<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>qvm-run --pass-io <span class="nv">$QUBE_NAME</span> <span class="s1">&#39;cat /home/user/path/to/file&#39;</span> &gt; filename
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>qvm-run<span class="w"> </span>--pass-io<span class="w"> </span><span class="nv">$QUBE_NAME</span><span class="w"> </span><span class="s1">&#39;cat /home/user/path/to/file&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>filename
 </pre></div>
 </div>
 </div></blockquote>
@@ -62,7 +60,7 @@ are not covered.</p>
 <li><p>Copy a file from <code class="docutils literal notranslate"><span class="pre">dom0</span></code> to a Qube (it pops into <code class="docutils literal notranslate"><span class="pre">/home/user/QubesIncoming/dom0</span></code>),
 or from a Qube to another one:</p>
 <blockquote>
-<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>qvm-copy-to-vm <span class="nv">$QUBE_NAME</span> filepath
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>qvm-copy-to-vm<span class="w"> </span><span class="nv">$QUBE_NAME</span><span class="w"> </span>filepath
 </pre></div>
 </div>
 </div></blockquote>
@@ -70,22 +68,22 @@ or from a Qube to another one:</p>
 <li><p>Xen-specific commands executed from <code class="docutils literal notranslate"><span class="pre">dom0</span></code>:</p>
 <blockquote>
 <div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># List Xen domains (i.e. virtual machines)</span>
-xl list
+xl<span class="w"> </span>list
 <span class="c1"># Read Xen dmesg buffer</span>
-xl dmesg
+xl<span class="w"> </span>dmesg
 <span class="c1"># Monitor Xen domains</span>
-xl top
+xl<span class="w"> </span>top
 <span class="c1"># Print uptime for all domains</span>
-xl uptime
+xl<span class="w"> </span>uptime
 <span class="c1"># Connect to the console of the sys-firewall (Ctrl+] to exit)</span>
-sudo xl console sys-firewall
+sudo<span class="w"> </span>xl<span class="w"> </span>console<span class="w"> </span>sys-firewall
 
 <span class="c1"># Find where the &quot;eth0&quot; interface of a Qube is connected:</span>
-$ xl network-list sys-firewall
-Idx BE MAC Addr.         handle state evt-ch   tx-/rx-ring-ref BE-path
-<span class="m">0</span>   <span class="m">0</span>  <span class="m">00</span>:16:3e:5e:6c:00     <span class="m">0</span>     <span class="m">4</span>     -1    -1/-1          /local/domain/1/backend/vif/5/0
-$ xl vm-list <span class="p">|</span> grep <span class="s1">&#39; 1 &#39;</span>  <span class="c1"># the &quot;/1/&quot; in the Backend path</span>
-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx <span class="m">1</span> sys-net
+$<span class="w"> </span>xl<span class="w"> </span>network-list<span class="w"> </span>sys-firewall
+Idx<span class="w"> </span>BE<span class="w"> </span>MAC<span class="w"> </span>Addr.<span class="w">         </span>handle<span class="w"> </span>state<span class="w"> </span>evt-ch<span class="w">   </span>tx-/rx-ring-ref<span class="w"> </span>BE-path
+<span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">  </span><span class="m">00</span>:16:3e:5e:6c:00<span class="w">     </span><span class="m">0</span><span class="w">     </span><span class="m">4</span><span class="w">     </span>-1<span class="w">    </span>-1/-1<span class="w">          </span>/local/domain/1/backend/vif/5/0
+$<span class="w"> </span>xl<span class="w"> </span>vm-list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39; 1 &#39;</span><span class="w">  </span><span class="c1"># the &quot;/1/&quot; in the Backend path</span>
+xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx<span class="w"> </span><span class="m">1</span><span class="w"> </span>sys-net
 </pre></div>
 </div>
 </div></blockquote>
@@ -94,13 +92,13 @@ xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx <span class="m">1</span> sys-net
 <blockquote>
 <div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># List Qubes and various information about them</span>
 qvm-ls
-qvm-ls --format<span class="o">=</span>network
+qvm-ls<span class="w"> </span>--format<span class="o">=</span>network
 <span class="c1"># List USB devices</span>
-qvm-usb ls
+qvm-usb<span class="w"> </span>ls
 <span class="c1"># Run a command in a Qube and show its output</span>
-qvm-run --pass-io <span class="nv">$QUBE_NAME</span> <span class="nv">$command</span>
+qvm-run<span class="w"> </span>--pass-io<span class="w"> </span><span class="nv">$QUBE_NAME</span><span class="w"> </span><span class="nv">$command</span>
 <span class="c1"># Show the properties of a Qube, such as sys-net</span>
-qvm-prefs sys-net
+qvm-prefs<span class="w"> </span>sys-net
 </pre></div>
 </div>
 </div></blockquote>
@@ -108,11 +106,11 @@ qvm-prefs sys-net
 </ul>
 </section>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
 <p>Here are some notes on what I did when installing Qubes OS.</p>
 <ul>
 <li><p>Update Qubes OS:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo qubes-dom0-update
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>qubes-dom0-update
 </pre></div>
 </div>
 </li>
@@ -124,16 +122,16 @@ and change the shortcut associated with <code class="docutils literal notranslat
 For information, this feature comes from the issue
 <a class="reference external" href="https://github.com/QubesOS/qubes-issues/issues/881">https://github.com/QubesOS/qubes-issues/issues/881</a>, which documents the
 following script to configure XFCE shortcuts:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>shortcut<span class="o">()</span> <span class="o">{</span>
-    <span class="k">for</span> sub <span class="k">in</span> default custom<span class="p">;</span> <span class="k">do</span>
-        xfconf-query --channel xfce4-keyboard-shortcuts <span class="se">\</span>
-                     --property <span class="s2">&quot;/commands/</span><span class="nv">$sub</span><span class="s2">/</span><span class="nv">$1</span><span class="s2">&quot;</span> <span class="se">\</span>
-                     --type string --create --set <span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
-    <span class="k">done</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>shortcut<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span>sub<span class="w"> </span><span class="k">in</span><span class="w"> </span>default<span class="w"> </span>custom<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">        </span>xfconf-query<span class="w"> </span>--channel<span class="w"> </span>xfce4-keyboard-shortcuts<span class="w"> </span><span class="se">\</span>
+<span class="w">                     </span>--property<span class="w"> </span><span class="s2">&quot;/commands/</span><span class="nv">$sub</span><span class="s2">/</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                     </span>--type<span class="w"> </span>string<span class="w"> </span>--create<span class="w"> </span>--set<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="k">done</span>
 <span class="o">}</span>
 
-shortcut <span class="s1">&#39;&lt;Control&gt;&lt;Shift&gt;&lt;Alt&gt;p&#39;</span> <span class="s1">&#39;qvm-run --pause --all&#39;</span>
-shortcut <span class="s1">&#39;&lt;Control&gt;&lt;Alt&gt;Escape&#39;</span>   <span class="s1">&#39;qvm-xkill&#39;</span>
+shortcut<span class="w"> </span><span class="s1">&#39;&lt;Control&gt;&lt;Shift&gt;&lt;Alt&gt;p&#39;</span><span class="w"> </span><span class="s1">&#39;qvm-run --pause --all&#39;</span>
+shortcut<span class="w"> </span><span class="s1">&#39;&lt;Control&gt;&lt;Alt&gt;Escape&#39;</span><span class="w">   </span><span class="s1">&#39;qvm-xkill&#39;</span>
 </pre></div>
 </div>
 </li>
@@ -161,7 +159,7 @@ following <code class="docutils literal notranslate"><span class="pre">strftime<
 <li><p>In order to use a USB keyboard, the following command has to be run in
 <code class="docutils literal notranslate"><span class="pre">dom0</span></code> (cf. <a class="reference external" href="https://www.qubes-os.org/doc/usb/#how-to-use-a-usb-keyboard">https://www.qubes-os.org/doc/usb/#how-to-use-a-usb-keyboard</a>).
 This will create a <code class="docutils literal notranslate"><span class="pre">sys-usb</span></code> Qube if it does not already exist.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo qubesctl state.sls qvm.usb-keyboard
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>qubesctl<span class="w"> </span>state.sls<span class="w"> </span>qvm.usb-keyboard
 </pre></div>
 </div>
 </li>
@@ -175,43 +173,43 @@ official documentation:</p>
 <li><p>Create application shortcuts for Firefox private mode and Chromium incognito
 mode by adding some <code class="docutils literal notranslate"><span class="pre">.desktop</span></code> files in TemplateVMs
 (documentation: <a class="reference external" href="https://www.qubes-os.org/doc/managing-appvm-shortcuts/">https://www.qubes-os.org/doc/managing-appvm-shortcuts/</a>):</p>
-<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># /usr/share/applications/firefox-private.desktop</span><span class="w"></span>
-<span class="k">[Desktop Entry]</span><span class="w"></span>
-<span class="na">Version</span><span class="o">=</span><span class="s">1.0</span><span class="w"></span>
-<span class="na">Name</span><span class="o">=</span><span class="s">Firefox Private</span><span class="w"></span>
-<span class="na">Comment</span><span class="o">=</span><span class="s">Open a new Firefox private window</span><span class="w"></span>
-<span class="na">Exec</span><span class="o">=</span><span class="s">/usr/bin/firefox --private-window %u</span><span class="w"></span>
-<span class="na">Icon</span><span class="o">=</span><span class="s">firefox</span><span class="w"></span>
-<span class="na">Terminal</span><span class="o">=</span><span class="s">false</span><span class="w"></span>
-<span class="na">Type</span><span class="o">=</span><span class="s">Application</span><span class="w"></span>
-<span class="na">MimeType</span><span class="o">=</span><span class="s">text/html;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;text/mml;x-scheme-handler/http;x-scheme-handler/https;</span><span class="w"></span>
-<span class="na">StartupNotify</span><span class="o">=</span><span class="s">true</span><span class="w"></span>
-<span class="na">Categories</span><span class="o">=</span><span class="s">Network;WebBrowser;</span><span class="w"></span>
-<span class="na">Keywords</span><span class="o">=</span><span class="s">web;browser;internet;private;</span><span class="w"></span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># /usr/share/applications/firefox-private.desktop</span>
+<span class="k">[Desktop Entry]</span>
+<span class="na">Version</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">Name</span><span class="o">=</span><span class="s">Firefox Private</span>
+<span class="na">Comment</span><span class="o">=</span><span class="s">Open a new Firefox private window</span>
+<span class="na">Exec</span><span class="o">=</span><span class="s">/usr/bin/firefox --private-window %u</span>
+<span class="na">Icon</span><span class="o">=</span><span class="s">firefox</span>
+<span class="na">Terminal</span><span class="o">=</span><span class="s">false</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">Application</span>
+<span class="na">MimeType</span><span class="o">=</span><span class="s">text/html</span><span class="c1">;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;text/mml;x-scheme-handler/http;x-scheme-handler/https;</span>
+<span class="na">StartupNotify</span><span class="o">=</span><span class="s">true</span>
+<span class="na">Categories</span><span class="o">=</span><span class="s">Network</span><span class="c1">;WebBrowser;</span>
+<span class="na">Keywords</span><span class="o">=</span><span class="s">web</span><span class="c1">;browser;internet;private;</span>
 
-<span class="c1"># /usr/share/applications/chromium-incognito.desktop</span><span class="w"></span>
-<span class="k">[Desktop Entry]</span><span class="w"></span>
-<span class="na">Version</span><span class="o">=</span><span class="s">1.0</span><span class="w"></span>
-<span class="na">Name</span><span class="o">=</span><span class="s">Chromium Incognito</span><span class="w"></span>
-<span class="na">Comment</span><span class="o">=</span><span class="s">Open a new Chromium incognito window</span><span class="w"></span>
-<span class="na">Exec</span><span class="o">=</span><span class="s">/usr/bin/chromium-browser --incognito %U</span><span class="w"></span>
-<span class="na">Terminal</span><span class="o">=</span><span class="s">false</span><span class="w"></span>
-<span class="na">X-MultipleArgs</span><span class="o">=</span><span class="s">false</span><span class="w"></span>
-<span class="na">Type</span><span class="o">=</span><span class="s">Application</span><span class="w"></span>
-<span class="c1">; Icon=chromium-browser</span><span class="w"></span>
-<span class="na">Icon</span><span class="o">=</span><span class="s">web-browser</span><span class="w"></span>
-<span class="na">Categories</span><span class="o">=</span><span class="s">Network;WebBrowser;</span><span class="w"></span>
-<span class="na">MimeType</span><span class="o">=</span><span class="s">text/html;text/xml;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;</span><span class="w"></span>
-<span class="na">StartupWMClass</span><span class="o">=</span><span class="s">Chromium-browser</span><span class="w"></span>
-<span class="na">StartupNotify</span><span class="o">=</span><span class="s">true</span><span class="w"></span>
-<span class="na">Keywords</span><span class="o">=</span><span class="s">web;browser;internet;incognito;</span><span class="w"></span>
+<span class="c1"># /usr/share/applications/chromium-incognito.desktop</span>
+<span class="k">[Desktop Entry]</span>
+<span class="na">Version</span><span class="o">=</span><span class="s">1.0</span>
+<span class="na">Name</span><span class="o">=</span><span class="s">Chromium Incognito</span>
+<span class="na">Comment</span><span class="o">=</span><span class="s">Open a new Chromium incognito window</span>
+<span class="na">Exec</span><span class="o">=</span><span class="s">/usr/bin/chromium-browser --incognito %U</span>
+<span class="na">Terminal</span><span class="o">=</span><span class="s">false</span>
+<span class="na">X-MultipleArgs</span><span class="o">=</span><span class="s">false</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">Application</span>
+<span class="c1">; Icon=chromium-browser</span>
+<span class="na">Icon</span><span class="o">=</span><span class="s">web-browser</span>
+<span class="na">Categories</span><span class="o">=</span><span class="s">Network</span><span class="c1">;WebBrowser;</span>
+<span class="na">MimeType</span><span class="o">=</span><span class="s">text/html</span><span class="c1">;text/xml;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;</span>
+<span class="na">StartupWMClass</span><span class="o">=</span><span class="s">Chromium-browser</span>
+<span class="na">StartupNotify</span><span class="o">=</span><span class="s">true</span>
+<span class="na">Keywords</span><span class="o">=</span><span class="s">web</span><span class="c1">;browser;internet;incognito;</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </section>
 <section id="additional-software">
-<h2>Additional software<a class="headerlink" href="#additional-software" title="Permalink to this headline">¶</a></h2>
+<h2>Additional software<a class="headerlink" href="#additional-software" title="Link to this heading">¶</a></h2>
 <p>As the root partition of every AppVM is reset when it boots, additional software
 need to be installed in TemplateVMs.</p>
 <p>A Fedora template is used for system Qubes (<code class="docutils literal notranslate"><span class="pre">sys-net</span></code>, <code class="docutils literal notranslate"><span class="pre">sys-usb</span></code>, etc.).
@@ -242,7 +240,7 @@ In order to do this, the update proxy needs to be used from the TemplateVM:</p>
 </div>
 </section>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.qubes-os.org/doc/">https://www.qubes-os.org/doc/</a> Qubes OS user documentation</p></li>
 <li><p><a class="reference external" href="https://github.com/QubesOS">https://github.com/QubesOS</a> Qubes OS project Github</p></li>
@@ -250,9 +248,9 @@ In order to do this, the update proxy needs to be used from the TemplateVM:</p>
 </ul>
 </section>
 <section id="rpc-architecture">
-<h2>RPC Architecture<a class="headerlink" href="#rpc-architecture" title="Permalink to this headline">¶</a></h2>
+<h2>RPC Architecture<a class="headerlink" href="#rpc-architecture" title="Link to this heading">¶</a></h2>
 <section id="qubesd">
-<h3>qubesd<a class="headerlink" href="#qubesd" title="Permalink to this headline">¶</a></h3>
+<h3>qubesd<a class="headerlink" href="#qubesd" title="Link to this heading">¶</a></h3>
 <p>In <code class="docutils literal notranslate"><span class="pre">dom0</span></code>, there is a service written in Python which performs actions on
 Qubes: <code class="docutils literal notranslate"><span class="pre">qubesd</span></code>.
 Its architecture is described in <a class="reference external" href="https://www.qubes-os.org/doc/admin-api/">https://www.qubes-os.org/doc/admin-api/</a>:</p>
@@ -266,21 +264,21 @@ information and dispatches events to extensions. Last but not least,
 </div></blockquote>
 </section>
 <section id="package-update-notification">
-<h3>Package update notification<a class="headerlink" href="#package-update-notification" title="Permalink to this headline">¶</a></h3>
+<h3>Package update notification<a class="headerlink" href="#package-update-notification" title="Link to this heading">¶</a></h3>
 <p>When updating a Qube based on Fedora, <code class="docutils literal notranslate"><span class="pre">dnf</span></code> may show:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Notifying</span> <span class="n">dom0</span> <span class="n">about</span> <span class="n">installed</span> <span class="n">applications</span>
 </pre></div>
 </div>
 <p>This is due to a Qubes-specific hook in
 <code class="docutils literal notranslate"><span class="pre">/usr/lib/python3.6/site-packages/dnf-plugins/qubes-hooks.py</span></code>, which invokes:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/usr/lib/qubes/qrexec-client-vm dom0 qubes.NotifyUpdates /bin/echo <span class="nv">$UPDATES_COUNT</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/usr/lib/qubes/qrexec-client-vm<span class="w"> </span>dom0<span class="w"> </span>qubes.NotifyUpdates<span class="w"> </span>/bin/echo<span class="w"> </span><span class="nv">$UPDATES_COUNT</span>
 </pre></div>
 </div>
 <p>This RPC call runs <code class="docutils literal notranslate"><span class="pre">dom0:/etc/qubes-rpc/qubes.NotifyUpdates</span></code>, which contains:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
 
-<span class="nb">exec</span> /usr/bin/qubesd-query -c /var/run/qubesd.misc.sock --fail <span class="se">\</span>
-         <span class="s2">&quot;</span><span class="nv">$QREXEC_REMOTE_DOMAIN</span><span class="s2">&quot;</span> qubes.NotifyUpdates dom0 <span class="s2">&quot;&quot;</span> &gt;/dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+<span class="nb">exec</span><span class="w"> </span>/usr/bin/qubesd-query<span class="w"> </span>-c<span class="w"> </span>/var/run/qubesd.misc.sock<span class="w"> </span>--fail<span class="w"> </span><span class="se">\</span>
+<span class="w">         </span><span class="s2">&quot;</span><span class="nv">$QREXEC_REMOTE_DOMAIN</span><span class="s2">&quot;</span><span class="w"> </span>qubes.NotifyUpdates<span class="w"> </span>dom0<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
 </pre></div>
 </div>
 <p>This transmits the RPC call to <code class="docutils literal notranslate"><span class="pre">qubesd</span></code> daemon.
@@ -294,7 +292,7 @@ The policy of this RPC call is written in
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@qubes</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="s1">&#39;qubes.NotifyUpdates&#39;</span><span class="p">)</span>
 <span class="nd">@asyncio</span><span class="o">.</span><span class="n">coroutine</span>
 <span class="k">def</span> <span class="nf">qubes_notify_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">untrusted_payload</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Receive VM notification about updates availability</span>
 
 <span class="sd">    Payload contains a single integer - either 0 (no updates) or some</span>
@@ -307,11 +305,11 @@ The policy of this RPC call is written in
 </div>
 </section>
 <section id="qubes-database">
-<h3>Qubes database<a class="headerlink" href="#qubes-database" title="Permalink to this headline">¶</a></h3>
+<h3>Qubes database<a class="headerlink" href="#qubes-database" title="Link to this heading">¶</a></h3>
 <p>Each Qube can query its configuration using <code class="docutils literal notranslate"><span class="pre">qubesdb-cmd</span></code> and its aliases
 (<code class="docutils literal notranslate"><span class="pre">qubesdb-list</span></code>, <code class="docutils literal notranslate"><span class="pre">qubesdb-read</span></code>, etc):</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is like: qubesdb-cmd -c list /</span>
-$ qubesdb-list /
+$<span class="w"> </span>qubesdb-list<span class="w"> </span>/
 default-user
 name
 qubes-base-template
@@ -334,13 +332,13 @@ qubes-vm-type
 qubes-vm-updateable
 <span class="nb">type</span>
 
-$ qubesdb-read /default-user
+$<span class="w"> </span>qubesdb-read<span class="w"> </span>/default-user
 user
 
-$ qubesdb-read /name
+$<span class="w"> </span>qubesdb-read<span class="w"> </span>/name
 untrusted
 
-$ qubesdb-read /type
+$<span class="w"> </span>qubesdb-read<span class="w"> </span>/type
 AppVM
 </pre></div>
 </div>
@@ -357,7 +355,7 @@ opened file descriptors:</p>
 </section>
 </section>
 <section id="nested-virtualization">
-<h2>Nested Virtualization<a class="headerlink" href="#nested-virtualization" title="Permalink to this headline">¶</a></h2>
+<h2>Nested Virtualization<a class="headerlink" href="#nested-virtualization" title="Link to this heading">¶</a></h2>
 <p>Nested virtualization (the ability to run a hypervisor inside virtual
 machines) is not well supported by Xen. Here are some links relevant to this
 subject:</p>
@@ -377,44 +375,44 @@ named <code class="docutils literal notranslate"><span class="pre">virtualizer</
 <li><p>Create <code class="docutils literal notranslate"><span class="pre">/etc/qubes/templates/libvirt/xen/by-name/virtualizer.xml</span></code> in
 <code class="docutils literal notranslate"><span class="pre">dom0</span></code> with the following content (to extend
 <a class="reference external" href="https://github.com/QubesOS/qubes-core-admin/blob/master/templates/libvirt/xen.xml">https://github.com/QubesOS/qubes-core-admin/blob/master/templates/libvirt/xen.xml</a>):</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>{% extends &#39;libvirt/xen.xml&#39; %}
-{% block cpu %}
-    <span class="nt">&lt;cpu</span> <span class="na">mode=</span><span class="s">&#39;host-passthrough&#39;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;feature</span> <span class="na">name=</span><span class="s">&#39;vmx&#39;</span> <span class="na">policy=</span><span class="s">&#39;optional&#39;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;feature</span> <span class="na">name=</span><span class="s">&#39;svm&#39;</span> <span class="na">policy=</span><span class="s">&#39;optional&#39;</span><span class="nt">/&gt;</span>
-        <span class="cm">&lt;!-- disable SMAP inside VM, because of Linux bug --&gt;</span>
-        <span class="nt">&lt;feature</span> <span class="na">name=</span><span class="s">&#39;smap&#39;</span> <span class="na">policy=</span><span class="s">&#39;disable&#39;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;/cpu&gt;</span>
-{% endblock %}
-{% block features %}
-    <span class="nt">&lt;pae/&gt;</span>
-    <span class="nt">&lt;acpi/&gt;</span>
-    <span class="nt">&lt;apic/&gt;</span>
-    <span class="nt">&lt;viridian/&gt;</span>
-    <span class="nt">&lt;hap/&gt;</span> <span class="cm">&lt;!-- enable Hardware Assisted Paging --&gt;</span>
-    <span class="cm">&lt;!-- &lt;nestedvm/&gt; --&gt;</span>
-{% endblock %}
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>{%<span class="w"> </span>extends<span class="w"> </span>&#39;libvirt/xen.xml&#39;<span class="w"> </span>%}
+{%<span class="w"> </span>block<span class="w"> </span>cpu<span class="w"> </span>%}
+<span class="w">    </span><span class="nt">&lt;cpu</span><span class="w"> </span><span class="na">mode=</span><span class="s">&#39;host-passthrough&#39;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;feature</span><span class="w"> </span><span class="na">name=</span><span class="s">&#39;vmx&#39;</span><span class="w"> </span><span class="na">policy=</span><span class="s">&#39;optional&#39;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;feature</span><span class="w"> </span><span class="na">name=</span><span class="s">&#39;svm&#39;</span><span class="w"> </span><span class="na">policy=</span><span class="s">&#39;optional&#39;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="cm">&lt;!-- disable SMAP inside VM, because of Linux bug --&gt;</span>
+<span class="w">        </span><span class="nt">&lt;feature</span><span class="w"> </span><span class="na">name=</span><span class="s">&#39;smap&#39;</span><span class="w"> </span><span class="na">policy=</span><span class="s">&#39;disable&#39;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/cpu&gt;</span>
+{%<span class="w"> </span>endblock<span class="w"> </span>%}
+{%<span class="w"> </span>block<span class="w"> </span>features<span class="w"> </span>%}
+<span class="w">    </span><span class="nt">&lt;pae/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;acpi/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;apic/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;viridian/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;hap/&gt;</span><span class="w"> </span><span class="cm">&lt;!-- enable Hardware Assisted Paging --&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!-- &lt;nestedvm/&gt; --&gt;</span>
+{%<span class="w"> </span>endblock<span class="w"> </span>%}
 </pre></div>
 </div>
 </li>
 <li><p>Start the Qube and read the generated configuration:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo virsh dumpxml virtualizer
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>virsh<span class="w"> </span>dumpxml<span class="w"> </span>virtualizer
 <span class="c1"># or, if you do not like becoming root for this action:</span>
-virsh --connect<span class="o">=</span>xen:/// dumpxml virtualizer
+virsh<span class="w"> </span>--connect<span class="o">=</span>xen:///<span class="w"> </span>dumpxml<span class="w"> </span>virtualizer
 </pre></div>
 </div>
 </li>
 </ul>
 <section id="vagrant-in-a-qube-using-emulation">
-<h3>Vagrant in a Qube, using emulation<a class="headerlink" href="#vagrant-in-a-qube-using-emulation" title="Permalink to this headline">¶</a></h3>
+<h3>Vagrant in a Qube, using emulation<a class="headerlink" href="#vagrant-in-a-qube-using-emulation" title="Link to this heading">¶</a></h3>
 <p>Without nested virtualization, here are some commands to use Vagrant to emulate
 virtual machines in a Qube, from
 <a class="reference external" href="https://gist.github.com/xahare/0f2078fc8c52e7ddece1e5ba70c6d5fc">https://gist.github.com/xahare/0f2078fc8c52e7ddece1e5ba70c6d5fc</a>.</p>
 <ul>
 <li><p>Add libvirt to the persistent storage of the Qube
 (cf. <a class="reference external" href="https://www.qubes-os.org/doc/bind-dirs/">https://www.qubes-os.org/doc/bind-dirs/</a>):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir -p /rw/config/qubes-bind-dirs.d
-cat <span class="s">&lt;&lt; EOF &gt;&gt; /rw/config/qubes-bind-dirs.d/50_user.conf</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>/rw/config/qubes-bind-dirs.d
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt;&gt; /rw/config/qubes-bind-dirs.d/50_user.conf</span>
 <span class="s">binds+=( &#39;/etc/libvirt&#39; )</span>
 <span class="s">binds+=( &#39;/var/lib/libvirt&#39; )</span>
 <span class="s">EOF</span>
@@ -422,12 +420,12 @@ cat <span class="s">&lt;&lt; EOF &gt;&gt; /rw/config/qubes-bind-dirs.d/50_user.c
 </div>
 </li>
 <li><p>As <code class="docutils literal notranslate"><span class="pre">user</span></code>, install <code class="docutils literal notranslate"><span class="pre">vagrant-libvirt</span></code> plugin:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>vagrant plugin install vagrant-libvirt
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>vagrant<span class="w"> </span>plugin<span class="w"> </span>install<span class="w"> </span>vagrant-libvirt
 </pre></div>
 </div>
 </li>
 <li><p>As <code class="docutils literal notranslate"><span class="pre">user</span></code>, configure Vagrant to use libvirt with an emulated CPU:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cat <span class="s">&lt;&lt; EOF &gt; ~/.vagrant.d/Vagrantfile</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; ~/.vagrant.d/Vagrantfile</span>
 <span class="s">Vagrant.configure(&quot;2&quot;) do |config|</span>
 <span class="s">  config.vm.provider &quot;libvirt&quot; do |libvirt|</span>
 <span class="s">    libvirt.driver = &quot;qemu&quot;</span>
@@ -437,7 +435,7 @@ cat <span class="s">&lt;&lt; EOF &gt;&gt; /rw/config/qubes-bind-dirs.d/50_user.c
 <span class="s">end</span>
 <span class="s">EOF</span>
 
-cat <span class="s">&lt;&lt; EOF &gt;&gt; ~/.bashrc</span>
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt;&gt; ~/.bashrc</span>
 <span class="s">export LIBVIRT_DEFAULT_URI=&quot;qemu:///system&quot;</span>
 <span class="s">export VAGRANT_DEFAULT_PROVIDER=libvirt</span>
 <span class="s">EOF</span>
@@ -456,8 +454,9 @@ cat <span class="s">&lt;&lt; EOF &gt;&gt; ~/.bashrc</span>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Qubes OS setup</a><ul>
 <li><a class="reference internal" href="#useful-commands">Useful commands</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
@@ -477,12 +476,17 @@ cat <span class="s">&lt;&lt; EOF &gt;&gt; ~/.bashrc</span>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="qemu.html"
-                        title="previous chapter">QEmu-KVM notes</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="raspberrypi.html"
-                        title="next chapter">Configuration tweaks on a Raspberry Pi</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="qemu.html"
+                          title="previous chapter">QEmu-KVM notes</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="raspberrypi.html"
+                          title="next chapter">Configuration tweaks on a Raspberry Pi</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/qubes-os.rst.txt"
@@ -501,7 +505,7 @@ cat <span class="s">&lt;&lt; EOF &gt;&gt; ~/.bashrc</span>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -524,8 +528,8 @@ cat <span class="s">&lt;&lt; EOF &gt;&gt; ~/.bashrc</span>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Installing a Linux system &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Linux NAT router" href="nat.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="installing-a-linux-system">
-<h1>Installing a Linux system<a class="headerlink" href="#installing-a-linux-system" title="Permalink to this headline">¶</a></h1>
+<h1>Installing a Linux system<a class="headerlink" href="#installing-a-linux-system" title="Link to this heading">¶</a></h1>
 <p>This document aims at providing the main steps in installing a Linux system.
 When installing a specific Linux distribution, the documentation available on the distribution’s wiki often provides very detailed steps:</p>
 <ul class="simple">
@@ -50,7 +48,7 @@ When installing a specific Linux distribution, the documentation available on th
 <li><p>Gentoo’s Handbook: <a class="reference external" href="https://wiki.gentoo.org/wiki/Handbook:AMD64#Installing_Gentoo">https://wiki.gentoo.org/wiki/Handbook:AMD64#Installing_Gentoo</a></p></li>
 </ul>
 <section id="booting-a-live-media-to-a-live-system">
-<h2>Booting a live media to a live system<a class="headerlink" href="#booting-a-live-media-to-a-live-system" title="Permalink to this headline">¶</a></h2>
+<h2>Booting a live media to a live system<a class="headerlink" href="#booting-a-live-media-to-a-live-system" title="Link to this heading">¶</a></h2>
 <p>The first steps of installing a Linux system consist in booting on a Linux system provided as a CD-ROM image (<code class="docutils literal notranslate"><span class="pre">.iso</span></code> file) or as a live USB key image.
 Such live media can also be created with tools such as:</p>
 <ul class="simple">
@@ -61,39 +59,39 @@ Such live media can also be created with tools such as:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enumerate the available console keymaps, provided by:</span>
 <span class="c1"># * package kbd on Arch Linux</span>
 <span class="c1"># * package console-data on Debian</span>
-ls /usr/share/kbd/keymaps/**/*.map.gz
+ls<span class="w"> </span>/usr/share/kbd/keymaps/**/*.map.gz
 
 <span class="c1"># Load a French keymap using loadkeys from:</span>
 <span class="c1"># * package kbd on Arch Linux</span>
 <span class="c1"># * package kbd on Debian</span>
-loadkeys fr-latin9
+loadkeys<span class="w"> </span>fr-latin9
 </pre></div>
 </div>
 <p>For UEFI-based system, it is possible to verify that the live media has been booted in UEFI mode by enumerating the UEFI variables:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>ls /sys/firmware/efi/efivars
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>/sys/firmware/efi/efivars
 </pre></div>
 </div>
 <p>Then, it is possible to configure the network interfaces.
 This greatly depends upon the network environment of the installed system.
 Here are some commands to perform this:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using DHCP</span>
-dhclient eth0
+dhclient<span class="w"> </span>eth0
 
 <span class="c1"># Add an static IPv4 address for Ethernet interface eth0 and configure the DNS resolver</span>
-ip addr add <span class="m">192</span>.168.0.2/24 dev eth0
-ip route add default via <span class="m">192</span>.168.0.1
-<span class="nb">echo</span> <span class="s1">&#39;nameserver 192.168.0.1&#39;</span> &gt;&gt; /etc/resolv.conf
+ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">192</span>.168.0.2/24<span class="w"> </span>dev<span class="w"> </span>eth0
+ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span>default<span class="w"> </span>via<span class="w"> </span><span class="m">192</span>.168.0.1
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;nameserver 192.168.0.1&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/resolv.conf
 
 <span class="c1"># Check the connectivity with GitHub</span>
-curl -v https://github.com
+curl<span class="w"> </span>-v<span class="w"> </span>https://github.com
 
 <span class="c1"># Enable time synchronization, on systemd-based distribution</span>
-timedatectl set-ntp <span class="nb">true</span>
+timedatectl<span class="w"> </span>set-ntp<span class="w"> </span><span class="nb">true</span>
 </pre></div>
 </div>
 </section>
 <section id="partitioning-the-disks">
-<h2>Partitioning the disks<a class="headerlink" href="#partitioning-the-disks" title="Permalink to this headline">¶</a></h2>
+<h2>Partitioning the disks<a class="headerlink" href="#partitioning-the-disks" title="Link to this heading">¶</a></h2>
 <p>Once a live system is booted, the disks can be partitioned.
 There does not exist a generic configuration that works for every possible computer: some could use software RAID with much swap, others do not need swap at all, etc.</p>
 <p>One major differences between systems is the way a system boot:</p>
@@ -108,55 +106,55 @@ Allocating 400 MB for such a partition should be more than enough.</p></li>
 Allocating 200 MB to it should be enough.</p>
 <p>Here are useful commands for this step:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enumerate the available disks and partitions</span>
-fdisk -l
+fdisk<span class="w"> </span>-l
 lsblk
-ls -l /sys/class/block
-ls -l /dev/disk/by-path
+ls<span class="w"> </span>-l<span class="w"> </span>/sys/class/block
+ls<span class="w"> </span>-l<span class="w"> </span>/dev/disk/by-path
 
 <span class="c1"># Create partitions on /dev/sda in an interactive way</span>
-fdisk /dev/sda
+fdisk<span class="w"> </span>/dev/sda
 
 <span class="c1"># Format the EFI system partition as FAT32</span>
-mkfs.fat -F32 /dev/sda1
+mkfs.fat<span class="w"> </span>-F32<span class="w"> </span>/dev/sda1
 
 <span class="c1"># Format a partition as ext4</span>
-mkfs.ext4 /dev/sda2
+mkfs.ext4<span class="w"> </span>/dev/sda2
 
 <span class="c1"># Format a partition as Swap</span>
-mkswap /dev/sda2 <span class="o">&amp;&amp;</span> swapon /dev/sda2
+mkswap<span class="w"> </span>/dev/sda2<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>swapon<span class="w"> </span>/dev/sda2
 
 <span class="c1"># Create a RAID 1 (mirror) between two disks</span>
-mdadm --zero-superblock /dev/sda3
-mdadm --zero-superblock /dev/sdb3
-mdadm --create --verbose --level<span class="o">=</span><span class="m">1</span> --metadata<span class="o">=</span><span class="m">1</span>.2 <span class="se">\</span>
-    --raid-devices<span class="o">=</span><span class="m">2</span> /dev/md0 /dev/sda3 /dev/sdb3
-cat /proc/mdstat
-mdadm --detail --scan &gt;&gt; /etc/mdadm.conf
-mdadm --assemble --scan
+mdadm<span class="w"> </span>--zero-superblock<span class="w"> </span>/dev/sda3
+mdadm<span class="w"> </span>--zero-superblock<span class="w"> </span>/dev/sdb3
+mdadm<span class="w"> </span>--create<span class="w"> </span>--verbose<span class="w"> </span>--level<span class="o">=</span><span class="m">1</span><span class="w"> </span>--metadata<span class="o">=</span><span class="m">1</span>.2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--raid-devices<span class="o">=</span><span class="m">2</span><span class="w"> </span>/dev/md0<span class="w"> </span>/dev/sda3<span class="w"> </span>/dev/sdb3
+cat<span class="w"> </span>/proc/mdstat
+mdadm<span class="w"> </span>--detail<span class="w"> </span>--scan<span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/mdadm.conf
+mdadm<span class="w"> </span>--assemble<span class="w"> </span>--scan
 <span class="c1"># ... and add to kernel boot command line: root=/dev/md0 md=0,/dev/sda3,/dev/sdb3</span>
 
 <span class="c1"># Create an encrypted LUKS partition</span>
-cryptsetup -v --cipher aes-xts-plain64 --key-size <span class="m">512</span> luksFormat /dev/sda2
-cryptsetup open /dev/sda2 system
-mkfs.ext4 /dev/mapper/system
+cryptsetup<span class="w"> </span>-v<span class="w"> </span>--cipher<span class="w"> </span>aes-xts-plain64<span class="w"> </span>--key-size<span class="w"> </span><span class="m">512</span><span class="w"> </span>luksFormat<span class="w"> </span>/dev/sda2
+cryptsetup<span class="w"> </span>open<span class="w"> </span>/dev/sda2<span class="w"> </span>system
+mkfs.ext4<span class="w"> </span>/dev/mapper/system
 
 <span class="c1"># Backup the LUKS header</span>
-cryptsetup luksDump /dev/sda2
+cryptsetup<span class="w"> </span>luksDump<span class="w"> </span>/dev/sda2
 <span class="c1"># Optionally backup the encryption master key</span>
-dmsetup ls --target crypt
-dmsetup table --showkeys system
+dmsetup<span class="w"> </span>ls<span class="w"> </span>--target<span class="w"> </span>crypt
+dmsetup<span class="w"> </span>table<span class="w"> </span>--showkeys<span class="w"> </span>system
 
 <span class="c1"># Rescan LVM partitions after a change has been made</span>
 <span class="c1"># (Physical Volumes, Volume Groups and Logical Volumes)</span>
-vgchange --available y  <span class="c1"># or: vgchange -ay</span>
+vgchange<span class="w"> </span>--available<span class="w"> </span>y<span class="w">  </span><span class="c1"># or: vgchange -ay</span>
 pvscan
 vgscan
-vgscan --mknodes
+vgscan<span class="w"> </span>--mknodes
 lvscan
 
 <span class="c1"># Mount the partitions on /mnt</span>
-mount /dev/mapper/system /mnt
-mount /dev/sda1 /mnt/boot
+mount<span class="w"> </span>/dev/mapper/system<span class="w"> </span>/mnt
+mount<span class="w"> </span>/dev/sda1<span class="w"> </span>/mnt/boot
 </pre></div>
 </div>
 <p>Some documentation:</p>
@@ -165,85 +163,85 @@ mount /dev/sda1 /mnt/boot
 </ul>
 </section>
 <section id="installing-a-base-system">
-<h2>Installing a base system<a class="headerlink" href="#installing-a-base-system" title="Permalink to this headline">¶</a></h2>
+<h2>Installing a base system<a class="headerlink" href="#installing-a-base-system" title="Link to this heading">¶</a></h2>
 <p>Once the disks are ready, bootstrapping a system is often achieved using one command specific to the distribution.</p>
 <ul>
 <li><p>Arch Linux use <code class="docutils literal notranslate"><span class="pre">pacstrap</span></code>:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pacstrap /mnt base
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pacstrap<span class="w"> </span>/mnt<span class="w"> </span>base
 </pre></div>
 </div>
 </li>
 <li><p>Debian-based system use <code class="docutils literal notranslate"><span class="pre">debootstrap</span></code>:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>debootstrap --arch amd64 stable /mnt
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>debootstrap<span class="w"> </span>--arch<span class="w"> </span>amd64<span class="w"> </span>stable<span class="w"> </span>/mnt
 </pre></div>
 </div>
 </li>
 </ul>
 <p>Once this is done, it is possible to <code class="docutils literal notranslate"><span class="pre">chroot</span></code> into the bootstrapped system.
 Before that, the special directories need to be bind-mounted to the live system:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mount --bind /dev /mnt/dev
-mount --bind /proc /mnt/proc
-mount --bind /sys /mnt/sys
-chroot /mnt
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mount<span class="w"> </span>--bind<span class="w"> </span>/dev<span class="w"> </span>/mnt/dev
+mount<span class="w"> </span>--bind<span class="w"> </span>/proc<span class="w"> </span>/mnt/proc
+mount<span class="w"> </span>--bind<span class="w"> </span>/sys<span class="w"> </span>/mnt/sys
+chroot<span class="w"> </span>/mnt
 </pre></div>
 </div>
 <p>Arch Linux provides some helper scripts to minimize the number of commands to type:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
-arch-chroot /mnt
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>genfstab<span class="w"> </span>-U<span class="w"> </span>/mnt<span class="w"> </span>&gt;&gt;<span class="w"> </span>/mnt/etc/fstab
+arch-chroot<span class="w"> </span>/mnt
 </pre></div>
 </div>
 </section>
 <section id="configuring-the-base-system-before-the-first-boot">
-<h2>Configuring the base system before the first boot<a class="headerlink" href="#configuring-the-base-system-before-the-first-boot" title="Permalink to this headline">¶</a></h2>
+<h2>Configuring the base system before the first boot<a class="headerlink" href="#configuring-the-base-system-before-the-first-boot" title="Link to this heading">¶</a></h2>
 <p>Once chrooted into the newly-installed system while still being on the live system, a few things need to be configured.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set the console keyboard layout at boot (French keymap is sometimes named fr-pc)</span>
-<span class="nb">echo</span> <span class="s1">&#39;KEYMAP=fr-latin9&#39;</span> &gt; /etc/vconsole.conf
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;KEYMAP=fr-latin9&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/vconsole.conf
 
 <span class="c1"># Configure the timezone</span>
-ln -sf <span class="s2">&quot;/usr/share/zoneinfo/</span><span class="si">${</span><span class="nv">TIMEZONE</span><span class="k">:-</span><span class="nv">UTC</span><span class="si">}</span><span class="s2">&quot;</span> /etc/localtime
+ln<span class="w"> </span>-sf<span class="w"> </span><span class="s2">&quot;/usr/share/zoneinfo/</span><span class="si">${</span><span class="nv">TIMEZONE</span><span class="k">:-</span><span class="nv">UTC</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>/etc/localtime
 
 <span class="c1"># Generate /etc/adjtime</span>
-hwclock --systohc
+hwclock<span class="w"> </span>--systohc
 
 <span class="c1"># Enable locales in /etc/locale.gen and generate then</span>
-sed -i <span class="s1">&#39;s/^#\(en_GB.UTF-8 UTF-8\)/\1/&#39;</span> /etc/locale.gen
-<span class="si">${</span><span class="nv">EDITOR</span><span class="k">:-</span><span class="nv">vim</span><span class="si">}</span> /etc/locale.gen
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/^#\(en_GB.UTF-8 UTF-8\)/\1/&#39;</span><span class="w"> </span>/etc/locale.gen
+<span class="si">${</span><span class="nv">EDITOR</span><span class="k">:-</span><span class="nv">vim</span><span class="si">}</span><span class="w"> </span>/etc/locale.gen
 locale-gen
-<span class="nb">echo</span> <span class="s1">&#39;LANG=en_GB.UTF-8&#39;</span> &gt; /etc/locale.conf
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;LANG=en_GB.UTF-8&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/locale.conf
 
 <span class="c1"># Configure the hostname in /etc/hostname and /etc/hosts</span>
-<span class="nb">echo</span> <span class="s1">&#39;my-new-hostname&#39;</span> &gt; /etc/hostname
-<span class="nb">echo</span> <span class="s1">&#39;127.0.1.1 my-new-hostname&#39;</span> &gt; /etc/hosts
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;my-new-hostname&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/hostname
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;127.0.1.1 my-new-hostname&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/hosts
 
 <span class="c1"># Set the root password</span>
 passwd
 
 <span class="c1"># Create a new user in group adm and with /home/user as $HOME</span>
 <span class="c1"># Options: -m to create home, -N no user group -G for admin groups</span>
-useradd -mN -G adm,wheel user
-passwd user
+useradd<span class="w"> </span>-mN<span class="w"> </span>-G<span class="w"> </span>adm,wheel<span class="w"> </span>user
+passwd<span class="w"> </span>user
 
 <span class="c1"># Install a bootloader</span>
-<span class="k">if</span> <span class="nv">$USING_GRUB</span> <span class="p">;</span> <span class="k">then</span>
-    grub-mkconfig -o /boot/grub/grub.cfg
-    grub-install /dev/sda
+<span class="k">if</span><span class="w"> </span><span class="nv">$USING_GRUB</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>grub-mkconfig<span class="w"> </span>-o<span class="w"> </span>/boot/grub/grub.cfg
+<span class="w">    </span>grub-install<span class="w"> </span>/dev/sda
 <span class="k">fi</span>
-<span class="k">if</span> <span class="nv">$USING_UEFI</span> <span class="p">;</span> <span class="k">then</span>
-    cat &gt;&gt; /boot/loader/entries/00-arch-linux-hardened.conf
-title Arch Linux Hardened kernel
-linux /vmlinuz-linux-hardened
-initrd /intel-ucode.img
-initrd /initramfs-linux-hardened.img
-options <span class="nv">root</span><span class="o">=</span><span class="nv">UUID</span><span class="o">=</span>...
+<span class="k">if</span><span class="w"> </span><span class="nv">$USING_UEFI</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>cat<span class="w"> </span>&gt;&gt;<span class="w"> </span>/boot/loader/entries/00-arch-linux-hardened.conf
+title<span class="w"> </span>Arch<span class="w"> </span>Linux<span class="w"> </span>Hardened<span class="w"> </span>kernel
+linux<span class="w"> </span>/vmlinuz-linux-hardened
+initrd<span class="w"> </span>/intel-ucode.img
+initrd<span class="w"> </span>/initramfs-linux-hardened.img
+options<span class="w"> </span><span class="nv">root</span><span class="o">=</span><span class="nv">UUID</span><span class="o">=</span>...
 EOF
 
-    <span class="c1"># Install the systemd-boot EFI boot manager</span>
-    bootctl install
+<span class="w">    </span><span class="c1"># Install the systemd-boot EFI boot manager</span>
+<span class="w">    </span>bootctl<span class="w"> </span>install
 <span class="k">fi</span>
 
 <span class="c1"># Install the needed firmware, for example for the network interface controller</span>
-apt-get -y install firmware-linux-free  <span class="c1"># on Debian</span>
-pacman -S --noconfirm linux-firmware  <span class="c1"># on Arch Linux</span>
+apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>firmware-linux-free<span class="w">  </span><span class="c1"># on Debian</span>
+pacman<span class="w"> </span>-S<span class="w"> </span>--noconfirm<span class="w"> </span>linux-firmware<span class="w">  </span><span class="c1"># on Arch Linux</span>
 </pre></div>
 </div>
 <p>If the main system partition is encrypted, the initramfs needs to be regenerated.
@@ -251,7 +249,7 @@ The hooks need to be modified accordingly in <code class="docutils literal notra
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial line:</span>
 <span class="c1">#HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)</span>
 <span class="c1"># New line:</span>
-<span class="nv">HOOKS</span><span class="o">=(</span>base udev autodetect modconf block keymap keyboard encrypt filesystems fsck<span class="o">)</span>
+<span class="nv">HOOKS</span><span class="o">=(</span>base<span class="w"> </span>udev<span class="w"> </span>autodetect<span class="w"> </span>modconf<span class="w"> </span>block<span class="w"> </span>keymap<span class="w"> </span>keyboard<span class="w"> </span>encrypt<span class="w"> </span>filesystems<span class="w"> </span>fsck<span class="o">)</span>
 </pre></div>
 </div>
 <p>And run <code class="docutils literal notranslate"><span class="pre">mkinitcpio</span> <span class="pre">-p</span> <span class="pre">linux</span></code>.
@@ -277,21 +275,21 @@ The kernel boot command line also needs to be adjusted to include information ab
 <p>On a local system, it is a good idea to ensure that the USB-HID kernel modules (that handle the keyboard) are always loaded.
 Otherwise, a USB keyboard cannot be used to enter the disk encryption passphrase upon boot…
 It is also nice to ensure that the module for FAT filesystems is loaded, in order to be able to plug USB sticks even after disabling the module loading on the system.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;MODULES=(hid-generic vfat)&#39;</span> &gt;&gt; /etc/mkinitcpio.conf
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;MODULES=(hid-generic vfat)&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/mkinitcpio.conf
 </pre></div>
 </div>
 <p>If the system is remotely available through SSH, enable the server:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># On Debian-based systems</span>
-systemctl <span class="nb">enable</span> ssh
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>ssh
 <span class="c1"># On Arch Linux</span>
-systemctl <span class="nb">enable</span> sshd
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>sshd
 </pre></div>
 </div>
 <p>If the system is a remote one and has an encrypted disk partition, remote unlocking can be achieved by embedding a Dropbear SSH server in the initramfs.
 Such a configuration is detailed on <a class="reference external" href="https://wiki.archlinux.org/index.php/Dm-crypt/Specialties">https://wiki.archlinux.org/index.php/Dm-crypt/Specialties</a>.</p>
 </section>
 <section id="the-last-installation-step">
-<h2>The last installation step<a class="headerlink" href="#the-last-installation-step" title="Permalink to this headline">¶</a></h2>
+<h2>The last installation step<a class="headerlink" href="#the-last-installation-step" title="Link to this heading">¶</a></h2>
 <p>Finally, exit the chroot, unmount the system disks and reboot the system.
 With this, the base system is installed and it is possible to install software, use them, etc.
 A list of useful packages for some distributions is available on <a class="reference external" href="https://github.com/fishilico/shared/tree/master/machines/base_install">https://github.com/fishilico/shared/tree/master/machines/base_install</a>.</p>
@@ -310,8 +308,9 @@ Also, please add <code class="docutils literal notranslate"><span class="pre">IL
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Installing a Linux system</a><ul>
 <li><a class="reference internal" href="#booting-a-live-media-to-a-live-system">Booting a live media to a live system</a></li>
 <li><a class="reference internal" href="#partitioning-the-disks">Partitioning the disks</a></li>
@@ -322,12 +321,17 @@ Also, please add <code class="docutils literal notranslate"><span class="pre">IL
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="gdb.html"
-                        title="previous chapter">GDB, The GNU Project Debugger</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="nat.html"
-                        title="next chapter">Linux NAT router</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="gdb.html"
+                          title="previous chapter">GDB, The GNU Project Debugger</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="nat.html"
+                          title="next chapter">Linux NAT router</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/installation.rst.txt"
@@ -346,7 +350,7 @@ Also, please add <code class="docutils literal notranslate"><span class="pre">IL
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -369,8 +373,8 @@ Also, please add <code class="docutils literal notranslate"><span class="pre">IL
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

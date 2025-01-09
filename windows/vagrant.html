@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Windows Virtual Machine with Vagrant &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Some VBScript commands" href="vbscript.html" />
@@ -42,13 +40,13 @@
           <div class="body" role="main">
             
   <section id="windows-virtual-machine-with-vagrant">
-<h1>Windows Virtual Machine with Vagrant<a class="headerlink" href="#windows-virtual-machine-with-vagrant" title="Permalink to this headline">¶</a></h1>
+<h1>Windows Virtual Machine with Vagrant<a class="headerlink" href="#windows-virtual-machine-with-vagrant" title="Link to this heading">¶</a></h1>
 <p>Microsoft provides free Windows Vircual Machines (which expire after 90 days) on
 <a class="reference external" href="https://developer.microsoft.com/en-us/microsoft-edge/">https://developer.microsoft.com/en-us/microsoft-edge/</a>.
 Among the available VM are Vagrant machines. Here are instructions to setup
 a Windows VM through Vagrant using Libvirt and QEmu-KVM as backend.</p>
 <section id="create-a-libvirt-box">
-<h2>Create a Libvirt box<a class="headerlink" href="#create-a-libvirt-box" title="Permalink to this headline">¶</a></h2>
+<h2>Create a Libvirt box<a class="headerlink" href="#create-a-libvirt-box" title="Link to this heading">¶</a></h2>
 <ul>
 <li><p>Download a ZIP from <a class="reference external" href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/">https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/</a>, like
 <a class="reference external" href="https://az792536.vo.msecnd.net/vms/VMBuild_20180425/Vagrant/MSEdge/MSEdge.Win10.Vagrant.zip">https://az792536.vo.msecnd.net/vms/VMBuild_20180425/Vagrant/MSEdge/MSEdge.Win10.Vagrant.zip</a></p>
@@ -121,9 +119,9 @@ instructions:</p>
 name of the domain) and insert a <code class="docutils literal notranslate"><span class="pre">&lt;loader&gt;</span></code> tag into the <code class="docutils literal notranslate"><span class="pre">&lt;os&gt;</span></code> one.
 It should looks like:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;os&gt;</span>
-  <span class="nt">&lt;type</span> <span class="na">arch=</span><span class="s">&#39;x86_64&#39;</span> <span class="na">machine=</span><span class="s">&#39;pc-i440fx-3.0&#39;</span><span class="nt">&gt;</span>hvm<span class="nt">&lt;/type&gt;</span>
-  <span class="nt">&lt;loader</span> <span class="na">readonly=</span><span class="s">&#39;yes&#39;</span> <span class="na">secure=</span><span class="s">&#39;no&#39;</span> <span class="na">type=</span><span class="s">&#39;rom&#39;</span><span class="nt">&gt;</span>/usr/share/ovmf/x64/OVMF_CODE.fd<span class="nt">&lt;/loader&gt;</span>
-  <span class="nt">&lt;boot</span> <span class="na">dev=</span><span class="s">&#39;hd&#39;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">arch=</span><span class="s">&#39;x86_64&#39;</span><span class="w"> </span><span class="na">machine=</span><span class="s">&#39;pc-i440fx-3.0&#39;</span><span class="nt">&gt;</span>hvm<span class="nt">&lt;/type&gt;</span>
+<span class="w">  </span><span class="nt">&lt;loader</span><span class="w"> </span><span class="na">readonly=</span><span class="s">&#39;yes&#39;</span><span class="w"> </span><span class="na">secure=</span><span class="s">&#39;no&#39;</span><span class="w"> </span><span class="na">type=</span><span class="s">&#39;rom&#39;</span><span class="nt">&gt;</span>/usr/share/ovmf/x64/OVMF_CODE.fd<span class="nt">&lt;/loader&gt;</span>
+<span class="w">  </span><span class="nt">&lt;boot</span><span class="w"> </span><span class="na">dev=</span><span class="s">&#39;hd&#39;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/os&gt;</span>
 </pre></div>
 </div>
@@ -131,7 +129,7 @@ It should looks like:</p>
 </ul>
 </section>
 <section id="first-configuration">
-<h2>First configuration<a class="headerlink" href="#first-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>First configuration<a class="headerlink" href="#first-configuration" title="Link to this heading">¶</a></h2>
 <p>By default the virtual machine won’t be able to use the virtual network card as
 it lacks the VirtIO network drivers. The suitable drivers are provided by Redhat
 in a <code class="docutils literal notranslate"><span class="pre">virtio-win</span></code> package:
@@ -167,9 +165,9 @@ There are 3 drivers:</p>
 </div>
 </section>
 <section id="remote-access">
-<h2>Remote access<a class="headerlink" href="#remote-access" title="Permalink to this headline">¶</a></h2>
+<h2>Remote access<a class="headerlink" href="#remote-access" title="Link to this heading">¶</a></h2>
 <section id="rdp-connection">
-<h3>RDP connection<a class="headerlink" href="#rdp-connection" title="Permalink to this headline">¶</a></h3>
+<h3>RDP connection<a class="headerlink" href="#rdp-connection" title="Link to this heading">¶</a></h3>
 <p>In order to use the graphical interface, Vagrant supports using RDP (Remote
 Desktop Protocol), using <code class="docutils literal notranslate"><span class="pre">freerdp</span></code> (<code class="docutils literal notranslate"><span class="pre">rdesktop</span></code> can also be used if CredSSP
 is disabled on the Windows virtual machine).
@@ -180,14 +178,14 @@ firewall opened:</p>
 </pre></div>
 </div>
 <p>Then, one of these command should work (from a shell on the host):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>vagrant rdp
-xfreerdp /u:IEUser <span class="s1">&#39;/p:Passw0rd!&#39;</span> <span class="s2">&quot;/v:</span><span class="k">$(</span>vagrant ssh-config <span class="p">|</span> sed -n <span class="s1">&#39;s/ *HostName *//p&#39;</span><span class="k">)</span><span class="s2">:3389&quot;</span> <span class="se">\</span>
-    /w:1600 /h:900 /cert:ignore
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>vagrant<span class="w"> </span>rdp
+xfreerdp<span class="w"> </span>/u:IEUser<span class="w"> </span><span class="s1">&#39;/p:Passw0rd!&#39;</span><span class="w"> </span><span class="s2">&quot;/v:</span><span class="k">$(</span>vagrant<span class="w"> </span>ssh-config<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;s/ *HostName *//p&#39;</span><span class="k">)</span><span class="s2">:3389&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/w:1600<span class="w"> </span>/h:900<span class="w"> </span>/cert:ignore
 </pre></div>
 </div>
 </section>
 <section id="using-winrm">
-<h3>Using WinRM<a class="headerlink" href="#using-winrm" title="Permalink to this headline">¶</a></h3>
+<h3>Using WinRM<a class="headerlink" href="#using-winrm" title="Link to this heading">¶</a></h3>
 <p>In order to use WinRM to connect to the machine, add the following information
 to the <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use Windows Remote Management protocol (WinRM)</span>
@@ -278,7 +276,7 @@ Tunnel adapter Teredo Tunneling Pseudo-Interface:
 </div>
 </section>
 <section id="install-windows-openssh-server">
-<h3>Install Windows OpenSSH server<a class="headerlink" href="#install-windows-openssh-server" title="Permalink to this headline">¶</a></h3>
+<h3>Install Windows OpenSSH server<a class="headerlink" href="#install-windows-openssh-server" title="Link to this heading">¶</a></h3>
 <p>Since Windows 10 Fall Creators Update (1709 or 10.0.16299), Microsoft provides
 OpenSSH client (installed by default) and server (installed on demand):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PS C:\&gt; Get-WindowsCapability -Online | ? Name -like &#39;OpenSSH*&#39;
@@ -405,8 +403,9 @@ This public key can be provisioned with:</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Windows Virtual Machine with Vagrant</a><ul>
 <li><a class="reference internal" href="#create-a-libvirt-box">Create a Libvirt box</a></li>
 <li><a class="reference internal" href="#first-configuration">First configuration</a></li>
@@ -420,12 +419,17 @@ This public key can be provisioned with:</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="utc-clock.html"
-                        title="previous chapter">Set hardware clock to UTC</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="vbscript.html"
-                        title="next chapter">Some VBScript commands</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="utc-clock.html"
+                          title="previous chapter">Set hardware clock to UTC</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="vbscript.html"
+                          title="next chapter">Some VBScript commands</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/windows/vagrant.rst.txt"
@@ -444,7 +448,7 @@ This public key can be provisioned with:</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -467,8 +471,8 @@ This public key can be provisioned with:</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

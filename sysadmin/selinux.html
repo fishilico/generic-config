@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Some notes about my SELinux installation &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Sound Configuration" href="sound.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="some-notes-about-my-selinux-installation">
-<h1>Some notes about my SELinux installation<a class="headerlink" href="#some-notes-about-my-selinux-installation" title="Permalink to this headline">¶</a></h1>
+<h1>Some notes about my SELinux installation<a class="headerlink" href="#some-notes-about-my-selinux-installation" title="Link to this heading">¶</a></h1>
 <p>This document doesn’t document how to install SELinux. If you want to install
 it, please read one of these websites:</p>
 <ul class="simple">
@@ -83,26 +81,26 @@ SELinux-Refpolicy Mailing List Archive on lore.kernel.org</p></li>
 <p>The present document will focus on some pitfalls I’ve encountered since
 installing SELinux on systems running Debian or ArchLinux.</p>
 <section id="install-a-strict-policy">
-<h2>Install a strict policy<a class="headerlink" href="#install-a-strict-policy" title="Permalink to this headline">¶</a></h2>
+<h2>Install a strict policy<a class="headerlink" href="#install-a-strict-policy" title="Link to this heading">¶</a></h2>
 <p>On Debian by default a targeted policy is installed, daemons are confined but
 not users. To make users confined, you need to remove the unconfined module.
 To do this:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up staff accounts</span>
-semanage login -a -s staff_u userlogin
+semanage<span class="w"> </span>login<span class="w"> </span>-a<span class="w"> </span>-s<span class="w"> </span>staff_u<span class="w"> </span>userlogin
 
 <span class="c1"># Confine other users</span>
-semanage login -m -s user_u -r s0 __default__
+semanage<span class="w"> </span>login<span class="w"> </span>-m<span class="w"> </span>-s<span class="w"> </span>user_u<span class="w"> </span>-r<span class="w"> </span>s0<span class="w"> </span>__default__
 
 <span class="c1"># Map root to root instead of unconfined_u</span>
-semanage login -m -s root root
+semanage<span class="w"> </span>login<span class="w"> </span>-m<span class="w"> </span>-s<span class="w"> </span>root<span class="w"> </span>root
 
 <span class="c1"># Remove the unconfined module</span>
-semodule -r unconfined
+semodule<span class="w"> </span>-r<span class="w"> </span>unconfined
 </pre></div>
 </div>
 </section>
 <section id="use-run-init-as-root-without-a-password">
-<h2>Use <code class="docutils literal notranslate"><span class="pre">run_init</span></code> as root without a password<a class="headerlink" href="#use-run-init-as-root-without-a-password" title="Permalink to this headline">¶</a></h2>
+<h2>Use <code class="docutils literal notranslate"><span class="pre">run_init</span></code> as root without a password<a class="headerlink" href="#use-run-init-as-root-without-a-password" title="Link to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">run_init</span></code> command (to manage services) authenticates the real user with PAM
 before making a transition to <code class="docutils literal notranslate"><span class="pre">system_u:system_r:init_t</span></code> context. The default
 configuration tell PAM to ask for a password to authenticate but this may be
@@ -118,7 +116,7 @@ To disable the password prompt for root, add this at the beginning of
 </div>
 </section>
 <section id="fix-tmp-labeling">
-<h2>Fix <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> labeling<a class="headerlink" href="#fix-tmp-labeling" title="Permalink to this headline">¶</a></h2>
+<h2>Fix <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> labeling<a class="headerlink" href="#fix-tmp-labeling" title="Link to this heading">¶</a></h2>
 <p>If <code class="docutils literal notranslate"><span class="pre">mount</span></code> shows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tmpfs</span> <span class="n">on</span> <span class="o">/</span><span class="n">tmp</span> <span class="nb">type</span> <span class="n">tmpfs</span> <span class="p">(</span><span class="n">rw</span><span class="p">,</span><span class="n">nosuid</span><span class="p">,</span><span class="n">nodev</span><span class="p">,</span><span class="n">relatime</span><span class="p">,</span><span class="n">rootcontext</span><span class="o">=</span><span class="n">system_u</span><span class="p">:</span><span class="n">object_r</span><span class="p">:</span><span class="n">file_t</span><span class="p">:</span><span class="n">s0</span><span class="p">,</span><span class="n">seclabel</span><span class="p">)</span>
 </pre></div>
@@ -144,34 +142,34 @@ when using a policy without MLS):</p>
 needed to modify <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code> accordingly.</p>
 </section>
 <section id="configure-selinux-booleans">
-<h2>Configure SELinux booleans<a class="headerlink" href="#configure-selinux-booleans" title="Permalink to this headline">¶</a></h2>
+<h2>Configure SELinux booleans<a class="headerlink" href="#configure-selinux-booleans" title="Link to this heading">¶</a></h2>
 <p>Here are some booleans I use is almost all my SELinux systems (enabled with <code class="docutils literal notranslate"><span class="pre">setsebool</span> <span class="pre">-P</span> <span class="pre">$BOOL</span> <span class="pre">on</span></code> or <code class="docutils literal notranslate"><span class="pre">semanage</span> <span class="pre">boolean</span> <span class="pre">-m</span> <span class="pre">--on</span> <span class="pre">$BOOL</span></code>):</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Allow users to send ping</span>
-setsebool -P user_ping on
+setsebool<span class="w"> </span>-P<span class="w"> </span>user_ping<span class="w"> </span>on
 
 <span class="c1"># Enable reading of urandom for all domains</span>
-setsebool -P global_ssp on
+setsebool<span class="w"> </span>-P<span class="w"> </span>global_ssp<span class="w"> </span>on
 
 <span class="c1"># Use CGI with nginx (eg. for gitweb)</span>
-setsebool -P httpd_enable_cgi on
-setsebool -P nginx_enable_http_server on
+setsebool<span class="w"> </span>-P<span class="w"> </span>httpd_enable_cgi<span class="w"> </span>on
+setsebool<span class="w"> </span>-P<span class="w"> </span>nginx_enable_http_server<span class="w"> </span>on
 
 <span class="c1"># Make GPG agent to work</span>
-setsebool -P gpg_agent_env_file on
+setsebool<span class="w"> </span>-P<span class="w"> </span>gpg_agent_env_file<span class="w"> </span>on
 
 <span class="c1"># Disable NX memory protection for some applications (eg. Firefox)</span>
-setsebool -P allow_execmem on
+setsebool<span class="w"> </span>-P<span class="w"> </span>allow_execmem<span class="w"> </span>on
 
 <span class="c1"># Allow privileged users (sysadm_u, unconfined_u, etc.) to log in through SSH</span>
-setsebool -P ssh_sysadm_login on
+setsebool<span class="w"> </span>-P<span class="w"> </span>ssh_sysadm_login<span class="w"> </span>on
 
 <span class="c1"># Allow privileged users (sysadm_u, unconfined_u, etc.) to log in through X</span>
-setsebool -P xdm_sysadm_login on
+setsebool<span class="w"> </span>-P<span class="w"> </span>xdm_sysadm_login<span class="w"> </span>on
 </pre></div>
 </div>
 </section>
 <section id="fix-labels-for-files-in-home">
-<h2>Fix labels for files in <code class="docutils literal notranslate"><span class="pre">/home</span></code><a class="headerlink" href="#fix-labels-for-files-in-home" title="Permalink to this headline">¶</a></h2>
+<h2>Fix labels for files in <code class="docutils literal notranslate"><span class="pre">/home</span></code><a class="headerlink" href="#fix-labels-for-files-in-home" title="Link to this heading">¶</a></h2>
 <p>By default, files under <code class="docutils literal notranslate"><span class="pre">/home</span></code> are labeled as user home directories. On some
 system, <code class="docutils literal notranslate"><span class="pre">/home</span></code> is on the largest disk partition and there are other things,
 like database files (instead of <code class="docutils literal notranslate"><span class="pre">/var/lib/...</span></code> folders) or Git repositories.
@@ -182,27 +180,27 @@ to use:</p>
 </div>
 </section>
 <section id="generate-interface-file-for-audit2allow-r">
-<h2>Generate interface file for <code class="docutils literal notranslate"><span class="pre">audit2allow</span> <span class="pre">-R</span></code><a class="headerlink" href="#generate-interface-file-for-audit2allow-r" title="Permalink to this headline">¶</a></h2>
+<h2>Generate interface file for <code class="docutils literal notranslate"><span class="pre">audit2allow</span> <span class="pre">-R</span></code><a class="headerlink" href="#generate-interface-file-for-audit2allow-r" title="Link to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">audit2allow</span> <span class="pre">-R</span></code> needs <code class="docutils literal notranslate"><span class="pre">/var/lib/sepolgen/interface_info</span></code>, which is created
 by <code class="docutils literal notranslate"><span class="pre">sepolgen-ifgen</span></code>. However, as the <code class="docutils literal notranslate"><span class="pre">-p</span></code> parameter of this command is
 buggy, your interface files need to be located in the <code class="docutils literal notranslate"><span class="pre">default</span></code> policy, ie.
 in <code class="docutils literal notranslate"><span class="pre">/usr/share/selinux/default/include</span></code> directory. For example, add a symlink
 <code class="docutils literal notranslate"><span class="pre">/usr/share/selinux/default</span></code> to your policy directory:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>. /etc/selinux/config
-<span class="nb">cd</span> /usr/share/selinux <span class="o">&amp;&amp;</span> ln -s <span class="nv">$SELINUXTYPE</span> default
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>.<span class="w"> </span>/etc/selinux/config
+<span class="nb">cd</span><span class="w"> </span>/usr/share/selinux<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$SELINUXTYPE</span><span class="w"> </span>default
 sepolgen-ifgen
 </pre></div>
 </div>
 </section>
 <section id="activate-some-selinux-modules">
-<h2>Activate some SELinux modules<a class="headerlink" href="#activate-some-selinux-modules" title="Permalink to this headline">¶</a></h2>
+<h2>Activate some SELinux modules<a class="headerlink" href="#activate-some-selinux-modules" title="Link to this heading">¶</a></h2>
 <p>To reload modules, go to <code class="docutils literal notranslate"><span class="pre">/usr/share/selinux/$(policyname)</span></code> and run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>semodule --verbose -b base.pp -s $(basename $(pwd)) -n -i module1.pp -i ...
 </pre></div>
 </div>
 </section>
 <section id="allow-staff-u-to-read-root-when-running-sudo">
-<h2>Allow <code class="docutils literal notranslate"><span class="pre">staff_u</span></code> to read <code class="docutils literal notranslate"><span class="pre">/root</span></code> when running <code class="docutils literal notranslate"><span class="pre">sudo</span></code><a class="headerlink" href="#allow-staff-u-to-read-root-when-running-sudo" title="Permalink to this headline">¶</a></h2>
+<h2>Allow <code class="docutils literal notranslate"><span class="pre">staff_u</span></code> to read <code class="docutils literal notranslate"><span class="pre">/root</span></code> when running <code class="docutils literal notranslate"><span class="pre">sudo</span></code><a class="headerlink" href="#allow-staff-u-to-read-root-when-running-sudo" title="Link to this heading">¶</a></h2>
 <p>By default <code class="docutils literal notranslate"><span class="pre">/etc/selinux/default/modules/active/file_contexts.homedirs</span></code>
 defines <code class="docutils literal notranslate"><span class="pre">/root</span></code> to be labeled <code class="docutils literal notranslate"><span class="pre">root:object_r:user_home_t</span></code>, which <code class="docutils literal notranslate"><span class="pre">staff_u</span></code>
 can’t access (there is a constraint for it). To solve this issue, change the
@@ -216,7 +214,7 @@ constraint or (much sumpler) change the user associated to <code class="docutils
 </div>
 </section>
 <section id="export-local-configuration-done-with-semanage">
-<h2>Export local configuration done with <code class="docutils literal notranslate"><span class="pre">semanage</span></code><a class="headerlink" href="#export-local-configuration-done-with-semanage" title="Permalink to this headline">¶</a></h2>
+<h2>Export local configuration done with <code class="docutils literal notranslate"><span class="pre">semanage</span></code><a class="headerlink" href="#export-local-configuration-done-with-semanage" title="Link to this heading">¶</a></h2>
 <p>To export all local changes done with <code class="docutils literal notranslate"><span class="pre">semanage</span></code>, there is an option:</p>
 <blockquote>
 <div><p>semanage -o</p>
@@ -227,7 +225,7 @@ constraint or (much sumpler) change the user associated to <code class="docutils
 </div></blockquote>
 </section>
 <section id="bugs-still-present-in-october-2014">
-<h2>Bugs still present in October 2014<a class="headerlink" href="#bugs-still-present-in-october-2014" title="Permalink to this headline">¶</a></h2>
+<h2>Bugs still present in October 2014<a class="headerlink" href="#bugs-still-present-in-october-2014" title="Link to this heading">¶</a></h2>
 <p>In ArchLinux, <code class="docutils literal notranslate"><span class="pre">/sys</span></code> is not labelled correctly on boot. It needs to be labeled
 by systemd using <code class="docutils literal notranslate"><span class="pre">tmpfiles.d</span></code> configuration. Therefore you need to add this in
 <code class="docutils literal notranslate"><span class="pre">/etc/tmpfiles.d/sysfs.conf</span></code>:</p>
@@ -249,8 +247,9 @@ by systemd using <code class="docutils literal notranslate"><span class="pre">tm
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Some notes about my SELinux installation</a><ul>
 <li><a class="reference internal" href="#install-a-strict-policy">Install a strict policy</a></li>
 <li><a class="reference internal" href="#use-run-init-as-root-without-a-password">Use <code class="docutils literal notranslate"><span class="pre">run_init</span></code> as root without a password</a></li>
@@ -266,12 +265,17 @@ by systemd using <code class="docutils literal notranslate"><span class="pre">tm
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="remote-desktop-linux.html"
-                        title="previous chapter">Remote Desktop on Linux</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="sound.html"
-                        title="next chapter">Sound Configuration</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="remote-desktop-linux.html"
+                          title="previous chapter">Remote Desktop on Linux</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="sound.html"
+                          title="next chapter">Sound Configuration</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/selinux.rst.txt"
@@ -290,7 +294,7 @@ by systemd using <code class="docutils literal notranslate"><span class="pre">tm
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -313,8 +317,8 @@ by systemd using <code class="docutils literal notranslate"><span class="pre">tm
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

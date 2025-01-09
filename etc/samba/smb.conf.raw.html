@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>etc/samba/smb.conf &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="etc/ssh/sshd_config.default" href="../ssh/sshd_config.default.raw.html" />
@@ -42,7 +40,7 @@
           <div class="body" role="main">
             
   <section id="etc-samba-smb-conf">
-<h1><code class="docutils literal notranslate"><span class="pre">etc/samba/smb.conf</span></code><a class="headerlink" href="#etc-samba-smb-conf" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">etc/samba/smb.conf</span></code><a class="headerlink" href="#etc-samba-smb-conf" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../../_downloads/e14342bf56fd283059ac698d0c2ea735/smb.conf"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuration file for Samba client (smbclient, gvfs-smb, etc.) and server.</span>
 <span class="c1"># This file is either in /etc/samba/smb.conf or /usr/local/samba/lib/smb.conf.</span>
@@ -50,32 +48,32 @@
 <span class="c1"># Documentation:</span>
 <span class="c1"># - https://www.samba.org/samba/docs/Samba-HOWTO-Collection.pdf</span>
 <span class="o">[</span>global<span class="o">]</span>
-    <span class="c1"># Workgroup or NT domain name that the Samba server is part of</span>
-    <span class="nv">workgroup</span> <span class="o">=</span> WORKGROUP
+<span class="w">    </span><span class="c1"># Workgroup or NT domain name that the Samba server is part of</span>
+<span class="w">    </span><span class="nv">workgroup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>WORKGROUP
 
-    <span class="c1"># NetBIOS name (the hostname, by default)</span>
-    netbios <span class="nv">name</span> <span class="o">=</span> MyName
+<span class="w">    </span><span class="c1"># NetBIOS name (the hostname, by default)</span>
+<span class="w">    </span>netbios<span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>MyName
 
-    <span class="c1"># server string is the equivalent of the NT Description field</span>
-    server <span class="nv">string</span> <span class="o">=</span> Samba Server
+<span class="w">    </span><span class="c1"># server string is the equivalent of the NT Description field</span>
+<span class="w">    </span>server<span class="w"> </span><span class="nv">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Samba<span class="w"> </span>Server
 
-    <span class="c1"># Be compatible with recent Microsoft Servers which disabled SMBv1</span>
-    client max <span class="nv">protocol</span> <span class="o">=</span> SMB3
+<span class="w">    </span><span class="c1"># Be compatible with recent Microsoft Servers which disabled SMBv1</span>
+<span class="w">    </span>client<span class="w"> </span>max<span class="w"> </span><span class="nv">protocol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>SMB3
 
-    <span class="c1"># Security mode (share, user, server, domain or ads)</span>
-    <span class="nv">security</span> <span class="o">=</span> user
+<span class="w">    </span><span class="c1"># Security mode (share, user, server, domain or ads)</span>
+<span class="w">    </span><span class="nv">security</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>user
 
-    <span class="c1"># Restrict connections to machines on the local network and loopback</span>
-    hosts <span class="nv">allow</span> <span class="o">=</span> <span class="m">10</span>. <span class="m">172</span>.16. <span class="m">192</span>.168. <span class="m">127</span>.
+<span class="w">    </span><span class="c1"># Restrict connections to machines on the local network and loopback</span>
+<span class="w">    </span>hosts<span class="w"> </span><span class="nv">allow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span>.<span class="w"> </span><span class="m">172</span>.16.<span class="w"> </span><span class="m">192</span>.168.<span class="w"> </span><span class="m">127</span>.
 
 <span class="c1"># For a share that allows file upload, uncomment these lines</span>
 <span class="p">;</span><span class="o">[</span>share<span class="o">]</span>
-<span class="p">;</span>   <span class="nv">comment</span> <span class="o">=</span> Share <span class="k">for</span> upload
-<span class="p">;</span>   <span class="nv">path</span> <span class="o">=</span> /srv/samba
-<span class="p">;</span>   <span class="nv">public</span> <span class="o">=</span> yes
-<span class="p">;</span>   <span class="nv">writable</span> <span class="o">=</span> yes
-<span class="p">;</span>   <span class="nv">printable</span> <span class="o">=</span> no
-<span class="p">;</span>   create <span class="nv">mask</span> <span class="o">=</span> <span class="m">0770</span>
+<span class="p">;</span><span class="w">   </span><span class="nv">comment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Share<span class="w"> </span><span class="k">for</span><span class="w"> </span>upload
+<span class="p">;</span><span class="w">   </span><span class="nv">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/srv/samba
+<span class="p">;</span><span class="w">   </span><span class="nv">public</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>yes
+<span class="p">;</span><span class="w">   </span><span class="nv">writable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>yes
+<span class="p">;</span><span class="w">   </span><span class="nv">printable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>no
+<span class="p">;</span><span class="w">   </span>create<span class="w"> </span><span class="nv">mask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0770</span>
 </pre></div>
 </div>
 </section>
@@ -87,12 +85,16 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="../resolv.conf.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/resolv.conf</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../ssh/sshd_config.default.raw.html"
-                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config.default</span></code></a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../resolv.conf.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc/resolv.conf</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../ssh/sshd_config.default.raw.html"
+                          title="next chapter"><code class="docutils literal notranslate"><span class="pre">etc/ssh/sshd_config.default</span></code></a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc/samba/smb.conf.raw.rst.txt"
@@ -111,7 +113,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -134,8 +136,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

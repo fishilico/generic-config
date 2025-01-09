@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Bluetooth on Linux &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Some information of Debian systems" href="debian.html" />
@@ -42,9 +40,9 @@
           <div class="body" role="main">
             
   <section id="bluetooth-on-linux">
-<h1>Bluetooth on Linux<a class="headerlink" href="#bluetooth-on-linux" title="Permalink to this headline">¶</a></h1>
+<h1>Bluetooth on Linux<a class="headerlink" href="#bluetooth-on-linux" title="Link to this heading">¶</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
 <p>Bluetooth is a protocol that can be used to communicate between two devices that are paired together.
 It can be used to connect wireless devices (keyboard, mouse, sound speaker, etc.), to transmit files (with OBEX, for Object Exchange) and even to share Internet connectivity (using BNEP, the Bluetooth Network Encapsulation Protocol, which uses a L2CAP channel to transmit IP packets).
 The protocol has been developed since at least 1989 and Bluetooth has been standardised as IEEE 802.15.1.
@@ -54,12 +52,12 @@ More information can be found on its Wikipedia page: <a class="reference externa
 <ul>
 <li><p>Install the packages that provide Bluetooth service and programs: <code class="docutils literal notranslate"><span class="pre">bluez</span></code> and <code class="docutils literal notranslate"><span class="pre">bluez-utils</span></code></p></li>
 <li><p>Unblock the radio interface, if it has been blocked:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>rfkill unblock bluetooth
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>rfkill<span class="w"> </span>unblock<span class="w"> </span>bluetooth
 </pre></div>
 </div>
 </li>
 <li><p>Start the service:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl start bluetooth.service
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>start<span class="w"> </span>bluetooth.service
 </pre></div>
 </div>
 </li>
@@ -69,76 +67,76 @@ More information can be found on its Wikipedia page: <a class="reference externa
 This command produces BTSnoop files that can be opened for example in Wireshark.</p>
 </section>
 <section id="connecting-an-android-phone-to-a-laptop-using-bluetooth">
-<h2>Connecting an Android phone to a laptop using Bluetooth<a class="headerlink" href="#connecting-an-android-phone-to-a-laptop-using-bluetooth" title="Permalink to this headline">¶</a></h2>
+<h2>Connecting an Android phone to a laptop using Bluetooth<a class="headerlink" href="#connecting-an-android-phone-to-a-laptop-using-bluetooth" title="Link to this heading">¶</a></h2>
 <p>Here is a trace on a laptop that get paired with an Android phone via Bluetooth (<code class="docutils literal notranslate"><span class="pre">[bluetooth]#</span></code> is the user prompt):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ bluetoothctl
-<span class="o">[</span>CHG<span class="o">]</span> Controller <span class="m">01</span>:23:45:67:89:AB Pairable: yes
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>bluetoothctl
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Controller<span class="w"> </span><span class="m">01</span>:23:45:67:89:AB<span class="w"> </span>Pairable:<span class="w"> </span>yes
 
 <span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># power on</span>
-<span class="o">[</span>CHG<span class="o">]</span> Controller <span class="m">01</span>:23:45:67:89:AB Class: 0x0000010c
-Changing power on succeeded
-<span class="o">[</span>CHG<span class="o">]</span> Controller <span class="m">01</span>:23:45:67:89:AB Powered: yes
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Controller<span class="w"> </span><span class="m">01</span>:23:45:67:89:AB<span class="w"> </span>Class:<span class="w"> </span>0x0000010c
+Changing<span class="w"> </span>power<span class="w"> </span>on<span class="w"> </span>succeeded
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Controller<span class="w"> </span><span class="m">01</span>:23:45:67:89:AB<span class="w"> </span>Powered:<span class="w"> </span>yes
 
 <span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># scan on</span>
-<span class="o">[</span>NEW<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 AndroidPhone
+<span class="o">[</span>NEW<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>AndroidPhone
 
 <span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># devices</span>
-Device <span class="m">55</span>:44:33:22:11:00 AndroidPhone
+Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>AndroidPhone
 
 <span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># pair 55:44:33:22:11:00</span>
-Attempting to pair with <span class="m">55</span>:44:33:22:11:00
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 Connected: yes
-Request confirmation
-<span class="o">[</span>agent<span class="o">]</span> Confirm passkey <span class="m">123123</span> <span class="o">(</span>yes/no<span class="o">)</span>: yes
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 Modalias: bluetooth:v0075p0100d0201
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001105</span>-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000110a-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000110c-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000110e-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001112</span>-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001115</span>-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001116</span>-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000111f-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000112d-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: 0000112f-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001132</span>-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001200</span>-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001800</span>-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: <span class="m">00001801</span>-0000-1000-8000-00805f9b34fb
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 UUIDs: a23d00bc-217c-123b-9c00-fc44577136ee
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 ServicesResolved: yes
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 Paired: yes
-Pairing successful
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 ServicesResolved: no
-<span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">55</span>:44:33:22:11:00 Connected: no
+Attempting<span class="w"> </span>to<span class="w"> </span>pair<span class="w"> </span>with<span class="w"> </span><span class="m">55</span>:44:33:22:11:00
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>Connected:<span class="w"> </span>yes
+Request<span class="w"> </span>confirmation
+<span class="o">[</span>agent<span class="o">]</span><span class="w"> </span>Confirm<span class="w"> </span>passkey<span class="w"> </span><span class="m">123123</span><span class="w"> </span><span class="o">(</span>yes/no<span class="o">)</span>:<span class="w"> </span>yes
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>Modalias:<span class="w"> </span>bluetooth:v0075p0100d0201
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span><span class="m">00001105</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span>0000110a-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span>0000110c-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span>0000110e-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span><span class="m">00001112</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span><span class="m">00001115</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span><span class="m">00001116</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span>0000111f-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span>0000112d-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span>0000112f-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span><span class="m">00001132</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span><span class="m">00001200</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span><span class="m">00001800</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span><span class="m">00001801</span>-0000-1000-8000-00805f9b34fb
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>UUIDs:<span class="w"> </span>a23d00bc-217c-123b-9c00-fc44577136ee
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>ServicesResolved:<span class="w"> </span>yes
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>Paired:<span class="w"> </span>yes
+Pairing<span class="w"> </span>successful
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>ServicesResolved:<span class="w"> </span>no
+<span class="o">[</span>CHG<span class="o">]</span><span class="w"> </span>Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span>Connected:<span class="w"> </span>no
 
 <span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># info 55:44:33:22:11:00</span>
-Device <span class="m">55</span>:44:33:22:11:00 <span class="o">(</span>public<span class="o">)</span>
-    Name: AndroidPhone
-    Alias: AndroidPhone
-    Class: 0x005a020c
-    Icon: phone
-    Paired: yes
-    Trusted: no
-    Blocked: no
-    Connected: no
-    LegacyPairing: no
-    UUID: OBEX Object Push          <span class="o">(</span><span class="m">00001105</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: Audio Source              <span class="o">(</span>0000110a-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: A/V Remote Control Target <span class="o">(</span>0000110c-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: A/V Remote Control        <span class="o">(</span>0000110e-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: Headset AG                <span class="o">(</span><span class="m">00001112</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: PANU                      <span class="o">(</span><span class="m">00001115</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: NAP                       <span class="o">(</span><span class="m">00001116</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: Handsfree Audio Gateway   <span class="o">(</span>0000111f-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: SIM Access                <span class="o">(</span>0000112d-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: Phonebook Access Server   <span class="o">(</span>0000112f-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: Message Access Server     <span class="o">(</span><span class="m">00001132</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: PnP Information           <span class="o">(</span><span class="m">00001200</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: Generic Access Profile    <span class="o">(</span><span class="m">00001800</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: Generic Attribute Profile <span class="o">(</span><span class="m">00001801</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
-    UUID: Vendor specific           <span class="o">(</span>a23d00bc-217c-123b-9c00-fc44577136ee<span class="o">)</span>
-    Modalias: bluetooth:v0075p0100d0201
+Device<span class="w"> </span><span class="m">55</span>:44:33:22:11:00<span class="w"> </span><span class="o">(</span>public<span class="o">)</span>
+<span class="w">    </span>Name:<span class="w"> </span>AndroidPhone
+<span class="w">    </span>Alias:<span class="w"> </span>AndroidPhone
+<span class="w">    </span>Class:<span class="w"> </span>0x005a020c
+<span class="w">    </span>Icon:<span class="w"> </span>phone
+<span class="w">    </span>Paired:<span class="w"> </span>yes
+<span class="w">    </span>Trusted:<span class="w"> </span>no
+<span class="w">    </span>Blocked:<span class="w"> </span>no
+<span class="w">    </span>Connected:<span class="w"> </span>no
+<span class="w">    </span>LegacyPairing:<span class="w"> </span>no
+<span class="w">    </span>UUID:<span class="w"> </span>OBEX<span class="w"> </span>Object<span class="w"> </span>Push<span class="w">          </span><span class="o">(</span><span class="m">00001105</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>Audio<span class="w"> </span>Source<span class="w">              </span><span class="o">(</span>0000110a-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>A/V<span class="w"> </span>Remote<span class="w"> </span>Control<span class="w"> </span>Target<span class="w"> </span><span class="o">(</span>0000110c-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>A/V<span class="w"> </span>Remote<span class="w"> </span>Control<span class="w">        </span><span class="o">(</span>0000110e-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>Headset<span class="w"> </span>AG<span class="w">                </span><span class="o">(</span><span class="m">00001112</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>PANU<span class="w">                      </span><span class="o">(</span><span class="m">00001115</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>NAP<span class="w">                       </span><span class="o">(</span><span class="m">00001116</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>Handsfree<span class="w"> </span>Audio<span class="w"> </span>Gateway<span class="w">   </span><span class="o">(</span>0000111f-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>SIM<span class="w"> </span>Access<span class="w">                </span><span class="o">(</span>0000112d-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>Phonebook<span class="w"> </span>Access<span class="w"> </span>Server<span class="w">   </span><span class="o">(</span>0000112f-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>Message<span class="w"> </span>Access<span class="w"> </span>Server<span class="w">     </span><span class="o">(</span><span class="m">00001132</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>PnP<span class="w"> </span>Information<span class="w">           </span><span class="o">(</span><span class="m">00001200</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>Generic<span class="w"> </span>Access<span class="w"> </span>Profile<span class="w">    </span><span class="o">(</span><span class="m">00001800</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>Generic<span class="w"> </span>Attribute<span class="w"> </span>Profile<span class="w"> </span><span class="o">(</span><span class="m">00001801</span>-0000-1000-8000-00805f9b34fb<span class="o">)</span>
+<span class="w">    </span>UUID:<span class="w"> </span>Vendor<span class="w"> </span>specific<span class="w">           </span><span class="o">(</span>a23d00bc-217c-123b-9c00-fc44577136ee<span class="o">)</span>
+<span class="w">    </span>Modalias:<span class="w"> </span>bluetooth:v0075p0100d0201
 </pre></div>
 </div>
 <p>The information about the peering (for example encryption and signature keys for messages) can be extracted from <code class="docutils literal notranslate"><span class="pre">/var/lib/bluetooth/01:23:45:67:89:AB/55:44:33:22:11:00/info</span></code>.</p>
@@ -162,8 +160,9 @@ Such an UUID can be searched in bluez header files such as <a class="reference e
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Bluetooth on Linux</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#connecting-an-android-phone-to-a-laptop-using-bluetooth">Connecting an Android phone to a laptop using Bluetooth</a></li>
@@ -171,12 +170,17 @@ Such an UUID can be searched in bluez header files such as <a class="reference e
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="archlinux-pkg.html"
-                        title="previous chapter">Notes about Arch Linux packages</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="debian.html"
-                        title="next chapter">Some information of Debian systems</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="archlinux-pkg.html"
+                          title="previous chapter">Notes about Arch Linux packages</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="debian.html"
+                          title="next chapter">Some information of Debian systems</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/sysadmin/bluetooth.rst.txt"
@@ -195,7 +199,7 @@ Such an UUID can be searched in bluez header files such as <a class="reference e
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -218,8 +222,8 @@ Such an UUID can be searched in bluez header files such as <a class="reference e
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

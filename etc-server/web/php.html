@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>PHP Configuration Customization &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css?v=601dbdee" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="SSL configuration on a web server" href="ssl.html" />
@@ -42,12 +40,12 @@
           <div class="body" role="main">
             
   <section id="php-configuration-customization">
-<h1>PHP Configuration Customization<a class="headerlink" href="#php-configuration-customization" title="Permalink to this headline">¶</a></h1>
+<h1>PHP Configuration Customization<a class="headerlink" href="#php-configuration-customization" title="Link to this heading">¶</a></h1>
 <p>Here are some tips &amp; tricks to configure a php.ini file.</p>
 <section id="php-ini-configuration">
-<h2><code class="docutils literal notranslate"><span class="pre">php.ini</span></code> configuration<a class="headerlink" href="#php-ini-configuration" title="Permalink to this headline">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">php.ini</span></code> configuration<a class="headerlink" href="#php-ini-configuration" title="Link to this heading">¶</a></h2>
 <section id="common-important-configuration-options">
-<h3>Common important configuration options<a class="headerlink" href="#common-important-configuration-options" title="Permalink to this headline">¶</a></h3>
+<h3>Common important configuration options<a class="headerlink" href="#common-important-configuration-options" title="Link to this heading">¶</a></h3>
 <p>Here are some options I use in both development and production environments:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">;</span> <span class="n">Decides</span> <span class="n">whether</span> <span class="n">PHP</span> <span class="n">may</span> <span class="n">expose</span> <span class="n">the</span> <span class="n">fact</span> <span class="n">that</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">installed</span> <span class="n">on</span> <span class="n">the</span> <span class="n">server</span>
 <span class="p">;</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">by</span> <span class="n">adding</span> <span class="n">its</span> <span class="n">signature</span> <span class="n">to</span> <span class="n">the</span> <span class="n">Web</span> <span class="n">server</span> <span class="n">header</span><span class="p">)</span><span class="o">.</span>  <span class="n">It</span> <span class="ow">is</span> <span class="n">no</span> <span class="n">security</span>
@@ -77,7 +75,7 @@
 </div>
 </section>
 <section id="development-vs-production-options">
-<h3>Development vs. Production options<a class="headerlink" href="#development-vs-production-options" title="Permalink to this headline">¶</a></h3>
+<h3>Development vs. Production options<a class="headerlink" href="#development-vs-production-options" title="Link to this heading">¶</a></h3>
 <p>Here are the options which are likely to be different in dev and in prod:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>; open_basedir, if set, limits all file operations to the defined directory
 ; and below.  This directive makes most sense if used in a per-directory
@@ -175,7 +173,7 @@ display_startup_errors = On
 </div>
 </section>
 <section id="php-size-limits">
-<h3>PHP size limits<a class="headerlink" href="#php-size-limits" title="Permalink to this headline">¶</a></h3>
+<h3>PHP size limits<a class="headerlink" href="#php-size-limits" title="Link to this heading">¶</a></h3>
 <p>In some configurations it may be needed to raise the limits on memory resource
 usage.  Here are some relevant options in <code class="docutils literal notranslate"><span class="pre">php.ini</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">;</span> <span class="n">Maximum</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">memory</span> <span class="n">a</span> <span class="n">script</span> <span class="n">may</span> <span class="n">consume</span> <span class="p">(</span><span class="mi">128</span><span class="n">MB</span><span class="p">)</span>
@@ -198,7 +196,7 @@ usage.  Here are some relevant options in <code class="docutils literal notransl
 </div>
 </section>
 <section id="debian-default-configuration-file">
-<h3>Debian default configuration file<a class="headerlink" href="#debian-default-configuration-file" title="Permalink to this headline">¶</a></h3>
+<h3>Debian default configuration file<a class="headerlink" href="#debian-default-configuration-file" title="Link to this heading">¶</a></h3>
 <p>With PHP 5, the default configuration file that Debian ships is installed in
 <code class="docutils literal notranslate"><span class="pre">/usr/share/php5/php.ini-production</span></code>. Each time this file gets updated it is
 possible to re-sync <code class="docutils literal notranslate"><span class="pre">php.ini</span></code> with a command like:</p>
@@ -208,7 +206,7 @@ possible to re-sync <code class="docutils literal notranslate"><span class="pre"
 </section>
 </section>
 <section id="extensions-list">
-<h2>Extensions list<a class="headerlink" href="#extensions-list" title="Permalink to this headline">¶</a></h2>
+<h2>Extensions list<a class="headerlink" href="#extensions-list" title="Link to this heading">¶</a></h2>
 <p>Here are some extensions to enable for most common-purpose websites:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">curl</span></code></p></li>
@@ -226,7 +224,7 @@ possible to re-sync <code class="docutils literal notranslate"><span class="pre"
 </ul>
 </section>
 <section id="apache-configuration">
-<h2>Apache configuration<a class="headerlink" href="#apache-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Apache configuration<a class="headerlink" href="#apache-configuration" title="Link to this heading">¶</a></h2>
 <p>Apache has a module to run PHP. On Debian its installation is simple:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libapache2</span><span class="o">-</span><span class="n">mod</span><span class="o">-</span><span class="n">php5</span>
 <span class="n">a2enmod</span> <span class="n">php5</span>
@@ -245,7 +243,7 @@ in <code class="docutils literal notranslate"><span class="pre">&lt;Directory&gt
 </pre></div>
 </div>
 <section id="rewrite-module">
-<h3>Rewrite module<a class="headerlink" href="#rewrite-module" title="Permalink to this headline">¶</a></h3>
+<h3>Rewrite module<a class="headerlink" href="#rewrite-module" title="Link to this heading">¶</a></h3>
 <p>To have nicer URLs, many websites setup a hook to call <code class="docutils literal notranslate"><span class="pre">index.php</span></code> with a part of the path in its parameter. In Apache, this behavior is achieved thanks to the rewrite module. To enable this module on Debian, run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a2enmod</span> <span class="n">rewrite</span>
 </pre></div>
@@ -271,7 +269,7 @@ lines such as these ones in it:</p>
 </section>
 </section>
 <section id="nginx-configuration">
-<h2>Nginx configuration<a class="headerlink" href="#nginx-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Nginx configuration<a class="headerlink" href="#nginx-configuration" title="Link to this heading">¶</a></h2>
 <p>Nginx doesn’t use PHP as a module so you have to run another daemon which
 provides a CGI-like gateway. For example, you may use <code class="docutils literal notranslate"><span class="pre">php5-fpm</span></code> daemon,
 which installation is trivial on Debian:</p>
@@ -345,7 +343,7 @@ fastcgi_param   REDIRECT_STATUS         200;
 </pre></div>
 </div>
 <section id="rewrite-directive">
-<h3>Rewrite directive<a class="headerlink" href="#rewrite-directive" title="Permalink to this headline">¶</a></h3>
+<h3>Rewrite directive<a class="headerlink" href="#rewrite-directive" title="Link to this heading">¶</a></h3>
 <p>Nginx provides an HTTP rewrite module to change URIs dynamically. This directive
 sets up pseudo subdirectories in <code class="docutils literal notranslate"><span class="pre">/path</span></code> URI which are handled by <code class="docutils literal notranslate"><span class="pre">page.php</span></code>
 script:</p>
@@ -356,7 +354,7 @@ script:</p>
 </section>
 </section>
 <section id="lighttpd-configuration">
-<h2>Lighttpd configuration<a class="headerlink" href="#lighttpd-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Lighttpd configuration<a class="headerlink" href="#lighttpd-configuration" title="Link to this heading">¶</a></h2>
 <p>Like Nginx, Lighttpd can use PHP through a CGI or FastCGI application like
 PHP-FPM.  Here are some documentation links:</p>
 <ul class="simple">
@@ -386,8 +384,9 @@ with PHP-FPM:</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">PHP Configuration Customization</a><ul>
 <li><a class="reference internal" href="#php-ini-configuration"><code class="docutils literal notranslate"><span class="pre">php.ini</span></code> configuration</a><ul>
 <li><a class="reference internal" href="#common-important-configuration-options">Common important configuration options</a></li>
@@ -410,12 +409,17 @@ with PHP-FPM:</p>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="nginx.conf.raw.html"
-                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/web/nginx.conf</span></code></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="ssl.html"
-                        title="next chapter">SSL configuration on a web server</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="nginx.conf.raw.html"
+                          title="previous chapter"><code class="docutils literal notranslate"><span class="pre">etc-server/web/nginx.conf</span></code></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="ssl.html"
+                          title="next chapter">SSL configuration on a web server</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/etc-server/web/php.rst.txt"
@@ -434,7 +438,7 @@ with PHP-FPM:</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -457,8 +461,8 @@ with PHP-FPM:</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html>
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>windows/Vagrantfile &#8212; Generic Config</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Active Directory by Microsoft" href="active_directory.html" />
@@ -42,33 +40,33 @@
           <div class="body" role="main">
             
   <section id="windows-vagrantfile">
-<h1><code class="docutils literal notranslate"><span class="pre">windows/Vagrantfile</span></code><a class="headerlink" href="#windows-vagrantfile" title="Permalink to this headline">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">windows/Vagrantfile</span></code><a class="headerlink" href="#windows-vagrantfile" title="Link to this heading">¶</a></h1>
 <p><a class="reference download internal" download="" href="../_downloads/680295a40315c1b0e1a5b2966e75ed56/Vagrantfile"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">file</span></code></a></p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- mode: ruby -*-</span>
 <span class="c1"># vi: set ft=ruby :</span>
 
-Vagrant.configure<span class="o">(</span><span class="s2">&quot;2&quot;</span><span class="o">)</span> <span class="k">do</span> <span class="p">|</span>config<span class="p">|</span>
-  <span class="c1"># cf. vagrant.rst for instructions on downloading and importing windows/win10-edge box</span>
-  config.vm.box <span class="o">=</span> <span class="s2">&quot;windows/win10-edge&quot;</span>
+Vagrant.configure<span class="o">(</span><span class="s2">&quot;2&quot;</span><span class="o">)</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="p">|</span>config<span class="p">|</span>
+<span class="w">  </span><span class="c1"># cf. vagrant.rst for instructions on downloading and importing windows/win10-edge box</span>
+<span class="w">  </span>config.vm.box<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;windows/win10-edge&quot;</span>
 
-  <span class="c1"># Configure remote access</span>
-  config.ssh.username <span class="o">=</span> <span class="s2">&quot;IEUser&quot;</span>
-  config.ssh.password <span class="o">=</span> <span class="s2">&quot;Passw0rd!&quot;</span>
+<span class="w">  </span><span class="c1"># Configure remote access</span>
+<span class="w">  </span>config.ssh.username<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;IEUser&quot;</span>
+<span class="w">  </span>config.ssh.password<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Passw0rd!&quot;</span>
 
-  <span class="c1"># Use Windows Remote Management protocol (WinRM)</span>
-  <span class="c1">#config.vm.communicator = &quot;winrm&quot;</span>
-  config.winrm.username <span class="o">=</span> <span class="s2">&quot;IEUser&quot;</span>
-  config.winrm.password <span class="o">=</span> <span class="s2">&quot;Passw0rd!&quot;</span>
+<span class="w">  </span><span class="c1"># Use Windows Remote Management protocol (WinRM)</span>
+<span class="w">  </span><span class="c1">#config.vm.communicator = &quot;winrm&quot;</span>
+<span class="w">  </span>config.winrm.username<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;IEUser&quot;</span>
+<span class="w">  </span>config.winrm.password<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Passw0rd!&quot;</span>
 
-  <span class="c1"># Use 2 CPU and 4GB of RAM</span>
-  config.vm.provider :libvirt <span class="k">do</span> <span class="p">|</span>v<span class="p">|</span>
-    v.cpus <span class="o">=</span> <span class="m">2</span>
-    v.memory <span class="o">=</span> <span class="m">4096</span>
+<span class="w">  </span><span class="c1"># Use 2 CPU and 4GB of RAM</span>
+<span class="w">  </span>config.vm.provider<span class="w"> </span>:libvirt<span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="p">|</span>v<span class="p">|</span>
+<span class="w">    </span>v.cpus<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span>
+<span class="w">    </span>v.memory<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4096</span>
 
-    <span class="c1"># Use a virtual TPM 2.0 with swtpm</span>
-    v.tpm_model <span class="o">=</span> <span class="s1">&#39;tpm-crb&#39;</span>
-    v.tpm_type <span class="o">=</span> <span class="s1">&#39;emulator&#39;</span>
-  end
+<span class="w">    </span><span class="c1"># Use a virtual TPM 2.0 with swtpm</span>
+<span class="w">    </span>v.tpm_model<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;tpm-crb&#39;</span>
+<span class="w">    </span>v.tpm_type<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;emulator&#39;</span>
+<span class="w">  </span>end
 end
 </pre></div>
 </div>
@@ -81,12 +79,16 @@ end
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Windows system information</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="active_directory.html"
-                        title="next chapter">Active Directory by Microsoft</a></p>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Windows system information</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="active_directory.html"
+                          title="next chapter">Active Directory by Microsoft</a></p>
+  </div>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/windows/Vagrantfile.raw.rst.txt"
@@ -105,7 +107,7 @@ end
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -128,8 +130,8 @@ end
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2013-2023, Nicolas Iooss.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    &#169; Copyright 2013-2023, Nicolas Iooss.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>
