@@ -43,6 +43,8 @@ jobs:
         fi
         # Disable Jekyll engine
         touch _build/html/.nojekyll
+        # Add a CNAME file
+        printf doc.iosenag.net > _build/html/CNAME
 
     - name: Build Github pages with Sphinx
       run: make html
