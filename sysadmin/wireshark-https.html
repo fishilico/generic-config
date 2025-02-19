@@ -60,6 +60,11 @@ tshark<span class="w"> </span>-ni<span class="w"> </span>any<span class="w"> </s
 
 <span class="c1"># Merge the secrets in the Decryption Secrets Block part of the capture file</span>
 editcap<span class="w"> </span>--inject-secrets<span class="w"> </span>tls,keylogfile.txt<span class="w"> </span>capture.pcapng<span class="w"> </span>capture-with-secrets.pcapng
+
+<span class="c1"># It is also possible to live-capture with the keylogfile</span>
+<span class="c1"># Option -V -O http displays packet details for (decrypted) HTTP</span>
+<span class="c1"># Option -x displays hexadecimal data</span>
+tshark<span class="w"> </span>-ni<span class="w"> </span>any<span class="w"> </span>-f<span class="w"> </span><span class="s1">&#39;tcp port 443&#39;</span><span class="w"> </span>-o<span class="w"> </span>tls.keylog_file:keylogfile.txt<span class="w"> </span>-V<span class="w"> </span>-O<span class="w"> </span>http<span class="w"> </span>-x
 </pre></div>
 </div>
 <p>The keylogfile then looks like (for TLS 1.3):</p>

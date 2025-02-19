@@ -17,12 +17,17 @@ For example:
 
     # Capture network traffic
     tshark -ni any -w capture.pcapng
-    
+
     # Perform a request to a HTTPS website, for example with curl
     SSLKEYLOGFILE=keylogfile.txt curl https://wiki.wireshark.org/
 
     # Merge the secrets in the Decryption Secrets Block part of the capture file
     editcap --inject-secrets tls,keylogfile.txt capture.pcapng capture-with-secrets.pcapng
+
+    # It is also possible to live-capture with the keylogfile
+    # Option -V -O http displays packet details for (decrypted) HTTP
+    # Option -x displays hexadecimal data
+    tshark -ni any -f 'tcp port 443' -o tls.keylog_file:keylogfile.txt -V -O http -x
 
 The keylogfile then looks like (for TLS 1.3):
 
