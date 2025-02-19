@@ -6,7 +6,7 @@ jobs:
   build_pages:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install dependencies
       run: |
@@ -16,7 +16,7 @@ jobs:
     - run: make all
 
     - name: Upload HTML artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: html
         path: _build/html
@@ -63,7 +63,7 @@ jobs:
         fi
 
     - name: Upload changes in artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: gh-pages.patch
         path: _build/gh-pages.patch
